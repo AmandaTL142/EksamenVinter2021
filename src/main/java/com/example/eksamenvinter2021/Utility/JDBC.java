@@ -25,7 +25,7 @@ public class JDBC {
             }
 
             try  {
-                InputStream stream = new FileInputStream("EksamensprojektVinter2021/src/main/resources/application.properties");
+                InputStream stream = new FileInputStream("src/main/resources/application.properties");
                 Properties properties = new Properties();
                 properties.load(stream);
                 url = properties.getProperty("db.url");

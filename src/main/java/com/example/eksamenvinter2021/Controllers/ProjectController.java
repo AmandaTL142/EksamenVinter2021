@@ -16,10 +16,4 @@ public class ProjectController {
         model.addAttribute("Project", ps.showProject(thisProject));
         return "project.html";
     }
-
-    @GetMapping("/error")
-    public String index (){
-        return "error.html";
-    }
-
 }

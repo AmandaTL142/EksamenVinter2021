@@ -1,2 +1,2 @@
 # EksamenVinter2021
-Dette er det nye projekt, der kan conencte med databasen.
+Dette er det nye projekt, der kan connecte med databasen.

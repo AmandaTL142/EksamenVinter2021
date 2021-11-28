@@ -109,4 +109,19 @@ public class Project {
     public Project() {
     }
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectTitle='" + projectTitle + '\'' +
+                ", projectDeadline=" + projectDeadline +
+                ", status='" + status + '\'' +
+                ", basePrice=" + basePrice +
+                ", totalPrice=" + totalPrice +
+                ", totalTime=" + totalTime +
+                ", customerId=" + customerId +
+                ", managerId=" + managerId +
+                ", description='" + description + '\'' +
+                ", projectId=" + projectId +
+                '}';
+    }
 }

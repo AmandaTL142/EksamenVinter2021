@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class ProjectController {
@@ -12,8 +13,11 @@ public class ProjectController {
     ProjectService ps = new ProjectService();
 
     @GetMapping("/project/{thisProject}")//Path variables: /{}
-    public String showWishlist(@PathVariable("thisProject") int thisProject, Model model) {
-        model.addAttribute("Project", ps.showProject(thisProject));
-        return "project.html";
+    public String project(@PathVariable("thisProject") String thisProject, Model model) {
+        //int id = Integer.parseInt(thisProject);
+        model.addAttribute("ProjectID", ps.showProject(15));
+        return "project";
     }
+
+
 }

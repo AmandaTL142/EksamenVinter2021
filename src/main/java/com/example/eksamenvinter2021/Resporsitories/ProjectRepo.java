@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class ProjectRepo {
 
+    //Testet i "test"
     public void insertProjectIntoDatabase(Project p) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -30,7 +31,7 @@ public class ProjectRepo {
         }
     }
 
-
+    //Testet i "test", dele virker ikke
     public Project getProjectFromDatabase(int id) {
         Project p = new Project();
         try {
@@ -38,24 +39,29 @@ public class ProjectRepo {
                     "heroku_7aba49c42d6c0f0.projects WHERE project_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            String name = rs.getString("name");
+            rs.next();
+            String title = rs.getString("title");
             Date date = rs.getDate("project_deadline");
             String status = rs.getString("status");
             Double price = rs.getDouble("base_price");
             int customerId = rs.getInt("customer_id");
             int managerId = rs.getInt("manager_id");
-            p = new Project(name, date, status, price, customerId, managerId);
+            p = new Project(title, date, status, price, customerId, managerId);
 
             //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
             // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
+
+            //Virker ikke
             if (rs.getDouble("total_price") != 0){
                 p.setTotalPrice(rs.getDouble("total_price"));
             }
 
+            //Virker ikke
             if (rs.getString("total_time") != null){
                 p.setTotalPrice(rs.getInt("total_time"));
             }
 
+            //Virker!
             if (rs.getString("description") != null){
                 p.setDescription(rs.getString("description"));
             }
@@ -69,6 +75,7 @@ public class ProjectRepo {
         return p;
     }
 
+    //Testet i "test"
     public void deleteProjectFromDatabase(int id) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -85,7 +92,7 @@ public class ProjectRepo {
     public void updateProjectInDatabase(Project p) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `name` = ?, `project_deadline` = ?, " +
+                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
                             "`status` = ?, `base_price` = ?, `total_price` = ?, `total_time` = ?, " +
                             "`customer_id` = ?, `manager_id` = ?, `description` = ? WHERE (`project_id` = ?;");
             stmt.setString(1, p.getProjectTitle());

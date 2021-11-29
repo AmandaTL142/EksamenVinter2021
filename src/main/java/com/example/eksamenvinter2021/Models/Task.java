@@ -12,6 +12,12 @@ public class Task {
     private Time startTime;
     private Time endTIme; //update(status==complete)
 
+    //TODO update time
+    //man skal manuelt sætte tiden
+    //officielt starttid
+    //endTime deadline
+    //actual EndTIme
+
     public Task() {
     }
 

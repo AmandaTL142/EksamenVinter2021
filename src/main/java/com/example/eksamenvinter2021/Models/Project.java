@@ -12,6 +12,7 @@ public class Project {
     private int customerId;
     private int managerId;
 
+
     public String getDescription() {
         return description;
     }

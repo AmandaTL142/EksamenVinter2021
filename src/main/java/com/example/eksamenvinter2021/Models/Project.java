@@ -4,13 +4,12 @@ import java.util.Date;
 
 public class Project {
     private String projectTitle;
-    private Date projectDeadline;
+    private String projectDeadline;
     private String status;
-    private double basePrice;
+    private String basePrice;
     private double totalPrice;
     private int totalTime;
     private int customerId;
-    private int managerId;
 
     public String getDescription() {
         return description;
@@ -41,11 +40,11 @@ public class Project {
         this.projectTitle = projectTitle;
     }
 
-    public Date getProjectDeadline() {
+    public String getProjectDeadline() {
         return projectDeadline;
     }
 
-    public void setProjectDeadline(Date projectDeadline) {
+    public void setProjectDeadline(String projectDeadline) {
         this.projectDeadline = projectDeadline;
     }
 
@@ -57,11 +56,11 @@ public class Project {
         this.status = status;
     }
 
-    public double getBasePrice() {
+    public String getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(double basePrice) {
+    public void setBasePrice(String basePrice) {
         this.basePrice = basePrice;
     }
 
@@ -73,13 +72,6 @@ public class Project {
         this.customerId = customerId;
     }
 
-    public int getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
-    }
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
@@ -97,13 +89,12 @@ public class Project {
         return totalTime;
     }
 
-    public Project(String name, Date projectDeadline, String status, double basePrice, int customerId, int managerId) {
-    this.projectTitle = name;
+    public Project(String title, String projectDeadline, String status, String basePrice, int customerId) {
+    this.projectTitle = title;
     this.projectDeadline = projectDeadline;
     this.status = status;
     this.basePrice = basePrice;
     this.customerId = customerId;
-    this.managerId = managerId;
     }
 
     public Project() {
@@ -119,7 +110,6 @@ public class Project {
                 ", totalPrice=" + totalPrice +
                 ", totalTime=" + totalTime +
                 ", customerId=" + customerId +
-                ", managerId=" + managerId +
                 ", description='" + description + '\'' +
                 ", projectId=" + projectId +
                 '}';

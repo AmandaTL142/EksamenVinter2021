@@ -15,15 +15,14 @@ public class ProjectRepo {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("INSERT INTO heroku_7aba49c42d6c0f0.projects (`title`, `project_deadline`, " +
-                            "`status`, `base_price`, `customer_id`, `manager_id`, `description`) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?);");
+                            "`status`, `base_price`, `customer_id`, `description`) " +
+                            "VALUES (?, ?, ?, ?, ?, ?);");
             stmt.setString(1, p.getProjectTitle());
-            stmt.setDate(2, (Date) p.getProjectDeadline());
+            stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setDouble(4, p.getBasePrice());
+            stmt.setString(4, p.getBasePrice());
             stmt.setInt(5, p.getCustomerId());
-            stmt.setInt(6, p.getManagerId());
-            stmt.setString(7, p.getDescription());
+            stmt.setString(6, p.getDescription());
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Project could not be inserted into database");
@@ -41,12 +40,11 @@ public class ProjectRepo {
             ResultSet rs = stmt.executeQuery();
             rs.next();
             String title = rs.getString("title");
-            Date date = rs.getDate("project_deadline");
+            String date = rs.getString("project_deadline");
             String status = rs.getString("status");
-            Double price = rs.getDouble("base_price");
+            String price = rs.getString("base_price");
             int customerId = rs.getInt("customer_id");
-            int managerId = rs.getInt("manager_id");
-            p = new Project(title, date, status, price, customerId, managerId);
+            p = new Project(title, date, status, price, customerId);
 
             //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
             // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
@@ -94,16 +92,15 @@ public class ProjectRepo {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
                             "`status` = ?, `base_price` = ?, `total_price` = ?, `total_time` = ?, " +
-                            "`customer_id` = ?, `manager_id` = ?, `description` = ? WHERE (`project_id` = ?;");
+                            "`customer_id` = ?, `description` = ? WHERE (`project_id` = ?;");
             stmt.setString(1, p.getProjectTitle());
-            stmt.setDate(2, (Date) p.getProjectDeadline());
+            stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setDouble(4, p.getBasePrice());
+            stmt.setString(4, p.getBasePrice());
             stmt.setDouble(5, p.getTotalPrice());
             stmt.setInt(6, p.getTotalTime());
             stmt.setInt(7, p.getCustomerId());
-            stmt.setInt(8, p.getManagerId());
-            stmt.setString(9, p.getDescription());
+            stmt.setString(8, p.getDescription());
             stmt.setInt(9, p.getProjectId());
             stmt.executeUpdate();
 
@@ -112,6 +109,23 @@ public class ProjectRepo {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public int getProjectId(String projectTitle) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+            stmt.setString(1, projectTitle);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("project_id");
+            return id;
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get id for with title " + projectTitle + " from database");
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 
 }

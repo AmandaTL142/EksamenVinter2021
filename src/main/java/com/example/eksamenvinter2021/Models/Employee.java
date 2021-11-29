@@ -3,7 +3,9 @@ package com.example.eksamenvinter2021.Models;
 public class Employee {
     private int employeeId;
     private String employeeName;
+    private String password;
     private String competence;
+    private String role;
 
     public String getEmployeeName(){
         return employeeName;
@@ -25,9 +27,27 @@ public class Employee {
         return employeeId;
     }
 
-    public Employee(String employeeName, String competence){
+    public String getRole(){
+        return role;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public Employee(String employeeName, String password,String competence, String role){
         this.employeeName = employeeName;
+        this.password = password;
         this.competence = competence;
+        this.role = role;
     }
 
     public Employee(){}

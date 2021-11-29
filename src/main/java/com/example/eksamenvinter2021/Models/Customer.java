@@ -17,6 +17,10 @@ public class Customer {
     public void setCustomerId(int customerId){
         this.customerId = customerId;
     }
+    public int getCustomerId(){
+        return customerId;
+    }
+
 
     public Customer(String customerName){
         this.customerName = customerName;

@@ -8,20 +8,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginService {
-
-    public static boolean login(String name, String password) {
-        String checkName = "";
+    //LoginService should contact database via repository, not in this class
+    //This will be implemented when EmployeeRepo finished
+    public static boolean login(int employee_id, String password) {
+        int checkId = 0;
         String checkPassword = "";
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM users WHERE name= ? AND password= ?;");
-            stmt.setString(1, name);
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees WHERE name= ? AND password= ?;");
+            stmt.setInt(1, employee_id);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                checkName = rs.getString(1);
+                checkId = rs.getInt(1);
                 checkPassword = rs.getString(2);
             }
-            if (checkName.equals(name)) {
+            if (checkId == employee_id) {
                 if (checkPassword.equals(password)) {
                     return true;
                 }
@@ -35,7 +36,7 @@ public class LoginService {
 
     public static boolean isManager(int userId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM users where user_id=?;");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees where employee_id=?;");
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

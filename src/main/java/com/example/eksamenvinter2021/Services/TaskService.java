@@ -11,9 +11,11 @@ public class TaskService {
     Project p = new Project();
     Task t = new Task();
 
-    public void createNewTask( String title,String description, String estimated_time, String status){
+    public Task createNewTask( String title,String description, String estimated_time, String status){
         Task t = new Task();
         tr.insertNewTaskToDB(t, p.getProjectId());
+
+        return t;
     }
 
     public void readTask(){

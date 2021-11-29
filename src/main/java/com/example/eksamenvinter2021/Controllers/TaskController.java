@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Controllers;
 
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 import com.example.eksamenvinter2021.Services.TaskService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class TaskController {
         String status = wr.getParameter("new-task-status");
       ts.createNewTask(title, description,estimated_time, status);
 
+    Task currentTask = ts.createNewTask(title, description,estimated_time, status);
 
         return "redirect:/showTask";
 }

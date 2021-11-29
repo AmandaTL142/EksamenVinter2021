@@ -1,8 +1,9 @@
-package com.example.eksamenvinter2021.Resporsitories;/*package com.example.eksamensprojektvinter2021.Resporsitories;
+package com.example.eksamenvinter2021.Resporsitories;
 
-import com.example.eksamensprojektvinter2021.Models.Project;
-import com.example.eksamensprojektvinter2021.Models.Task;
-import com.example.eksamensprojektvinter2021.Utility.JDBC;
+
+import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Task;
+import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,26 +14,22 @@ public class TaskRepo {
 
     Connection conn = JDBC.getConnection();
 
-    public void insertNewTaskToDB(Task task){
-
-        int projectID = getProjectId(Project project);
+    public void insertNewTaskToDB(Task task, int projectID){
 
         String insertTaskSQL ="INSERT INTO tasks(task_id, title, description,estimated_time, " +
-                "time_used, status, project_id,subproject_id) values (?,?,?,?,?,?,?,?)";
+                "time_used, status, project_id) values (?,?,?,?,?,?,?)";
 
 
         try{
-            //TODO hente et foreign key id til at indgå her i sql-statement
 
             PreparedStatement stmt = conn.prepareStatement(insertTaskSQL);
             stmt.setInt(1,task.getTaskID());
             stmt.setString(2,task.getTitle());
             stmt.setString(3,task.getDescription());
-            stmt.setDouble(4,task.getEstimatedTime());
-            stmt.setDouble(5,task.getTimeUsed());
+            stmt.setTime(4,task.getEstimatedTime());
+            stmt.setTime(5,task.getTimeUsed());
             stmt.setString(6,task.getStatus());
-            stmt.setInt(7,);
-            stmt.setInt(8);
+            stmt.setInt(7,projectID);
 
         } catch (SQLException e) {
             System.out.println("connection not found");
@@ -41,10 +38,10 @@ public class TaskRepo {
         }
     }
 
-    public int getProjectId(Project project) {
+   /* public int getProjectId(Project project) {
         int projectId = 0;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT project_id FROM project WHERE title= ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project where project_id = ?");
             stmt.setString(1, String.valueOf(project.getProjectId()));
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -72,8 +69,52 @@ public class TaskRepo {
             System.out.println(e.getMessage());
         }
         return projectId;
+    }*/
+
+    public void readTask(){
+
+
     }
 
-}
+  public void updateTask(){
+      Task task = new Task();
 
- */
+      String sql= "UPDATE task SET title=?, description=?, estimatedTime=?, time_used=?, status=?";
+
+      try {
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.executeUpdate();
+
+          ResultSet rs = stmt.executeQuery();
+          while (rs.next()){
+              task.setTitle(rs.getString(2));
+              task.setDescription(rs.getString(3));
+              task.setEstimatedTime(rs.getTime(4));
+              task.setTimeUsed(rs.getTime(5));
+              task.setStatus(rs.getString(6));
+          }
+
+      } catch (SQLException e) {
+          System.out.println("no connection");
+          System.out.println(e.getMessage());
+          e.printStackTrace();
+      }
+
+  }
+
+  public void deleteTask(int inputFromUser){
+        String sql ="DELETE from tasks where task_id=?";
+
+      try {
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.setInt(1,inputFromUser);
+          stmt.executeUpdate();
+
+      } catch (SQLException e) {
+          System.out.println("no connection");
+          System.out.println(e.getMessage());
+          e.printStackTrace();
+      }
+  }
+
+}

@@ -1,17 +1,19 @@
 package com.example.eksamenvinter2021.Models;
 
+import java.sql.Time;
+
 public class Task {
     private int taskID;
     private String title;
     private String description;
-    private double estimatedTime;
-    private double timeUsed;
+    private Time estimatedTime;
+    private Time timeUsed;
     private String status;
 
     public Task() {
     }
 
-    public Task(int taskID, String title, String description, double estimatedTime, double timeUsed, String status) {
+    public Task(int taskID, String title, String description, Time estimatedTime, Time timeUsed, String status) {
         this.taskID = taskID;
         this.title = title;
         this.description = description;
@@ -44,19 +46,19 @@ public class Task {
         this.description = description;
     }
 
-    public double getEstimatedTime() {
+    public Time getEstimatedTime() {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(double estimatedTime) {
+    public void setEstimatedTime(Time estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 
-    public double getTimeUsed() {
+    public Time getTimeUsed() {
         return timeUsed;
     }
 
-    public void setTimeUsed(double timeUsed) {
+    public void setTimeUsed(Time timeUsed) {
         this.timeUsed = timeUsed;
     }
 

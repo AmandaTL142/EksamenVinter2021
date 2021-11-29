@@ -3,8 +3,6 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Customer;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 
-import java.util.Date;
-
 public class CustomerService {
 
     CustomerRepo customerRepo = new CustomerRepo();

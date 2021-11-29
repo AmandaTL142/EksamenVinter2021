@@ -9,6 +9,7 @@ public class TaskService {
     TaskRepo tr = new TaskRepo();
 
     Project p = new Project();
+    Task t = new Task();
 
     public void createNewTask(){
         Task t = new Task();
@@ -21,5 +22,9 @@ public class TaskService {
 
     public void updateTask(){
         tr.updateTask();
+    }
+
+    public void deleteTask(){
+        tr.deleteTask(t.getTaskID());
     }
 }

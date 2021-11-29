@@ -9,6 +9,8 @@ public class Task {
     private Time estimatedTime;
     private Time timeUsed;
     private String status;
+    private Time startTime;
+    private Time endTIme; //update(status==complete)
 
     public Task() {
     }

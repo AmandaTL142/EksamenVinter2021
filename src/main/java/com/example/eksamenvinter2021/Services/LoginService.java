@@ -2,6 +2,7 @@ package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Utility.JDBC;
 
+import javax.servlet.http.HttpSession;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class LoginService {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String role = String.valueOf(rs.getInt(1));//Henviser til kolonne hvor 'rolle' står som MANAGER
-                if (role.equals("MANAGER")) {
+                if (role.matches("MANAGER")) {
                     return true;
                 }
             }
@@ -49,5 +50,14 @@ public class LoginService {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public static boolean validLogin(HttpSession session) {
+        //All GetMappings implements validLogin method to find if user is logged in
+        return session.getAttribute("id") != null;
+    }
+
+    public static boolean validManagerLogin(HttpSession session) {
+        return (boolean) session.getAttribute("manager");
     }
 }

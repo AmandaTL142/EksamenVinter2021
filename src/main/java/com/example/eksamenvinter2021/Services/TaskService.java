@@ -1,19 +1,23 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
+
+import java.sql.Time;
 
 public class TaskService {
 
     TaskRepo tr = new TaskRepo();
 
     Project p = new Project();
+    Subproject sp = new Subproject();
     Task t = new Task();
 
-    public Task createNewTask( String title,String description, String estimated_time, String status){
-        Task t = new Task();
-        tr.insertNewTaskToDB(t, p.getProjectId());
+    public Task createNewTask(String title, String description, Time estimatedTime, String status){
+        Task t = new Task(title,description, estimatedTime,status);
+        tr.insertNewTaskToDB(t);
 
         return t;
     }
@@ -26,7 +30,4 @@ public class TaskService {
         tr.updateTask();
     }
 
-    public void deleteTask(){
-        tr.deleteTask(t.getTaskID());
-    }
-}
+

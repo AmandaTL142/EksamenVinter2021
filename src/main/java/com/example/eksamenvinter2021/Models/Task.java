@@ -3,14 +3,14 @@ package com.example.eksamenvinter2021.Models;
 import java.sql.Time;
 
 public class Task {
-    private int taskID;
     private String title;
     private String description;
-    private Time estimatedTime;
+    private Time estimated_time;
     private Time timeUsed;
     private String status;
-    private Time startTime;
-    private Time endTIme; //update(status==complete)
+
+    //private Time startTime;
+    //private Time endTIme; //update(status==complete)
 
     //TODO update time
     //man skal manuelt sætte tiden
@@ -21,21 +21,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(int taskID, String title, String description, Time estimatedTime, Time timeUsed, String status) {
-        this.taskID = taskID;
+    public Task(String title, String description, Time estimated_time, String status) {
         this.title = title;
         this.description = description;
-        this.estimatedTime = estimatedTime;
-        this.timeUsed = timeUsed;
+        this.estimated_time = estimated_time;
         this.status = status;
-    }
-
-    public int getTaskID() {
-        return taskID;
-    }
-
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
     }
 
     public String getTitle() {
@@ -55,11 +45,11 @@ public class Task {
     }
 
     public Time getEstimatedTime() {
-        return estimatedTime;
+        return estimated_time;
     }
 
     public void setEstimatedTime(Time estimatedTime) {
-        this.estimatedTime = estimatedTime;
+        this.estimated_time = estimated_time;
     }
 
     public Time getTimeUsed() {

@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Time;
+import java.text.DateFormat;
 
-@RestController
+@Controller
 public class TaskController {
 
     TaskService ts = new TaskService();
@@ -26,7 +27,7 @@ public class TaskController {
 
 @PostMapping("/createNewTask")
 
-    public String newTask(WebRequest wr){
+    public String createNewTask(WebRequest wr){
 
         /*Først få task til at køre
         derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
@@ -34,12 +35,12 @@ public class TaskController {
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
         //TODO kan man ændre, så den modtager en time-datatype i stedet???
-    String estimated_time = wr.getParameter("new-task-estimatedTime");
+    String estimated_time = wr.getParameter(DateFormat.getDateInstance().format("new-task-estimatedTime"));
         String status = wr.getParameter("new-task-status");
-      ts.createNewTask(title, description,estimated_time, status);
+      ts.createNewTask(title,description,estimated_time,status);
 
     Task currentTask = ts.createNewTask(title, description,estimated_time, status);
 
-        return "redirect:/showTask";
+        return "newTask";
 }
 }

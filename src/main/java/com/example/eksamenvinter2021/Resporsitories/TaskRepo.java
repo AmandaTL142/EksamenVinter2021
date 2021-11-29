@@ -14,22 +14,25 @@ public class TaskRepo {
 
     Connection conn = JDBC.getConnection();
 
-    public void insertNewTaskToDB(Task task, int projectID){
+    public void insertNewTaskToDB(Task task){
 
-        String insertTaskSQL ="INSERT INTO tasks(task_id, title, description,estimated_time, " +
-                "time_used, status, project_id) values (?,?,?,?,?,?,?)";
+        //TODO hvorfor vil den ikke indsætte i DB?
+        //TODO hvordan var det nu, jeg fik connected en foreign key?
+
+        String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?,?)";
 
 
         try{
 
             PreparedStatement stmt = conn.prepareStatement(insertTaskSQL);
-            stmt.setInt(1,task.getTaskID());
             stmt.setString(2,task.getTitle());
             stmt.setString(3,task.getDescription());
             stmt.setTime(4,task.getEstimatedTime());
             stmt.setTime(5,task.getTimeUsed());
             stmt.setString(6,task.getStatus());
-            stmt.setInt(7,projectID);
+
+            stmt.executeUpdate();
+
 
         } catch (SQLException e) {
             System.out.println("connection not found");
@@ -38,7 +41,7 @@ public class TaskRepo {
         }
     }
 
-   /* public int getProjectId(Project project) {
+   public int getProjectId(Project project) {
         int projectId = 0;
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project where project_id = ?");
@@ -52,10 +55,11 @@ public class TaskRepo {
             System.out.println(e.getMessage());
         }
         return projectId;
+
     }
 
 
-    public int getSubProjectId(Project project) {
+    /*public int getSubProjectId(Project project) {
         int subProjectId = 0;
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT subproject_id FROM subprojects WHERE title= ?");

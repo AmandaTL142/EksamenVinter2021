@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
-
 public class TaskRepo {
 
     Connection conn = JDBC.getConnection();
@@ -24,19 +22,20 @@ public class TaskRepo {
         int subProjectID= getSubProjectId("subProjectTitle");
 
 
-        String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?,?,?,?)";
+        String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?)";
 
 
         try{
 
             PreparedStatement stmt = conn.prepareStatement(insertTaskSQL);
-            stmt.setString(2,task.getTitle());
-            stmt.setString(3,task.getDescription());
-            stmt.setString(4,task.getEstimatedTime());
-            stmt.setString(5,task.getTimeUsed());
-            stmt.setString(6,task.getStatus());
-            stmt.setInt(7,getProjectId("projectTitle"));
-            stmt.setInt(8,getSubProjectId("subProjectTitle"));
+
+            stmt.setString(1,task.getTitle());
+            stmt.setString(2,task.getDescription());
+            stmt.setString(3,task.getEstimatedTime());
+            stmt.setString(4,task.getTimeUsed());
+            stmt.setString(5,task.getStatus());
+            //stmt.setInt(6,getProjectId("projectTitle"));
+            //stmt.setInt(7,getSubProjectId("subProjectTitle"));
 
             stmt.executeUpdate();
 
@@ -73,7 +72,7 @@ public class TaskRepo {
         int subProjectID=0;
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT subproject_id FROM " +
-                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+                    "heroku_7aba49c42d6c0f0.subprojects WHERE title=?;");
             stmt.setString(1, subProjectTitle);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){

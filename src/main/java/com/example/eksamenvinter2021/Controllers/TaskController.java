@@ -48,6 +48,7 @@ public class TaskController {
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
+        //String projectID = wr.getParameter("new-task-projectID");
 
         ts.createNewTask(title,description,estimated_time,timeUsed,status);
 

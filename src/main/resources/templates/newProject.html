@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret projekt</title>
+</head>
+<body>
+<h1> Opret projekt </h1>
+
+<div>
+    <form id= method="GET" action="/createNewProject">
+        <label>Titel:</label><br>
+        <input name="project-title-input" type="text" required><br>
+
+        <label>Deadline:</label><br>
+        <input name="project-deadline-input" type="text" required><br>
+
+        <label>Forventet pris:</label><br>
+        <input name="project-baseprice-input" type="text" required><br>
+
+        <label>Beskrivelse:</label><br>
+        <input name="project-description-input" type="text" required><br>
+        <input type="submit" value="Opret">
+
+    </form>
+
+</div>
+</body>
+</html>

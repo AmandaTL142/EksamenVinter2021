@@ -21,26 +21,24 @@ public class EmployeeRepo {
             System.out.println(e.getMessage());
         }
     }
-    public Employee getEmployeeFromDatabase(int id) {
+    public Employee getEmployeeFromDatabase(int id) {//TODO: Se igennem og ryd op for unødvendig kode
         Employee employee = new Employee();
-        String name = "";
+        //String name = "";
         String competence = "";
         String password = "";
         String role = "";
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
-                    "SELECT * FROM " + "heroku_7aba49c42d6c0f0.employees WHERE employee_id=?;");
+                    "SELECT * FROM heroku_7aba49c42d6c0f0.employees WHERE employee_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                name = rs.getString("name");
+            //while (rs.next()) { //TODO: Ikke nødvendigt da rs kun arbejder med én linje
+            String name = rs.getString("name");
                 competence = rs.getString("competence");
                 password = rs.getString("password");
                 role = rs.getString("role");
-
-            }
+            //}
             employee = new Employee(name, password, competence, role);
-
 
         } catch(SQLException e){
             System.out.println("Couldn't find the employee with id: " + id + " from the database");

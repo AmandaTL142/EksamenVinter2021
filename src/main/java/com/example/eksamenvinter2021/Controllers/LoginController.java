@@ -35,8 +35,7 @@ public class LoginController {
         if (validPass) {
             Employee employee = es.showEmployee(employee_id);
             session.setAttribute("employee", employee);
-
-            return "redirect:/project"; //Mangler projekt-id for at vise korrekt projekt
+            return "employee"; //Mangler projekt-id for at vise korrekt projekt
             //Vis forskellige sider til manager og medarbejder
             //Hvis ingen aktiv session --> websiden vises ikke, henviser til login
             //Alle sider implementerer metode der tjekker om logget ind

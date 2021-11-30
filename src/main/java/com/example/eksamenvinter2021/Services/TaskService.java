@@ -15,7 +15,7 @@ public class TaskService {
     Subproject sp = new Subproject();
     Task t = new Task();
 
-    public Task createNewTask(String title, String description, Time estimatedTime, Time timeUsed, String status) {
+    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
         Task t = new Task(title, description, estimatedTime, timeUsed, status);
         tr.insertNewTaskToDB(t);
 

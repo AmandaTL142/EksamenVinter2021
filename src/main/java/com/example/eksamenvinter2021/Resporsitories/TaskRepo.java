@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
+
 public class TaskRepo {
 
     Connection conn = JDBC.getConnection();
@@ -17,7 +19,10 @@ public class TaskRepo {
     public void insertNewTaskToDB(Task task){
 
         //TODO hvorfor vil den ikke indsætte i DB?
-        //TODO hvordan var det nu, jeg fik connected en foreign key?
+
+        int projectId= getProjectId("projectTitle");
+        int subProjectID= getSubProjectId("subProjectTitle");
+
 
         String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?,?,?,?)";
 
@@ -27,11 +32,11 @@ public class TaskRepo {
             PreparedStatement stmt = conn.prepareStatement(insertTaskSQL);
             stmt.setString(2,task.getTitle());
             stmt.setString(3,task.getDescription());
-            stmt.setTime(4,task.getEstimatedTime());
-            stmt.setTime(5,task.getTimeUsed());
+            stmt.setString(4,task.getEstimatedTime());
+            stmt.setString(5,task.getTimeUsed());
             stmt.setString(6,task.getStatus());
-            stmt.setInt(7,);
-            stmt.setInt(8,);
+            stmt.setInt(7,getProjectId("projectTitle"));
+            stmt.setInt(8,getSubProjectId("subProjectTitle"));
 
             stmt.executeUpdate();
 
@@ -43,39 +48,46 @@ public class TaskRepo {
         }
     }
 
-   public int getProjectId(Project project) {
-        int projectId = 0;
+
+    public int getProjectId(String projectTitle) {
+        int projectID=0;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM project where project_id = ?");
-            stmt.setString(1, String.valueOf(project.getProjectId()));
+            PreparedStatement stmt = conn.prepareStatement("SELECT project_id FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+            stmt.setString(1, projectTitle);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                projectId = rs.getInt(7);
+            while(rs.next()){
+                projectID = rs.getInt("project_id");
             }
-        } catch (SQLException e) {
-            System.out.println("Something went wrong");
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get id for with title " + projectTitle + " from database");
             System.out.println(e.getMessage());
         }
-        return projectId;
-
+        return projectID;
     }
 
 
-    /*public int getSubProjectId(Project project) {
-        int subProjectId = 0;
+    public int getSubProjectId(String subProjectTitle) {
+        int subProjectID=0;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT subproject_id FROM subprojects WHERE title= ?");
-            stmt.setString(1, String.valueOf(project.getProjectId()));
+            PreparedStatement stmt = conn.prepareStatement("SELECT subproject_id FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+            stmt.setString(1, subProjectTitle);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                subProjectId = rs.getInt(8);
+            while(rs.next()){
+                subProjectID = rs.getInt("subproject_id");
             }
-        } catch (SQLException e) {
-            System.out.println("Something went wrong");
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get id for with title " + subProjectTitle + " from database");
             System.out.println(e.getMessage());
         }
-        return projectId;
-    }*/
+        return subProjectID;
+    }
+
 
     public void readTask(){
 
@@ -94,8 +106,8 @@ public class TaskRepo {
           while (rs.next()){
               task.setTitle(rs.getString(2));
               task.setDescription(rs.getString(3));
-              task.setEstimatedTime(rs.getTime(4));
-              task.setTimeUsed(rs.getTime(5));
+              task.setEstimatedTime(rs.getString(4));
+              task.setTimeUsed(rs.getString(5));
               task.setStatus(rs.getString(6));
           }
 

@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.time.LocalTime;
 
 @Controller
 public class TaskController {
@@ -29,19 +30,28 @@ public class TaskController {
 
     public String createNewTask(WebRequest wr){
 
-        /*Først få task til at køre
+        /* TODO-liste:
+        Først få task til at køre
         derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
         inde i et projekt og dermed automatisk er koblet til et project*/
+
+
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
 
-        //TODO //Hvordan håndtere jeg den som en time-type i stedet for en string type?
-    String estimated_time = wr.getParameter(DateFormat.getDateInstance().format("new-task-estimatedTime"));
+        String estimated_time = wr.getParameter("new-task-estimatedTime");
+
+        //transform string til datetime-java-format (loacltime) parToDateTime
+    //localTime time = LocalTime.parse("den aflveret String fra browser")
+    //evt. lav validation
+    //System.out.println(LocalTime.parse(estimated_time));
+
+        String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
 
-      ts.createNewTask();
+        ts.createNewTask(title,description,estimated_time,timeUsed,status);
 
-    Task currentTask = ts.createNewTask();
+    Task currentTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
 
         return "newTask";
 }

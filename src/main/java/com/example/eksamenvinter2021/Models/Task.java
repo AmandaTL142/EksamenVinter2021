@@ -5,7 +5,7 @@ import java.sql.Time;
 public class Task {
     private String title;
     private String description;
-    private Time estimated_time;
+    private Time estimatedTime;
     private Time timeUsed;
     private String status;
 
@@ -21,10 +21,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, String description, Time estimated_time, String status) {
+    public Task(String title, String description, Time estimatedTime, Time timeUsed, String status) {
         this.title = title;
         this.description = description;
-        this.estimated_time = estimated_time;
+        this.estimatedTime = estimatedTime;
+        this.timeUsed = timeUsed;
         this.status = status;
     }
 
@@ -45,11 +46,11 @@ public class Task {
     }
 
     public Time getEstimatedTime() {
-        return estimated_time;
+        return estimatedTime;
     }
 
     public void setEstimatedTime(Time estimatedTime) {
-        this.estimated_time = estimated_time;
+        this.estimatedTime = estimatedTime;
     }
 
     public Time getTimeUsed() {

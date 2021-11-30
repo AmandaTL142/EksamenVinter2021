@@ -15,19 +15,20 @@ public class TaskService {
     Subproject sp = new Subproject();
     Task t = new Task();
 
-    public Task createNewTask(String title, String description, Time estimatedTime, String status){
-        Task t = new Task(title,description, estimatedTime,status);
+    public Task createNewTask(String title, String description, Time estimatedTime, Time timeUsed, String status) {
+        Task t = new Task(title, description, estimatedTime, timeUsed, status);
         tr.insertNewTaskToDB(t);
 
         return t;
     }
 
-    public void readTask(){
+    public void readTask() {
 
     }
 
-    public void updateTask(){
+    public void updateTask() {
         tr.updateTask();
     }
+}
 
 

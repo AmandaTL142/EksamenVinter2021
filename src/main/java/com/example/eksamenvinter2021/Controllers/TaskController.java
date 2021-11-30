@@ -34,12 +34,14 @@ public class TaskController {
         inde i et projekt og dermed automatisk er koblet til et project*/
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
-        //TODO kan man ændre, så den modtager en time-datatype i stedet???
+
+        //TODO //Hvordan håndtere jeg den som en time-type i stedet for en string type?
     String estimated_time = wr.getParameter(DateFormat.getDateInstance().format("new-task-estimatedTime"));
         String status = wr.getParameter("new-task-status");
-      ts.createNewTask(title,description,estimated_time,status);
 
-    Task currentTask = ts.createNewTask(title, description,estimated_time, status);
+      ts.createNewTask();
+
+    Task currentTask = ts.createNewTask();
 
         return "newTask";
 }

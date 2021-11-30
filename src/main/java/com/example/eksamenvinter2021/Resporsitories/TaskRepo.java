@@ -19,7 +19,7 @@ public class TaskRepo {
         //TODO hvorfor vil den ikke indsætte i DB?
         //TODO hvordan var det nu, jeg fik connected en foreign key?
 
-        String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?,?)";
+        String insertTaskSQL ="INSERT INTO heroku_7aba49c42d6c0f0.tasks VALUES(?,?,?,?,?,?,?,?)";
 
 
         try{
@@ -30,6 +30,8 @@ public class TaskRepo {
             stmt.setTime(4,task.getEstimatedTime());
             stmt.setTime(5,task.getTimeUsed());
             stmt.setString(6,task.getStatus());
+            stmt.setInt(7,);
+            stmt.setInt(8,);
 
             stmt.executeUpdate();
 

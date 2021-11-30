@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Startside</title>
@@ -25,7 +26,16 @@
 </head>
 <body>
 
-<h1>Det virker!</h1>
+<h1>Velkommen til projektstyring</h1>
+<div>
+    <p>Login</p>
+        <form id="login-form" method="POST" action="/login">
+            <input type="text" placeholder="ID" name="employee_id" required>
+            <input type="text" placeholder="Password" name="password" required>
+            <input type="submit" value="Login">
+        </form>
 
+
+</div>
 </body>
 </html>

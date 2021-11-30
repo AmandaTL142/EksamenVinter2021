@@ -25,12 +25,10 @@
 </head>
 <body>
 
-<h1> Medarbejders navn</h1>
+<h1 th:text="${employee_id}"> Medarbejders navn</h1>
 
-<h1 ><td th:text="${Project.getName()}"></h1>
-
-    <td th:text="${Project.getDescription()}"></td>
-    <td th:text="${Project.getProjectId()}"></td>
+<th  th:if = "${session.manager?}">Du er manager</th>
+<th  th:if = "${!session.manager?}">Du er ikke manager</th>
 
 </tr>
 

@@ -14,13 +14,13 @@ public class LoginService {
         int checkId = 0;
         String checkPassword = "";
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees WHERE name= ? AND password= ?;");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees WHERE employee_id= ? AND password= ?;");
             stmt.setInt(1, employee_id);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                checkId = rs.getInt(1);
-                checkPassword = rs.getString(2);
+                checkId = rs.getInt("employee_id");
+                checkPassword = rs.getString("password");
             }
             if (checkId == employee_id) {
                 if (checkPassword.equals(password)) {

@@ -23,13 +23,17 @@ public class EmployeeRepo {
     }
     public Employee getEmployeeFromDatabase(int id) {
         Employee employee = new Employee();
+        String name = "";
+        String competence = "";
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
-                    "SELECT * FROM " + "heroku_7aba49c42d6c0f0.employee WHERE employee_id=?;");
+                    "SELECT * FROM " + "heroku_7aba49c42d6c0f0.employees WHERE employee_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            String name = rs.getString("employeeName");
-            String competence = rs.getString("competence");
+            while (rs.next()) {
+                name = rs.getString("name");
+                competence = rs.getString("competence");
+            }
             employee = new Employee(name, competence);
 
 

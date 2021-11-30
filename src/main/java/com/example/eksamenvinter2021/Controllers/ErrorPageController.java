@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class ErrorPageController implements ErrorController {
+public class ErrorPageController{
 
     @GetMapping("/error")
     public String customError() {
-        return "error.html";
+        return "error";
     }
-
 }

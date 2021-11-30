@@ -7,14 +7,16 @@ public class EmployeeService {
 
     EmployeeRepo employeeRepo = new EmployeeRepo();
 
-    public void createNewEmployee(String employeeName, String competence) {
-        Employee employee = new Employee(employeeName, competence);
+    public void createNewEmployee(String employeeName, String competence, String role, String password) {
+        Employee employee = new Employee(employeeName, competence, role, password);
         employeeRepo.insertEmployeeIntoDatabase(employee);
     }
 
-    public void updateEmployee(Employee employee, String employeeName, String competence) {
+    public void updateEmployee(Employee employee, String employeeName, String competence, String role, String password) {
         employee.setEmployeeName(employeeName);
         employee.setCompetence(competence);
+        employee.setRole(role);
+        employee.setPassword(password);
         employeeRepo.updateEmployeeInDatabase(employee);
     }
 

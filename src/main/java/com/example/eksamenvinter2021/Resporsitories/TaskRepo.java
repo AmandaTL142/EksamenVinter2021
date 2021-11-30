@@ -1,8 +1,5 @@
-package com.example.eksamenvinter2021.Resporsitories;/*package com.example.eksamensprojektvinter2021.Resporsitories;
-
-import com.example.eksamensprojektvinter2021.Models.Project;
-import com.example.eksamensprojektvinter2021.Models.Task;
-import com.example.eksamensprojektvinter2021.Utility.JDBC;
+/*
+package com.example.eksamenvinter2021.Resporsitories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,5 +72,4 @@ public class TaskRepo {
     }
 
 }
-
- */
+*/

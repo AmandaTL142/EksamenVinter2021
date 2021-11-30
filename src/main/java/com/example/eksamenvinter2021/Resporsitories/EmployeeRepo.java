@@ -25,6 +25,8 @@ public class EmployeeRepo {
         Employee employee = new Employee();
         String name = "";
         String competence = "";
+        String password = "";
+        String role = "";
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
                     "SELECT * FROM " + "heroku_7aba49c42d6c0f0.employees WHERE employee_id=?;");
@@ -33,8 +35,11 @@ public class EmployeeRepo {
             while (rs.next()) {
                 name = rs.getString("name");
                 competence = rs.getString("competence");
+                password = rs.getString("password");
+                role = rs.getString("role");
+
             }
-            employee = new Employee(name, competence);
+            employee = new Employee(name, password, competence, role);
 
 
         } catch(SQLException e){

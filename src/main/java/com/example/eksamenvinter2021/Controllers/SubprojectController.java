@@ -26,13 +26,14 @@ public class SubprojectController {
     SubprojectService sps = new SubprojectService();
     SubprojectRepo spr = new SubprojectRepo();
 
-    ArrayList<String> projectNames = pr.getProjectNamesInArray();
+    //ArrayList<String> projectNames = pr.getProjectNamesInArray();
+    ArrayList<Project> projectArray = pr.getProjectsInArray();
 
 
 
     //Denne virker
     @GetMapping("/subproject/{thisSubproject}")
-    public String project(@PathVariable("thisSubproject") String thisSubproject, Model model) {
+    public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
         int id = Integer.parseInt(thisSubproject);
         model.addAttribute("Subproject", sps.showSubproject(id));
         model.addAttribute("Project", ps.showProject((sps.showSubproject(id)).getProjectId()));
@@ -48,7 +49,7 @@ public class SubprojectController {
     //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
     @PostMapping("/createNewSubproject")
     public String createNewSubproject(WebRequest webr, Model model) {
-        model.addAttribute("projectNames", projectNames);
+        model.addAttribute("projects", projectArray);
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
@@ -109,5 +110,13 @@ public class SubprojectController {
     }
 
      */
+
+    @GetMapping("/showSubprojects/{thisProject}")
+    public String subProjects(@PathVariable("thisProject") String thisProject, Model model) {
+        int id = Integer.parseInt(thisProject);
+        model.addAttribute("subprojects", sps.showSubprojectLinkedToProject(id));
+        model.addAttribute("project", ps.showProject(id));
+        return "showSubprojects";
+    }
 
 }

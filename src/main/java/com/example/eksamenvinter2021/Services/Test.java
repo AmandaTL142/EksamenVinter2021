@@ -99,8 +99,8 @@ public class Test {
         }
 
           */
-        ArrayList<String> projectNames = pr.getProjectNamesInArray();
-        System.out.println(projectNames);
+        ArrayList<Project> projects = pr.getProjectsInArray();
+        System.out.println(projects);
     }
     }
 

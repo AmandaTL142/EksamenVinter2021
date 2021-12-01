@@ -151,4 +151,29 @@ public class ProjectRepo {
         return projectNames;
     }
 
+    public ArrayList<Project> getProjectsInArray() {
+        ArrayList<Project> projectArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE project_id=15;");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            //while(rs.next());
+            //{
+                String title = rs.getString("title");
+                String date = rs.getString("project_deadline");
+                String status = rs.getString("status");
+                double price = Double.parseDouble(rs.getString("base_price"));
+                int customerId = rs.getInt("customer_id");
+                Project p = new Project(title, date, status, price, customerId);
+                projectArray.add(p);
+            //}
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return projectArray;
+    }
+
 }

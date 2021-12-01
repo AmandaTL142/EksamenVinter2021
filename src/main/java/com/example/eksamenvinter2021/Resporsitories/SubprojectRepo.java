@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SubprojectRepo {
 
@@ -106,6 +107,39 @@ public class SubprojectRepo {
             System.out.println(e.getMessage());
         }
         return 0;
+    }
+
+    public ArrayList<Subproject> showSubprojectLinkedToProject(int thisProjectId) {
+        Subproject sp = new Subproject();
+        ArrayList<Subproject> subprojects = new ArrayList<Subproject>();
+
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
+            stmt.setInt(1, thisProjectId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                String title = rs.getString("title");
+                String date = rs.getString("subproject_deadline");
+                String status = rs.getString("status");
+                int projectId = rs.getInt("project_id");
+                sp = new Subproject(title, date, status, projectId);
+                //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
+                // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
+                if (rs.getString("description") != null){
+                    sp.setSubprojectDescription(rs.getString("description"));
+                }
+
+                sp.setSubprojectId(rs.getInt("subproject_id"));
+                subprojects.add(sp);
+            }
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get subprojects for project with id " + thisProjectId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return subprojects;
     }
 
 }

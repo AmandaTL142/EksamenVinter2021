@@ -25,9 +25,9 @@
         <!-- https://javainspires.blogspot.com/2020/09/thymeleaf-select-optionlist-example.html -->
         <br>
         <td><select name="subproject-projectname-input">
-            <option th:each="subproject-projectname-input :${projectNames}"
-                    th:value="${subproject-projectname-input}"
-                    th:text="${subproject-projectname-input}"></option>
+            <option th:each="Project :${projects}"
+                    th:value="${Project.getProjectTitle()}"
+                    th:text="${Project.getProjectTitle()}"></option>
         </select></td>
         </br>
 

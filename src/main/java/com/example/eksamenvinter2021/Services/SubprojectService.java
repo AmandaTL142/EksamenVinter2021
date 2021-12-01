@@ -3,6 +3,8 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 
+import java.util.ArrayList;
+
 public class SubprojectService {
 
     SubprojectRepo spr = new SubprojectRepo();
@@ -23,5 +25,9 @@ public class SubprojectService {
 
     public Subproject showSubproject (int subprojectId) {
         return spr.getSubprojectFromDatabase(subprojectId);
+    }
+
+    public ArrayList<Subproject> showSubprojectLinkedToProject(int thisProjectId) {
+        return showSubprojectLinkedToProject(thisProjectId);
     }
 }

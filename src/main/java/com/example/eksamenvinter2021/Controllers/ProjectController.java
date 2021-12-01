@@ -71,7 +71,7 @@ public class ProjectController {
     }
 
     //Virker ikke
-    @GetMapping("/editProject/{thisProject}")
+    @GetMapping("/editProject")
     public String editProject(@PathVariable("thisProject") String thisProject, Model model) {
         //int id = Integer.parseInt(thisProject);
         //model.addAttribute("Project", ps.showProject(id));

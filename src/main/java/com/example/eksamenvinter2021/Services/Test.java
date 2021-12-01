@@ -1,16 +1,19 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Test {
 
     public static void main(String[] args) {
+        ProjectRepo pr = new ProjectRepo();
         /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("UPDATE `heroku_7aba49c42d6c0f0`." +
@@ -21,7 +24,7 @@ public class Test {
             System.out.println(e.getMessage());
         }
 */
-
+/*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE project_id=?;");
@@ -61,6 +64,8 @@ public class Test {
             System.out.println(e.getMessage());
         }
 
+ */
+
         /*
         Date date = null;
         Project p = new Project("title", date, "Ikke påbegyndt", 1000, 5, 5);
@@ -94,7 +99,8 @@ public class Test {
         }
 
           */
-
+        ArrayList<String> projectNames = pr.getProjectNamesInArray();
+        System.out.println(projectNames);
     }
     }
 

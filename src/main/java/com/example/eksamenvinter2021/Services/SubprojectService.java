@@ -3,15 +3,13 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 
-import java.util.Date;
-
 public class SubprojectService {
 
     SubprojectRepo spr = new SubprojectRepo();
 
-    public void createNewSubproject(String title, String deadline, String status, int projectId) {
+    public Subproject createNewSubproject(String title, String deadline, String status, int projectId) {
         Subproject sp = new Subproject(title, deadline, status, projectId);
-        spr.insertSubprojectIntoDatabase(sp);
+        return sp;
     }
 
     //Jeg har ikke integreret, hvordan metoden får ændringerne fra brugeren.

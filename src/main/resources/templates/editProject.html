@@ -11,19 +11,19 @@
 <div>
     <form method="POST" action="/editProject">
         <label>Titel:</label><br>
-        <input name="project-title-input" value="th:text="${Project.getProjectTitle()}"" type="text" required><br>
+        <input name="project-title-input" th:placeholder="#{Project.getProjectTitle()}" type="text" required><br>
 
         <label>Deadline:</label><br>
-        <input type="date" name="project-deadline-input" value=th:text="${Project.getDeadline()}" min="2018-01-01" max="2030-12-31"></br>
+        <input type="date" name="project-deadline-input" th:placeholder="#{Project.getProjectDeadline()}" min="2018-01-01" max="2030-12-31"></br>
 
         <label>Forventet pris:</label><br>
-        <input name="project-baseprice-input" value=th:text="${Project.getBaseprice()}" type="text"><br>
+        <input name="project-baseprice-input" type="text" th:placeholder="#{Project.getBaseprice()}"><br>
 
         <label>Beskrivelse:</label><br>
-        <input name="project-description-input" type="text"><br>
+        <input name="project-description-input" type="text" th:placeholder="#{Project.getDescription()}"><br>
 
         <label>Navn på kunde:</label><br>
-        <input name="project-costumer-input" type="text"><br>
+        <input name="project-customer-input" type="text"><br>
 
 
         <!--https://www.w3schools.com/tags/att_select_form.asp-->
@@ -36,7 +36,7 @@
         </select>
         </br>
 
-        <br><input type="submit" value="Opret"></br>
+        <br><input type="submit" value="Opdatér"></br>
 
     </form>
 

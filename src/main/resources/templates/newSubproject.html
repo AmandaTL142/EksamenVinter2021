@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret delprojekt</title>
@@ -16,10 +16,20 @@
         <input type="date" name="subproject-deadline-input" min="2018-01-01" max="2030-12-31"></br>
 
         <label>Beskrivelse:</label><br>
-        <input name="subproject-description-input" type="text" required><br>
+        <input name="subproject-description-input" type="text" required></br>
 
-        <label>Navn på projekt:</label><br>
-        <input name="subproject-projectname-input" type="text" required><br>
+        <label>Navn på projekt:</label>
+        <!--
+        <br>
+        <input name="subproject-projectname-input" type="text" required></>br> -->
+        <!-- https://javainspires.blogspot.com/2020/09/thymeleaf-select-optionlist-example.html -->
+        <br>
+        <td><select name="subproject-projectname-input">
+            <option th:each="subproject-projectname-input :${projectNames}"
+                    th:value="${subproject-projectname-input}"
+                    th:text="${subproject-projectname-input}"></option>
+        </select></td>
+        </br>
 
 
         <!--https://www.w3schools.com/tags/att_select_form.asp-->

@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ProjectRepo {
 
@@ -59,7 +60,7 @@ public class ProjectRepo {
             if (rs.getString("total_time") != null){
                 p.setTotalPrice(rs.getInt("total_time"));
             }
-            
+
              */
 
             //Virker!
@@ -129,6 +130,25 @@ public class ProjectRepo {
             System.out.println(e.getMessage());
         }
         return 0;
+    }
+
+
+    public ArrayList<String> getProjectNamesInArray() {
+        ArrayList<String> projectNames = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT title FROM " +
+                    "heroku_7aba49c42d6c0f0.projects;");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                projectNames.add(rs.getString("title"));
+            }
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get projectnames from database");
+            System.out.println(e.getMessage());
+        }
+        return projectNames;
     }
 
 }

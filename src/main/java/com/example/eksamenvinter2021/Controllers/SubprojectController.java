@@ -13,17 +13,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Controller
 public class SubprojectController {
+
 
     ProjectService ps = new ProjectService();
     ProjectRepo pr = new ProjectRepo();
     Subproject sp = new Subproject();
     SubprojectService sps = new SubprojectService();
     SubprojectRepo spr = new SubprojectRepo();
-    CustomerRepo cr = new CustomerRepo();
+
+    ArrayList<String> projectNames = pr.getProjectNamesInArray();
+
 
 
     //Denne virker
@@ -35,26 +39,27 @@ public class SubprojectController {
         return "showSubproject";
     }
 
-
+    //Denne virker
     @GetMapping("/newSubproject")
     public String newSubproject() {
         return "newSubproject";
     }
 
+    //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
     @PostMapping("/createNewSubproject")
-    public String createNewSubproject(WebRequest webr) {
+    public String createNewSubproject(WebRequest webr, Model model) {
+        model.addAttribute("projectNames", projectNames);
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
         String projectName = webr.getParameter("subproject-projectname-input");
         String status = webr.getParameter("subproject-status-input");
 
-
         int projectId = pr.getProjectId(projectName);
 
 
         //Create subproject-object
-        Subproject currentSubproject = new Subproject(title, deadline, status, projectId);
+        Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, projectId);
 
         currentSubproject.setSubprojectDescription(description);
 
@@ -78,7 +83,7 @@ public class SubprojectController {
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
         String description = webr.getParameter("project-description-input");
-        String costumerName = webr.getParameter("project-costumer-input");
+        String customerName = webr.getParameter("project-customer-input");
         String status = webr.getParameter("project-status-input");
 
         double basePrice = 0;
@@ -90,7 +95,7 @@ public class SubprojectController {
             e.printStackTrace();
         }
 
-        int customerId = cr.getCustomerIdFromDatabase(costumerName);
+        int customerId = cr.getCustomerIdFromDatabase(customerName);
 
         //Create project-object
         Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);

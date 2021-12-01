@@ -26,6 +26,7 @@ public class ProjectController {
         return "showProject";
     }
 
+    //Denne virker
     @GetMapping("/newProject")
     public String newProject() {
         return "newProject";
@@ -69,16 +70,20 @@ public class ProjectController {
         return "redirect:/newProject";
     }
 
-    /*
-    @GetMapping("/editProject")
-    public String editProject() {
+    //Virker ikke
+    @GetMapping("/editProject/{thisProject}")
+    public String editProject(@PathVariable("thisProject") String thisProject, Model model) {
+        //int id = Integer.parseInt(thisProject);
+        //model.addAttribute("Project", ps.showProject(id));
         return "editProject";
     }
 
+    //Virker ikke
+    //Den skal vise den info, der er i forvejen.
     @RequestMapping("/editProjectId/{thisProject}")
     public String editProject(@PathVariable("thisProject") String thisProject, Model model, WebRequest webr) {
-        int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.showProject(id));
+        //int id = Integer.parseInt(thisProject);
+        //model.addAttribute("Project", ps.showProject(id));
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
@@ -108,6 +113,5 @@ public class ProjectController {
         return "redirect:/editProject";
     }
 
-     */
 
 }

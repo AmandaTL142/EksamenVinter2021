@@ -3,23 +3,47 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 import com.example.eksamenvinter2021.Services.TaskService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
-
-import java.sql.Time;
-import java.text.DateFormat;
-import java.time.LocalTime;
 
 @Controller
 public class TaskController {
 
     TaskService ts = new TaskService();
+    TaskRepo tr = new TaskRepo();
+    Task t = new Task();
 
     //TODO få samlet alle HTML der tilhører task i en mappe
     //TODO har det påvirkelse på hvordan man referer til html, når man skal returne??????
+
+    @GetMapping("/")
+    public String taskPage(){
+        return "/taskPage";
+    }
+
+    @GetMapping("/taskEditor")
+    public String taskEditor(){
+        return "/taskEditor";
+    }
+
+    @PostMapping("/editTask")
+    public String getOneTask(Model m){
+        //TODO hvordan skal den opsættes i taskService?
+        //TODO få den connected med det rigtige taskID
+        //TODO HVordan får jeg initialized task object inde i html???
+
+        Integer OneTask = tr.fetchSingleTask();
+        m.addAttribute("OneTask", OneTask);
+
+        ts.updateTask();
+        return "redirect://";
+    }
+
+
 
     @GetMapping("/newTask")
     public String newTask(){
@@ -51,8 +75,6 @@ public class TaskController {
         //String projectID = wr.getParameter("new-task-projectID");
 
         ts.createNewTask(title,description,estimated_time,timeUsed,status);
-
-    Task currentTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
 
         return "newTask";
 }

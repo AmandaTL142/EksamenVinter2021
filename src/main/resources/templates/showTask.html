@@ -5,9 +5,18 @@
   <title>showTask</title>
 </head>
 <body>
-<h1>
+<h1>Overview Task</h1>
+  <table>
+    <tr th:each="employee : ${employees}">
+      <!--Dollartegn henviser til...
+      man behøver ikke at skrive getID, da man ved at tilgå listen,
+      der indeholder objektet employee, og dermed også er bekendt med alle employee-attributterne-->
+      <td th:text="${employee.id}"></td>
+      <td th:text ="${employee.employeeName}"></td>
+      <td th:text = "${employee.salary}"></td>
+    </tr>
+  </table>
 
-</h1>
 
 </body>
 </html>

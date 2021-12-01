@@ -9,20 +9,21 @@ import java.sql.Time;
 
 public class TaskService {
 
-    TaskRepo tr = new TaskRepo();
+ TaskRepo tr = new TaskRepo();
 
-    Project p = new Project();
-    Subproject sp = new Subproject();
-    Task t = new Task();
+    public void createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
+        Task task = new Task(title, description, estimatedTime, timeUsed, status);
+        tr.insertNewTaskToDB(task);
 
-    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
-        Task t = new Task(title, description, estimatedTime, timeUsed, status);
-        tr.insertNewTaskToDB(t);
+    }
 
+    public Task fetchSingleTask(Task t){
+
+        tr.fetchSingleTask();
         return t;
     }
 
-    public void readTask() {
+    public void showTask() {
 
     }
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit task</title>
+</head>
+<body>
+<h1>Edit task </h1>
+
+<form method="POST" action="/taskEditor">
+
+    <table>
+        <tr>
+            <div class = "container">
+                <input type="text" placeholder="title" name="new-task-title" required value=th:text="${task.title}">
+                <input type="text" placeholder="description" name="new-task-description" value="${task.description}">
+                <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required value="${task.estimatedTime}">
+                <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required value="${task.timeUsed}">
+                <input type="text" placeholder="status" name="new-task-status" required value="${task.status}">
+
+            </div>
+
+            <div class="container">
+                <input type="submit" value="Tilmeld">
+            </div>
+
+        </tr>
+    </table>
+
+</form>
+
+
+
+
+</body>
+</html>

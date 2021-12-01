@@ -20,7 +20,7 @@ public class ProjectRepo {
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setString(4, p.getBasePrice());
+            stmt.setDouble(4, p.getBasePrice());
             stmt.setInt(5, p.getCustomerId());
             stmt.setString(6, p.getDescription());
             stmt.executeUpdate();
@@ -42,7 +42,7 @@ public class ProjectRepo {
             String title = rs.getString("title");
             String date = rs.getString("project_deadline");
             String status = rs.getString("status");
-            String price = rs.getString("base_price");
+            double price = Double.parseDouble(rs.getString("base_price"));
             int customerId = rs.getInt("customer_id");
             p = new Project(title, date, status, price, customerId);
 
@@ -96,7 +96,7 @@ public class ProjectRepo {
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setString(4, p.getBasePrice());
+            stmt.setDouble(4, p.getBasePrice());
             stmt.setDouble(5, p.getTotalPrice());
             stmt.setInt(6, p.getTotalTime());
             stmt.setInt(7, p.getCustomerId());

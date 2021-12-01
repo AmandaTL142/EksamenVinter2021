@@ -31,7 +31,7 @@ public class Test {
             String title = rs.getString("title");
             String date = rs.getString("project_deadline");
             String status = rs.getString("status");
-            String price = rs.getString("base_price");
+            double price = Double.parseDouble(rs.getString("base_price"));
             int customerId = rs.getInt("customer_id");
             Project p = new Project(title, date, status, price, customerId);
 

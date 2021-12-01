@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret delprojekt</title>
+</head>
+<body>
+<h1> Opret delprojekt </h1>
+
+<div>
+    <form method="POST" action="/createNewSubproject">
+        <label>Titel:</label><br>
+        <input name="subproject-title-input" type="text" required><br>
+
+        <label>Deadline:</label><br>
+        <input type="date" name="subproject-deadline-input" min="2018-01-01" max="2030-12-31"></br>
+
+        <label>Beskrivelse:</label><br>
+        <input name="subproject-description-input" type="text" required><br>
+
+        <label>Navn på projekt:</label><br>
+        <input name="subproject-projectname-input" type="text" required><br>
+
+
+        <!--https://www.w3schools.com/tags/att_select_form.asp-->
+        <label for="status">Status:</label>
+        <br>
+        <select name="subproject-status-input" id="status">
+            <option value="Ikke påbegyndt">Ikke påbegyndt</option>
+            <option value="Påbegyndt">Påbegyndt</option>
+            <option value="Færdig">Færdig</option>
+        </select>
+        </br>
+
+        <br><input type="submit" value="Opret"></br>
+
+    </form>
+
+
+</div>
+</body>
+</html>

@@ -9,13 +9,13 @@ public class SubprojectService {
 
     SubprojectRepo spr = new SubprojectRepo();
 
-    public void createNewSubproject(String title, Date deadline, String status, int projectId) {
+    public void createNewSubproject(String title, String deadline, String status, int projectId) {
         Subproject sp = new Subproject(title, deadline, status, projectId);
         spr.insertSubprojectIntoDatabase(sp);
     }
 
     //Jeg har ikke integreret, hvordan metoden får ændringerne fra brugeren.
-    public void updateSubproject(Subproject sp, String title, String description, Date subprojectDeadline, String status) {
+    public void updateSubproject(Subproject sp, String title, String description, String subprojectDeadline, String status) {
         sp.setSubprojectTitle(title);
         sp.setSubprojectDescription(description);
         sp.setSubprojectDeadline(subprojectDeadline);

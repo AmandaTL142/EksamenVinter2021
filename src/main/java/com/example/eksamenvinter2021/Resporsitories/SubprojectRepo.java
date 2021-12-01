@@ -18,7 +18,7 @@ public class SubprojectRepo {
                             "VALUES (?, ?, ?, ?, ?);");
             stmt.setString(1, p.getSubprojectTitle());
             stmt.setString(2, p.getSubprojectDescription());
-            stmt.setDate(3, (Date) p.getSubprojectDeadline());
+            stmt.setString(3, p.getSubprojectDeadline());
             stmt.setString(4, p.getSubprojectStatus());
             stmt.setInt(5, p.getProjectId());
             stmt.executeUpdate();
@@ -28,7 +28,7 @@ public class SubprojectRepo {
         }
     }
 
-
+    //Denne virker
     public Subproject getSubprojectFromDatabase(int id) {
         Subproject sp = new Subproject();
         try {
@@ -36,8 +36,9 @@ public class SubprojectRepo {
                     "heroku_7aba49c42d6c0f0.subprojects WHERE subproject_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
+            rs.next();
             String title = rs.getString("title");
-            Date date = rs.getDate("subproject_deadline");
+            String date = rs.getString("subproject_deadline");
             String status = rs.getString("status");
             int projectId = rs.getInt("project_id");
             sp = new Subproject(title, date, status, projectId);
@@ -78,7 +79,7 @@ public class SubprojectRepo {
                             "`status` = ? WHERE (`subproject_id` = ?);");
             stmt.setString(1, sp.getSubprojectTitle());
             stmt.setString(2, sp.getSubprojectDescription());
-            stmt.setDate(3, (Date) sp.getSubprojectDeadline());
+            stmt.setString(3, sp.getSubprojectDeadline());
             stmt.setString(4, sp.getSubprojectStatus());
             stmt.setInt(5, sp.getSubprojectId());
             stmt.executeUpdate();
@@ -88,6 +89,23 @@ public class SubprojectRepo {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public int getSubprojectId(String subprojectTitle) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subproject_id FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+            stmt.setString(1, subprojectTitle);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("subproject_id");
+            return id;
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get id for with title " + subprojectTitle + " from database");
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 
 }

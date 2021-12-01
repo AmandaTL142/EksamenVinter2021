@@ -49,6 +49,7 @@ public class ProjectRepo {
             //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
             // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
 
+            /*
             //Virker ikke
             if (rs.getDouble("total_price") != 0){
                 p.setTotalPrice(rs.getDouble("total_price"));
@@ -58,6 +59,8 @@ public class ProjectRepo {
             if (rs.getString("total_time") != null){
                 p.setTotalPrice(rs.getInt("total_time"));
             }
+            
+             */
 
             //Virker!
             if (rs.getString("description") != null){

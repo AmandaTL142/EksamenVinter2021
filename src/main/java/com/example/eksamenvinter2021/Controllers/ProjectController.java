@@ -18,11 +18,12 @@ public class ProjectController {
     ProjectRepo pr = new ProjectRepo();
     CustomerRepo cr = new CustomerRepo();
 
-    @GetMapping("/project/{thisProject}")//Path variables: /{}
+    //Denne virker
+    @GetMapping("/project/{thisProject}")
     public String project(@PathVariable("thisProject") String thisProject, Model model) {
-        //int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.showProject(15));
-        return "project";
+        int id = Integer.parseInt(thisProject);
+        model.addAttribute("Project", ps.showProject(id));
+        return "showProject";
     }
 
     @GetMapping("/newProject")
@@ -30,10 +31,9 @@ public class ProjectController {
         return "newProject";
     }
 
-    //Nu virker den!!!
-    //Jeg har også problemer med at omsætte String til double, jeg måtte droppe date-formattet.
+    //Denne virker
     @PostMapping("/createNewProject")
-    public String createNewProject(WebRequest webr) throws SQLException {
+    public String createNewProject(WebRequest webr) {
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
@@ -59,16 +59,55 @@ public class ProjectController {
 
         currentProject.setDescription(description);
 
-   //Add project to DB
+        //Add project to DB
         pr.insertProjectIntoDatabase(currentProject);
 
         //Get project id
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
 
-        System.out.println(currentProject.toString());
-
         return "redirect:/newProject";
     }
+
+    /*
+    @GetMapping("/editProject")
+    public String editProject() {
+        return "editProject";
+    }
+
+    @RequestMapping("/editProjectId/{thisProject}")
+    public String editProject(@PathVariable("thisProject") String thisProject, Model model, WebRequest webr) {
+        int id = Integer.parseInt(thisProject);
+        model.addAttribute("Project", ps.showProject(id));
+        String title = webr.getParameter("project-title-input");
+        String deadline = webr.getParameter("project-deadline-input");
+        String basePriceString = webr.getParameter("project-baseprice-input");
+        String description = webr.getParameter("project-description-input");
+        String costumerName = webr.getParameter("project-costumer-input");
+        String status = webr.getParameter("project-status-input");
+
+        double basePrice = 0;
+        try {
+            basePrice = Double.parseDouble(basePriceString);
+        } catch (Exception e) {
+            System.out.println("Baseprice could not be converted from string to double. " +
+                    "Check whether the input is a number.");
+            e.printStackTrace();
+        }
+
+        int customerId = cr.getCustomerIdFromDatabase(costumerName);
+
+        //Create project-object
+        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
+
+        currentProject.setDescription(description);
+
+        //Update project in DB
+        pr.updateProjectInDatabase(currentProject);
+
+        return "redirect:/editProject";
+    }
+
+     */
 
 }

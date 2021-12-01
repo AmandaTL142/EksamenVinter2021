@@ -6,7 +6,6 @@
 </head>
 <body>
 
-<h1>Detaljer</h1>
 <h1 th:text="${session.employee.employeeName}">Navn</h1>
 
 <th  th:if = "${session.employee.role == 'MANAGER'}">Du er manager</th>

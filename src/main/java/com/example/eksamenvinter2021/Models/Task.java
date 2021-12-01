@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Models;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 public class Task {
     private String title;
@@ -8,6 +9,7 @@ public class Task {
     private String estimatedTime;
     private String timeUsed;
     private String status;
+    private ArrayList<Task> tasks;
 
     //private Time startTime;
     //private Time endTIme; //update(status==complete)
@@ -67,5 +69,13 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 }

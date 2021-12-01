@@ -6,6 +6,7 @@ import com.example.eksamenvinter2021.Services.TaskService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
@@ -31,13 +32,14 @@ public class TaskController {
     }
 
     @PostMapping("/editTask")
-    public String getOneTask(Model m){
+    public String getOneTask(@PathVariable("thisTask") int thisTask, Model m){
         //TODO hvordan skal den opsættes i taskService?
         //TODO få den connected med det rigtige taskID
         //TODO HVordan får jeg initialized task object inde i html???
 
         Integer OneTask = tr.fetchSingleTask();
-        m.addAttribute("OneTask", OneTask);
+
+        m.addAttribute("OneTask", tr.getAllTasks(thisTask));
 
         ts.updateTask();
         return "redirect://";

@@ -42,6 +42,7 @@ input{
     padding: 15px 30px;
     font-size: 1rem;
     font-weight: bold;
+    border-radius: 20px;
     background: rgba(200, 200, 200, 1);
 }
 input:hover{

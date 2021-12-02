@@ -14,16 +14,16 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public void setCustomerId(int customerId){
-        this.customerId = customerId;
-    }
     public int getCustomerId(){
         return customerId;
     }
 
-
     public Customer(String customerName){
         this.customerName = customerName;
+    }
+
+    public void setCustomerId(int customerId){
+        this.customerId = customerId;
     }
 
     public Customer(){}

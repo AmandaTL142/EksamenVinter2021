@@ -7,9 +7,10 @@ public class CustomerService {
 
     CustomerRepo customerRepo = new CustomerRepo();
 
-    public void createNewCustomer(String customerName) {
+    public Customer createNewCustomer(String customerName) {
         Customer customer = new Customer(customerName);
-        customerRepo.insertCustomerIntoDatabase(customer);
+        //customerRepo.insertCustomerIntoDatabase(customer);
+        return customer;
     }
 
     public void updateCustomer(Customer customer, String customerName) {

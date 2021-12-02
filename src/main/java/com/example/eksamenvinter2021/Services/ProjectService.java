@@ -8,7 +8,7 @@ import java.util.Date;
 public class ProjectService {
     ProjectRepo pr = new ProjectRepo();
 
-    public Project createNewProjectObject(String title, String projectDeadline, String status, String basePrice,
+    public Project createNewProjectObject(String title, String projectDeadline, String status, double basePrice,
                                  int customerId) {
         Project p = new Project(title, projectDeadline, status, basePrice, customerId);
         //pr.insertProjectIntoDatabase(p);
@@ -17,7 +17,7 @@ public class ProjectService {
     }
 
     //Jeg har ikke integreret, hvordan metoden får ændringerne fra brugeren.
-    public void updateProject(Project p, String title, String projectDeadline, String status, String basePrice,
+    public void updateProject(Project p, String title, String projectDeadline, String status, double basePrice,
                               int costumerId, String description) {
         p.setProjectTitle(title);
         p.setProjectDeadline(projectDeadline);

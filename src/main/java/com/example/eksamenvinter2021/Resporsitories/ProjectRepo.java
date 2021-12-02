@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ProjectRepo {
 
@@ -20,7 +21,7 @@ public class ProjectRepo {
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setString(4, p.getBasePrice());
+            stmt.setDouble(4, p.getBasePrice());
             stmt.setInt(5, p.getCustomerId());
             stmt.setString(6, p.getDescription());
             stmt.executeUpdate();
@@ -42,13 +43,14 @@ public class ProjectRepo {
             String title = rs.getString("title");
             String date = rs.getString("project_deadline");
             String status = rs.getString("status");
-            String price = rs.getString("base_price");
+            double price = Double.parseDouble(rs.getString("base_price"));
             int customerId = rs.getInt("customer_id");
             p = new Project(title, date, status, price, customerId);
 
             //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
             // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
 
+            /*
             //Virker ikke
             if (rs.getDouble("total_price") != 0){
                 p.setTotalPrice(rs.getDouble("total_price"));
@@ -58,6 +60,8 @@ public class ProjectRepo {
             if (rs.getString("total_time") != null){
                 p.setTotalPrice(rs.getInt("total_time"));
             }
+
+             */
 
             //Virker!
             if (rs.getString("description") != null){
@@ -96,7 +100,7 @@ public class ProjectRepo {
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
-            stmt.setString(4, p.getBasePrice());
+            stmt.setDouble(4, p.getBasePrice());
             stmt.setDouble(5, p.getTotalPrice());
             stmt.setInt(6, p.getTotalTime());
             stmt.setInt(7, p.getCustomerId());
@@ -126,6 +130,50 @@ public class ProjectRepo {
             System.out.println(e.getMessage());
         }
         return 0;
+    }
+
+
+    public ArrayList<String> getProjectNamesInArray() {
+        ArrayList<String> projectNames = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT title FROM " +
+                    "heroku_7aba49c42d6c0f0.projects;");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                projectNames.add(rs.getString("title"));
+            }
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get projectnames from database");
+            System.out.println(e.getMessage());
+        }
+        return projectNames;
+    }
+
+    public ArrayList<Project> getProjectsInArray() {
+        ArrayList<Project> projectArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE project_id=15;");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            //while(rs.next());
+            //{
+                String title = rs.getString("title");
+                String date = rs.getString("project_deadline");
+                String status = rs.getString("status");
+                double price = Double.parseDouble(rs.getString("base_price"));
+                int customerId = rs.getInt("customer_id");
+                Project p = new Project(title, date, status, price, customerId);
+                projectArray.add(p);
+            //}
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return projectArray;
     }
 
 }

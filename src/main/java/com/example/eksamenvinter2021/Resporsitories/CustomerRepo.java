@@ -65,4 +65,22 @@ public class CustomerRepo {
         }
 
     }
+
+    public int getCustomerIdFromDatabase(String name) {
+        int customer_id = 0;
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+                    "SELECT customer_id FROM heroku_7aba49c42d6c0f0.customers WHERE name=?;");
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("customer_id");
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get the customer-id for customer with name " + name + " from the database");
+            System.out.println(e.getMessage());
+        }
+        return customer_id;
+    }
 }

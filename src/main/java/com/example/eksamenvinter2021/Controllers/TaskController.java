@@ -30,7 +30,39 @@ public class TaskController {
         return "showTask";
     }
 
-    @PostMapping
+    @RequestMapping("/taskEditor")
+    public String taskEditor(WebRequest wr) {
+        String title = wr.getParameter("new-task-title");
+        String description = wr.getParameter("new-task-description");
+        String estimated_time = wr.getParameter("new-task-estimatedTime");
+        String timeUsed = wr.getParameter("new-task-timeUsed");
+        String status = wr.getParameter("new-task-status");
+
+        if (title != "" && title != null) {
+            t.setTitle(title);
+        }
+
+        if (description != "" && description != null) {
+            t.setDescription(description);
+        }
+
+        if (estimated_time != "" && estimated_time != null) {
+            t.setEstimatedTime(estimated_time);
+        }
+
+        if (timeUsed != "" && timeUsed != null) {
+            t.setStatus(timeUsed);
+        }
+
+        if (status != "" && status != null) {
+            t.setStatus(status);
+        }
+
+        tr.updateTask(t);
+
+        return "/";
+
+    }
 
     @GetMapping("/newTask")
     public String newTask(){
@@ -44,7 +76,6 @@ public class TaskController {
         String description = wr.getParameter("new-task-description");
 
         String estimated_time = wr.getParameter("new-task-estimatedTime");
-
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");

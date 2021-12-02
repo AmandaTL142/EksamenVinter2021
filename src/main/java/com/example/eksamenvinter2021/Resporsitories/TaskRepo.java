@@ -42,7 +42,7 @@ public class TaskRepo {
 
     public void updateTask(Task task){
 
-        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` =?, `estimated_time` =?, `time_used` =? WHERE (`task_id` =?) VALUES (?, ?, ?, ?);";
+        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` =?, `estimated_time` =?, `time_used` =? WHERE(`task_id` =?);";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -51,7 +51,8 @@ public class TaskRepo {
             stmt.setString(2,task.getDescription());
             stmt.setString(3,task.getEstimatedTime());
             stmt.setString(4,task.getTimeUsed());
-            stmt.setString(5,task.getStatus());
+            //stmt.setString(5,task.getStatus());
+            stmt.setInt(5,task.getId());
 
             stmt.executeUpdate();
 

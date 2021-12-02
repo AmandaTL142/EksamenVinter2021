@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Delprojekt</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/static/styles/stylesheets/images/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/static/styles/stylesheets/images/favicon/apple-icon-60x60.png">
@@ -25,10 +25,13 @@
 </head>
 <body>
 
-<h1 th:text="${employee_id}"> Medarbejders navn</h1>
+<h1><td th:text="${Project.getProjectTitle()}"></h1>
 
-<th  th:if = "${session.manager?}">Du er manager</th>
-<th  th:if = "${!session.manager?}">Du er ikke manager</th>
+<h1 ><td th:text="${Subproject.getSubprojectTitle()}"></h1>
+
+<td th:text="${Subproject.getSubprojectDescription()}"></td>
+<td th:text="${Subproject.getSubprojectDeadline()}"></td>
+<td th:text="${Subproject.getSubprojectId()}"></td>
 
 </tr>
 

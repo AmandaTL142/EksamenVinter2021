@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Controllers;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import org.springframework.stereotype.Controller;
@@ -9,69 +10,55 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Controller
 public class ProjectController {
 
     ProjectService ps = new ProjectService();
     ProjectRepo pr = new ProjectRepo();
+    CustomerRepo cr = new CustomerRepo();
 
-    @GetMapping("/project/{thisProject}")//Path variables: /{}
+    //Denne virker
+    @GetMapping("/project/{thisProject}")
     public String project(@PathVariable("thisProject") String thisProject, Model model) {
-        //int id = Integer.parseInt(thisProject);
-        model.addAttribute("ProjectID", ps.showProject(15));
-        return "project";
+        int id = Integer.parseInt(thisProject);
+        model.addAttribute("Project", ps.showProject(id));
+        return "showProject";
     }
 
+    //Denne virker
     @GetMapping("/newProject")
     public String newProject() {
         return "newProject";
     }
 
-    @RequestMapping(value = "/createNewProject", method = RequestMethod.GET)
-    public String createNewProject(WebRequest webr) throws SQLException {
+    //Denne virker
+    @PostMapping("/createNewProject")
+    public String createNewProject(WebRequest webr) {
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
-        String basePrice = webr.getParameter("project-baseprice-input");
+        String basePriceString = webr.getParameter("project-baseprice-input");
         String description = webr.getParameter("project-description-input");
+        String costumerName = webr.getParameter("project-costumer-input");
+        String status = webr.getParameter("project-status-input");
 
-        //Det ser ud til, at der tilføjes et projekt, før input er modtaget. Hvordan forhindrer jeg dette?
 
-        /*
         double basePrice = 0;
         try {
-            basePrice = Double.parseDouble(price);
+            basePrice = Double.parseDouble(basePriceString);
         } catch (Exception e) {
-            System.out.println("Baseprice could not be converted from string to double");
+            System.out.println("Baseprice could not be converted from string to double. " +
+                    "Check whether the input is a number.");
             e.printStackTrace();
         }
 
-         */
+        int customerId = cr.getCustomerIdFromDatabase(costumerName);
 
 
         //Create project-object
-        Project currentProject = ps.createNewProjectObject(title, deadline, "Ikke påbegyndt", basePrice,
-        5);
+        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
 
         currentProject.setDescription(description);
-
-        /*
-        if (!currentProject.getProjectTitle().equals(null)){
-            //Add project to DB
-            pr.insertProjectIntoDatabase(currentProject);
-
-            //Get project id
-            int projectId = pr.getProjectId(title);
-            currentProject.setProjectId(projectId);
-
-            System.out.println(currentProject.toString());
-        } else{
-            System.out.println(currentProject.toString());
-        }
-
-         */
 
         //Add project to DB
         pr.insertProjectIntoDatabase(currentProject);
@@ -80,9 +67,51 @@ public class ProjectController {
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
 
-        System.out.println(currentProject.toString());
-
-        return "newProject";
+        return "redirect:/newProject";
     }
+
+    //Virker ikke
+    @GetMapping("/editProject")
+    public String editProject(@PathVariable("thisProject") String thisProject, Model model) {
+        //int id = Integer.parseInt(thisProject);
+        //model.addAttribute("Project", ps.showProject(id));
+        return "editProject";
+    }
+
+    //Virker ikke
+    //Den skal vise den info, der er i forvejen.
+    @RequestMapping("/editProjectId/{thisProject}")
+    public String editProject(@PathVariable("thisProject") String thisProject, Model model, WebRequest webr) {
+        //int id = Integer.parseInt(thisProject);
+        //model.addAttribute("Project", ps.showProject(id));
+        String title = webr.getParameter("project-title-input");
+        String deadline = webr.getParameter("project-deadline-input");
+        String basePriceString = webr.getParameter("project-baseprice-input");
+        String description = webr.getParameter("project-description-input");
+        String costumerName = webr.getParameter("project-costumer-input");
+        String status = webr.getParameter("project-status-input");
+
+        double basePrice = 0;
+        try {
+            basePrice = Double.parseDouble(basePriceString);
+        } catch (Exception e) {
+            System.out.println("Baseprice could not be converted from string to double. " +
+                    "Check whether the input is a number.");
+            e.printStackTrace();
+        }
+
+        int customerId = cr.getCustomerIdFromDatabase(costumerName);
+
+        //Create project-object
+        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
+
+        currentProject.setDescription(description);
+
+        //Update project in DB
+        pr.updateProjectInDatabase(currentProject);
+
+        return "redirect:/editProject";
+    }
+
 
 }

@@ -6,7 +6,7 @@ public class Project {
     private String projectTitle;
     private String projectDeadline;
     private String status;
-    private String basePrice;
+    private double basePrice;
     private double totalPrice;
     private int totalTime;
     private int customerId;
@@ -56,11 +56,11 @@ public class Project {
         this.status = status;
     }
 
-    public String getBasePrice() {
+    public double getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(String basePrice) {
+    public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 
@@ -89,7 +89,7 @@ public class Project {
         return totalTime;
     }
 
-    public Project(String title, String projectDeadline, String status, String basePrice, int customerId) {
+    public Project(String title, String projectDeadline, String status, double basePrice, int customerId) {
     this.projectTitle = title;
     this.projectDeadline = projectDeadline;
     this.status = status;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vis delprojekter</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/design/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/design/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/design/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/design/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/design/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/design/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/design/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/design/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/design/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/design/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/design/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/design/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/design/images/favicon/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/design/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" type="text/css" href="/static/styles/Header.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles/background.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles/mainPage.css">
+    <link th:href="@{/styles/Header.css}" rel="stylesheet">
+    <link th:href="@{/styles/index.css}" rel="stylesheet">
+    <link th:href="@{/styles/background.css}" rel="stylesheet">
+    <link th:href="@{/styles/mainPage.css}" rel="stylesheet">
+
+</head>
+<body>
+<header>
+
+</header>
+<body>
+<h1><td th:text="${project.getProjectTitle()}"></h1>
+<table>
+    <tr>
+        <th id="Titel">Titel</th>
+        <th id="description">Beskrivelse</th>
+        <th id="deadline">Deadline</th>
+        <th id="status">Status</th>
+    </tr>
+    <tr
+            th:each="subproject : ${subprojects}">
+        <td th:text="${subproject.getSubprojectTitle()}"></td>
+        <td th:text="${subproject.getSubprojectDescription()}"></td>
+        <td th:text="${subproject.getSubprojectDeadline()}"></td>
+        <td th:text="${subproject.getSubprojectStatus()}"></td>
+        </td>
+
+    </tr>
+</table>
+</body>
+</body>
+</html>

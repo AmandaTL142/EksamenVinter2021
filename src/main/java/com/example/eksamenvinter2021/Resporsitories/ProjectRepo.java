@@ -155,11 +155,11 @@ public class ProjectRepo {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.projects WHERE project_id=15;");
+                    "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            //while(rs.next());
-            //{
+            while(rs.next());
+            {
                 String title = rs.getString("title");
                 String date = rs.getString("project_deadline");
                 String status = rs.getString("status");
@@ -167,7 +167,7 @@ public class ProjectRepo {
                 int customerId = rs.getInt("customer_id");
                 Project p = new Project(title, date, status, price, customerId);
                 projectArray.add(p);
-            //}
+            }
 
         } catch(SQLException e){
             System.out.println("Couldn't get projects from database");

@@ -42,25 +42,26 @@ public class SubprojectController {
 
     //Denne virker
     @GetMapping("/newSubproject")
-    public String newSubproject() {
+    public String newSubproject(Model model) {
+        model.addAttribute("projects", projectArray);
         return "newSubproject";
     }
 
     //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
     @PostMapping("/createNewSubproject")
-    public String createNewSubproject(WebRequest webr, Model model) {
-        model.addAttribute("projects", projectArray);
+    public String createNewSubproject(WebRequest webr) {
+        //model.addAttribute("projects", projectArray);
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
         String projectName = webr.getParameter("subproject-projectname-input");
         String status = webr.getParameter("subproject-status-input");
 
-        int projectId = pr.getProjectId(projectName);
+        //int projectId = pr.getProjectId(projectName);
 
 
         //Create subproject-object
-        Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, projectId);
+        Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, 5);
 
         currentSubproject.setSubprojectDescription(description);
 

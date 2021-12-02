@@ -2,7 +2,6 @@ package com.example.eksamenvinter2021.Controllers;
 
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
-import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 import com.example.eksamenvinter2021.Services.ProjectService;
@@ -14,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Controller
 public class SubprojectController {
@@ -36,7 +34,7 @@ public class SubprojectController {
     public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
         int id = Integer.parseInt(thisSubproject);
         model.addAttribute("Subproject", sps.showSubproject(id));
-        model.addAttribute("Project", ps.showProject((sps.showSubproject(id)).getProjectId()));
+        model.addAttribute("Project", ps.getProjectObject((sps.showSubproject(id)).getProjectId()));
         return "showSubproject";
     }
 
@@ -69,6 +67,13 @@ public class SubprojectController {
         spr.insertSubprojectIntoDatabase(currentSubproject);
 
         return "redirect:/newSubproject";
+    }
+
+    @GetMapping("/deleteSubtask/{subtaskId}")
+    public String deleteSubtask(@PathVariable String subtaskId) throws SQLException {
+        int id = Integer.parseInt(subtaskId);
+        sps.deleteSubprojectFromDatabase(id);
+        return "confirmationPage";
     }
 
 /*
@@ -116,7 +121,7 @@ public class SubprojectController {
     public String subProjects(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
         model.addAttribute("subprojects", sps.showSubprojectLinkedToProject(id));
-        model.addAttribute("project", ps.showProject(id));
+        model.addAttribute("project", ps.getProjectObject(id));
         return "showSubprojects";
     }
 

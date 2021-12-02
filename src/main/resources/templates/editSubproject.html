@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit subproject</title>
+</head>
+<body>
+<h1>Edit subproject</h1>
+
+<!--This is a work in proces - intet virker endnu-->
+<div>
+  <form method="POST" action="/editProjectChanges">
+    <label>Title:</label><br>
+    <input name="dubproject-title-input" th:placeholder="${Project.getProjectTitle()}" type="text"><br>
+
+    <label>Deadline:</label><br>
+    <input type="date" name="subproject-deadline-input" th:placeholder="${Project.getProjectDeadline()}" min="2018-01-01" max="2030-12-31"></br>
+
+    <label>Description:</label><br>
+    <input name="subproject-description-input" type="text" th:placeholder="${Project.basePrice}"><br>
+
+    <label>Connected Project:</label><br>
+    <input name="subproject-customer-input" type="text"><br>
+
+
+    <!--https://www.w3schools.com/tags/att_select_form.asp-->
+    <label for="status">Status:</label>
+    <br>
+    <select name="project-status-input" id="status">
+      <option value="Ikke påbegyndt">Ikke påbegyndt</option>
+      <option value="Påbegyndt">Påbegyndt</option>
+      <option value="Færdig">Færdig</option>
+    </select>
+    </br>
+
+    <br><input type="submit" value="Opdatér"></br>
+
+  </form>
+
+
+</div>
+</body>
+</html>

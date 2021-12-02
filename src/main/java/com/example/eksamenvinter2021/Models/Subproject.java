@@ -68,4 +68,16 @@ public class Subproject {
         this.subprojectDeadline = deadline;
         this.projectId = projectId;
     }
+
+    @Override
+    public String toString() {
+        return "Subproject{" +
+                "subprojectId=" + subprojectId +
+                ", subprojectTitle='" + subprojectTitle + '\'' +
+                ", subprojectDescription='" + subprojectDescription + '\'' +
+                ", subprojectDeadline='" + subprojectDeadline + '\'' +
+                ", subprojectStatus='" + subprojectStatus + '\'' +
+                ", projectId=" + projectId +
+                '}';
+    }
 }

@@ -9,20 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.sql.SQLException;
-
 @Controller
 public class ProjectController {
 
     ProjectService ps = new ProjectService();
     ProjectRepo pr = new ProjectRepo();
     CustomerRepo cr = new CustomerRepo();
+    Project editThisProject = new Project();
 
     //Denne virker
     @GetMapping("/project/{thisProject}")
     public String project(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.showProject(id));
+        model.addAttribute("Project", ps.getProjectObject(id));
         return "showProject";
     }
 
@@ -70,20 +69,19 @@ public class ProjectController {
         return "redirect:/newProject";
     }
 
-    //Virker ikke
-    @GetMapping("/editProject")
-    public String editProject(@PathVariable("thisProject") String thisProject, Model model) {
-        //int id = Integer.parseInt(thisProject);
-        //model.addAttribute("Project", ps.showProject(id));
+
+    @GetMapping("/editProject/{thisProject}")
+    public String editProjectGetProject(@PathVariable("thisProject") String thisProject, Model model) {
+        int id = Integer.parseInt(thisProject);
+        editThisProject = ps.getProjectObject(id);
+        model.addAttribute("Project", ps.getProjectObject(id));
         return "editProject";
     }
 
     //Virker ikke
     //Den skal vise den info, der er i forvejen.
-    @RequestMapping("/editProjectId/{thisProject}")
-    public String editProject(@PathVariable("thisProject") String thisProject, Model model, WebRequest webr) {
-        //int id = Integer.parseInt(thisProject);
-        //model.addAttribute("Project", ps.showProject(id));
+    @RequestMapping("/editProjectChanges")
+    public String editProjectGetChanges(WebRequest webr) {
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
@@ -91,27 +89,42 @@ public class ProjectController {
         String costumerName = webr.getParameter("project-costumer-input");
         String status = webr.getParameter("project-status-input");
 
-        double basePrice = 0;
-        try {
-            basePrice = Double.parseDouble(basePriceString);
-        } catch (Exception e) {
-            System.out.println("Baseprice could not be converted from string to double. " +
-                    "Check whether the input is a number.");
-            e.printStackTrace();
+
+        if (title!="" && title!=null){
+            editThisProject.setProjectTitle(title);
         }
 
-        int customerId = cr.getCustomerIdFromDatabase(costumerName);
+        if (deadline!="" && deadline!=null){
+            editThisProject.setProjectDeadline(deadline);
+        }
 
-        //Create project-object
-        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
+        if (basePriceString!="" && basePriceString!=null){
+            double basePrice = 0;
+            try {
+                basePrice = Double.parseDouble(basePriceString);
+                editThisProject.setBasePrice(basePrice);
+            } catch (Exception e) {
+                System.out.println("Baseprice could not be converted from string to double. " +
+                        "Check whether the input is a number.");
+                e.printStackTrace();
+            }
+        }
 
-        currentProject.setDescription(description);
+        if (description!="" && description!=null){
+            editThisProject.setDescription(description);
+        }
+        if (costumerName!="" && costumerName!=null){
+            int customerId = cr.getCustomerIdFromDatabase(costumerName);
+            editThisProject.setCustomerId(customerId);
+        }
+        if (status!="" && status!=null){
+            editThisProject.setStatus(status);
+        }
 
         //Update project in DB
-        pr.updateProjectInDatabase(currentProject);
+        pr.updateProjectInDatabase(editThisProject);
 
-        return "redirect:/editProject";
+        return "confirmationPage";
     }
-
 
 }

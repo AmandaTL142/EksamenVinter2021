@@ -35,7 +35,7 @@
 
 </header>
 <body>
-<h1><td th:text="${project.getProjectTitle()}"></h1>
+<h1><td th:text="${project.getProjectTitle()}"></h1></td>
 <table>
     <tr>
         <th id="Titel">Titel</th>
@@ -49,6 +49,8 @@
         <td th:text="${subproject.getSubprojectDescription()}"></td>
         <td th:text="${subproject.getSubprojectDeadline()}"></td>
         <td th:text="${subproject.getSubprojectStatus()}"></td>
+        <td>
+            <a th:href="@{/deleteSubtask/{id}(id=${subproject.getSubprojectId()})}"> Slet </a>
         </td>
 
     </tr>

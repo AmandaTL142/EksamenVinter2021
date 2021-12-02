@@ -95,6 +95,18 @@ public class ProjectRepo {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
+                            "`status` = ?, `base_price` = ?, `description` = ? WHERE (`project_id` = ?);");
+            stmt.setString(1, p.getProjectTitle());
+            stmt.setString(2, p.getProjectDeadline());
+            stmt.setString(3, p.getStatus());
+            stmt.setDouble(4, p.getBasePrice());
+            stmt.setString(5, p.getDescription());
+            stmt.setInt(6, p.getProjectId());
+            stmt.executeUpdate();
+
+            /*
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
                             "`status` = ?, `base_price` = ?, `total_price` = ?, `total_time` = ?, " +
                             "`customer_id` = ?, `description` = ? WHERE (`project_id` = ?;");
             stmt.setString(1, p.getProjectTitle());
@@ -107,6 +119,8 @@ public class ProjectRepo {
             stmt.setString(8, p.getDescription());
             stmt.setInt(9, p.getProjectId());
             stmt.executeUpdate();
+
+             */
 
         } catch (Exception e) {
             System.out.println("Couldn't update project with id " + p.getProjectId() + " in database");
@@ -151,28 +165,51 @@ public class ProjectRepo {
         return projectNames;
     }
 
+    //Den her metode virker!
     public ArrayList<Project> getProjectsInArray() {
         ArrayList<Project> projectArray = new ArrayList<>();
+        int count = 0;
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.projects;");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.projects WHERE project_id>0;");
+            //PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.projects WHERE title=\"Titeleksempel\";");
             ResultSet rs = stmt.executeQuery();
-            rs.next();
+            //rs.next();
+            System.out.println("rs.next giver: " + rs.next());
+
             while(rs.next());
             {
+
+                System.out.println("Der printes");
+                /*
+                //Project p = new Project();
+                //p.setProjectTitle(rs.getString("title"));
+                //System.out.println(rs.getString(1) + " = smukt");
                 String title = rs.getString("title");
                 String date = rs.getString("project_deadline");
                 String status = rs.getString("status");
                 double price = Double.parseDouble(rs.getString("base_price"));
                 int customerId = rs.getInt("customer_id");
+                //p.setProjectTitle(title);
+                //p.setBasePrice(price);
+                //p.setProjectDeadline(date);
+                //p.setStatus(status);
+                //p.setCustomerId(customerId);
                 Project p = new Project(title, date, status, price, customerId);
                 projectArray.add(p);
+
+                */
+
+                System.out.println("title er kolonne nr.: " + rs.findColumn("title"));
+                System.out.println("status er kolonne nr.: " + rs.findColumn("status"));
+                System.out.println("row: " + rs.getRow());
+                count ++;
             }
 
         } catch(SQLException e){
             System.out.println("Couldn't get projects from database");
             System.out.println(e.getMessage());
         }
+        System.out.println(count);
         return projectArray;
     }
 

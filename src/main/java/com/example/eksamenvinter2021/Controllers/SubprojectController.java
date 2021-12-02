@@ -37,14 +37,14 @@ public class SubprojectController {
         int id = Integer.parseInt(thisSubproject);
         model.addAttribute("Subproject", sps.getSubprojectObject(id));
         model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
-        return "showSubproject";
+        return "suproject_html/showSubproject";
     }
 
     //Denne virker
     @GetMapping("/newSubproject")
     public String newSubproject(Model model) {
         model.addAttribute("projects", projectArray);
-        return "newSubproject";
+        return "suproject_html/newSubproject";
     }
 
     //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
@@ -68,7 +68,7 @@ public class SubprojectController {
         //Add subproject to DB
         spr.insertSubprojectIntoDatabase(currentSubproject);
 
-        return "redirect:/newSubproject";
+        return "redirect:/suproject_html/newSubproject";
     }
 
     //Denne virker
@@ -87,7 +87,7 @@ public class SubprojectController {
         //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
         model.addAttribute("Subproject", sps.getSubprojectObject(id));
         model.addAttribute("Project", pr.getProjectFromDatabase(editThisSubproject.getProjectId()));
-        return "editSubproject";
+        return "suproject_html/editSubproject";
     }
 
     //Denne virker
@@ -125,7 +125,7 @@ public class SubprojectController {
         int id = Integer.parseInt(thisProject);
         model.addAttribute("subprojects", sps.showSubprojectLinkedToProject(id));
         model.addAttribute("project", ps.getProjectObject(id));
-        return "showSubprojects";
+        return "suproject_html/showSubprojects";
     }
 
 }

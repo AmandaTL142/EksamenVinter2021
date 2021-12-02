@@ -22,13 +22,13 @@ public class ProjectController {
     public String project(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
         model.addAttribute("Project", ps.getProjectObject(id));
-        return "showProject";
+        return "project_html/showProject";
     }
 
     //Denne virker
     @GetMapping("/newProject")
     public String newProject() {
-        return "newProject";
+        return "project_html/newProject";
     }
 
     //Denne virker
@@ -66,7 +66,7 @@ public class ProjectController {
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
 
-        return "redirect:/newProject";
+        return "redirect:/project_html/newProject";
     }
 
     //Denne virker
@@ -75,7 +75,7 @@ public class ProjectController {
         int id = Integer.parseInt(thisProject);
         editThisProject = ps.getProjectObject(id);
         model.addAttribute("Project", ps.getProjectObject(id));
-        return "editProject";
+        return "project_html/editProject";
     }
 
     //Denne virker
@@ -122,7 +122,7 @@ public class ProjectController {
         //Update project in DB
         pr.updateProjectInDatabase(editThisProject);
 
-        return "confirmationPage";
+        return "project_html/confirmationPage";
     }
 
 }

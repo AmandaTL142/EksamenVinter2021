@@ -22,7 +22,7 @@ public class CustomerService {
     }
 
 
-    public Customer showProject (int customerId) {
+    public Customer showCustomer (int customerId) {
         return customerRepo.getCustomerFromDatabase(customerId);
     }
 

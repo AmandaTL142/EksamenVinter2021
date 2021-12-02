@@ -9,24 +9,24 @@
 
 <!--This is a work in proces - intet virker endnu-->
 <div>
-  <form method="POST" action="/editProjectChanges">
+  <form method="POST" action="/editSubprojectChanges">
     <label>Title:</label><br>
-    <input name="dubproject-title-input" th:placeholder="${Project.getProjectTitle()}" type="text"><br>
+    <input name="subproject-title-input" th:placeholder="${Subproject.subprojectTitle}" type="text"><br>
 
     <label>Deadline:</label><br>
-    <input type="date" name="subproject-deadline-input" th:placeholder="${Project.getProjectDeadline()}" min="2018-01-01" max="2030-12-31"></br>
+    <input type="date" name="subproject-deadline-input" th:placeholder="${Subproject.getSubprojectDeadline()}" min="2018-01-01" max="2030-12-31"></br>
 
     <label>Description:</label><br>
-    <input name="subproject-description-input" type="text" th:placeholder="${Project.basePrice}"><br>
+    <input name="subproject-description-input" type="text" th:placeholder="${Subproject.getSubprojectDescription()}"><br>
 
     <label>Connected Project:</label><br>
-    <input name="subproject-customer-input" type="text"><br>
-
+    <input name="subproject-project-input" type="text" th:placeholder="${Project.getProjectTitle()}"><br>
 
     <!--https://www.w3schools.com/tags/att_select_form.asp-->
     <label for="status">Status:</label>
     <br>
-    <select name="project-status-input" id="status">
+    <select name="subproject-status-input" id="status" required>
+      <option selected disabled></option>
       <option value="Ikke påbegyndt">Ikke påbegyndt</option>
       <option value="Påbegyndt">Påbegyndt</option>
       <option value="Færdig">Færdig</option>

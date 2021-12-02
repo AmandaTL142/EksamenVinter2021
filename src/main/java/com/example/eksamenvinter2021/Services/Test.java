@@ -103,6 +103,7 @@ public class Test {
         //System.out.println(sps.showSubprojectLinkedToProject(15));
         //System.out.println(ps.getProjectObject(15));
         //pr.updateProjectInDatabase(Project p)
+        System.out.println(ps.getProjectObject(15));
     }
     }
 

@@ -23,6 +23,8 @@ public class SubprojectController {
     Subproject sp = new Subproject();
     SubprojectService sps = new SubprojectService();
     SubprojectRepo spr = new SubprojectRepo();
+    Subproject editThisSubproject = new Subproject();
+    Project projectConnectedToSubproject = new Project();
 
     //ArrayList<String> projectNames = pr.getProjectNamesInArray();
     ArrayList<Project> projectArray = pr.getProjectsInArray();
@@ -33,8 +35,8 @@ public class SubprojectController {
     @GetMapping("/subproject/{thisSubproject}")
     public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
         int id = Integer.parseInt(thisSubproject);
-        model.addAttribute("Subproject", sps.showSubproject(id));
-        model.addAttribute("Project", ps.getProjectObject((sps.showSubproject(id)).getProjectId()));
+        model.addAttribute("Subproject", sps.getSubprojectObject(id));
+        model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
         return "showSubproject";
     }
 
@@ -69,6 +71,7 @@ public class SubprojectController {
         return "redirect:/newSubproject";
     }
 
+    //Denne virker
     @GetMapping("/deleteSubtask/{subtaskId}")
     public String deleteSubtask(@PathVariable String subtaskId) throws SQLException {
         int id = Integer.parseInt(subtaskId);
@@ -76,47 +79,47 @@ public class SubprojectController {
         return "confirmationPage";
     }
 
-/*
-    @GetMapping("/editProject")
-    public String editProject() {
-        return "editProject";
+    //Denne virker
+    @GetMapping("/editSubproject/{thisSubproject}")
+    public String editSubrojectGetSubproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
+        int id = Integer.parseInt(thisSubproject);
+        editThisSubproject = sps.getSubprojectObject(id);
+        //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
+        model.addAttribute("Subproject", sps.getSubprojectObject(id));
+        model.addAttribute("Project", pr.getProjectFromDatabase(editThisSubproject.getProjectId()));
+        return "editSubproject";
     }
 
-    @RequestMapping("/editProjectId/{thisProject}")
-    public String editProject(@PathVariable("thisProject") String thisProject, Model model, WebRequest webr) {
-        int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.showProject(id));
-        String title = webr.getParameter("project-title-input");
-        String deadline = webr.getParameter("project-deadline-input");
-        String basePriceString = webr.getParameter("project-baseprice-input");
-        String description = webr.getParameter("project-description-input");
-        String customerName = webr.getParameter("project-customer-input");
-        String status = webr.getParameter("project-status-input");
+    //Denne virker
+    @RequestMapping("/editSubprojectChanges")
+    public String editSubprojectGetChanges(WebRequest webr) {
+        String title = webr.getParameter("subproject-title-input");
+        String deadline = webr.getParameter("subproject-deadline-input");
+        String description = webr.getParameter("subproject-description-input");
+        //String projectName = webr.getParameter("subproject-project-input");
+        String status = webr.getParameter("subproject-status-input");
 
-        double basePrice = 0;
-        try {
-            basePrice = Double.parseDouble(basePriceString);
-        } catch (Exception e) {
-            System.out.println("Baseprice could not be converted from string to double. " +
-                    "Check whether the input is a number.");
-            e.printStackTrace();
+        if (title!="" && title!=null){
+            editThisSubproject.setSubprojectTitle(title);
         }
 
-        int customerId = cr.getCustomerIdFromDatabase(customerName);
+        if (deadline!="" && deadline!=null){
+            editThisSubproject.setSubprojectDeadline(deadline);
+        }
 
-        //Create project-object
-        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
+        if (description!="" && description!=null){
+            editThisSubproject.setSubprojectDescription(description);
+        }
 
-        currentProject.setDescription(description);
+        editThisSubproject.setSubprojectStatus(status);
 
         //Update project in DB
-        pr.updateProjectInDatabase(currentProject);
+        spr.updateSubprojectInDatabase(editThisSubproject);
 
-        return "redirect:/editProject";
+        return "confirmationPage";
     }
 
-     */
-
+    //Denne virker
     @GetMapping("/showSubprojects/{thisProject}")
     public String subProjects(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);

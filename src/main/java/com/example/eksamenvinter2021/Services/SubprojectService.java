@@ -25,7 +25,7 @@ public class SubprojectService {
         spr.updateSubprojectInDatabase(sp);
     }
 
-    public Subproject showSubproject (int subprojectId) {
+    public Subproject getSubprojectObject(int subprojectId) {
         return spr.getSubprojectFromDatabase(subprojectId);
     }
 

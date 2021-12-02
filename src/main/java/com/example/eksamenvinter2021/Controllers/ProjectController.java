@@ -69,7 +69,7 @@ public class ProjectController {
         return "redirect:/newProject";
     }
 
-
+    //Denne virker
     @GetMapping("/editProject/{thisProject}")
     public String editProjectGetProject(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
@@ -78,8 +78,7 @@ public class ProjectController {
         return "editProject";
     }
 
-    //Virker ikke
-    //Den skal vise den info, der er i forvejen.
+    //Denne virker
     @RequestMapping("/editProjectChanges")
     public String editProjectGetChanges(WebRequest webr) {
         String title = webr.getParameter("project-title-input");
@@ -117,9 +116,8 @@ public class ProjectController {
             int customerId = cr.getCustomerIdFromDatabase(costumerName);
             editThisProject.setCustomerId(customerId);
         }
-        if (status!="" && status!=null){
-            editThisProject.setStatus(status);
-        }
+
+        editThisProject.setStatus(status);
 
         //Update project in DB
         pr.updateProjectInDatabase(editThisProject);

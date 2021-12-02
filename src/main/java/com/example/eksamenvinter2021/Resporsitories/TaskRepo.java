@@ -17,7 +17,6 @@ public class TaskRepo {
 
     public void insertNewTaskToDB(Task task){
 
-        //TODO hvorfor vil den ikke indsætte i DB?
 
         //int projectId= getProjectId("projectTitle");
         //int subProjectID= getSubProjectId("subProjectTitle");
@@ -103,7 +102,7 @@ public class TaskRepo {
         ArrayList<Task> allTasks = new ArrayList<>();
         try {
 
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=? values(?)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
             stmt.setInt(1, projectID);
 
             ResultSet rs = stmt.executeQuery();
@@ -125,30 +124,26 @@ public class TaskRepo {
 
     }
 
-  public void updateTask(){
-      Task task = new Task();
+  public Task updateTask( Task task){
 
       String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` =?, `estimated_time` =?, `time_used` =? WHERE (`task_id` =?) VALUES (?, ?, ?, ?);";
 
-
       try {
           PreparedStatement stmt = conn.prepareStatement(sql);
-          stmt.executeUpdate();
 
-          ResultSet rs = stmt.executeQuery();
-          while (rs.next()){
-              task.setTitle(rs.getString(2));
-              task.setDescription(rs.getString(3));
-              task.setEstimatedTime(rs.getString(4));
-              task.setTimeUsed(rs.getString(5));
-              task.setStatus(rs.getString(6));
-          }
+          stmt.setString();
+          stmt.setString();
+          stmt.setString();
+          stmt.setString();
+
+          stmt.executeUpdate();
 
       } catch (SQLException e) {
           System.out.println("no connection");
           System.out.println(e.getMessage());
           e.printStackTrace();
       }
+      return task;
 
   }
 

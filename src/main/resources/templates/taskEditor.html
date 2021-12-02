@@ -10,24 +10,38 @@
 <form method="POST" action="/taskEditor">
 
     <table>
-        <tr th:each="task:${task.getTasks()}">
+        <tr th:each="task:${tasks}">
             <div class = "container">
-                <input type="text" placeholder="title" name="new-task-title" required value=th:text="${task.title}">
-                <input type="text" placeholder="description" name="new-task-description" value=th:text="${task.description}">
-                <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required value=th:text="${task.estimatedTime}">
-                <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required value=th:text="${task.timeUsed}">
-                <input type="text" placeholder="status" name="new-task-status" required value=th:text="${task.status}">
+
+                <label>Title: </label>
+                <input name="new-task-title" type="text" th:placeholder="${task.title}" ><br>
+
+
+                <label>Description: </label>
+                <input name="new-task-description" type="text" th:placeholder="${task.description}"><br>
+
+                <label>estimatedTime: </label>
+                <input name="new-task-estimatedTime" type="time" th:placeholder="${task.estimatedTime}"><br>
+
+                <label>TimeUsed: </label>
+                <input name="new-task-timeUsed" type="time" th:placeholder="${task.timeUsed}"><br>
+
+                <label>status: </label>
+                <input name="new-task-status" type="text" th:placeholder="${task.status}"><br>
 
             </div>
 
             <div class="container">
-                <input type="submit" value="Tilmeld">
+                <input type="submit" value="Save">
             </div>
 
         </tr>
     </table>
 
 </form>
+
+<!--  <input name="project-description-input" type="text" th:placeholder="#{Project.getDescription()}"><br>
+-->
 
 
 

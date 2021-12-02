@@ -21,27 +21,31 @@ public class TaskController {
     //TODO få samlet alle HTML der tilhører task i en mappe
     //TODO har det påvirkelse på hvordan man referer til html, når man skal returne??????
 
-    @GetMapping("/")
+    @GetMapping("/taskPage")
     public String taskPage(){
         return "/taskPage";
     }
 
     @GetMapping("/taskEditor")
-    public String taskEditor(){
+    public String taskEditor(Model m){
+        m.addAttribute("tasks", ts.getAllTasks(15));
+
         return "/taskEditor";
     }
 
     @PostMapping("/editTask")
-    public String getOneTask(@PathVariable("thisTask") int thisTask, Model m){
-        //TODO hvordan skal den opsættes i taskService?
+    public String getOneTask(@PathVariable("thisTask") int thisTask, Model m, WebRequest wr){
         //TODO få den connected med det rigtige taskID
-        //TODO HVordan får jeg initialized task object inde i html???
 
-        Integer OneTask = tr.fetchSingleTask();
+        String title=wr.getParameter("new-task-title");
+        String description = wr.getParameter("new-task-description");
 
-        m.addAttribute("OneTask", tr.getAllTasks(thisTask));
+        String estimated_time = wr.getParameter("new-task-estimatedTime");
+        String timeUsed = wr.getParameter("new-task-timeUsed");
+        String status = wr.getParameter("new-task-status");
 
-        ts.updateTask();
+        ts.updateTask(title,description,estimated_time,timeUsed,status);
+
         return "redirect://";
     }
 
@@ -55,22 +59,11 @@ public class TaskController {
 @PostMapping("/createNewTask")
 
     public String createNewTask(WebRequest wr){
-
-        /* TODO-liste:
-        Først få task til at køre
-        derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
-        inde i et projekt og dermed automatisk er koblet til et project*/
-
-
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
 
         String estimated_time = wr.getParameter("new-task-estimatedTime");
 
-        //transform string til datetime-java-format (loacltime) parToDateTime
-    //localTime time = LocalTime.parse("den aflveret String fra browser")
-    //evt. lav validation
-    //System.out.println(LocalTime.parse(estimated_time));
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
@@ -81,3 +74,14 @@ public class TaskController {
         return "newTask";
 }
 }
+
+//transform string til datetime-java-format (loacltime) parToDateTime
+//localTime time = LocalTime.parse("den aflveret String fra browser")
+//evt. lav validation
+//System.out.println(LocalTime.parse(estimated_time));
+
+
+   /* TODO-liste:
+        Først få task til at køre
+        derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
+        inde i et projekt og dermed automatisk er koblet til et project*/

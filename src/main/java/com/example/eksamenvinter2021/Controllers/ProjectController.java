@@ -66,7 +66,7 @@ public class ProjectController {
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
 
-        return "redirect:/project_html/newProject";
+        return "confirmationPage";
     }
 
     //Denne virker
@@ -122,7 +122,7 @@ public class ProjectController {
         //Update project in DB
         pr.updateProjectInDatabase(editThisProject);
 
-        return "project_html/confirmationPage";
+        return "confirmationPage";
     }
 
 }

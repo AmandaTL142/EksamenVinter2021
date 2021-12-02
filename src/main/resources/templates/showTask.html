@@ -1,22 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>showTask</title>
 </head>
 <body>
 <h1>Overview Task</h1>
-  <table>
-    <tr th:each="employee : ${employees}">
-      <!--Dollartegn henviser til...
-      man behøver ikke at skrive getID, da man ved at tilgå listen,
-      der indeholder objektet employee, og dermed også er bekendt med alle employee-attributterne-->
-      <td th:text="${employee.id}"></td>
-      <td th:text ="${employee.employeeName}"></td>
-      <td th:text = "${employee.salary}"></td>
-    </tr>
-  </table>
 
+<table>
+
+  <tr>
+    <th id="Titel">Title </th>
+    <th id="description">Description </th>
+    <th id="estimatedTime">Estimated Time </th>
+    <th id="timeUsed">Time Used </th>
+    <th id="status">Status </th>
+  </tr>
+
+
+  <tr th:each="task : ${tasks}">
+    <td th:text="${task.getTitle()}"></td>
+    <td th:text="${task.getDescription()}"></td>
+    <td th:text="${task.getEstimatedTime()}"></td>
+    <td th:text="${task.getTimeUsed()}"></td>
+    <td th:text="${task.getStatus()}"></td>
+
+    </td>
+
+  </tr>
+</table>
+
+
+<button class="taskbutton">
+  <a th:href="@{/taskEditor}">Edit task</a>
+</button>
 
 </body>
 </html>

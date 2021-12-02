@@ -16,8 +16,6 @@ public class TaskRepo {
     Connection conn = JDBC.getConnection();
 
     public void insertNewTaskToDB(Task task){
-
-
         //int projectId= getProjectId("projectTitle");
         //int subProjectID= getSubProjectId("subProjectTitle");
 
@@ -40,6 +38,29 @@ public class TaskRepo {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void updateTask(Task task){
+
+        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` =?, `estimated_time` =?, `time_used` =? WHERE (`task_id` =?) VALUES (?, ?, ?, ?);";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1,task.getTitle());
+            stmt.setString(2,task.getDescription());
+            stmt.setString(3,task.getEstimatedTime());
+            stmt.setString(4,task.getTimeUsed());
+            stmt.setString(5,task.getStatus());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("no connection");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -78,25 +99,6 @@ public class TaskRepo {
         return 0;
     }
 
-    public Integer fetchSingleTask(){
-        /*The users want a feature, such that they can see a single employee by their employeenumber*/
-
-        Integer requestTask = 0;
-
-        try {
-            PreparedStatement ps = conn.prepareStatement("Select * from tasks where task_id=?;");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                requestTask = rs.getInt("id");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Can not find task" + e.getMessage());
-        }
-
-        return requestTask;
-    }
-
 
     public ArrayList<Task> getAllTasks(int projectID){
         ArrayList<Task> allTasks = new ArrayList<>();
@@ -110,11 +112,12 @@ public class TaskRepo {
 
             while(rs.next()){
                 Task t= new Task();
-                t.setTitle(rs.getString(1));
-                t.setDescription(rs.getString(2));
-                t.setEstimatedTime(rs.getString(3));
-                t.setTimeUsed(rs.getString(4));
-                t.setStatus(rs.getString(5));
+                t.setId(rs.getInt(1));
+                t.setTitle(rs.getString(2));
+                t.setDescription(rs.getString(3));
+                t.setEstimatedTime(rs.getString(4));
+                t.setTimeUsed(rs.getString(5));
+                t.setStatus(rs.getString(6));
                 allTasks.add(t);
             }
         } catch (SQLException e) {
@@ -124,28 +127,7 @@ public class TaskRepo {
 
     }
 
-  public Task updateTask( Task task){
 
-      String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` =?, `estimated_time` =?, `time_used` =? WHERE (`task_id` =?) VALUES (?, ?, ?, ?);";
-
-      try {
-          PreparedStatement stmt = conn.prepareStatement(sql);
-
-          stmt.setString();
-          stmt.setString();
-          stmt.setString();
-          stmt.setString();
-
-          stmt.executeUpdate();
-
-      } catch (SQLException e) {
-          System.out.println("no connection");
-          System.out.println(e.getMessage());
-          e.printStackTrace();
-      }
-      return task;
-
-  }
 
   public void deleteTask(int inputFromUser){
         String sql ="DELETE from tasks where task_id=?";

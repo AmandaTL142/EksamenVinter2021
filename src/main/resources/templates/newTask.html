@@ -13,11 +13,28 @@
     </div>
 
     <div class = "container">
+
+        <label for="status">Title:</label>
         <input type="text" placeholder="title" name="new-task-title" required value="a">
+
+        <label for="status">Description:</label>
         <input type="text" placeholder="description" name="new-task-description" value="a">
+
+        <label for="status">Status:</label>
         <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required value="a">
+
+        <label for="status">Status:</label>
         <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required value="a">
+
+        <label for="status">Status:</label>
         <input type="text" placeholder="status" name="new-task-status" required value="a">
+        <br>
+        <select name="new-task-status" id="status">
+            <option value="Ikke påbegyndt">On Hold</option>
+            <option value="Påbegyndt">Pending</option>
+            <option value="Færdig">Complete</option>
+        </select>
+        </br>
 
     </div>
 

@@ -15,15 +15,16 @@ public class TaskService {
     public void createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
         Task task = new Task(title, description, estimatedTime, timeUsed, status);
         tr.insertNewTaskToDB(task);
-
     }
 
-    public void fetchSingleTask(Task t){
-
-        tr.fetchSingleTask();
+    public void updateTask(String title, String description, String estimatedTime, String timeUsed, String status) {
+        Task task = new Task(title, description, estimatedTime, timeUsed, status);
+        tr.insertNewTaskToDB(task);
     }
+
 
     public ArrayList<Task> getAllTasks(int id){
+
         return tr.getAllTasks(id);
     }
 
@@ -31,11 +32,7 @@ public class TaskService {
 
     }
 
-    public void updateTask(String title, String description, String estimatedTime, String timeUsed, String status) {
-        Task task = new Task(title, description, estimatedTime, timeUsed, status);
 
-        tr.updateTask(task);
-    }
 }
 
 

@@ -12,5 +12,10 @@
 <th  th:unless = "${session.employee.role == 'MANAGER'}">Du er ikke manager</th>
 
 
+<div th:each="task:${tasks}">
+    <li th:text="${task.title}"></li>
+</div>
+
+
 </body>
 </html>

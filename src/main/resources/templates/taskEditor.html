@@ -7,7 +7,7 @@
 <body>
 <h1>Edit task </h1>
 
-<form method="POST" action="/taskEditor">
+<form method="POST" th:action="@{/}" th:object="${task}">
 
     <table>
         <tr th:each="task:${tasks}">
@@ -29,22 +29,23 @@
                 <label>status: </label>
                 <input name="new-task-status" type="text" th:placeholder="${task.status}"><br>
 
+                <select name="new-task-status" id="status">
+                    <option value="Ikke påbegyndt">On Hold</option>
+                    <option value="Påbegyndt">Pending</option>
+                    <option value="Færdig">Complete</option>
+                </select>
+                </br>
+
             </div>
 
             <div class="container">
-                <input type="submit" value="Save">
+                <input type="submit" value="Update Task">
             </div>
 
         </tr>
     </table>
 
 </form>
-
-<!--  <input name="project-description-input" type="text" th:placeholder="#{Project.getDescription()}"><br>
--->
-
-
-
 
 </body>
 </html>

@@ -25,9 +25,16 @@ public class TaskController {
     //TODO har det påvirkelse på hvordan man referer til html, når man skal returne??????
 
     @GetMapping("/showTask")
-    public String allDepartments(Model objectThatTransportsData){
+    public String allTasks(Model objectThatTransportsData){
         ArrayList<Task> allTasks = tr.getAllTasks(15);
         objectThatTransportsData.addAttribute("tasks",allTasks);
+
+
+        return "showTask"; }
+
+    @PostMapping("/showProjectName")
+    public String showProjectName(){
+
         return "showTask";
     }
 
@@ -37,7 +44,6 @@ public class TaskController {
     }
 
     @PostMapping("/createNewTask")
-
     public String createNewTask(WebRequest wr){
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -52,6 +58,7 @@ public class TaskController {
 
         return "newTask";
     }
+
 
     @GetMapping("/taskEditor")
     public String taskEditor(Model m){

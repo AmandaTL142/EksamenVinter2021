@@ -130,12 +130,12 @@ public class TaskRepo {
 
 
 
-  public void deleteTask(int inputFromUser){
+  public void deleteTask(int taskID){
         String sql ="DELETE from tasks where task_id=?";
 
       try {
           PreparedStatement stmt = conn.prepareStatement(sql);
-          stmt.setInt(1,inputFromUser);
+          stmt.setInt(1,taskID);
           stmt.executeUpdate();
 
       } catch (SQLException e) {

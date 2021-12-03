@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
@@ -28,40 +29,6 @@ public class TaskController {
         ArrayList<Task> allTasks = tr.getAllTasks(15);
         objectThatTransportsData.addAttribute("tasks",allTasks);
         return "showTask";
-    }
-
-    @RequestMapping("/taskEditor")
-    public String taskEditor(WebRequest wr) {
-        String title = wr.getParameter("new-task-title");
-        String description = wr.getParameter("new-task-description");
-        String estimated_time = wr.getParameter("new-task-estimatedTime");
-        String timeUsed = wr.getParameter("new-task-timeUsed");
-        String status = wr.getParameter("new-task-status");
-
-        if (title != "" && title != null) {
-            t.setTitle(title);
-        }
-
-        if (description != "" && description != null) {
-            t.setDescription(description);
-        }
-
-        if (estimated_time != "" && estimated_time != null) {
-            t.setEstimatedTime(estimated_time);
-        }
-
-        if (timeUsed != "" && timeUsed != null) {
-            t.setStatus(timeUsed);
-        }
-
-        if (status != "" && status != null) {
-            t.setStatus(status);
-        }
-
-        tr.updateTask(t);
-
-        return "/";
-
     }
 
     @GetMapping("/newTask")
@@ -94,8 +61,9 @@ public class TaskController {
     }
 
     @PostMapping("/editTask")
-    public String getOneTask(@PathVariable("thisTask") WebRequest wr){
-        //TODO få den connected med det rigtige taskID
+    public String getTask(WebRequest wr){
+        //TODO få den connected med det rigtige taskID/projectID
+        //@PathVariable("thisTask")
 
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -106,7 +74,36 @@ public class TaskController {
 
         ts.updateTask(title,description,estimated_time,timeUsed,status);
 
-        return "taskEditor";
+        if (title != "" && title != null) {
+            t.setTitle(title);
+        }
+
+        if (description != "" && description != null) {
+            t.setDescription(description);
+        }
+
+        if (estimated_time != "" && estimated_time != null) {
+            t.setEstimatedTime(estimated_time);
+        }
+
+        if (timeUsed != "" && timeUsed != null) {
+            t.setStatus(timeUsed);
+        }
+
+        if (status != "" && status != null) {
+            t.setStatus(status);
+        }
+
+        tr.updateTask(t);
+
+        return "/";
+    }
+
+
+    @GetMapping("/deleteTask/{taskId}")
+    public String deleteWish(@PathVariable int taskId) throws SQLException {
+        tr.deleteTask(25);
+        return "confirmationPage.html";
     }
 }
 
@@ -117,6 +114,5 @@ public class TaskController {
 
 
    /* TODO-liste:
-        Først få task til at køre
         derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
         inde i et projekt og dermed automatisk er koblet til et project*/

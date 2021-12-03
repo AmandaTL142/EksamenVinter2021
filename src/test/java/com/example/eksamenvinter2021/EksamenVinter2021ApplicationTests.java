@@ -23,6 +23,12 @@ class EksamenVinter2021ApplicationTests {
     //Find project_end dato:
     //SELECT min(startDate) FROM projects WHERE project_id = X
     //SELECT max(endDate) FROM subtasks WHERE project_id = X
+    /*select max(deadline) from subtask
+    join task using (task_id)
+    join subproject using (subproject_id)
+    join project using (project_id)
+    where project_id = ?;
+    */
     public static long daysBetween(String input1, String input2) {
         //Find dato fra String
         LocalDate date1 = LocalDate.parse(input1);

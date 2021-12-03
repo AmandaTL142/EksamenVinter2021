@@ -10,6 +10,12 @@ public class Task {
     private String estimatedTime;
     private String timeUsed;
     private String status;
+    private int projectId;
+    private int subprojectId;
+    private String startDate;
+    private String endDate;
+
+
     private ArrayList<Task> tasks;
 
     //private Time startTime;
@@ -82,6 +88,38 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public int getSubprojectId() {
+        return subprojectId;
+    }
+
+    public void setSubprojectId(int subprojectId) {
+        this.subprojectId = subprojectId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public void setTasks(ArrayList<Task> tasks) {

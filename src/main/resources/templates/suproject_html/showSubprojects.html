@@ -50,7 +50,7 @@
         <td th:text="${subproject.getSubprojectDeadline()}"></td>
         <td th:text="${subproject.getSubprojectStatus()}"></td>
         <td>
-            <a th:href="@{/deleteSubtask/{id}(id=${subproject.getSubprojectId()})}"> Slet </a>
+            <a th:href="@{/deleteSubproject/{id}(id=${subproject.getSubprojectId()})}"> Slet </a>
         </td>
 
     </tr>

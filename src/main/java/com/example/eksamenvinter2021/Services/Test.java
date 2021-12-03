@@ -98,12 +98,12 @@ public class Test {
         }
 
           */
-        //System.out.println(pr.getProjectsInArray());
+        System.out.println(pr.getProjectsInArray());
         //System.out.println(spr.showSubprojectLinkedToProject(15));
         //System.out.println(sps.showSubprojectLinkedToProject(15));
         //System.out.println(ps.getProjectObject(15));
         //pr.updateProjectInDatabase(Project p)
-        System.out.println(ps.getProjectObject(15));
+        //System.out.println(ps.getProjectObject(15));
     }
     }
 

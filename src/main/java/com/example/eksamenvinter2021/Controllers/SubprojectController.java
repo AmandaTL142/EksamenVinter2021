@@ -72,8 +72,8 @@ public class SubprojectController {
     }
 
     //Denne virker
-    @GetMapping("/deleteSubtask/{subtaskId}")
-    public String deleteSubtask(@PathVariable String subtaskId) throws SQLException {
+    @GetMapping("/deleteSubproject/{subtaskId}")
+    public String deleteSubproject(@PathVariable String subtaskId) throws SQLException {
         int id = Integer.parseInt(subtaskId);
         sps.deleteSubprojectFromDatabase(id);
         return "confirmationPage";
@@ -96,7 +96,6 @@ public class SubprojectController {
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
-        //String projectName = webr.getParameter("subproject-project-input");
         String status = webr.getParameter("subproject-status-input");
 
         if (title!="" && title!=null){

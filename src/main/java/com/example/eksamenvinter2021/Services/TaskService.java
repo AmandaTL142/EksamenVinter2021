@@ -12,9 +12,10 @@ public class TaskService {
 
  TaskRepo tr = new TaskRepo();
 
-    public void createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
+    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
         Task task = new Task(title, description, estimatedTime, timeUsed, status);
-        tr.insertNewTaskToDB(task);
+        //tr.insertNewTaskToDB(task);
+        return task;
     }
 
     public void updateTask(String title, String description, String estimatedTime, String timeUsed, String status) {

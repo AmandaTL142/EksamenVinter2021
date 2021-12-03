@@ -26,6 +26,11 @@ public class ProjectController {
         return "showProject";
     }
 
+    @GetMapping("/shwoProject")
+    public String showProject(){
+        return "showProject";
+    }
+
     //Denne virker
     @GetMapping("/newProject")
     public String newProject() {

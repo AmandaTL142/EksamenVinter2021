@@ -100,6 +100,23 @@ public class TaskRepo {
 
     }
 
+    /*public int getProjectId(String ProjectTitle) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+                    "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
+            stmt.setString(1, subprojectTitle);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("subproject_id");
+            return id;
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get id for with title " + subprojectTitle + " from database");
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+*/
 
 
   public void deleteTask(int taskID){

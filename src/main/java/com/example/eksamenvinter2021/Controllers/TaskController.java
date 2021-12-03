@@ -1,7 +1,9 @@
 package com.example.eksamenvinter2021.Controllers;
 
+import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
+import com.example.eksamenvinter2021.Services.ProjectService;
 import com.example.eksamenvinter2021.Services.TaskService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,10 @@ import java.util.ArrayList;
 public class TaskController {
 
     TaskService ts = new TaskService();
+    ProjectService ps = new ProjectService();
     TaskRepo tr = new TaskRepo();
     Task t = new Task();
+    Project sharedProject = new Project();
 
     //TODO få samlet alle HTML der tilhører task i en mappe
     //TODO har det påvirkelse på hvordan man referer til html, når man skal returne??????
@@ -29,8 +33,8 @@ public class TaskController {
         ArrayList<Task> allTasks = tr.getAllTasks(15);
         objectThatTransportsData.addAttribute("tasks",allTasks);
 
-
         return "showTask"; }
+
 
     @PostMapping("/showProjectName")
     public String showProjectName(){
@@ -45,6 +49,7 @@ public class TaskController {
 
     @PostMapping("/createNewTask")
     public String createNewTask(WebRequest wr){
+
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
 
@@ -54,17 +59,27 @@ public class TaskController {
         String status = wr.getParameter("new-task-status");
         //String projectID = wr.getParameter("new-task-projectID");
 
-        ts.createNewTask(title,description,estimated_time,timeUsed,status);
+        Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
+
+        tempTask.setProjectId(sharedProject.getProjectId());
+
+        tr.insertNewTaskToDB(tempTask);
 
         return "newTask";
     }
 
-    @GetMapping("/subproject/{thisSubproject}")
-    public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
-        int id = Integer.parseInt(thisSubproject);
-        model.addAttribute("Subproject", sps.getSubprojectObject(id));
-        model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
-        return "suproject_html/showSubproject";
+    @GetMapping("/taskC/{thisProjectId}")
+    public String subproject(@PathVariable("thisProjectId") int thisProjectId, Model m) {
+        int id = thisProjectId;
+        Project p = ps.showProject(thisProjectId);
+        sharedProject = p;
+        m.addAttribute("project",p);
+
+        return"newTask";
+
+       // model.addAttribute("Subproject", sps.getSubprojectObject(id));
+        //model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
+        //return "suproject_html/showSubproject";
     }
 
 

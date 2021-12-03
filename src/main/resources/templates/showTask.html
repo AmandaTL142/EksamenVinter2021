@@ -27,19 +27,21 @@
     <td th:text="${task.getTimeUsed()}"></td>
     <td th:text="${task.getStatus()}"></td>
 
+    <td>
+    <button class="taskbutton">
+      <a th:href="@{/taskEditor/{id}(id=${task.getId})}">Edit task</a>
+    </button>
+  </td>
+    <td>
+    <button>
+      <a class="taskbutton" th:href="@{/deleteTask/{id}(id=${task.getId})}">Delete task</a>
+    </button>
+
     </td>
 
   </tr>
 </table>
 
-
-<button class="taskbutton">
-  <a th:href="@{/taskEditor}">Edit task</a>
-</button>
-
-<button>
-  <a class="taskbutton" th:href="@{/deleteTask/{id}(id=${task.getId})}">Delete task</a>
-</button>
 
 
 <!---

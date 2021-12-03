@@ -9,25 +9,28 @@
 
 <form method="POST" action="/createNewTask">
     <div class = "container">
-        <h2>Create a new task</h2>
+        <h1 th:text="${project.getProjectTitle()}"></h1>
+
+            <h2>Create a new task</h2>
+
     </div>
 
     <div class = "container">
 
         <label for="status">Title:</label>
-        <input type="text" placeholder="title" name="new-task-title" required value="a">
+        <input type="text" placeholder="title" name="new-task-title" required>
 
         <label for="status">Description:</label>
-        <input type="text" placeholder="description" name="new-task-description" value="a">
+        <input type="text" placeholder="description" name="new-task-description">
 
         <label for="status">Status:</label>
-        <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required value="a">
+        <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required>
 
         <label for="status">Status:</label>
-        <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required value="a">
+        <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required>
 
         <label for="status">Status:</label>
-        <input type="text" placeholder="status" name="new-task-status" required value="a">
+        <input type="text" placeholder="status" name="new-task-status" required>
         <br>
         <select name="new-task-status" id="status">
             <option value="Ikke påbegyndt">On Hold</option>

@@ -30,7 +30,6 @@ public class SubprojectController {
     ArrayList<Project> projectArray = pr.getProjectsInArray();
 
 
-
     //Denne virker
     @GetMapping("/subproject/{thisSubproject}")
     public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
@@ -54,21 +53,21 @@ public class SubprojectController {
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
-        String projectName = webr.getParameter("subproject-projectname-input");
+        String projectTitle = webr.getParameter("subproject-projecttitle-input");
         String status = webr.getParameter("subproject-status-input");
 
-        //int projectId = pr.getProjectId(projectName);
+        int projectId = pr.getProjectId(projectTitle);
 
 
         //Create subproject-object
-        Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, 5);
+        Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, projectId);
 
         currentSubproject.setSubprojectDescription(description);
 
         //Add subproject to DB
         spr.insertSubprojectIntoDatabase(currentSubproject);
 
-        return "redirect:/suproject_html/newSubproject";
+        return "confirmationPage";
     }
 
     //Denne virker

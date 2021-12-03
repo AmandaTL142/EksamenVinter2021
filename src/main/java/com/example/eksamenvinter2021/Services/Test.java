@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 
@@ -98,12 +99,16 @@ public class Test {
         }
 
           */
-        System.out.println(pr.getProjectsInArray());
+        //System.out.println(pr.getProjectsInArray());
         //System.out.println(spr.showSubprojectLinkedToProject(15));
         //System.out.println(sps.showSubprojectLinkedToProject(15));
         //System.out.println(ps.getProjectObject(15));
         //pr.updateProjectInDatabase(Project p)
         //System.out.println(ps.getProjectObject(15));
+
+        Subproject sp = new Subproject("13:13", "2012.12.12", "Ikke påbegyndt", 15);
+        System.out.println(sp.getStartDate());
+        spr.insertSubprojectIntoDatabase(sp);
     }
     }
 

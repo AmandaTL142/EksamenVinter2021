@@ -59,6 +59,15 @@ public class TaskController {
         return "newTask";
     }
 
+    @GetMapping("/subproject/{thisSubproject}")
+    public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
+        int id = Integer.parseInt(thisSubproject);
+        model.addAttribute("Subproject", sps.getSubprojectObject(id));
+        model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
+        return "suproject_html/showSubproject";
+    }
+
+
 
     @GetMapping("/taskEditor")
     public String taskEditor(Model m){

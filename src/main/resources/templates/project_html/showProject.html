@@ -32,7 +32,7 @@
     <td th:text="${Project.getDescription()}"></td>
     <td th:text="${Project.getProjectId()}"></td>
 <td>
-    <a th:href="@{/deleteSubtask/{id}(id=${Project.getProjectId()})}">Create subproject</a>
+    <a th:href="@{/newSubproject/{id}(id=${Project.getProjectId()})}">Create subproject</a>
 </td>
 
 <td>

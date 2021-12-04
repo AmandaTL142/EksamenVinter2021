@@ -40,9 +40,9 @@ public class SubprojectController {
     }
 
     //Denne virker
-    @GetMapping("/newSubproject")
-    public String newSubproject(Model model) {
-        model.addAttribute("projects", projectArray);
+    @GetMapping("/newSubproject/{thisProjectId}")
+    public String newSubproject(@PathVariable("thisProjectId") int thisProjectId) {
+        projectConnectedToSubproject = pr.getProjectFromDatabase(thisProjectId);
         return "suproject_html/newSubproject";
     }
 
@@ -53,11 +53,11 @@ public class SubprojectController {
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
-        String projectTitle = webr.getParameter("subproject-projecttitle-input");
+        //String projectTitle = webr.getParameter("subproject-projecttitle-input");
         String status = webr.getParameter("subproject-status-input");
 
-        int projectId = pr.getProjectId(projectTitle);
-
+        //int projectId = pr.getProjectId(projectTitle);
+        int projectId = projectConnectedToSubproject.getProjectId();
 
         //Create subproject-object
         Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, projectId);
@@ -71,9 +71,9 @@ public class SubprojectController {
     }
 
     //Denne virker
-    @GetMapping("/deleteSubproject/{subtaskId}")
-    public String deleteSubproject(@PathVariable String subtaskId) throws SQLException {
-        int id = Integer.parseInt(subtaskId);
+    @GetMapping("/deleteSubproject/{subprojectId}")
+    public String deleteSubproject(@PathVariable String subprojectId) throws SQLException {
+        int id = Integer.parseInt(subprojectId);
         sps.deleteSubprojectFromDatabase(id);
         return "confirmationPage";
     }

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.SQLException;
+
 @Controller
 public class ProjectController {
 
@@ -87,6 +89,8 @@ public class ProjectController {
         String description = webr.getParameter("project-description-input");
         String costumerName = webr.getParameter("project-costumer-input");
         String status = webr.getParameter("project-status-input");
+        String startDate = webr.getParameter("project-startdate-input");
+        String endDate = webr.getParameter("project-enddate-input");
 
 
         if (title!="" && title!=null){
@@ -119,9 +123,24 @@ public class ProjectController {
 
         editThisProject.setStatus(status);
 
+        if (startDate!="" && startDate!=null){
+            editThisProject.setStartDate(startDate);
+        }
+
+        if (endDate!="" && endDate!=null){
+            editThisProject.setEndDate(endDate);
+        }
+
         //Update project in DB
         pr.updateProjectInDatabase(editThisProject);
 
+        return "confirmationPage";
+    }
+
+    @GetMapping("/deleteProject/{projectId}")
+    public String deleteSubproject(@PathVariable("projectId") String projectId) throws SQLException {
+        int id = Integer.parseInt(projectId);
+        ps.deleteProjectFromDatabase(id);
         return "confirmationPage";
     }
 

@@ -2,7 +2,9 @@ package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
+import com.example.eksamenvinter2021.Utility.JDBC;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 
 public class ProjectService {
@@ -30,6 +32,10 @@ public class ProjectService {
 
     public Project getProjectObject(int projectId) {
         return pr.getProjectFromDatabase(projectId);
+    }
+
+    public void deleteProjectFromDatabase(int id) {
+        pr.deleteProjectFromDatabase(id);
     }
 
 }

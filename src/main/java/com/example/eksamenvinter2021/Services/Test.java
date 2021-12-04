@@ -103,12 +103,18 @@ public class Test {
         //System.out.println(spr.showSubprojectLinkedToProject(15));
         //System.out.println(sps.showSubprojectLinkedToProject(15));
         //System.out.println(ps.getProjectObject(15));
-        //pr.updateProjectInDatabase(Project p)
+        Project p = new Project("01:02", "2012.12.12", "Ikke påbegyndt", 1000, 5);
+        p.setProjectId(125);
+        pr.updateProjectInDatabase(p);
         //System.out.println(ps.getProjectObject(15));
 
+        /*
         Subproject sp = new Subproject("13:13", "2012.12.12", "Ikke påbegyndt", 15);
         System.out.println(sp.getStartDate());
         spr.insertSubprojectIntoDatabase(sp);
+
+         */
+        //ps.deleteProjectFromDatabase(135);
     }
     }
 

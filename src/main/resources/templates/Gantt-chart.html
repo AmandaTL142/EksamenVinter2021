@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            let projects = [[${projects}]];
+            var data = new google.visualization.DataTable();
+
+            data.addColumn('string', 'Task ID');
+            data.addColumn('string', 'Task Name');
+            data.addColumn('string', 'Resource');
+            data.addColumn('date', 'Start Date');
+            data.addColumn('date', 'End Date');
+            data.addColumn('number', 'Duration');
+            data.addColumn('number', 'Percent Complete');
+            data.addColumn('string', 'Dependencies');
+
+            for (let project = 0; project < projects.length; project++) {
+                let projectStartDate = Date.parse(projects[project].startDate);
+                let projectDeadLine = Date.parse(projects[project].endDate);
+
+
+                data.addRows
+                ([
+                    [projects[project].projectId.toString(), "PROJECT: " + projects[project].name, null, new Date(projectStartDate), new Date(projectDeadLine), null, status, null]
+                ]);
+
+
+                var options = {
+                    height: 400,
+                    gantt: {
+                        trackHeight: 30
+                    }
+                };
+
+                var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+                chart.draw(data, options);
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="chart_div"></div>
+</body>
+</html>
+
+

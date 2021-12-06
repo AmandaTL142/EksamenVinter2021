@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectRepo {
 
@@ -150,8 +151,7 @@ public class ProjectRepo {
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next())
-            {
+            while (rs.next()) {
                 int projectId = rs.getInt("project_id");
                 String title = rs.getString("title");
                 String deadline = rs.getString("project_deadline");
@@ -171,11 +171,10 @@ public class ProjectRepo {
                 projectArray.add(p);
             }
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Couldn't get projects from database");
             System.out.println(e.getMessage());
         }
         return projectArray;
     }
-
 }

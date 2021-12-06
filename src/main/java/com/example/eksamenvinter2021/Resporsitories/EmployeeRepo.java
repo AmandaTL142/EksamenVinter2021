@@ -39,6 +39,7 @@ public class EmployeeRepo {
                 role = rs.getString("role");
             }
             employee = new Employee(name, password, competence, role);
+            employee.setEmployeeId(id); //Indsat af Amanda
 
         } catch(SQLException e){
             System.out.println("Couldn't find the employee with id: " + id + " from the database");

@@ -6,16 +6,28 @@
 </head>
 <body>
 
+<h1 ><td th:text="${project.getProjectTitle()}"></h1>
+<h1>Edit employees</h1>
+
 <form method="POST" action="/addEmployeeToProjectInput">
+
+    <h2>Connected employees</h2>
 <tr
         th:each="employee : ${projectEmployees}">
     <td th:text="${employee.getEmployeeName()}"></td>
+
+    <!--This remove-button is a work in progress-->
+    <td>
+        <a th:href="@{/removeEmployee/{id}(id=${employee.getEmployeeId()})}"
+           onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
+    </td>
     <br>
 
 </tr>
 
+    <br>
 
-<br>
+    <h2>Add employee</h2>
 <td>
     <select th:name="project-employeeId-input">
 
@@ -27,7 +39,7 @@
 </td>
 </br>
 
-    <br><input type="submit" value="Opret"></br>
+    <br><input type="submit" value="Add employee"></br>
 </form>
 
 </body>

@@ -169,6 +169,7 @@ public class ProjectController {
         ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
         model.addAttribute("projectEmployees", projectEmployees);
         editThisProject = ps.getProjectObject(thisProject);
+        model.addAttribute("project", editThisProject);
         return "project_html/addEmployeeToProject.html";
     }
 
@@ -182,5 +183,6 @@ public class ProjectController {
         ltr.insertLinkTabelWithEmployeeAndCustomerIntoDatabase(employeeId, projectId);
         return "confirmationPage";
     }
+
 
 }

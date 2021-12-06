@@ -1,12 +1,8 @@
 package com.example.eksamenvinter2021.Services;
 
-import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
-
-import java.util.ArrayList;
 
 public class Test {
 
@@ -117,7 +113,7 @@ public class Test {
 
          */
         //ps.deleteProjectFromDatabase(135);
-        System.out.println(ltr.getEmployeesProjectsFromDB(5));
+        System.out.println(ltr.getProjectsConnectedToEmployee(5));
     }
     }
 

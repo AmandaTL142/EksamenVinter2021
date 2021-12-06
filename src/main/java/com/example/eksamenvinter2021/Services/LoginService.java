@@ -1,11 +1,12 @@
 package com.example.eksamenvinter2021.Services;
 
+import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Utility.JDBC;
-
 import javax.servlet.http.HttpSession;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class LoginService {
     //LoginService should contact database via repository, not in this class
@@ -60,5 +61,9 @@ public class LoginService {
 
     public static boolean validManagerLogin(HttpSession session) {
         return (boolean) session.getAttribute("manager");
+    }
+
+    public static boolean notLoggedIn(HttpSession session) {
+        return session.getAttribute("employee") == null;
     }
 }

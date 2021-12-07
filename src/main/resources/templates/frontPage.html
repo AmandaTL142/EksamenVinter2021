@@ -31,12 +31,12 @@
         <td th:text="${project.getStartDate()}"></td>
         <td th:text="${project.getEndDate()}"></td>
         <td>
-            <a th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
+            <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
         </td>
 
         <td>
-            <a th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}"
-               onclick="return confirm('Are you sure you want to delete this subproject?');">Delete</a>
+            <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}"
+               onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
         </td>
 
     </tr>

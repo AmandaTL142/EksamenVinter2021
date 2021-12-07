@@ -56,6 +56,20 @@ public class TimeMethods {
             System.out.println("Final project deadline could not be calculated");
             System.out.println(e.getMessage());
         }
-
     }
+
+    //GetTotalHours
+    /*Public int getTotalHours (project p) {
+        calculates total hours spend by adding together all reported hours spent by employees
+    }*/
+
+    /*Public int hours worked employee (employee e, project p) {
+        totals hours spend by one employee on one project
+    }*/
+
+    /*Public int hours spent on all projects (employee e) {
+        Shows total hours used on all projects by an employee
+    }*
+    */
+
 }

@@ -18,7 +18,11 @@ class EksamenVinter2021ApplicationTests {
     @Test
     void contextLoads() {
         daysBetween("2021-11-29", "2021-12-01");//MySQL gemmer datoer i formatet YYYY-MM-DD
+
+
     }
+
+
 
     //Find project_end dato:
     //SELECT min(startDate) FROM projects WHERE project_id = X

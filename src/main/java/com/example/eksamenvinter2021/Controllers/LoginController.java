@@ -17,6 +17,7 @@ public class LoginController {
     //Her laver vi noget log-in logik
     //Benyt sessions
     EmployeeService es = new EmployeeService();
+    LoginService ls = new LoginService();
 
     @GetMapping("/")
     public String login() {
@@ -47,14 +48,12 @@ public class LoginController {
 
     @GetMapping("/employee")
     public String employee(HttpSession session) {
-        if (notLoggedIn(session)) {
-            return "error";
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
         } else {
             return "employee";
         }
     }
 
-    public boolean notLoggedIn(HttpSession session) {
-        return session.getAttribute("employee") == null;
-    }
+
 }

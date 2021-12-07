@@ -51,4 +51,19 @@ public class Employee {
     }
 
     public Employee(){}
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", employeeName='" + employeeName + '\'' +
+                ", password='" + password + '\'' +
+                ", competence='" + competence + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 }

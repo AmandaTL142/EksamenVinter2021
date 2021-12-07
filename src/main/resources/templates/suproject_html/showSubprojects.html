@@ -58,7 +58,8 @@
         </td>
 
         <td>
-            <a th:href="@{/deleteSubproject/{id}(id=${subproject.getSubprojectId()})}"> Delete </a>
+            <a th:href="@{/deleteSubproject/{id}(id=${subproject.getSubprojectId()})}"
+               onclick="return confirm('Are you sure you want to delete this subproject?');">Delete</a>
         </td>
 
     </tr>

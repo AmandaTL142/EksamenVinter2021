@@ -1,15 +1,19 @@
 package com.example.eksamenvinter2021.Controllers;
 
+import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
+import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
+import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-
-import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -17,13 +21,16 @@ public class ProjectController {
     ProjectService ps = new ProjectService();
     ProjectRepo pr = new ProjectRepo();
     CustomerRepo cr = new CustomerRepo();
+    LinkTabelRepo ltr = new LinkTabelRepo();
     Project editThisProject = new Project();
+    EmployeeRepo er = new EmployeeRepo();
+    EmployeeService es = new EmployeeService();
 
     //Denne virker
     @GetMapping("/project/{thisProject}")
-    public String project(@PathVariable("thisProject") String thisProject, Model model) {
-        int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.getProjectObject(id));
+    public String project(@PathVariable("thisProject") int thisProject, Model model) {
+        //int id = Integer.parseInt(thisProject);
+        model.addAttribute("Project", ps.getProjectObject(thisProject));
         return "project_html/showProject";
     }
 
@@ -73,10 +80,10 @@ public class ProjectController {
 
     //Denne virker
     @GetMapping("/editProject/{thisProject}")
-    public String editProjectGetProject(@PathVariable("thisProject") String thisProject, Model model) {
-        int id = Integer.parseInt(thisProject);
-        editThisProject = ps.getProjectObject(id);
-        model.addAttribute("Project", ps.getProjectObject(id));
+    public String editProjectGetProject(@PathVariable("thisProject") int thisProject, Model model) {
+        //int id = Integer.parseInt(thisProject);
+        editThisProject = ps.getProjectObject(thisProject);
+        model.addAttribute("Project", ps.getProjectObject(thisProject));
         return "project_html/editProject";
     }
 
@@ -138,10 +145,44 @@ public class ProjectController {
     }
 
     @GetMapping("/deleteProject/{projectId}")
-    public String deleteSubproject(@PathVariable("projectId") String projectId) throws SQLException {
+    public String deleteSubproject(@PathVariable("projectId") String projectId){
         int id = Integer.parseInt(projectId);
         ps.deleteProjectFromDatabase(id);
         return "confirmationPage";
     }
+
+    //Virker
+    @GetMapping("/getProjectsForEmployee")
+    public String getProjectsForEmployee(HttpSession session, Model model) {
+        Employee employee;
+        employee = (Employee) session.getAttribute("employee");
+        int employeeId = employee.getEmployeeId();
+        ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
+        model.addAttribute("Projects", projects);
+        return "fragments/projectsConnectedToEmployee.html";
+    }
+
+    @GetMapping("/addEmployeeToProject/{thisProject}")
+    public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
+        ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+        model.addAttribute("allEmployees", allEmployees);
+        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+        model.addAttribute("projectEmployees", projectEmployees);
+        editThisProject = ps.getProjectObject(thisProject);
+        model.addAttribute("project", editThisProject);
+        return "project_html/addEmployeeToProject.html";
+    }
+
+
+
+    @RequestMapping("/addEmployeeToProjectInput")
+    public String addEmployeeToProject(WebRequest webr) {
+        String employeeIdString = webr.getParameter("project-employeeId-input");
+        int employeeId = Integer.parseInt(employeeIdString);
+        int projectId = editThisProject.getProjectId();
+        ltr.insertLinkTabelWithEmployeeAndCustomerIntoDatabase(employeeId, projectId);
+        return "confirmationPage";
+    }
+
 
 }

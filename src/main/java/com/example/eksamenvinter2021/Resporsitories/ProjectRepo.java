@@ -177,4 +177,41 @@ public class ProjectRepo {
         }
         return projectArray;
     }
+
+    public ArrayList<Project> getProjectsInArrayForGantt() {
+        ArrayList<Project> projectArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.projects;");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                String title = rs.getString("title");
+                String deadline = rs.getString("project_deadline");
+                String status = rs.getString("status");
+                double price = Double.parseDouble(rs.getString("base_price"));
+                int customerId = rs.getInt("customer_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Project p = new Project(projectId, title, deadline, status, price, customerId, startDate, endDate);
+                p.setProjectId(projectId);
+                p.setProjectTitle(title);
+                p.setProjectDeadline(deadline);
+                p.setStatus(status);
+                p.setBasePrice(price);
+                p.setCustomerId(customerId);
+                p.setStartDate(startDate);
+                p.setEndDate(endDate);
+
+                projectArray.add(p);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return projectArray;
+    }
 }

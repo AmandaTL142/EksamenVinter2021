@@ -9,9 +9,10 @@ public class GanttController {
     ProjectRepo pr = new ProjectRepo();
 
     @GetMapping("/gantt")
-    public String gant(Model model)
-    {
-        model.addAttribute("projects", pr.getProjectsInArray());
+    public String gant(Model model) {
+
+        model.addAttribute("projects", pr.getProjectsInArrayForGantt());
+        System.out.println(pr.getProjectsInArrayForGantt().toString());
         return "/Gantt-chart";
     }
 }

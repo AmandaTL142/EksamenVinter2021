@@ -22,14 +22,19 @@
             data.addColumn('string', 'Dependencies');
 
             for (let project = 0; project < projects.length; project++) {
+
                 let projectStartDate = Date.parse(projects[project].startDate);
                 let projectDeadLine = Date.parse(projects[project].endDate);
+
+                let status = [[${project.status}]];
+                let projectId = [[${project.projectId}]];
 
 
                 data.addRows
                 ([
-                    [projects[project].projectId.toString(), "PROJECT: " + projects[project].name, null, new Date(projectStartDate), new Date(projectDeadLine), null, status, null]
+                    [projects[project].projectId.toString(), "Project: " + projects[project].title, projects[project].customerId, new Date(projectStartDate), new Date(projectDeadLine), null, status, null]
                 ]);
+
 
 
                 var options = {
@@ -48,6 +53,8 @@
 </head>
 <body>
 <div id="chart_div"></div>
+<div> </div>
+
 </body>
 </html>
 

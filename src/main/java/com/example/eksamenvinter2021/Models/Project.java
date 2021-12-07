@@ -92,11 +92,24 @@ public class Project {
     }
 
     public Project(String title, String projectDeadline, String status, double basePrice, int customerId) {
-    this.projectTitle = title;
-    this.projectDeadline = projectDeadline;
-    this.status = status;
-    this.basePrice = basePrice;
-    this.customerId = customerId;
+        this.projectTitle = title;
+        this.projectDeadline = projectDeadline;
+        this.status = status;
+        this.basePrice = basePrice;
+        this.customerId = customerId;
+    }
+
+
+    public Project(int projectId, String title, String projectDeadline, String status, double basePrice, int customerId, String startDate, String endDate) {
+        this.projectId = projectId;
+        this.projectTitle = title;
+        this.projectDeadline = projectDeadline;
+        this.status = status;
+        this.basePrice = basePrice;
+        this.totalTime = totalTime;
+        this.customerId = customerId;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public Project() {

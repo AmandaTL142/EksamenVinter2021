@@ -1,10 +1,8 @@
 package com.example.eksamenvinter2021.Services;
 
-import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
-
-import java.util.ArrayList;
 
 public class Test {
 
@@ -13,6 +11,7 @@ public class Test {
         SubprojectRepo spr = new SubprojectRepo();
         SubprojectService sps = new SubprojectService();
         ProjectService ps = new ProjectService();
+        LinkTabelRepo ltr = new LinkTabelRepo();
         /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("UPDATE `heroku_7aba49c42d6c0f0`." +
@@ -102,8 +101,19 @@ public class Test {
         //System.out.println(spr.showSubprojectLinkedToProject(15));
         //System.out.println(sps.showSubprojectLinkedToProject(15));
         //System.out.println(ps.getProjectObject(15));
-        //pr.updateProjectInDatabase(Project p)
-        System.out.println(ps.getProjectObject(15));
+        //Project p = new Project("01:02", "2012.12.12", "Ikke påbegyndt", 1000, 5);
+        //p.setProjectId(125);
+        //pr.updateProjectInDatabase(p);
+        //System.out.println(ps.getProjectObject(15));
+
+        /*
+        Subproject sp = new Subproject("13:13", "2012.12.12", "Ikke påbegyndt", 15);
+        System.out.println(sp.getStartDate());
+        spr.insertSubprojectIntoDatabase(sp);
+
+         */
+        //ps.deleteProjectFromDatabase(135);
+        System.out.println(ltr.getProjectsConnectedToEmployee(5));
     }
     }
 

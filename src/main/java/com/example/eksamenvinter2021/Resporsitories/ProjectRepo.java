@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectRepo {
 
@@ -15,15 +16,18 @@ public class ProjectRepo {
     public void insertProjectIntoDatabase(Project p) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("INSERT INTO heroku_7aba49c42d6c0f0.projects (`title`, `project_deadline`, " +
-                            "`status`, `base_price`, `customer_id`, `description`) " +
-                            "VALUES (?, ?, ?, ?, ?, ?);");
+                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`projects` " +
+                            "(`title`, `project_deadline`, `status`, `base_price`, `customer_id`, " +
+                            "`description`, `start_date`, `end_date`) VALUES " +
+                            "(?,?,?,?,?,?,?,?);");
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
             stmt.setDouble(4, p.getBasePrice());
             stmt.setInt(5, p.getCustomerId());
             stmt.setString(6, p.getDescription());
+            stmt.setString(7, p.getStartDate());
+            stmt.setString(8, p.getEndDate());
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Project could not be inserted into database");
@@ -41,34 +45,19 @@ public class ProjectRepo {
             ResultSet rs = stmt.executeQuery();
             rs.next();
             String title = rs.getString("title");
-            String date = rs.getString("project_deadline");
+            String deadline = rs.getString("project_deadline");
             String status = rs.getString("status");
             double price = Double.parseDouble(rs.getString("base_price"));
             int customerId = rs.getInt("customer_id");
-            p = new Project(title, date, status, price, customerId);
+            String description = rs.getString("description");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
 
-            //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
-            // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
-
-            /*
-            //Virker ikke
-            if (rs.getDouble("total_price") != 0){
-                p.setTotalPrice(rs.getDouble("total_price"));
-            }
-
-            //Virker ikke
-            if (rs.getString("total_time") != null){
-                p.setTotalPrice(rs.getInt("total_time"));
-            }
-
-             */
-
-            //Virker!
-            if (rs.getString("description") != null){
-                p.setDescription(rs.getString("description"));
-            }
-
-            p.setProjectId(rs.getInt("project_id"));
+            p = new Project(title, deadline, status, price, customerId);
+            p.setProjectId(id);
+            p.setDescription(description);
+            p.setStartDate(startDate);
+            p.setEndDate(endDate);
 
         } catch(SQLException e){
             System.out.println("Couldn't get project with id " + id + " from database");
@@ -80,8 +69,9 @@ public class ProjectRepo {
     //Testet i "test"
     public void deleteProjectFromDatabase(int id) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE (`project_id` = '" + id + "');");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
+            stmt.setInt(1, id);
+                    //("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE (`project_id` = " + id + ");");
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Couldn't delete project with id " + id + " from database");
@@ -90,37 +80,23 @@ public class ProjectRepo {
 
     }
 
-    //Skal jeg evt. lave if-statements til de attributter, der ikke er NN?
+
     public void updateProjectInDatabase(Project p) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
-                            "`status` = ?, `base_price` = ?, `description` = ? WHERE (`project_id` = ?);");
+                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline`= ?, " +
+                            "`status` = ?, `base_price` = ?, `customer_id` = ?, `description` = ?, " +
+                            "`start_date` = ?, `end_date` = ? WHERE (`project_id` = ?);");
             stmt.setString(1, p.getProjectTitle());
             stmt.setString(2, p.getProjectDeadline());
             stmt.setString(3, p.getStatus());
             stmt.setDouble(4, p.getBasePrice());
-            stmt.setString(5, p.getDescription());
-            stmt.setInt(6, p.getProjectId());
-            stmt.executeUpdate();
-
-            /*
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline` = ?, " +
-                            "`status` = ?, `base_price` = ?, `total_price` = ?, `total_time` = ?, " +
-                            "`customer_id` = ?, `description` = ? WHERE (`project_id` = ?;");
-            stmt.setString(1, p.getProjectTitle());
-            stmt.setString(2, p.getProjectDeadline());
-            stmt.setString(3, p.getStatus());
-            stmt.setDouble(4, p.getBasePrice());
-            stmt.setDouble(5, p.getTotalPrice());
-            stmt.setInt(6, p.getTotalTime());
-            stmt.setInt(7, p.getCustomerId());
-            stmt.setString(8, p.getDescription());
+            stmt.setInt(5, p.getCustomerId());
+            stmt.setString(6, p.getDescription());
+            stmt.setString(7, p.getStartDate());
+            stmt.setString(8, p.getEndDate());
             stmt.setInt(9, p.getProjectId());
             stmt.executeUpdate();
-
-             */
 
         } catch (Exception e) {
             System.out.println("Couldn't update project with id " + p.getProjectId() + " in database");
@@ -128,6 +104,7 @@ public class ProjectRepo {
         }
 
     }
+
 
     public int getProjectId(String projectTitle) {
         try {
@@ -142,11 +119,12 @@ public class ProjectRepo {
         } catch(SQLException e){
             System.out.println("Couldn't get id for with title " + projectTitle + " from database");
             System.out.println(e.getMessage());
+
+            return 0;
         }
-        return 0;
     }
 
-
+    //Test denne
     public ArrayList<String> getProjectNamesInArray() {
         ArrayList<String> projectNames = new ArrayList<>();
         try {
@@ -168,49 +146,72 @@ public class ProjectRepo {
     //Den her metode virker!
     public ArrayList<Project> getProjectsInArray() {
         ArrayList<Project> projectArray = new ArrayList<>();
-        int count = 0;
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.projects WHERE project_id>0;");
-            //PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.projects WHERE title=\"Titeleksempel\";");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
-            //rs.next();
-            System.out.println("rs.next giver: " + rs.next());
 
-            while(rs.next());
-            {
-
-                System.out.println("Der printes");
-                /*
-                //Project p = new Project();
-                //p.setProjectTitle(rs.getString("title"));
-                //System.out.println(rs.getString(1) + " = smukt");
+            while (rs.next()) {
+                int projectId = rs.getInt("project_id");
                 String title = rs.getString("title");
-                String date = rs.getString("project_deadline");
+                String deadline = rs.getString("project_deadline");
                 String status = rs.getString("status");
                 double price = Double.parseDouble(rs.getString("base_price"));
                 int customerId = rs.getInt("customer_id");
-                //p.setProjectTitle(title);
-                //p.setBasePrice(price);
-                //p.setProjectDeadline(date);
-                //p.setStatus(status);
-                //p.setCustomerId(customerId);
-                Project p = new Project(title, date, status, price, customerId);
+                String description = rs.getString("description");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Project p = new Project(title, deadline, status, price, customerId);
+                p.setProjectId(projectId);
+                p.setDescription(description);
+                p.setStartDate(startDate);
+                p.setEndDate(endDate);
+
                 projectArray.add(p);
-
-                */
-
-                System.out.println("title er kolonne nr.: " + rs.findColumn("title"));
-                System.out.println("status er kolonne nr.: " + rs.findColumn("status"));
-                System.out.println("row: " + rs.getRow());
-                count ++;
             }
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Couldn't get projects from database");
             System.out.println(e.getMessage());
         }
-        System.out.println(count);
         return projectArray;
     }
 
+    public ArrayList<Project> getProjectsInArrayForGantt() {
+        ArrayList<Project> projectArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.projects;");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                String title = rs.getString("title");
+                String deadline = rs.getString("project_deadline");
+                String status = rs.getString("status");
+                double price = Double.parseDouble(rs.getString("base_price"));
+                int customerId = rs.getInt("customer_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Project p = new Project(projectId, title, deadline, status, price, customerId, startDate, endDate);
+                p.setProjectId(projectId);
+                p.setProjectTitle(title);
+                p.setProjectDeadline(deadline);
+                p.setStatus(status);
+                p.setBasePrice(price);
+                p.setCustomerId(customerId);
+                p.setStartDate(startDate);
+                p.setEndDate(endDate);
+
+                projectArray.add(p);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return projectArray;
+    }
 }

@@ -6,6 +6,7 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EmployeeRepo {
     public void insertEmployeeIntoDatabase(Employee employee) {
@@ -39,6 +40,7 @@ public class EmployeeRepo {
                 role = rs.getString("role");
             }
             employee = new Employee(name, password, competence, role);
+            employee.setEmployeeId(id); //Indsat af Amanda
 
         } catch(SQLException e){
             System.out.println("Couldn't find the employee with id: " + id + " from the database");
@@ -74,4 +76,31 @@ public class EmployeeRepo {
         }
 
     }
+
+    //Lavet af Amanda
+    public ArrayList<Employee> getAllEmployeesFromDatabase() {
+        Employee employee = new Employee();
+        ArrayList<Employee> employeeList = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+                    "SELECT * FROM heroku_7aba49c42d6c0f0.employees;");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("employee_id");;
+                String name = rs.getString("name");
+                String competence = rs.getString("competence");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                employee = new Employee(name, password, competence, role);
+                employee.setEmployeeId(id);
+                employeeList.add(employee);
+            }
+
+        } catch(SQLException e){
+            System.out.println("Couldn't find employees in database");
+            System.out.println(e.getMessage());
+        }
+        return employeeList;
+    }
+
 }

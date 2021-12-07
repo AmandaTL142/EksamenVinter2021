@@ -9,6 +9,8 @@ public class Subproject {
     private String subprojectDeadline;
     private String subprojectStatus;
     private int projectId;
+    private String startDate;
+    private String endDate;
 
     public Subproject() {
     }
@@ -79,5 +81,21 @@ public class Subproject {
                 ", subprojectStatus='" + subprojectStatus + '\'' +
                 ", projectId=" + projectId +
                 '}';
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

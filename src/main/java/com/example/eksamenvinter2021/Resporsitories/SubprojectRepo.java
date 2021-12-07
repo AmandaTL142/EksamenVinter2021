@@ -11,17 +11,19 @@ import java.util.ArrayList;
 
 public class SubprojectRepo {
 
-    public void insertSubprojectIntoDatabase(Subproject p) {
+    public void insertSubprojectIntoDatabase(Subproject sp) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`subprojects` (`title`, `description`, " +
-                            "`subproject_deadline`, `status`, `project_id`) " +
-                            "VALUES (?, ?, ?, ?, ?);");
-            stmt.setString(1, p.getSubprojectTitle());
-            stmt.setString(2, p.getSubprojectDescription());
-            stmt.setString(3, p.getSubprojectDeadline());
-            stmt.setString(4, p.getSubprojectStatus());
-            stmt.setInt(5, p.getProjectId());
+                            "`subproject_deadline`, `status`, `project_id`, `start_date`, `end_date`) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?);");
+            stmt.setString(1, sp.getSubprojectTitle());
+            stmt.setString(2, sp.getSubprojectDescription());
+            stmt.setString(3, sp.getSubprojectDeadline());
+            stmt.setString(4, sp.getSubprojectStatus());
+            stmt.setInt(5, sp.getProjectId());
+            stmt.setString(6, sp.getStartDate());
+            stmt.setString(7, sp.getEndDate());
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Subproject could not be inserted into database");
@@ -29,7 +31,7 @@ public class SubprojectRepo {
         }
     }
 
-    //Denne virker
+    //Denne virker 2/12
     public Subproject getSubprojectFromDatabase(int id) {
         Subproject sp = new Subproject();
         try {
@@ -38,19 +40,28 @@ public class SubprojectRepo {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
+            int subprojectId = rs.getInt("subproject_id");
             String title = rs.getString("title");
+            String description = rs.getString("description");
             String date = rs.getString("subproject_deadline");
             String status = rs.getString("status");
             int projectId = rs.getInt("project_id");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
             sp = new Subproject(title, date, status, projectId);
+            sp.setSubprojectId(subprojectId);
 
-            //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
-            // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
-            if (rs.getString("description") != null){
-                sp.setSubprojectDescription(rs.getString("description"));
+            if (description != null && description != ""){
+                sp.setSubprojectDescription(description);
             }
 
-            sp.setSubprojectId(rs.getInt("subproject_id"));
+            if (startDate != null && startDate != ""){
+                sp.setStartDate(startDate);
+            }
+
+            if (endDate != null && endDate != ""){
+                sp.setEndDate(endDate);
+            }
 
         } catch(SQLException e){
             System.out.println("Couldn't get subproject with id " + id + " from database");
@@ -75,14 +86,16 @@ public class SubprojectRepo {
     public void updateSubprojectInDatabase(Subproject sp) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("UPDATE `heroku_7aba49c42d6c0f0`.`subprojects` SET `title` = ?, " +
-                            "`description` = ?, `subproject_deadline` = ?, " +
-                            "`status` = ? WHERE (`subproject_id` = ?);");
+                    ("UPDATE `heroku_7aba49c42d6c0f0`.`subprojects` SET `title` = ?, `description` = ?, " +
+                            "`subproject_deadline` = ?, `status` = ?, `start_date` = ?, `end_date` = ? " +
+                            "WHERE (`subproject_id` = ?);");
             stmt.setString(1, sp.getSubprojectTitle());
             stmt.setString(2, sp.getSubprojectDescription());
             stmt.setString(3, sp.getSubprojectDeadline());
             stmt.setString(4, sp.getSubprojectStatus());
-            stmt.setInt(5, sp.getSubprojectId());
+            stmt.setString(5, sp.getStartDate());
+            stmt.setString(6, sp.getEndDate());
+            stmt.setInt(7, sp.getSubprojectId());
             stmt.executeUpdate();
 
         } catch (Exception e) {
@@ -92,6 +105,7 @@ public class SubprojectRepo {
 
     }
 
+    /* Denne skal ikke bruges, men den fungerer fint
     public int getSubprojectId(String subprojectTitle) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subproject_id FROM " +
@@ -109,9 +123,11 @@ public class SubprojectRepo {
         return 0;
     }
 
-    public ArrayList<Subproject> showSubprojectLinkedToProject(int thisProjectId) {
-        Subproject sp = new Subproject();
-        ArrayList<Subproject> subprojects = new ArrayList<Subproject>();
+     */
+
+    public ArrayList<Subproject> getSubprojectsLinkedToProject(int thisProjectId) {
+        Subproject sp;
+        ArrayList<Subproject> subprojects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
@@ -119,18 +135,30 @@ public class SubprojectRepo {
             stmt.setInt(1, thisProjectId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
+
+                int subprojectId = rs.getInt("subproject_id");
                 String title = rs.getString("title");
+                String description = rs.getString("description");
                 String date = rs.getString("subproject_deadline");
                 String status = rs.getString("status");
                 int projectId = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
                 sp = new Subproject(title, date, status, projectId);
-                //Kan ikke sætte total_price til null i condition, så det virker nok ikke, da databasen forventes at
-                // returnere null og ikke 0. Jeg vil gerne teste dette, inden jeg finder på en mere kompliceret løsning.
-                if (rs.getString("description") != null){
-                    sp.setSubprojectDescription(rs.getString("description"));
+                sp.setSubprojectId(subprojectId);
+
+                if (description != null && description != ""){
+                    sp.setSubprojectDescription(description);
                 }
 
-                sp.setSubprojectId(rs.getInt("subproject_id"));
+                if (startDate != null && startDate != ""){
+                    sp.setStartDate(startDate);
+                }
+
+                if (endDate != null && endDate != ""){
+                    sp.setEndDate(endDate);
+                }
+
                 subprojects.add(sp);
             }
 

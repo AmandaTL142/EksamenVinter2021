@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delprojekt</title>
+    <title>Title</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/static/styles/stylesheets/images/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/static/styles/stylesheets/images/favicon/apple-icon-60x60.png">
@@ -24,28 +24,6 @@
 
 </head>
 <body>
-
-<h1><td th:text="${Project.getProjectTitle()}"></h1>
-
-<h1 ><td th:text="${Subproject.getSubprojectTitle()}"></h1>
-
-<tr>
-    <th >Description</th>
-    <th >Description</th>
-    <th >Deadline</th>
-    <th >Status</th>
-    <th>Start date</th>
-    <th>End date</th>
-</tr>
-
-<tr>
-    <td th:text="${Subproject.getSubprojectDescription()}"></td>
-    <td th:text="${Subproject.getSubprojectDeadline()}"></td>
-    <td th:text="${Subproject.getSubprojectStatus()}"></td>
-    <td th:text="${Subproject.getStartDate()}"></td>
-    <td th:text="${Subproject.getEndDate()}"></td>
-
-</tr>
 
 </body>
 </html>

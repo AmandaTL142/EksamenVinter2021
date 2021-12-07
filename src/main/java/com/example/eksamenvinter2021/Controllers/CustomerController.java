@@ -36,6 +36,6 @@ public class CustomerController {
         int customerId = cr.getCustomerIdFromDatabase(costumerName);
         currentCustomer.setCustomerId(customerId);
 
-        return "redirect:/newCustomer";
+        return "confirmationPage";
     }
 }

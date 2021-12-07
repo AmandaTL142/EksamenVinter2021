@@ -189,24 +189,25 @@ public class ProjectRepo {
             while (rs.next()) {
                 int projectId = rs.getInt("project_id");
                 String title = rs.getString("title");
-                String deadline = rs.getString("project_deadline");
                 String status = rs.getString("status");
-                double price = Double.parseDouble(rs.getString("base_price"));
                 int customerId = rs.getInt("customer_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
-                Project p = new Project(projectId, title, deadline, status, price, customerId, startDate, endDate);
+                Project p = new Project(projectId, title, status, customerId, startDate, endDate);
                 p.setProjectId(projectId);
                 p.setProjectTitle(title);
-                p.setProjectDeadline(deadline);
                 p.setStatus(status);
-                p.setBasePrice(price);
                 p.setCustomerId(customerId);
                 p.setStartDate(startDate);
                 p.setEndDate(endDate);
 
-                projectArray.add(p);
+
+                if(startDate != null && !startDate.isEmpty() ) {
+                    if (endDate != null && !endDate.isEmpty()) {
+                        projectArray.add(p);
+                    }
+                }
             }
 
         } catch (SQLException e) {

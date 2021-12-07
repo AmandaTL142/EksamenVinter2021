@@ -1,7 +1,5 @@
 package com.example.eksamenvinter2021.Models;
 
-import java.util.Date;
-
 public class Project {
     private String projectTitle;
     private String projectDeadline;
@@ -98,13 +96,10 @@ public class Project {
     }
 
 
-    public Project(int projectId, String title, String projectDeadline, String status, double basePrice, int customerId, String startDate, String endDate) {
+    public Project(int projectId, String title, String status, int customerId, String startDate, String endDate) {
         this.projectId = projectId;
         this.projectTitle = title;
-        this.projectDeadline = projectDeadline;
         this.status = status;
-        this.basePrice = basePrice;
-        this.totalTime = totalTime;
         this.customerId = customerId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -125,6 +120,8 @@ public class Project {
                 ", customerId=" + customerId +
                 ", description='" + description + '\'' +
                 ", projectId=" + projectId +
+                ", startDate=" + startDate + '\'' +
+                ", endDate=" + endDate +
                 '}';
     }
 

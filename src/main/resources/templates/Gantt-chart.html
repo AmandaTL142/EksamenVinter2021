@@ -9,9 +9,7 @@
 
         function drawChart() {
 
-            let projects = [[${projects}]];
             var data = new google.visualization.DataTable();
-
             data.addColumn('string', 'Task ID');
             data.addColumn('string', 'Task Name');
             data.addColumn('string', 'Resource');
@@ -21,19 +19,41 @@
             data.addColumn('number', 'Percent Complete');
             data.addColumn('string', 'Dependencies');
 
+            /*
+            let projects = [[${projects}]];
+
             for (let project = 0; project < projects.length; project++) {
 
-                let projectStartDate = Date.parse(projects[project].startDate);
-                let projectDeadLine = Date.parse(projects[project].endDate);
+                let currentProjectId =  projects[project].projectId;
+                let currentProjectName = projects[project].projectTitle;
+                let projectStatus = projects[project].status;
+                let currentCustomerId = projects[project].customerId;
+                let projectStartDate = new Date.parse(projects[project].startDate);
+                let projectEndDate = new Date.parse(projects[project].endDate);
 
-                let status = [[${project.status}]];
-                let projectId = [[${project.projectId}]];
 
 
                 data.addRows
                 ([
-                    [projects[project].projectId.toString(), "Project: " + projects[project].title, projects[project].customerId, new Date(projectStartDate), new Date(projectDeadLine), null, status, null]
+                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, status, null]
                 ]);
+
+             */
+
+            projectStatus = "Complete"
+
+            if(projectStatus === "Pending"){
+                projectStatusAsInt = 0;
+            } else if(projectStatus === "OnGoing"){
+                projectStatusAsInt = 50;
+            } else {
+                projectStatusAsInt = 100;
+            }
+
+                data.addRows([
+                    ["15","15:18","5", new Date(2021,12,24), new Date(2021,12,31), null, projectStatusAsInt, null]
+                ])
+
 
 
 
@@ -47,13 +67,14 @@
                 var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
                 chart.draw(data, options);
-            }
+            //}
         }
     </script>
 </head>
 <body>
 <div id="chart_div"></div>
-<div> </div>
+
+<h1 ><td th:text="${projects}"></h1>
 
 </body>
 </html>

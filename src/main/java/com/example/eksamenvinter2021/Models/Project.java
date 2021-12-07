@@ -12,6 +12,7 @@ public class Project {
     private int customerId;
     private String startDate;
     private String endDate;
+    private int projectId;
 
     public String getDescription() {
         return description;
@@ -30,9 +31,6 @@ public class Project {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-
-    private int projectId;
-
 
     public String getProjectTitle() {
         return projectTitle;

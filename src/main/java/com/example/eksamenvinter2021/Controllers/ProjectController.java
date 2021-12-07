@@ -7,6 +7,7 @@ import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Services.EmployeeService;
+import com.example.eksamenvinter2021.Services.LoginService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,19 +26,35 @@ public class ProjectController {
     Project editThisProject = new Project();
     EmployeeRepo er = new EmployeeRepo();
     EmployeeService es = new EmployeeService();
+    LoginService ls = new LoginService();
 
     //Denne virker
     @GetMapping("/project/{thisProject}")
-    public String project(@PathVariable("thisProject") int thisProject, Model model) {
-        //int id = Integer.parseInt(thisProject);
-        model.addAttribute("Project", ps.getProjectObject(thisProject));
-        return "project_html/showProject";
+    public String project(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            //int id = Integer.parseInt(thisProject);
+            model.addAttribute("Project", ps.getProjectObject(thisProject));
+            return "project_html/showProject";
+        }
     }
 
     //Denne virker
     @GetMapping("/newProject")
-    public String newProject() {
-        return "project_html/newProject";
+    public String newProject(HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                return "project_html/newProject";
+            }
+            else{
+                return "error";
+            }
+        }
+
     }
 
     //Denne virker
@@ -80,11 +97,22 @@ public class ProjectController {
 
     //Denne virker
     @GetMapping("/editProject/{thisProject}")
-    public String editProjectGetProject(@PathVariable("thisProject") int thisProject, Model model) {
-        //int id = Integer.parseInt(thisProject);
-        editThisProject = ps.getProjectObject(thisProject);
-        model.addAttribute("Project", ps.getProjectObject(thisProject));
-        return "project_html/editProject";
+    public String editProjectGetProject(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            editThisProject = ps.getProjectObject(thisProject);
+            model.addAttribute("Project", ps.getProjectObject(thisProject));
+
+            //Checks if the user is a manager and thus allowed to access the site
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                return "project_html/editProject";
+            }
+            else{
+                return "error";
+            }
+        }
     }
 
     //Denne virker
@@ -145,10 +173,18 @@ public class ProjectController {
     }
 
     @GetMapping("/deleteProject/{projectId}")
-    public String deleteSubproject(@PathVariable("projectId") String projectId){
-        int id = Integer.parseInt(projectId);
-        ps.deleteProjectFromDatabase(id);
-        return "confirmationPage";
+    public String deleteSubproject(@PathVariable("projectId") String projectId, HttpSession session){
+
+        //Checks if the user is a manager and thus allowed to delete the project
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee.getRole().equals("MANAGER")){
+            int id = Integer.parseInt(projectId);
+            ps.deleteProjectFromDatabase(id);
+            return "confirmationPage";
+        }
+        else{
+            return "error";
+        }
     }
 
     //Virker
@@ -180,9 +216,21 @@ public class ProjectController {
         String employeeIdString = webr.getParameter("project-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
         int projectId = editThisProject.getProjectId();
-        ltr.insertLinkTabelWithEmployeeAndCustomerIntoDatabase(employeeId, projectId);
+        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "confirmationPage";
     }
 
+    @GetMapping("/frontPage")
+    public String frontPage(HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            return "frontPage";
+        }
+        //Employee employee = (Employee) session.getAttribute("employee");
+        //int employeeId = employee.getEmployeeId();
+        //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
+        //model.addAttribute("projects", projects);
+    }
 
 }

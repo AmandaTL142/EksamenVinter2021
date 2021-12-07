@@ -51,7 +51,7 @@ public class LoginController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            return "employee";
+            return "frontPage";
         }
     }
 

@@ -178,6 +178,7 @@ public class ProjectRepo {
         return projectArray;
     }
 
+    //Casper har lavet denne
     public ArrayList<Project> getProjectsInArrayForGantt() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {

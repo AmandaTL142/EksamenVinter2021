@@ -36,8 +36,14 @@ public class ProjectController {
 
     //Denne virker
     @GetMapping("/newProject")
-    public String newProject() {
-        return "project_html/newProject";
+    public String newProject(HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee.getRole().equals("MANAGER")){
+            return "project_html/newProject";
+        }
+        else{
+            return "error";
+        }
     }
 
     //Denne virker
@@ -180,9 +186,17 @@ public class ProjectController {
         String employeeIdString = webr.getParameter("project-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
         int projectId = editThisProject.getProjectId();
-        ltr.insertLinkTabelWithEmployeeAndCustomerIntoDatabase(employeeId, projectId);
+        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "confirmationPage";
     }
 
+    @GetMapping("/frontPage")
+    public String frontPage() {
+        //Employee employee = (Employee) session.getAttribute("employee");
+        //int employeeId = employee.getEmployeeId();
+        //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
+        //model.addAttribute("projects", projects);
+        return "frontPage";
+    }
 
 }

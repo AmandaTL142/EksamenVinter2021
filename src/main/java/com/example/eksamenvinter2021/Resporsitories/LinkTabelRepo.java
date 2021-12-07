@@ -8,7 +8,6 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,7 +75,7 @@ public class LinkTabelRepo {
         return employeeObjects;
     }
 
-    public void insertLinkTabelWithEmployeeAndCustomerIntoDatabase(int employeeId, int projectId) {
+    public void insertLinkTabelWithEmployeeAndProjectIntoDatabase(int employeeId, int projectId) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `project_id`) " +

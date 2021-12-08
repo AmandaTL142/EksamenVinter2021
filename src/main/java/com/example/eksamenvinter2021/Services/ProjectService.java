@@ -6,6 +6,7 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
 import java.util.Date;
+import java.util.List;
 
 public class ProjectService {
     ProjectRepo pr = new ProjectRepo();
@@ -38,4 +39,30 @@ public class ProjectService {
         pr.deleteProjectFromDatabase(id);
     }
 
+    /*
+
+    Might be need for GANTT
+
+    public List<Project> projectList;
+
+    public List<Project> getAllProjects()
+    {
+        projectList = pr.getProjectsInArrayForGantt();
+        return projectList;
+    }
+
+    public List<Project> getAllProjectsFromDataBase()
+    {
+        List<Project> allProjects = getAllProjects();
+
+        for (Project p : allProjects) {
+            p.setAssociatedSubprojects(subprojectService.getAllAssociatedSubprojectsAndAssociatedTasks(p.getProjectId()));
+        }
+
+        return allProjects;
+    }
+    */
+
 }
+
+

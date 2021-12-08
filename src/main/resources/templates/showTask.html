@@ -33,8 +33,10 @@
     </button>
   </td>
     <td>
+
     <button>
-      <a class="taskbutton" th:href="@{/deleteTask/{id}(id=${task.getId})}">Delete task</a>
+      <a th:href="@{/deleteTask/{id}(id=${Project.geTaskId()})}"
+         onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
     </button>
 
     </td>

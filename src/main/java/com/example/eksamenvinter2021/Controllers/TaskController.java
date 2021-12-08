@@ -26,7 +26,6 @@ public class TaskController {
     Project sharedProject = new Project();
 
     //TODO få samlet alle HTML der tilhører task i en mappe
-    //TODO har det påvirkelse på hvordan man referer til html, når man skal returne??????
 
     @GetMapping("/showTask")
     public String allTasks(Model objectThatTransportsData){
@@ -69,7 +68,7 @@ public class TaskController {
     }
 
     @GetMapping("/taskC/{thisProjectId}")
-    public String subproject(@PathVariable("thisProjectId") int thisProjectId, Model m) {
+    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
         int id = thisProjectId;
         Project p = ps.showProject(thisProjectId);
         sharedProject = p;
@@ -77,19 +76,22 @@ public class TaskController {
 
         return"newTask";
 
-       // model.addAttribute("Subproject", sps.getSubprojectObject(id));
-        //model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
-        //return "suproject_html/showSubproject";
+    }
+
+    @GetMapping("/showTasks/{thisProjectId}")
+    public String showTasks(@PathVariable("thisProjectId") int thisProjectId, Model m){
+        int id= thisProjectId;
+        Project p = ps.showProject(thisProjectId);
+        sharedProject = p;
+        m.addAttribute("project",p);
+
+        ArrayList<Task> allTasks = tr.getAllTasks(thisProjectId);
+        m.addAttribute("allTasks",allTasks);
+
+        return "showTask";
     }
 
 
-
-    @GetMapping("/taskEditor")
-    public String taskEditor(Model m){
-        m.addAttribute("tasks", ts.getAllTasks(15));
-
-        return "/taskEditor";
-    }
 
     @PostMapping("/editTask")
     public String getTask(WebRequest wr){
@@ -127,14 +129,16 @@ public class TaskController {
 
         tr.updateTask(t);
 
+
+
         return "/";
     }
 
 
     @GetMapping("/deleteTask/{taskId}")
     public String deleteWish(@PathVariable int taskId) throws SQLException {
-        tr.deleteTask(25);
-        return "confirmationPage.html";
+        tr.deleteTask(taskId);
+        return "confirmPage";
     }
 }
 

@@ -40,6 +40,28 @@
 </button>
 
 
+<div class="myTask">
+    <h1>My tasks</h1>
+</div>
+
+<table>
+    <tr>
+        <th id="Titel">Titel</th>
+        <th id="description">Beskrivelse</th>
+        <th id="deadline">Deadline</th>
+        <th id="status">Status</th>
+    </tr>
+    <tr
+            th:each="task : ${subprojects}">
+        <td th:text="${subproject.getSubprojectTitle()}"></td>
+        <td th:text="${subproject.getSubprojectDescription()}"></td>
+        <td th:text="${subproject.getSubprojectDeadline()}"></td>
+        <td th:text="${subproject.getSubprojectStatus()}"></td>
+        </td>
+
+    </tr>
+
+
 
 
 

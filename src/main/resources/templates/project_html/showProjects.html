@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Show All Projects</title>
+    <script src="javascript/js.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/style/collapseStyle.css">
 </head>
 <body>
+
+<table>
+    <thead>
+        <!---Table headings--->
+        <tr>
+            <th>Projektnavn</th>
+            <th>ID</th>
+            <th>Deadline</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tbody>
+            <tr>
+                <td>
+                    <label for="Projektnavn">Projektnavn</label>
+                    <input type="checkbox" name="Projektnavn" id="Projektnavn" data-toggle="toggle">
+                </td>
+            </tr>
+            <tr>
+                <td>Juleprojekt</td>
+                <td>15</td>
+                <td>24/12/2021</td>
+            </tr>
+            <tr>
+                <td>Påskeprojekt</td>
+                <td>55</td>
+                <td>1/5/2022</td>
+            </tr>
+        </tbody>
+        <tbody class="hide">
+
+        </tbody>
+    </tbody>
+</table>
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="toggle"]').change(function(){
+            $(this).parents().next('.hide').toggle();
+        });
+    });
+</script>
 
 </body>
 </html>

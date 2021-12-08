@@ -19,28 +19,29 @@
             data.addColumn('number', 'Percent Complete');
             data.addColumn('string', 'Dependencies');
 
-            /*
+
             let projects = [[${projects}]];
 
             for (let project = 0; project < projects.length; project++) {
 
-                let currentProjectId =  projects[project].projectId;
+                let currentProjectId =  projects[project].projectId.toString();
                 let currentProjectName = projects[project].projectTitle;
                 let projectStatus = projects[project].status;
-                let currentCustomerId = projects[project].customerId;
-                let projectStartDate = new Date.parse(projects[project].startDate);
-                let projectEndDate = new Date.parse(projects[project].endDate);
+                let currentCustomerId = projects[project].customerId.toString();
+                let projectStartDate = new Date (projects[project].startDate);
+                let projectEndDate = new Date (projects[project].endDate);
+
+                console.log(currentProjectId)
+                console.log(currentProjectName)
+                console.log(projectStatus)
+                console.log(currentCustomerId)
+                console.log(projectStartDate)
+                console.log(projectEndDate)
 
 
+                projectStatus = "Complete"
+                let projectStatusAsInt = 0;
 
-                data.addRows
-                ([
-                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, status, null]
-                ]);
-
-             */
-
-            projectStatus = "Complete"
 
             if(projectStatus === "Pending"){
                 projectStatusAsInt = 0;
@@ -50,9 +51,10 @@
                 projectStatusAsInt = 100;
             }
 
-                data.addRows([
-                    ["15","15:18","5", new Date(2021,12,24), new Date(2021,12,31), null, projectStatusAsInt, null]
-                ])
+                data.addRows
+                ([
+                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+                ]);
 
 
 
@@ -67,14 +69,13 @@
                 var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
                 chart.draw(data, options);
-            //}
+            }
         }
     </script>
 </head>
 <body>
+<h1> Your Gannt chart</h1>
 <div id="chart_div"></div>
-
-<h1 ><td th:text="${projects}"></h1>
 
 </body>
 </html>

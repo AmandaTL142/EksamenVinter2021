@@ -199,12 +199,17 @@ public class ProjectRepo {
                 p.setProjectTitle(title);
                 p.setStatus(status);
                 p.setCustomerId(customerId);
-                p.setStartDate(startDate);
-                p.setEndDate(endDate);
 
 
                 if(startDate != null && !startDate.isEmpty() ) {
                     if (endDate != null && !endDate.isEmpty()) {
+
+                        String newStartDate = startDate.replace("-",",").replace("'","");
+                        String newEndDate = endDate.replace("-",",").replace("'","");
+
+                        p.setStartDate(newStartDate);
+                        p.setEndDate(newEndDate);
+
                         projectArray.add(p);
                     }
                 }

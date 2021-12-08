@@ -106,44 +106,16 @@ public class TaskRepo {
 
     }
 
-    public ArrayList<Task> getAllTasks(int projectID){
-        ArrayList<Task> allTasks = new ArrayList<>();
+    public int getTaskID(String taskTitle){
         try {
-
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
-            stmt.setInt(1, projectID);
-
-            ResultSet rs = stmt.executeQuery();
-
-
-            while(rs.next()){
-                Task t= new Task();
-                t.setTitle(rs.getString(1));
-                t.setDescription(rs.getString(2));
-                t.setEstimatedTime(rs.getString(3));
-                t.setTimeUsed(rs.getString(4));
-                t.setStatus(rs.getString(5));
-                t.setStartDate(rs.getString(6));
-                t.setEndDate(rs.getString(7));
-                allTasks.add(t);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allTasks;
-
-    }
-
-    public int getTaskId(String taskTitle){
-        try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT task_id from" +
-                    "heroku_7aba49c42d6c0f0.tasks where title=?");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks WHERE title=?;");
             stmt.setString(1,taskTitle);
             ResultSet rs = stmt.executeQuery();
+
             rs.next();
             int id = rs.getInt("task_id");
             return id;
-
         } catch (SQLException e) {
             System.out.println("Couldn't get id for with title " + taskTitle + " from database");
             System.out.println(e.getMessage());
@@ -151,20 +123,53 @@ public class TaskRepo {
         return 0;
     }
 
+    public ArrayList<Task> getAllTasksInnProject(int pID){
+        ArrayList<Task> allTasks = new ArrayList<>();
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
+            stmt.setInt(1, pID);
+
+            ResultSet rs = stmt.executeQuery();
+
+
+            while(rs.next()){
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimated_time = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                int subprojectID = rs.getInt("subproject_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task t = new Task(title,description,estimated_time,timeUsed,status,projectID,subprojectID,startDate,endDate);
+
+                allTasks.add(t);
+            }
+        } catch (SQLException e) {
+            System.out.println("Couldn't get tasks from database");
+            System.out.println(e.getMessage());
+        }
+        return allTasks;
+
+    }
 
     public void deleteTask(int taskID){
-        String sql ="DELETE from tasks where task_id=?";
-
+        PreparedStatement stmt = null;
         try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,taskID);
+            stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
+            stmt.setInt(1, taskID);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("no connection");
+            System.out.println("Couldn't delete project with id " + taskID + " from database");
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
+
+
+
     }
 
 }

@@ -59,7 +59,7 @@ public class ProjectController {
 
     //Denne virker
     @PostMapping("/createNewProject")
-    public String createNewProject(WebRequest webr) {
+    public String createNewProject(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
@@ -91,6 +91,11 @@ public class ProjectController {
         //Get project id
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
+
+        //Connect project to manager via LinkTabel
+        Employee employee = (Employee) session.getAttribute("employee");
+        int employeeID = employee.getEmployeeId();
+        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
 
         return "confirmationPage";
     }
@@ -193,7 +198,7 @@ public class ProjectController {
         Employee employee;
         employee = (Employee) session.getAttribute("employee");
         int employeeId = employee.getEmployeeId();
-        ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
+        ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employeeId);
         model.addAttribute("Projects", projects);
         return "fragments/projectsConnectedToEmployee.html";
     }
@@ -208,7 +213,6 @@ public class ProjectController {
         model.addAttribute("project", editThisProject);
         return "project_html/addEmployeeToProject.html";
     }
-
 
 
     @RequestMapping("/addEmployeeToProjectInput")
@@ -232,5 +236,34 @@ public class ProjectController {
         //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
         //model.addAttribute("projects", projects);
     }
+
+    @GetMapping("/removeEmployeeFromProject/{thisProject}")
+    public String removeEmployeeFromProject(@PathVariable("thisProject") int thisProject, Model model) {
+        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+        model.addAttribute("projectEmployees", projectEmployees);
+        editThisProject = ps.getProjectObject(thisProject);
+        model.addAttribute("project", editThisProject);
+        return "project_html/removeEmployeeFromProject.html";
+    }
+
+    @GetMapping("/removeEmployee/{id}")
+    public String removeEmployee(@PathVariable("id") int id, HttpSession session){
+
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            //Checks if the user is a manager and thus allowed to access the site
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                int projectId = editThisProject.getProjectId();
+               ltr. removeEmployeeFromProject(id, projectId);
+                return "confirmationPage";
+            }
+            else{
+                return "error";
+            }
+        }
+    }
+
 
 }

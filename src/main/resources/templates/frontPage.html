@@ -10,7 +10,6 @@
 
 <td>
     <a th:if = "${session.employee.role == 'MANAGER'}" onclick="location.href='/newProject';">New</a>
-
 </td>
 
 <table>
@@ -21,6 +20,7 @@
         <th id="status">Status</th>
         <th id="startdate">Start date</th>
         <th id="enddate">End date</th>
+        <th id="employees">Employees</th>
     </tr>
     <tr
             th:each="project : ${session.employee.getProjectArray()}">
@@ -30,6 +30,8 @@
         <td th:text="${project.getStatus()}"></td>
         <td th:text="${project.getStartDate()}"></td>
         <td th:text="${project.getEndDate()}"></td>
+        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+
         <td>
             <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
         </td>

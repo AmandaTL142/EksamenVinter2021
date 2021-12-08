@@ -1,5 +1,9 @@
 package com.example.eksamenvinter2021.Models;
 
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+
+import java.util.ArrayList;
+
 public class Project {
     private String projectTitle;
     private String projectDeadline;
@@ -11,6 +15,8 @@ public class Project {
     private String startDate;
     private String endDate;
     private int projectId;
+
+    LinkTabelRepo ltr = new LinkTabelRepo();
 
     public String getDescription() {
         return description;
@@ -139,5 +145,21 @@ public class Project {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public ArrayList<String> getEmployeesNamesFromProject(){
+        ArrayList<Employee> employeeList = ltr.getEmployeesFromProject(projectId);
+        ArrayList<String> employeeNameList = new ArrayList<>();
+
+        employeeList.forEach((Employee) -> {
+            employeeNameList.add(Employee.getEmployeeName());
+        });
+
+        employeeList.forEach((Employee) -> {
+            employeeNameList.add(Employee.getEmployeeName());
+        });
+
+
+        return employeeNameList;
     }
 }

@@ -27,15 +27,21 @@
     <br>
     <select name="subproject-status-input" id="status" required>
       <option selected disabled></option>
-      <option value="Ikke påbegyndt">Ikke påbegyndt</option>
-      <option value="Påbegyndt">Påbegyndt</option>
-      <option value="Færdig">Færdig</option>
+      <option value="On hold">On hold</option>
+      <option value="Ongoing">Ongoing</option>
+      <option value="Complete">Complete</option>
     </select>
     </br>
 
     <br><input type="submit" value="Opdatér"></br>
 
   </form>
+
+  <td>
+    <a th:href="@{/addEmployeeToProject/{id}(id=${Project.getProjectId()})}"> Edit employees </a>
+  </td>
+
+
 
 
 </div>

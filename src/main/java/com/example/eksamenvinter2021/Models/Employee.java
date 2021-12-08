@@ -1,13 +1,8 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Employee {
     private int employeeId;
@@ -79,6 +74,6 @@ public class Employee {
 
     //Denne metode skal bruges til at hente projects fra session direkte i html.
     public ArrayList<Project> getProjectArray() {
-        return ltr.getProjectsConnectedToEmployee(employeeId);
+        return ltr.getActiveProjectsConnectedToEmployee(employeeId);
     }
 }

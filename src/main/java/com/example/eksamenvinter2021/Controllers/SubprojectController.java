@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Controllers;
 
+import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -125,5 +127,68 @@ public class SubprojectController {
         model.addAttribute("project", ps.getProjectObject(id));
         return "suproject_html/showSubprojects";
     }
+
+
+    //Skal ændres:
+    /*
+
+    @GetMapping("/addEmployeeToProject/{thisProject}")
+    public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
+        ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+        model.addAttribute("allEmployees", allEmployees);
+        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+        model.addAttribute("projectEmployees", projectEmployees);
+        editThisProject = ps.getProjectObject(thisProject);
+        model.addAttribute("project", editThisProject);
+        return "project_html/addEmployeeToProject.html";
+    }
+
+
+
+    @RequestMapping("/addEmployeeToProjectInput")
+    public String addEmployeeToProject(WebRequest webr) {
+        String employeeIdString = webr.getParameter("project-employeeId-input");
+        int employeeId = Integer.parseInt(employeeIdString);
+        int projectId = editThisProject.getProjectId();
+        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
+        return "confirmationPage";
+    }
+
+    @GetMapping("/frontPage")
+    public String frontPage(HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            return "frontPage";
+        }
+        //Employee employee = (Employee) session.getAttribute("employee");
+        //int employeeId = employee.getEmployeeId();
+        //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
+        //model.addAttribute("projects", projects);
+    }
+
+    @GetMapping("/removeEmployee/{id}")
+    public String removeEmployee(@PathVariable("id") int id, HttpSession session){
+
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            //Checks if the user is a manager and thus allowed to access the site
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                System.out.println("Printes her - idEmp=" + id);
+                int projectId = editThisProject.getProjectId();
+                ltr.removeEmployeeFromProject(id, projectId);
+                return "confirmationPage";
+            }
+            else{
+                return "error";
+            }
+        }
+    }
+
+     */
+
+
 
 }

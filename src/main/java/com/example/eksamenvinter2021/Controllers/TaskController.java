@@ -25,6 +25,8 @@ public class TaskController {
     ProjectService ps = new ProjectService();
     TaskRepo tr = new TaskRepo();
     Task t = new Task();
+    Task edithThisTask = new Task();
+
     Project sharedProject = new Project();
 
     LoginService ls = new LoginService();
@@ -150,7 +152,7 @@ public class TaskController {
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
 
-        ts.updateTask(title,description,estimated_time,timeUsed,status);
+        //ts.updateTask(title,description,estimated_time,timeUsed,status);
 
         if (title != "" && title != null) {
             t.setTitle(title);
@@ -172,7 +174,7 @@ public class TaskController {
             t.setStatus(status);
         }
 
-        tr.updateTask(t);
+        tr.updateTask(edithThisTask);
 
         return "/";
     }

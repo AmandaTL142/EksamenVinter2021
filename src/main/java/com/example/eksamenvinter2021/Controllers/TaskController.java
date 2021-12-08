@@ -3,6 +3,7 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
+import com.example.eksamenvinter2021.Services.LoginService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import com.example.eksamenvinter2021.Services.TaskService;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,7 +27,85 @@ public class TaskController {
     Task t = new Task();
     Project sharedProject = new Project();
 
-    //TODO få samlet alle HTML der tilhører task i en mappe
+    LoginService ls = new LoginService();
+
+
+    //vi skal i endpoint navngive, og definere at vi ønsker at en variable skal medfølge
+    @GetMapping("/task/{thisProject}")
+    /* Pathvariable, fortæller, at vi ønsker en variable, der skal føres med videre,
+    hvor vi herefter definere den som en int */
+
+    /*public String newTask(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
+
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            //int id = Integer.parseInt(thisProject);
+            model.addAttribute("Project", ps.getProjectObject(thisProject));
+            return "project_html/showProject";
+        }
+        return "newTask";
+    }*/
+
+
+    /* @GetMapping("/newProject")
+    public String newProject(HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                return "project_html/newProject";
+            }
+            else{
+                return "error";
+            }
+        }
+
+    } */
+
+    @PostMapping("/createNewTask")
+    public String createNewTask(WebRequest wr){
+        //Først fortælles, at der ønskes input fra bruger via browser
+        String title=wr.getParameter("new-task-title");
+        String description = wr.getParameter("new-task-description");
+
+        String estimated_time = wr.getParameter("new-task-estimatedTime");
+
+        String timeUsed = wr.getParameter("new-task-timeUsed");
+        String status = wr.getParameter("new-task-status");
+
+
+        //Her oprettes task-objectet
+        Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
+
+        /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
+        ProjectId sættes til i første omgang at være et tomt project, hvor det herefter er muligt at
+        kalde på metoden som henter projectId*/
+        tempTask.setProjectId(sharedProject.getProjectId());
+
+        /*her gøres der brug af metoden insertNewTaskToDB, som er en metode fra Task repo.
+        Metoden indsætter de givende informationer ind til DB.
+        I parantesen siges der, at disse værdier, som er indtastet af brugeren, i task-objektet
+        og på denne måde instanzieres objektet*/
+        tr.insertNewTaskToDB(tempTask);
+
+        return "newTask";
+    }
+
+    @GetMapping("/taskC/{thisProjectId}")
+    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
+        //Her omdefinere vi thisProhecjtId som værende id
+        int id = thisProjectId;
+
+        //
+        Project p = ps.showProject(thisProjectId);
+        sharedProject = p;
+        m.addAttribute("project",p);
+
+        return"newTask";
+
+    }
 
     @GetMapping("/showTask")
     public String allTasks(Model objectThatTransportsData){
@@ -41,46 +121,11 @@ public class TaskController {
         return "showTask";
     }
 
-    @GetMapping("/newTask")
-    public String newTask(){
-        return "newTask";
-    }
-
-    @PostMapping("/createNewTask")
-    public String createNewTask(WebRequest wr){
-
-        String title=wr.getParameter("new-task-title");
-        String description = wr.getParameter("new-task-description");
-
-        String estimated_time = wr.getParameter("new-task-estimatedTime");
-
-        String timeUsed = wr.getParameter("new-task-timeUsed");
-        String status = wr.getParameter("new-task-status");
-        //String projectID = wr.getParameter("new-task-projectID");
-
-        Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
-
-        tempTask.setProjectId(sharedProject.getProjectId());
-
-        tr.insertNewTaskToDB(tempTask);
-
-        return "newTask";
-    }
-
-    @GetMapping("/taskC/{thisProjectId}")
-    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
-        int id = thisProjectId;
-        Project p = ps.showProject(thisProjectId);
-        sharedProject = p;
-        m.addAttribute("project",p);
-
-        return"newTask";
-
-    }
-
     @GetMapping("/showTasks/{thisProjectId}")
     public String showTasks(@PathVariable("thisProjectId") int thisProjectId, Model m){
         int id= thisProjectId;
+
+        //
         Project p = ps.showProject(thisProjectId);
         sharedProject = p;
         m.addAttribute("project",p);
@@ -128,8 +173,6 @@ public class TaskController {
         }
 
         tr.updateTask(t);
-
-
 
         return "/";
     }

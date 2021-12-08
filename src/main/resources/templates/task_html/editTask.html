@@ -2,9 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit task</title>
 </head>
 <body>
+<h1>Edit task </h1>
+
+<form method="POST" th:action="@{/}" th:object="${task}">
+
+    <table>
+        <tr th:each="task:${tasks}">
+            <div class = "container">
+
+                <label>Title: </label>
+                <input name="new-task-title" type="text" th:placeholder="${task.title}" ><br>
+
+
+                <label>Description: </label>
+                <input name="new-task-description" type="text" th:placeholder="${task.description}"><br>
+
+                <label>estimatedTime: </label>
+                <input name="new-task-estimatedTime" type="time" th:placeholder="${task.estimatedTime}"><br>
+
+                <label>TimeUsed: </label>
+                <input name="new-task-timeUsed" type="time" th:placeholder="${task.timeUsed}"><br>
+
+                <label>status: </label>
+                <input name="new-task-status" type="text" th:placeholder="${task.status}"><br>
+
+                <select name="new-task-status" id="status">
+                    <option value="Ikke påbegyndt">On Hold</option>
+                    <option value="Påbegyndt">Pending</option>
+                    <option value="Færdig">Complete</option>
+                </select>
+                </br>
+
+            </div>
+
+            <div class="container">
+                <input type="submit" value="Update Task">
+            </div>
+
+        </tr>
+    </table>
+
+</form>
 
 </body>
 </html>

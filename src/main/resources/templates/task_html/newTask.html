@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="dkk" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>newTask</title>
 </head>
 <body>
+
+
+<form method="POST" action="/createNewTask">
+    <div class = "container">
+        <h1 th:text="${project.getProjectTitle()}"></h1>
+
+        <h2>Create a new task</h2>
+
+    </div>
+
+    <div class = "container">
+
+        <label for="status">Title:</label>
+        <input type="text" placeholder="title" name="new-task-title" required>
+
+        <label for="status">Description:</label>
+        <input type="text" placeholder="description" name="new-task-description">
+
+        <label for="status">Status:</label>
+        <input type="text" placeholder="estimated Time" name="new-task-estimatedTime" required>
+
+        <label for="status">Status:</label>
+        <input type="text" placeholder="timeUsed" name="new-task-timeUsed" required>
+
+        <label for="status">Status:</label>
+        <input type="text" placeholder="status" name="new-task-status" required>
+        <br>
+        <select name="new-task-status" id="status">
+            <option value="Ikke påbegyndt">On Hold</option>
+            <option value="Påbegyndt">Pending</option>
+            <option value="Færdig">Complete</option>
+        </select>
+        </br>
+
+    </div>
+
+    <div class="container">
+        <input type="submit" value="Create Task">
+    </div>
+
+    <!--input type=number min"1" max "24 - for time"-->
+    <!--input type=number min"1" max "24 - for minutter"-->
+    <!--input type=number min"1" max "24 - for sekunder"-->
+
+
+</form>
+
 
 </body>
 </html>

@@ -29,8 +29,8 @@ public class TaskService {
         return tr.getAllTasks(id);
     }
 
-    public void showTask() {
-
+    public Task getTaskObject(int tasktId) {
+        return tr.getTaskFromDB(tasktId);
     }
 
 

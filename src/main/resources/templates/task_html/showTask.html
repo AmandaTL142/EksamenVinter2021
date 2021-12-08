@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>showTask</title>
 </head>
 <body>
+<h1>Overview Task</h1>
+
+<h1 th: ></h1>
+
+<table>
+
+    <tr>
+        <th id="Titel">Title </th>
+        <th id="description">Description </th>
+        <th id="estimatedTime">Estimated Time </th>
+        <th id="timeUsed">Time Used </th>
+        <th id="status">Status </th>
+    </tr>
+
+
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.getTitle()}"></td>
+        <td th:text="${task.getDescription()}"></td>
+        <td th:text="${task.getEstimatedTime()}"></td>
+        <td th:text="${task.getTimeUsed()}"></td>
+        <td th:text="${task.getStatus()}"></td>
+
+        <td>
+            <button class="taskbutton">
+                <a th:href="@{/taskEditor/{id}(id=${task.getId})}">Edit task</a>
+            </button>
+        </td>
+        <td>
+
+            <button>
+                <a th:href="@{/deleteTask/{id}(id=${Project.geTaskId()})}"
+                   onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+            </button>
+
+        </td>
+
+    </tr>
+</table>
+
+
+
+<!---
+lav en delete knap her
+evt. advarselsbesked når man sletter
+-->
 
 </body>
 </html>

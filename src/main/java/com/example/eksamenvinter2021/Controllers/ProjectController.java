@@ -9,6 +9,7 @@ import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.LoginService;
 import com.example.eksamenvinter2021.Services.ProjectService;
+import com.example.eksamenvinter2021.Services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class ProjectController {
     EmployeeRepo er = new EmployeeRepo();
     EmployeeService es = new EmployeeService();
     LoginService ls = new LoginService();
+    TaskService ts = new TaskService();
 
     //Denne virker
     @GetMapping("/project/{thisProject}")
@@ -36,6 +38,8 @@ public class ProjectController {
         } else {
             //int id = Integer.parseInt(thisProject);
             model.addAttribute("Project", ps.getProjectObject(thisProject));
+            model.addAttribute("Task",ts.getTaskObject(thisProject));
+
             return "project_html/showProject";
         }
     }

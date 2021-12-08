@@ -67,7 +67,7 @@ public class TaskController {
 
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
-    public String createNewTask(WebRequest wr){
+    public String createNewTask(WebRequest wr, HttpSession session){
         //Først fortælles, at der ønskes input fra bruger via browser
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -92,7 +92,7 @@ public class TaskController {
         og på denne måde instanzieres objektet*/
         tr.insertNewTaskToDB(tempTask);
 
-        return "task/newTask";
+        return "task_html/newTask";
     }
 
     //man skal indtaste et projectId, for at komme på det rigtige projekt
@@ -102,11 +102,11 @@ public class TaskController {
         int id = thisProjectId;
 
         //
-        Project p = ps.showProject(thisProjectId);
+        Project p = ps.getProjectObject(thisProjectId);
         sharedProject = p;
         m.addAttribute("project",p);
 
-        return"task/newTask";
+        return"task_html/newTask";
 
     }
 
@@ -115,13 +115,15 @@ public class TaskController {
         ArrayList<Task> allTasks = tr.getAllTasks(15);
         objectThatTransportsData.addAttribute("tasks",allTasks);
 
-        return "task/showTask"; }
+        return "task_html/showTask"; }
 
 
     @PostMapping("/showProjectName")
-    public String showProjectName(){
+    public String showProjectName( HttpSession session){
 
-        return "task/showTask";
+
+
+        return "task_html/showTask";
     }
 
     @GetMapping("/showTasks/{thisProjectId}")
@@ -129,15 +131,17 @@ public class TaskController {
         int id= thisProjectId;
 
         //
-        Project p = ps.showProject(thisProjectId);
+        Project p = ps.getProjectObject(thisProjectId);
         sharedProject = p;
         m.addAttribute("project",p);
 
         ArrayList<Task> allTasks = tr.getAllTasks(thisProjectId);
         m.addAttribute("allTasks",allTasks);
 
-        return "task/showTask";
+        return "task_html/showTask";
     }
+
+
 
 
 
@@ -177,7 +181,7 @@ public class TaskController {
 
         tr.updateTask(edithThisTask);
 
-        return "task/showTask";
+        return "task_html/showTask";
     }
 
 

@@ -46,6 +46,40 @@ public class TaskRepo {
         }
     }
 
+    public Task getTaskFromDB(int id){
+        Task t= new Task();
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("Select * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks where task_id=?");
+            stmt.setInt(1,id);
+            ResultSet rs = stmt.executeQuery();
+
+            rs.next();
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String estimated_time = rs.getString("estimated_time");
+            String timeUsed = rs.getString("time_used");
+            String status = rs.getString("status");
+            int projectID = rs.getInt("project_id");
+            int subprojectID = rs.getInt("subproject_id");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
+
+            t = new Task(title, description,estimated_time,timeUsed,status);
+            t.setTitle(title);
+            t.setDescription(description);
+            t.setEstimatedTime(estimated_time);
+            t.setTimeUsed(timeUsed);
+            t.setStatus(status);
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get task with id " + id + " from database");
+            System.out.println(e.getMessage());
+        }
+        return t;
+    }
+
     public void updateTask(Task task){
 
         String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` = ?, `estimated_time` = ?, `time_used` = ?, `status` =?, `start_date` = ?, `end_date` =? WHERE (`task_id` =?);\n";

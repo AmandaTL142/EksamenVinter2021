@@ -27,5 +27,17 @@
 </td>
 </tr>
 
+
+
+<h1 ><td th:text="${Task.getTitle()}"></h1>
+
+<td th:text="${Task.getDescription()}"></td>
+<td th:text="${Task.getId()}"></td>
+
+
+<button>
+    <a class="taskbutton" th:href="@{/taskC/{id}(id=${project.Id})}">Create Task</a>
+</button>
+
 </body>
 </html>

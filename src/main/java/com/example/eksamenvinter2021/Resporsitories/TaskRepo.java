@@ -1,35 +1,43 @@
-/*
 package com.example.eksamenvinter2021.Resporsitories;
+
+
+import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Task;
+import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TaskRepo {
 
     Connection conn = JDBC.getConnection();
 
     public void insertNewTaskToDB(Task task){
-
-        int projectID = getProjectId(Project project);
-
-        String insertTaskSQL ="INSERT INTO tasks(task_id, title, description,estimated_time, " +
-                "time_used, status, project_id,subproject_id) values (?,?,?,?,?,?,?,?)";
-
+        //int projectId= getProjectId("projectTitle");
+        //int subProjectID= getSubProjectId("subProjectTitle");
 
         try{
-            //TODO hente et foreign key id til at indgå her i sql-statement
 
-            PreparedStatement stmt = conn.prepareStatement(insertTaskSQL);
-            stmt.setInt(1,task.getTaskID());
-            stmt.setString(2,task.getTitle());
-            stmt.setString(3,task.getDescription());
-            stmt.setDouble(4,task.getEstimatedTime());
-            stmt.setDouble(5,task.getTimeUsed());
-            stmt.setString(6,task.getStatus());
-            stmt.setInt(7,);
-            stmt.setInt(8);
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` " +
+                    "(`title`, `description`, `estimated_time`, `time_used`, `status`, `project_id`," +
+                    " `subproject_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?,?,?,?,?)");
+
+            stmt.setString(1,task.getTitle());
+            stmt.setString(2,task.getDescription());
+            stmt.setString(3,task.getEstimatedTime());
+            stmt.setString(4,task.getTimeUsed());
+            stmt.setString(5,task.getStatus());
+            stmt.setInt(6,task.getProjectId());
+            stmt.setInt(7,task.getSubprojectId());
+            stmt.setString(8, task.getStartDate());
+            stmt.setString(9,task.getEndDate());
+            //stmt.setInt(6,getProjectId("projectTitle"));
+            //stmt.setInt(7,getSubProjectId("subProjectTitle"));
+            stmt.executeUpdate();
+
 
         } catch (SQLException e) {
             System.out.println("connection not found");
@@ -38,38 +46,91 @@ public class TaskRepo {
         }
     }
 
-    public int getProjectId(Project project) {
-        int projectId = 0;
+    public void updateTask(Task task){
+
+        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` = ?, `estimated_time` = ?, `time_used` = ?, `status` =?, `start_date` = ?, `end_date` =? WHERE (`task_id` =?);\n";
+
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT project_id FROM project WHERE title= ?");
-            stmt.setString(1, String.valueOf(project.getProjectId()));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1,task.getTitle());
+            stmt.setString(2,task.getDescription());
+            stmt.setString(3,task.getEstimatedTime());
+            stmt.setString(4,task.getTimeUsed());
+            stmt.setString(5,task.getStatus());
+            stmt.setString(6,task.getStartDate());
+            stmt.setString(7,task.getEndDate());
+
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("no connection");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    public ArrayList<Task> getAllTasks(int projectID){
+        ArrayList<Task> allTasks = new ArrayList<>();
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
+            stmt.setInt(1, projectID);
+
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                projectId = rs.getInt(7);
+
+
+            while(rs.next()){
+                Task t= new Task();
+                t.setTitle(rs.getString(1));
+                t.setDescription(rs.getString(2));
+                t.setEstimatedTime(rs.getString(3));
+                t.setTimeUsed(rs.getString(4));
+                t.setStatus(rs.getString(5));
+                t.setStartDate(rs.getString(6));
+                t.setEndDate(rs.getString(7));
+                allTasks.add(t);
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong");
+            e.printStackTrace();
+        }
+        return allTasks;
+
+    }
+
+    public int getTaskId(String taskTitle){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT task_id from" +
+                    "heroku_7aba49c42d6c0f0.tasks where title=?");
+            stmt.setString(1,taskTitle);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("task_id");
+            return id;
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get id for with title " + taskTitle + " from database");
             System.out.println(e.getMessage());
         }
-        return projectId;
+        return 0;
     }
 
 
-    public int getSubProjectId(Project project) {
-        int subProjectId = 0;
+    public void deleteTask(int taskID){
+        String sql ="DELETE from tasks where task_id=?";
+
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT subproject_id FROM subprojects WHERE title= ?");
-            stmt.setString(1, String.valueOf(project.getProjectId()));
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                subProjectId = rs.getInt(8);
-            }
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,taskID);
+            stmt.executeUpdate();
+
         } catch (SQLException e) {
-            System.out.println("Something went wrong");
+            System.out.println("no connection");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return projectId;
     }
 
 }
-*/

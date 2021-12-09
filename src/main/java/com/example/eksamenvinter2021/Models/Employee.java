@@ -73,8 +73,12 @@ public class Employee {
     }
 
     //Denne metode skal bruges til at hente projects fra session direkte i html.
-    public ArrayList<Project> getProjectArray() {
+    public ArrayList<Project> getActiveProjectArray() {
         return ltr.getActiveProjectsConnectedToEmployee(employeeId);
+    }
+
+    public ArrayList<Project> getCompletedProjectArray() {
+        return ltr.getCompletedProjectsConnectedToEmployee(employeeId);
     }
 
     @Override

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Overview</title>
 </head>
 <body>
 
-<h1>Projekter</h1>
+<h1>Projects</h1>
 
 <td>
     <a th:if = "${session.employee.role == 'MANAGER'}" onclick="location.href='/newProject';">New</a>
@@ -23,7 +23,7 @@
         <th id="employees">Employees</th>
     </tr>
     <tr
-            th:each="project : ${session.employee.getProjectArray()}">
+            th:each="project : ${session.employee.getActiveProjectArray()}">
         <td th:text="${project.getProjectTitle()}"></td>
         <td th:text="${project.getDescription()}"></td>
         <td th:text="${project.getProjectDeadline()}"></td>
@@ -43,6 +43,46 @@
 
     </tr>
 </table>
+
+<button onclick="myFunction()">Show finished projects</button>
+
+<div id="finishedProjects" hidden>
+    <table>
+        <tr
+                th:each="project : ${session.employee.getCompletedProjectArray()}">
+            <td th:text="${project.getProjectTitle()}"></td>
+            <td th:text="${project.getDescription()}"></td>
+            <td th:text="${project.getProjectDeadline()}"></td>
+            <td th:text="${project.getStatus()}"></td>
+            <td th:text="${project.getStartDate()}"></td>
+            <td th:text="${project.getEndDate()}"></td>
+            <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+
+            <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
+            </td>
+
+            <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}"
+                   onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("finishedProjects");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+</script>
+
 
 </body>
 </html>

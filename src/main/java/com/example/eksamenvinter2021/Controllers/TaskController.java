@@ -3,7 +3,11 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
+import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
+import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.LoginService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import com.example.eksamenvinter2021.Services.TaskService;
@@ -20,50 +24,47 @@ import java.util.ArrayList;
 @Controller
 public class TaskController {
 
+    //Task methods
     TaskService ts = new TaskService();
-    ProjectService ps = new ProjectService();
     TaskRepo tr = new TaskRepo();
-    Task t = new Task();
-    Task edithThisTask = new Task();
 
+    //Task objects
+    Task edithThisTask = new Task();
+    Task t = new Task();
+
+    //Project methods
+    ProjectRepo pr = new ProjectRepo();
+    ProjectService ps = new ProjectService();
+
+    //Project objects
     Project sharedProject = new Project();
 
+    //Employee
+    EmployeeRepo er = new EmployeeRepo();
+    EmployeeService es = new EmployeeService();
+
+    //Methods
+    LinkTabelRepo ltr = new LinkTabelRepo();
     LoginService ls = new LoginService();
 
 
-    //vi skal i endpoint navngive, og definere at vi ønsker at en variable skal medfølge
-    @GetMapping("/task/{thisProject}")
-    /* Pathvariable, fortæller, at vi ønsker en variable, der skal føres med videre,
-    hvor vi herefter definere den som en int */
 
-    /*public String newTask(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
+    //man skal indtaste et projectId, for at komme på det rigtige projekt
+    @GetMapping("/createTask/{thisProjectId}")
+    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
+        //Her gemmer vi projektID, som en int
+        int id = thisProjectId;
 
-        if (ls.notLoggedIn(session)) {
-            return  "redirect:/";
-        } else {
-            //int id = Integer.parseInt(thisProject);
-            model.addAttribute("Project", ps.getProjectObject(thisProject));
-            return "project_html/showProject";
-        }
-        return "newTask";
-    }*/
+        //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
+        Project p = ps.getProjectObject(thisProjectId);
 
 
-    /* @GetMapping("/newProject")
-    public String newProject(HttpSession session) {
-        if (ls.notLoggedIn(session)) {
-            return  "redirect:/";
-        } else {
-            Employee employee = (Employee) session.getAttribute("employee");
-            if (employee.getRole().equals("MANAGER")){
-                return "project_html/newProject";
-            }
-            else{
-                return "error";
-            }
-        }
+        sharedProject = p;
+        m.addAttribute("project",p);
 
-    } */
+        return"task_html/newTask";
+
+    }
 
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
@@ -78,7 +79,7 @@ public class TaskController {
         String status = wr.getParameter("new-task-status");
 
 
-        //Her oprettes task-objectet
+        //Create task-object
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
 
         /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
@@ -95,42 +96,27 @@ public class TaskController {
         return "task_html/newTask";
     }
 
-    //man skal indtaste et projectId, for at komme på det rigtige projekt
-    @GetMapping("/taskC/{thisProjectId}")
-    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
-        //Her omdefinere vi thisProhecjtId som værende id
-        int id = thisProjectId;
-
-        //
-        Project p = ps.getProjectObject(thisProjectId);
-        sharedProject = p;
-        m.addAttribute("project",p);
-
-        return"task_html/newTask";
-
-    }
-
-    @GetMapping("/showTask")
-    public String allTasks(Model objectThatTransportsData){
-        ArrayList<Task> allTasks = tr.getAllTasks(15);
-        objectThatTransportsData.addAttribute("tasks",allTasks);
-
-        return "task_html/showTask"; }
 
 
-    @PostMapping("/showProjectName")
-    public String showProjectName( HttpSession session){
+    @GetMapping("/showTask/{thisProject}")
+    public String tasks(@PathVariable("thisProject") int thisProject, Model m){
+        int pID = thisProject;
 
+        m.addAttribute("tasks", ts.showTaskLinkedToProject(thisProject));
+        m.addAttribute("project", ps.getProjectObject(pID));
 
+        ArrayList<Task> allTasks = ts.getAllTasks(thisProject);
+        m.addAttribute("allTasks",allTasks);
 
         return "task_html/showTask";
     }
 
-    @GetMapping("/showTasks/{thisProjectId}")
+
+    /*@GetMapping("/showTasks/{thisProjectId}")
     public String showTasks(@PathVariable("thisProjectId") int thisProjectId, Model m){
         int id= thisProjectId;
 
-        //
+
         Project p = ps.getProjectObject(thisProjectId);
         sharedProject = p;
         m.addAttribute("project",p);
@@ -139,14 +125,23 @@ public class TaskController {
         m.addAttribute("allTasks",allTasks);
 
         return "task_html/showTask";
+    }*/
+
+
+
+@GetMapping("/editTask/{thisTask}")
+public String editTask(@PathVariable("thisTask") int thisTask, Model m){
+    int id = thisTask;
+    edithThisTask = ts.getTaskObject(id);
+
+    m.addAttribute("tasks",ts.getTaskObject(id));
+    m.addAttribute("project",pr.getProjectFromDatabase(edithThisTask.getProjectId()));
+
+    return "task_html/showTask";
     }
 
-
-
-
-
-    @PostMapping("/editTask")
-    public String getTask(WebRequest wr){
+    @PostMapping("/editTaskChanges")
+    public String editTask(WebRequest wr){
         //TODO få den connected med det rigtige taskID/projectID
         //@PathVariable("thisTask")
 
@@ -157,7 +152,6 @@ public class TaskController {
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
 
-        //ts.updateTask(title,description,estimated_time,timeUsed,status);
 
         if (title != "" && title != null) {
             t.setTitle(title);

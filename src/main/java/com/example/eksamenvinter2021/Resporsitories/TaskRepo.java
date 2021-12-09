@@ -168,8 +168,43 @@ public class TaskRepo {
             System.out.println(e.getMessage());
         }
 
+    }
 
+    public  ArrayList<Task> getTaskLinkedToProject(int thisProjectID){
+        Task t;
+        ArrayList<Task> allTasks = new ArrayList<>();
 
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks WHERE project_id=?;");
+
+            stmt.setInt(1,thisProjectID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+
+                int taskID = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimated_time = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                int subprojectID = rs.getInt("subproject_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                t = new Task(title,description,estimated_time,timeUsed,status,startDate,endDate);
+                t.setId(taskID);
+
+                allTasks.add(t);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Couldn't get subprojects for project with id " + thisProjectID + " from database");
+            System.out.println(e.getMessage());
+        }
+
+        return allTasks;
     }
 
 }

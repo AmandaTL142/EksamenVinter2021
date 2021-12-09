@@ -31,6 +31,7 @@ public class ProjectController {
     TaskService ts = new TaskService();
 
     //Denne virker
+    //TODO jeg forstår ikke denne?
     @GetMapping("/project/{thisProject}")
     public String project(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {

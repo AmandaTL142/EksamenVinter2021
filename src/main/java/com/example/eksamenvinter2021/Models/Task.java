@@ -41,6 +41,9 @@ public class Task {
     public Task(String title, String description, String estimated_time, String timeUsed, String status, int projectID, int subprojectID, String startDate, String endDate) {
     }
 
+    public Task(String title, String description, String estimated_time, String timeUsed, String status, String startDate, String endDate) {
+    }
+
     public String getTitle() {
         return title;
     }

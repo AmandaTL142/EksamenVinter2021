@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>showTask</title>
+    <title>show Task</title>
 </head>
 <body>
 <h1>Overview Task</h1>
 
-<h1 th: ></h1>
+<h1><td th:text="${project.getProjectTitle()}"></h1></td>
 
 <table>
 
@@ -20,7 +20,8 @@
     </tr>
 
 
-    <tr th:each="task : ${tasks}">
+    <tr
+            th:each="task:${tasks}">
         <td th:text="${task.getTitle()}"></td>
         <td th:text="${task.getDescription()}"></td>
         <td th:text="${task.getEstimatedTime()}"></td>
@@ -29,13 +30,13 @@
 
         <td>
             <button class="taskbutton">
-                <a th:href="@{/taskEditor/{id}(id=${task.getId})}">Edit task</a>
+                <a th:href="@{/editTask/{id}(id=${task.getId})}">Edit task</a>
             </button>
         </td>
         <td>
 
             <button>
-                <a th:href="@{/deleteTask/{id}(id=${Project.geTaskId()})}"
+                <a th:href="@{/deleteTask/{id}(id=${task.getId()})}"
                    onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
             </button>
 

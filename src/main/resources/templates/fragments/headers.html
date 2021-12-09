@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragment</title>
+</head>
+<body>
+
+<header th:fragment="Manager-header" class="header">
+    <a href="/" class="header-nav-bar"><h1>Projects</h1></a>
+
+	<span>
+			<a href="/newProject" class="nav-bar">New Project</a>
+		</span>
+
+	<span>
+			<a href="/newCustomer" class="nav-bar">New Customer</a>
+		</span>
+
+
+	<span>
+			<a href="/gantt" class="nav-bar">Gantt Chart</a>
+		</span>
+
+    <span>
+			<a href="/index" class="nav-bar">Log out</a>
+		</span>
+
+
+</header>
+<header th:fragment="Employee-header" class="header">
+
+	<a href="/frontPage" class="header-nav-bar"><h1>Tasks</h1></a>
+
+	<span>
+			<a href="/newTask" class="nav-bar">New Task</a>
+		</span>
+
+	<span>
+			<a href="/gantt" class="nav-bar">Gantt Chart</a>
+		</span>
+
+	<span>
+			<a href="/" class="nav-bar">Log out</a>
+		</span>
+
+</header>
+
+<footer th:fragment="footer">
+
+
+</footer>
+
+</body>
+</html>

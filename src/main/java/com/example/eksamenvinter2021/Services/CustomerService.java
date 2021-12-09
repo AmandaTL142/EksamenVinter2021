@@ -9,7 +9,6 @@ public class CustomerService {
 
     public Customer createNewCustomer(String customerName) {
         Customer customer = new Customer(customerName);
-        //customerRepo.insertCustomerIntoDatabase(customer);
         return customer;
     }
 

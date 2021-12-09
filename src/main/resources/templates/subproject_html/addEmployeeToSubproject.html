@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<h1 ><td th:text="${project.getProjectTitle()}"></h1>
+<h1 ><td th:text="${subproject.getSubprojectTitle()}"></h1>
 <h1>Edit employees</h1>
 
-<form method="POST" action="/addEmployeeToProjectInput">
+<form method="POST" action="/addEmployeeToSubprojectInput">
 
     <h2>Connected employees</h2>
 <tr
-        th:each="employee : ${projectEmployees}">
+        th:each="employee : ${subprojectEmployees}">
     <td th:text="${employee.getEmployeeName()}"></td>
     <br>
 
@@ -23,7 +23,7 @@
 
     <h2>Add employee</h2>
 <td>
-    <select th:name="project-employeeId-input">
+    <select th:name="subproject-employeeId-input">
 
         <option th:each="employee :${allEmployees}"
                 th:value="${employee.getEmployeeId()}"

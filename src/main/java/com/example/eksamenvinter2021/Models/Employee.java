@@ -1,11 +1,16 @@
 package com.example.eksamenvinter2021.Models;
 
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+
+import java.util.ArrayList;
+
 public class Employee {
     private int employeeId;
     private String employeeName;
     private String password;
     private String competence;
     private String role;
+    LinkTabelRepo ltr = new LinkTabelRepo();
 
     public String getEmployeeName(){
         return employeeName;
@@ -66,4 +71,22 @@ public class Employee {
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
+
+    //Denne metode skal bruges til at hente projects fra session direkte i html.
+    public ArrayList<Project> getProjectArray() {
+        return ltr.getActiveProjectsConnectedToEmployee(employeeId);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Employee)) {
+            return false;
+        } else {
+            Employee otherEmployee = (Employee) other;
+            boolean theSame = otherEmployee.getEmployeeId() == this.getEmployeeId();
+            return theSame;
+        }
+    }
+
+
 }

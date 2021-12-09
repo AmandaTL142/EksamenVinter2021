@@ -113,7 +113,9 @@ public class Test {
 
          */
         //ps.deleteProjectFromDatabase(135);
-        System.out.println(ltr.getProjectsConnectedToEmployee(5));
+        //System.out.println(ltr.getActiveProjectsConnectedToEmployee(5));
+        //System.out.println(ltr.getEmployeesFromSubproject(45));
+        //ltr.removeEmployeeFromSubproject(1, 45);
     }
     }
 

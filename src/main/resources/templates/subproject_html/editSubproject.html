@@ -38,7 +38,11 @@
   </form>
 
   <td>
-    <a th:href="@{/addEmployeeToProject/{id}(id=${Project.getProjectId()})}"> Edit employees </a>
+    <a th:href="@{/addEmployeeToSubproject/{id}(id=${Project.getProjectId()})}"> Add employee </a>
+  </td>
+
+  <td>
+    <a th:href="@{/removeEmployeeFromSubproject/{id}(id=${Project.getProjectId()})}"> Remove employee </a>
   </td>
 
 

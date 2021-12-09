@@ -128,6 +128,36 @@ public class LinkTabelRepo {
         return employeeObjects;
     }
 
+    public ArrayList<Employee> getEmployeesFromSubproject(int subprojectId) {
+        ArrayList<Integer> employeeIds = new ArrayList<>();
+        ArrayList<Employee> employeeObjects = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.link_tabel WHERE subproject_id=?;");
+            stmt.setInt(1, subprojectId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int employeeId = rs.getInt("employee_id");
+                employeeIds.add(employeeId);
+            }
+
+            //Prevents doubles
+            Set<Integer> subprojectIdsHashset = new HashSet<>(employeeIds);
+            employeeIds.clear();
+            employeeIds.addAll(subprojectIdsHashset);
+
+            employeeIds.forEach((employeeId) -> {
+                employeeObjects.add(es.showEmployee(employeeId));
+            });
+
+        } catch(Exception e){
+            System.out.println("Couldn't get employees for subproject with id " + subprojectId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return employeeObjects;
+    }
+
+
     public void insertLinkTabelWithEmployeeAndProjectIntoDatabase(int employeeId, int projectId) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -143,12 +173,41 @@ public class LinkTabelRepo {
         }
     }
 
+    public void insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(int employeeId, int subprojectId) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subproject_id`) " +
+                            "VALUES (?, ?);");
+            stmt.setInt(1, employeeId);
+            stmt.setInt(2, subprojectId);
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Information could not be inserted into database");
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void removeEmployeeFromProject(int employeeId, int projectId) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
                     ("DELETE FROM heroku_7aba49c42d6c0f0.link_tabel WHERE employee_id=? AND project_id=?;");
             stmt.setInt(1, employeeId);
             stmt.setInt(2, projectId);
+
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Employee could not be removed from project in database");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void removeEmployeeFromSubproject(int employeeId, int subprojectId) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("DELETE FROM heroku_7aba49c42d6c0f0.link_tabel WHERE employee_id=? AND subproject_id=?;");
+            stmt.setInt(1, employeeId);
+            stmt.setInt(2, subprojectId);
 
             stmt.executeUpdate();
         } catch (Exception e) {

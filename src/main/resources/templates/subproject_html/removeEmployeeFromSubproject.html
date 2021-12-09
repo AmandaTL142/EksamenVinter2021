@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<h1 ><td th:text="${project.getProjectTitle()}"></h1>
+<h1 ><td th:text="${subproject.getSubprojectTitle()}"></h1>
 <h1>Edit employees</h1>
 
 <form method="POST">
 
     <h2>Connected employees</h2>
     <tr
-            th:each="employee : ${projectEmployees}">
+            th:each="employee : ${subprojectEmployees}">
         <td th:text="${employee.getEmployeeName()}"></td>
 
         <!--This remove-button is a work in progress-->

@@ -76,4 +76,17 @@ public class Employee {
     public ArrayList<Project> getProjectArray() {
         return ltr.getActiveProjectsConnectedToEmployee(employeeId);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Employee)) {
+            return false;
+        } else {
+            Employee otherEmployee = (Employee) other;
+            boolean theSame = otherEmployee.getEmployeeId() == this.getEmployeeId();
+            return theSame;
+        }
+    }
+
+
 }

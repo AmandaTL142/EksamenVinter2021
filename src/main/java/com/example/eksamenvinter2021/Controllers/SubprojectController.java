@@ -3,8 +3,11 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
+import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Services.LoginService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import com.example.eksamenvinter2021.Services.SubprojectService;
 import org.springframework.stereotype.Controller;
@@ -25,8 +28,11 @@ public class SubprojectController {
     Subproject sp = new Subproject();
     SubprojectService sps = new SubprojectService();
     SubprojectRepo spr = new SubprojectRepo();
+    LinkTabelRepo ltr = new LinkTabelRepo();
+    EmployeeRepo er = new EmployeeRepo();
     Subproject editThisSubproject = new Subproject();
     Project projectConnectedToSubproject = new Project();
+    LoginService ls = new LoginService();
 
     //ArrayList<String> projectNames = pr.getProjectNamesInArray();
     ArrayList<Project> projectArray = pr.getProjectsInArray();
@@ -38,14 +44,14 @@ public class SubprojectController {
         int id = Integer.parseInt(thisSubproject);
         model.addAttribute("Subproject", sps.getSubprojectObject(id));
         model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
-        return "suproject_html/showSubproject";
+        return "subproject_html/showSubproject";
     }
 
     //Denne virker
     @GetMapping("/newSubproject/{thisProjectId}")
     public String newSubproject(@PathVariable("thisProjectId") int thisProjectId) {
         projectConnectedToSubproject = pr.getProjectFromDatabase(thisProjectId);
-        return "suproject_html/newSubproject";
+        return "subproject_html/newSubproject";
     }
 
     //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
@@ -88,7 +94,7 @@ public class SubprojectController {
         //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
         model.addAttribute("Subproject", sps.getSubprojectObject(id));
         model.addAttribute("Project", pr.getProjectFromDatabase(editThisSubproject.getProjectId()));
-        return "suproject_html/editSubproject";
+        return "subproject_html/editSubproject";
     }
 
     //Denne virker
@@ -125,50 +131,48 @@ public class SubprojectController {
         int id = Integer.parseInt(thisProject);
         model.addAttribute("subprojects", sps.showSubprojectLinkedToProject(id));
         model.addAttribute("project", ps.getProjectObject(id));
-        return "suproject_html/showSubprojects";
+        return "subproject_html/showSubprojects";
     }
 
 
-    //Skal ændres:
-    /*
-
-    @GetMapping("/addEmployeeToProject/{thisProject}")
-    public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
+    @GetMapping("/addEmployeeToSubproject/{thisSubproject}")
+    public String addEmployeeToSubproject1(@PathVariable("thisSubproject") int thisSubproject, Model model) {
         ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+        ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
+
+        allEmployees.removeAll(subprojectEmployees);
+
         model.addAttribute("allEmployees", allEmployees);
-        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
-        model.addAttribute("projectEmployees", projectEmployees);
-        editThisProject = ps.getProjectObject(thisProject);
-        model.addAttribute("project", editThisProject);
-        return "project_html/addEmployeeToProject.html";
+        model.addAttribute("subprojectEmployees", subprojectEmployees);
+        editThisSubproject = sps.getSubprojectObject(thisSubproject);
+        model.addAttribute("subproject", editThisSubproject);
+        return "subproject_html/addEmployeeToSubproject.html";
     }
 
 
-
-    @RequestMapping("/addEmployeeToProjectInput")
-    public String addEmployeeToProject(WebRequest webr) {
-        String employeeIdString = webr.getParameter("project-employeeId-input");
+    @RequestMapping("/addEmployeeToSubprojectInput")
+    public String addEmployeeToSubproject2(WebRequest webr) {
+        String employeeIdString = webr.getParameter("subproject-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
-        int projectId = editThisProject.getProjectId();
-        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
+        int subprojectId = editThisSubproject.getSubprojectId();
+        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId);
         return "confirmationPage";
     }
 
-    @GetMapping("/frontPage")
-    public String frontPage(HttpSession session) {
-        if (ls.notLoggedIn(session)) {
-            return  "redirect:/";
-        } else {
-            return "frontPage";
-        }
-        //Employee employee = (Employee) session.getAttribute("employee");
-        //int employeeId = employee.getEmployeeId();
-        //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
-        //model.addAttribute("projects", projects);
+
+    @GetMapping("/removeEmployeeFromSubproject/{thisSubproject}")
+    public String removeEmployeeFromSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model) {
+        ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
+        model.addAttribute("subprojectEmployees", subprojectEmployees);
+        editThisSubproject = sps.getSubprojectObject(thisSubproject);
+        model.addAttribute("subproject", editThisSubproject);
+        return "subproject_html/removeEmployeeFromSubproject.html";
     }
 
-    @GetMapping("/removeEmployee/{id}")
-    public String removeEmployee(@PathVariable("id") int id, HttpSession session){
+
+    //Nedenstående virker ikke
+    @PostMapping("/removeEmployee/{employeeId}")
+    public String removeEmployee(@PathVariable("employeeId") int employeeId, HttpSession session){
 
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
@@ -176,9 +180,10 @@ public class SubprojectController {
             //Checks if the user is a manager and thus allowed to access the site
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                System.out.println("Printes her - idEmp=" + id);
-                int projectId = editThisProject.getProjectId();
-                ltr.removeEmployeeFromProject(id, projectId);
+                int subprojectId = editThisSubproject.getSubprojectId();
+                System.out.println("employeeId: " + employeeId);
+                System.out.println("subprojectId: " + subprojectId);
+                ltr.removeEmployeeFromSubproject(employeeId, subprojectId);
                 return "confirmationPage";
             }
             else{
@@ -186,8 +191,6 @@ public class SubprojectController {
             }
         }
     }
-
-     */
 
 
 

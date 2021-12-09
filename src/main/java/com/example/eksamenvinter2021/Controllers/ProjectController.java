@@ -206,9 +206,12 @@ public class ProjectController {
     @GetMapping("/addEmployeeToProject/{thisProject}")
     public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
         ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
-        model.addAttribute("allEmployees", allEmployees);
         ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+
+        allEmployees.removeAll(projectEmployees);
+
         model.addAttribute("projectEmployees", projectEmployees);
+        model.addAttribute("allEmployees", allEmployees);
         editThisProject = ps.getProjectObject(thisProject);
         model.addAttribute("project", editThisProject);
         return "project_html/addEmployeeToProject.html";
@@ -246,8 +249,8 @@ public class ProjectController {
         return "project_html/removeEmployeeFromProject.html";
     }
 
-    @GetMapping("/removeEmployee/{id}")
-    public String removeEmployee(@PathVariable("id") int id, HttpSession session){
+    @GetMapping("/removeEmployee/{employeeId}")
+    public String removeEmployee(@PathVariable("employeeId") int employeeId, HttpSession session){
 
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
@@ -256,7 +259,7 @@ public class ProjectController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
                 int projectId = editThisProject.getProjectId();
-               ltr. removeEmployeeFromProject(id, projectId);
+               ltr. removeEmployeeFromProject(employeeId, projectId);
                 return "confirmationPage";
             }
             else{

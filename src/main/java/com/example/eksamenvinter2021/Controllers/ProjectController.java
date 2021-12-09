@@ -174,6 +174,7 @@ public class ProjectController {
         }
 
         //Map 'subprojects' to model, name 'Subprojects'
+        model.addAttribute("Projects", projects);
         model.addAttribute("Subprojects", subprojects);
         return "project_html/showProjects";
     }

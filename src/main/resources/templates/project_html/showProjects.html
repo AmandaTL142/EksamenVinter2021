@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Show All Projects</title>
@@ -22,26 +22,23 @@
     <tbody>
         <tbody class="labels">
             <tr>
-                <td colspan="5">
-                    <label for="Projektnavn">Projektnavn</label>
+                <td colspan="3">
+                    <label  for="Projektnavn">Projektnavn</label>
                     <input type="checkbox" name="Projektnavn" id="Projektnavn" data-toggle="toggle">
                 </td>
             </tr>
         </tbody>
         <tbody class="hide">
-            <tr>
-                <td>Juleprojekt</td>
-                <td>15</td>
-                <td>24/12/2021</td>
-            </tr>
-            <tr>
-                <td>Påskeprojekt</td>
-                <td>55</td>
-                <td>1/5/2022</td>
+            <tr th:each= "project : ${Projects}">
+                <td class="collapsible" th:text="${project.getProjectTitle()}">Title</td>
+                <td class="collapsible" th:text="${project.getProjectId()}">ID</td>
+                <td class="collapsible" th:text="${project.getProjectDeadline()}">Deadline</td>
+                <tr th:each="subproject : ${Subprojects}">
+                    <td class="collapsible" th:text="${subproject.getSubprojectTitle()}">Title</td>
+                </tr>
             </tr>
         </tbody>
 </table>
-
 
 </body>
 </html>

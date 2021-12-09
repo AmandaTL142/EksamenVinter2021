@@ -2,8 +2,10 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.ProjectService;
+import com.example.eksamenvinter2021.Services.SubprojectService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
@@ -17,6 +19,7 @@ public class LinkTabelRepo {
 
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();
+    SubprojectService sps = new SubprojectService();
 
     public ArrayList<Project> getProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
@@ -45,6 +48,27 @@ public class LinkTabelRepo {
             System.out.println(e.getMessage());
         }
         return projectObjects;
+    }
+
+    public ArrayList<Subproject> getSubprojectsConnectedToProjectsAndEmployee(int projectId, int employeeId) {
+        ArrayList<Subproject> subProjects = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subproject_id FROM " +
+                    "link_tabel WHERE project_id = ? AND employee_id = ?;");
+            stmt.setInt(1, projectId);
+            stmt.setInt(2, employeeId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int subprojectId = rs.getInt("subproject_id");
+                Subproject temp = sps.getSubprojectObject(subprojectId);
+                subProjects.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Could not get subprojects for employee ID" + employeeId +
+                    " and project ID " + projectId);
+            System.out.println(e.getMessage());
+        }
+        return subProjects;
     }
 
     public ArrayList<Employee> getEmployeesFromProject(int projectId) {

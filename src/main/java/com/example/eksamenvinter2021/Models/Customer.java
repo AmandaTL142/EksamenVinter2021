@@ -6,26 +6,35 @@ public class Customer {
     private int customerId;
 
 
-    public String getCustomerName(){
+    public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName){
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public int getCustomerId(){
+    public int getCustomerId() {
         return customerId;
     }
 
-    public Customer(String customerName){
+    public Customer(String customerName) {
         this.customerName = customerName;
     }
 
-    public void setCustomerId(int customerId){
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
-    public Customer(){}
+    public Customer() {
+    }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "Name = '" + customerName + '\'' +
+                ", ID = " + customerId;
+
+    }
 }
+

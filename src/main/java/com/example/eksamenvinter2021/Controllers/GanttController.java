@@ -12,7 +12,6 @@ public class GanttController {
     public String gant(Model model) {
 
         model.addAttribute("projects", pr.getProjectsInArrayForGantt());
-        System.out.println(pr.getProjectsInArrayForGantt().toString());
         return "/Gantt-chart";
     }
 }

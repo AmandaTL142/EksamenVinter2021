@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Edit task</title>
@@ -21,10 +21,11 @@
                 <input name="new-task-description" type="text" th:placeholder="${task.description}"><br>
 
                 <label>estimatedTime: </label>
-                <input name="new-task-estimatedTime" type="time" th:placeholder="${task.estimatedTime}"><br>
+                <input name="new-task-estimatedTime" type="text" th:placeholder="${task.estimatedTime}"><br>
 
                 <label>TimeUsed: </label>
-                <input name="new-task-timeUsed" type="time" th:placeholder="${task.timeUsed}"><br>
+                <input name="new-task-timeUsed" type="text" th:placeholder="${task.timeUsed}"><br>
+
 
                 <label>status: </label>
                 <input name="new-task-status" type="text" th:placeholder="${task.status}"><br>

@@ -40,7 +40,7 @@ public class TaskService {
     }
 
     public ArrayList<Task> showTaskLinkedToProject(int thisProject){
-        return tr.getTaskLinkedToProject(thisProject);
+        return tr.getTasksInArray();
     }
 
 

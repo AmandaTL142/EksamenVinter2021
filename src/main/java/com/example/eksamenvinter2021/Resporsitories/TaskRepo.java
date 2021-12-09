@@ -22,8 +22,7 @@ public class TaskRepo {
         try{
 
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` " +
-                    "(`title`, `description`, `estimated_time`, `time_used`, `status`, `project_id`," +
-                    " `subproject_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?,?,?,?,?)");
+                    "(`title`, `description`, `estimated_time`, `time_used`, `status`, `project_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?,?,?,?)");
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
@@ -31,9 +30,9 @@ public class TaskRepo {
             stmt.setString(4,task.getTimeUsed());
             stmt.setString(5,task.getStatus());
             stmt.setInt(6,task.getProjectId());
-            stmt.setInt(7,task.getSubprojectId());
-            stmt.setString(8, task.getStartDate());
-            stmt.setString(9,task.getEndDate());
+            stmt.setString(7, task.getStartDate());
+            stmt.setString(8,task.getEndDate());
+
             //stmt.setInt(6,getProjectId("projectTitle"));
             //stmt.setInt(7,getSubProjectId("subProjectTitle"));
             stmt.executeUpdate();
@@ -86,6 +85,7 @@ public class TaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(8,task.getId());
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
@@ -159,18 +159,18 @@ public class TaskRepo {
     public void deleteTask(int taskID){
         PreparedStatement stmt = null;
         try {
-            stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
+            stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
             stmt.setInt(1, taskID);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Couldn't delete project with id " + taskID + " from database");
+            System.out.println("Couldn't delete task with id " + taskID + " from database");
             System.out.println(e.getMessage());
         }
 
     }
 
-    public  ArrayList<Task> getTaskLinkedToProject(int thisProjectID){
+    /*public  ArrayList<Task> getTaskLinkedToProject(int thisProjectID){
 
         ArrayList<Task> allTasks = new ArrayList<>();
         Task task = new Task();
@@ -214,6 +214,49 @@ public class TaskRepo {
         }
 
         return allTasks;
+    }*/
+
+    public ArrayList<Task> getTasksInArray() {
+        ArrayList<Task> taskArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks;");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int taskId = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimatedTime = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                int subprojectID = rs.getInt("subproject_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task task = new Task();
+                task.setId(taskId);
+                task.setTitle(title);
+                task.setDescription(description);
+                task.setEstimatedTime(estimatedTime);
+                task.setTimeUsed(timeUsed);
+                task.setStatus(status);
+                task.setProjectId(projectID);
+                task.setSubprojectId(subprojectID);
+                task.setStartDate(startDate);
+                task.setEndDate(endDate);
+
+
+                taskArray.add(task);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return taskArray;
     }
 
 }

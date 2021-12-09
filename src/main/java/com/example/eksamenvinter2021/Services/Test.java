@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Services;
 
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
@@ -14,6 +15,7 @@ public class Test {
         ProjectService ps = new ProjectService();
         LinkTabelRepo ltr = new LinkTabelRepo();
         TaskRepo tr = new TaskRepo();
+        Task task = new Task();
         /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("UPDATE `heroku_7aba49c42d6c0f0`." +
@@ -113,10 +115,26 @@ public class Test {
         System.out.println(sp.getStartDate());
         spr.insertSubprojectIntoDatabase(sp);
 
+
+        task.setId(55);
+        task.setTitle("Det lykkedes!!!");
+        task.setEstimatedTime("10");
+        task.setStatus("hej");
+
+        tr.updateTask(task);
+        tr.deleteTask(65);
+
          */
         //ps.deleteProjectFromDatabase(135);
         //System.out.println(ltr.getProjectsConnectedToEmployee(5));
-        tr.getTaskLinkedToProject(15);
+
+        task.setTitle("gaver!!!");
+        task.setEstimatedTime("10");
+        task.setStatus("hej");
+        task.setProjectId(15);
+
+
+        tr.insertNewTaskToDB(task);
     }
     }
 

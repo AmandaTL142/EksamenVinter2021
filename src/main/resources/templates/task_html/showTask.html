@@ -17,18 +17,28 @@
         <th id="estimatedTime">Estimated Time </th>
         <th id="timeUsed">Time Used </th>
         <th id="status">Status </th>
+        <th id="startDate">start date </th>
+        <th id="endDate">end date </th>
+
+
+
     </tr>
     <tr th:each="task:${tasks}">
         <td th:text ="${task.getTitle()}"></td>
-        <td th:text="${task.getTitle()}"></td>
         <td th:text="${task.getDescription()}"></td>
         <td th:text="${task.getEstimatedTime()}"></td>
         <td th:text="${task.getTimeUsed()}"></td>
         <td th:text="${task.getStatus()}"></td>
+        <td th:text="${task.getStartDate()}"></td>
+        <td th:text="${task.getEndDate()}"></td>
+
+
+
+
 
         <td>
             <button class="taskbutton">
-                <a th:href="@{/editTask/{id}(id=${task.getId})}">Edit task</a>
+                <a th:href="@{/editTask/{thisTask}(thisTask=${task.getId()})}">Edit task</a>
             </button>
         </td>
 
@@ -38,7 +48,15 @@
                    onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
             </button>
         </td>
+
+
+
+
     </tr>
+
+    <button>
+        <a th:href="@{/createTask/{id}(id=${project.getProjectId()})}">Create Task</a>
+    </button>
 
 </table>
 

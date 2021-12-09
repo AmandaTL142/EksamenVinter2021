@@ -38,6 +38,7 @@ public class TaskController {
 
     //Project objects
     Project sharedProject = new Project();
+    Project editThisProject = new Project();
 
     //Employee
     EmployeeRepo er = new EmployeeRepo();
@@ -68,7 +69,7 @@ public class TaskController {
 
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
-    public String createNewTask(WebRequest wr, HttpSession session){
+    public String createNewTask(WebRequest wr){
         //Først fortælles, at der ønskes input fra bruger via browser
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -93,7 +94,7 @@ public class TaskController {
         og på denne måde instanzieres objektet*/
         tr.insertNewTaskToDB(tempTask);
 
-        return "task_html/newTask";
+        return "confirmationPage";
     }
 
 
@@ -102,14 +103,13 @@ public class TaskController {
     public String tasks(@PathVariable("thisProject") int thisProject, Model m){
         int pID = thisProject;
 
-        System.out.println(tr.getTaskLinkedToProject(pID));
+        System.out.println(tr.getTasksInArray());
         System.out.println(pID);
 
-        m.addAttribute("tasks", tr.getTaskLinkedToProject());
+        m.addAttribute("tasks", tr.getTasksInArray());
         m.addAttribute("project", ps.getProjectObject(pID));
 
-        ArrayList<Task> allTasks = ts.getAllTasks(pID);
-        m.addAttribute("allTasks",allTasks);
+        sharedProject = ps.getProjectObject(thisProject);
 
         return "task_html/showTask";
     }
@@ -119,12 +119,11 @@ public class TaskController {
 @GetMapping("/editTask/{thisTask}")
 public String editTask(@PathVariable("thisTask") int thisTask, Model m){
     int id = thisTask;
-    edithThisTask = ts.getTaskObject(id);
 
     m.addAttribute("tasks",ts.getTaskObject(id));
-    m.addAttribute("project",pr.getProjectFromDatabase(edithThisTask.getProjectId()));
+    m.addAttribute("project",sharedProject);
 
-    return "task_html/showTask";
+    return "task_html/editTask";
     }
 
     @PostMapping("/editTaskChanges")
@@ -162,22 +161,16 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
 
         tr.updateTask(edithThisTask);
 
-        return "task_html/showTask";
+        return "task_html/editTask";
     }
 
 
     @GetMapping("/deleteTask/{taskId}")
-    public String deleteTask(@PathVariable("taskId") int taskId, HttpSession session) {
-        //Checks if user is employee,
-        Employee employee = (Employee) session.getAttribute("employee");
-        if (employee.getRole().equals("Employee")){
-            int id = taskId;
-            tr.deleteTask(id);
-            return "confirmPage";
-        }
-        else{
-            return "error";
-        }
+    public String deleteTask(@PathVariable("taskId") int taskId, Model m) {
+        int id = taskId;
+        tr.deleteTask(id);
+
+        return "confirmationPage";
 
     }
 }

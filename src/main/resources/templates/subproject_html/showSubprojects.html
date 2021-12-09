@@ -31,9 +31,13 @@
 
 </head>
 <body>
-<header>
 
-</header>
+    <div th:if = "${session.employee.role == 'MANAGER'}">
+
+        <div th:replace="fragments/headers :: Manager-header"></div>
+
+    </div>
+
 <body>
 <h1><td th:text="${project.getProjectTitle()}"></h1></td>
 <table>

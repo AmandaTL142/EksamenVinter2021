@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+<div th:if = "${session.employee.role == 'MANAGER'}">
+
+    <div th:replace="fragments/headers :: Manager-header"></div>
+
+</div>
+
+<div th:if = "${session.employee.role == 'STAFF'}">
+
+    <div th:replace="fragments/headers :: Employee-header"></div>
+
+</div>
 
 </body>
 </html>

@@ -74,6 +74,17 @@
     </script>
 </head>
 <body>
+<div th:if = "${session.employee.role == 'MANAGER'}">
+
+    <div th:replace="fragments/headers :: Manager-header"></div>
+
+</div>
+
+<div th:if = "${session.employee.role == 'STAFF'}">
+
+    <div th:replace="fragments/headers :: Employee-header"></div>
+
+</div>
 <h1> Your Gannt chart</h1>
 <div id="chart_div"></div>
 

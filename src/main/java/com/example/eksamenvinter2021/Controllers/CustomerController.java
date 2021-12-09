@@ -48,8 +48,6 @@ public class CustomerController {
         //Add customer to DB
         cr.insertCustomerIntoDatabase(currentCustomer);
 
-        System.out.println(currentCustomer.toString());
-
         return "confirmationPage";
     }
 }

@@ -6,11 +6,12 @@
 </head>
 <body>
 
-<h1>Projects</h1>
-
-<td>
-    <a th:if = "${session.employee.role == 'MANAGER'}" onclick="location.href='/newProject';">New</a>
-</td>
+<div>
+    <div th:replace="fragments/headers :: Manager-header"></div>
+</div>
+<div th:if = "${session.employee.role == 'STAFF'}">
+    <div th:replace="fragments/headers :: Employee-header"></div>
+</div>
 
 <table>
     <tr>

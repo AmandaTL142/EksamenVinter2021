@@ -15,7 +15,6 @@ public class CustomerRepo {
                     ("INSERT INTO heroku_7aba49c42d6c0f0.customers (`name`) " + "VALUES (?);");
             stmt.setString(1, customer.getCustomerName());
             stmt.executeUpdate();
-            System.out.println("customer added to DB");
 
         } catch (Exception e) {
             System.out.println("Customer could not be inserted into database");

@@ -102,30 +102,17 @@ public class TaskController {
     public String tasks(@PathVariable("thisProject") int thisProject, Model m){
         int pID = thisProject;
 
-        m.addAttribute("tasks", ts.showTaskLinkedToProject(thisProject));
+        System.out.println(tr.getTaskLinkedToProject(pID));
+        System.out.println(pID);
+
+        m.addAttribute("tasks", tr.getTaskLinkedToProject());
         m.addAttribute("project", ps.getProjectObject(pID));
 
-        ArrayList<Task> allTasks = ts.getAllTasks(thisProject);
+        ArrayList<Task> allTasks = ts.getAllTasks(pID);
         m.addAttribute("allTasks",allTasks);
 
         return "task_html/showTask";
     }
-
-
-    /*@GetMapping("/showTasks/{thisProjectId}")
-    public String showTasks(@PathVariable("thisProjectId") int thisProjectId, Model m){
-        int id= thisProjectId;
-
-
-        Project p = ps.getProjectObject(thisProjectId);
-        sharedProject = p;
-        m.addAttribute("project",p);
-
-        ArrayList<Task> allTasks = tr.getAllTasks(thisProjectId);
-        m.addAttribute("allTasks",allTasks);
-
-        return "task_html/showTask";
-    }*/
 
 
 

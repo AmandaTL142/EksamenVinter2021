@@ -171,35 +171,44 @@ public class TaskRepo {
     }
 
     public  ArrayList<Task> getTaskLinkedToProject(int thisProjectID){
-        Task t;
-        ArrayList<Task> allTasks = new ArrayList<>();
 
+        ArrayList<Task> allTasks = new ArrayList<>();
+        Task task = new Task();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks WHERE project_id=?;");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks WHERE project_id=?;");
 
             stmt.setInt(1,thisProjectID);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
+                System.out.println("Id: " + rs.getInt("task_id"));
+                System.out.println("Title: " + rs.getString("title"));
 
-                int taskID = rs.getInt("task_id");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                String estimated_time = rs.getString("estimated_time");
-                String timeUsed = rs.getString("time_used");
-                String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
-                int subprojectID = rs.getInt("subproject_id");
-                String startDate = rs.getString("start_date");
-                String endDate = rs.getString("end_date");
 
-                t = new Task(title,description,estimated_time,timeUsed,status,startDate,endDate);
-                t.setId(taskID);
+                task.setTitle(rs.getString("title"));
+                task.setDescription(rs.getString("description"));
+                task.setEstimatedTime(rs.getString("estimated_time"));
+                task.setTimeUsed( rs.getString("time_used"));
+                task.setProjectId(rs.getInt("project_id"));
+                task.setSubprojectId(rs.getInt("subproject_id"));
+                task.setStartDate(rs.getString("start_date"));
+                task.setEndDate( rs.getString("end_date"));
 
-                allTasks.add(t);
+                allTasks.add(task);
+
+                System.out.println("task: " + task);
+            }
+
+
+                //Task t = new Task(title,description,estimated_time,timeUsed,status,startDate,endDate);
+                //System.out.println("task er: " + t);
+                //t.setId(taskID);
+
+
 
             }
-        } catch (SQLException e) {
+         catch (SQLException e) {
             System.out.println("Couldn't get subprojects for project with id " + thisProjectID + " from database");
             System.out.println(e.getMessage());
         }

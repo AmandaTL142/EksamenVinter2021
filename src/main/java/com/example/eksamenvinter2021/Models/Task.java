@@ -44,6 +44,9 @@ public class Task {
     public Task(String title, String description, String estimated_time, String timeUsed, String status, String startDate, String endDate) {
     }
 
+    public Task(int task_id, String title, String description, String estimated_time, String time_used, String status, int project_id, int subproject_id, String start_date, String end_date) {
+    }
+
     public String getTitle() {
         return title;
     }
@@ -130,5 +133,22 @@ public class Task {
 
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", estimatedTime='" + estimatedTime + '\'' +
+                ", timeUsed='" + timeUsed + '\'' +
+                ", status='" + status + '\'' +
+                ", projectId=" + projectId +
+                ", subprojectId=" + subprojectId +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", tasks=" + tasks +
+                '}';
     }
 }

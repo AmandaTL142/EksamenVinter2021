@@ -3,6 +3,7 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 public class Test {
 
@@ -12,6 +13,7 @@ public class Test {
         SubprojectService sps = new SubprojectService();
         ProjectService ps = new ProjectService();
         LinkTabelRepo ltr = new LinkTabelRepo();
+        TaskRepo tr = new TaskRepo();
         /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("UPDATE `heroku_7aba49c42d6c0f0`." +
@@ -113,7 +115,8 @@ public class Test {
 
          */
         //ps.deleteProjectFromDatabase(135);
-        System.out.println(ltr.getProjectsConnectedToEmployee(5));
+        //System.out.println(ltr.getProjectsConnectedToEmployee(5));
+        tr.getTaskLinkedToProject(15);
     }
     }
 

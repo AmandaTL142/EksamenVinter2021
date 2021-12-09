@@ -18,10 +18,7 @@
         <th id="timeUsed">Time Used </th>
         <th id="status">Status </th>
     </tr>
-
-
-    <tr
-            th:each="task:${tasks}">
+    <tr th:each="task:${tasks}">
         <td th:text="${task.getTitle()}"></td>
         <td th:text="${task.getDescription()}"></td>
         <td th:text="${task.getEstimatedTime()}"></td>

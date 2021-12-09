@@ -38,6 +38,9 @@ public class Task {
         this.status = status;
     }
 
+    public Task(int taskId, String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+    }
+
     public String getTitle() {
         return title;
     }

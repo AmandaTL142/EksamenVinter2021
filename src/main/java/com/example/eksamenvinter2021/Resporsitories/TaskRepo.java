@@ -133,4 +133,41 @@ public class TaskRepo {
       }
   }
 
+    public ArrayList<Task> getTasksInArray() {
+        ArrayList<Task> taskArray = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks;");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int taskId = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimatedTime = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                String subprojectID = rs.getString("subproject_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task task = new Task(taskId,title,description,estimatedTime,timeUsed,status,startDate,endDate);
+
+                task.setProjectId(projectID);
+                task.setDescription(description);
+                task.setStartDate(startDate);
+                task.setEndDate(endDate);
+
+
+                taskArray.add(task);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Couldn't get projects from database");
+            System.out.println(e.getMessage());
+        }
+        return taskArray;
+    }
+
 }

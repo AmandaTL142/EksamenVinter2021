@@ -58,6 +58,7 @@ public class TaskRepo {
             ResultSet rs = stmt.executeQuery();
 
             rs.next();
+            //int taskID = rs.getInt("task_id");
             String title = rs.getString("title");
             String description = rs.getString("description");
             String estimated_time = rs.getString("estimated_time");
@@ -68,12 +69,19 @@ public class TaskRepo {
             String startDate = rs.getString("start_date");
             String endDate = rs.getString("end_date");
 
+
             t = new Task(title, description,estimated_time,timeUsed,status);
+            t.setId(id);
             t.setTitle(title);
             t.setDescription(description);
             t.setEstimatedTime(estimated_time);
             t.setTimeUsed(timeUsed);
             t.setStatus(status);
+            t.setProjectId(projectID);
+            t.setSubprojectId(subprojectID);
+            t.setStartDate(startDate);
+            t.setEndDate(endDate);
+
 
         } catch (SQLException e) {
             System.out.println("Couldn't get task with id " + id + " from database");
@@ -84,7 +92,7 @@ public class TaskRepo {
 
     public void updateTask(Task task){
 
-        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` = ?, `estimated_time` = ?, `time_used` = ?, `status` =?, `start_date` = ?, `end_date` =? WHERE (`task_id` =?);\n";
+        String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` = ?, `estimated_time` = ?, `time_used` = ?, `status` =?, `start_date` = ?, `end_date` =? WHERE (`task_id` =?);";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);

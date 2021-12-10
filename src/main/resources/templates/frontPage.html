@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div>
+<div th:if = "${session.employee.role == 'MANAGER'}">
     <div th:replace="fragments/headers :: Manager-header"></div>
 </div>
 <div th:if = "${session.employee.role == 'STAFF'}">

@@ -6,7 +6,7 @@
 <body>
 
 <header th:fragment="Manager-header" class="header">
-    <a href="/" class="header-nav-bar"><h1>Projects</h1></a>
+    <a href="/frontPage" class="header-nav-bar"><h1>Projects</h1></a>
 
 	<span>
 			<a href="/newProject" class="nav-bar">New Project</a>
@@ -22,7 +22,7 @@
 		</span>
 
     <span>
-			<a href="/index" class="nav-bar">Log out</a>
+			<a href="/" class="nav-bar">Log out</a>
 		</span>
 
 
@@ -47,6 +47,13 @@
 
 <footer th:fragment="footer">
 
+	<p th:if="${session.employee == null}"></p>
+	<h1>Logout</h1>
+	<form id="logout" method="POST" action="/logout">
+		<input type="submit" value="logout">
+	</form>
+
+	<p th:unless="${session.employee == null}"></p>
 
 </footer>
 

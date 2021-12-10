@@ -48,6 +48,6 @@ public class CustomerController {
         //Add customer to DB
         cr.insertCustomerIntoDatabase(currentCustomer);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 }

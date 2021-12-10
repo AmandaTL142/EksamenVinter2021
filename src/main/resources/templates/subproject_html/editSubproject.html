@@ -27,14 +27,31 @@
     <br>
     <select name="project-status-input" id="status" required>
       <div th:switch="${Project.getStatus()}">
-        <option th:case="'On hold'">On hold</option>
-        <option th:case="'Ongoing'">Ongoing</option>
-        <option th:case="'Complete'">Complete</option>
-        <option th:case="*" selected disabled></option>
+        <a th:case="'On hold'">
+          <option >On hold</option>
+          <option >Ongoing</option>
+          <option >Complete</option>
+        </a>
+
+        <a th:case="'Ongoing'">
+          <option >Ongoing</option>
+          <option >On hold</option>
+          <option >Complete</option>
+        </a>
+
+        <a th:case="'Complete'">
+          <option >Complete</option>
+          <option >Ongoing</option>
+          <option >On hold</option>
+        </a>
+
+        <a th:case="*">
+          <option >On hold</option>
+          <option >Ongoing</option>
+          <option >Complete</option>
+        </a>
       </div>
-      <option value="On hold">On hold</option>
-      <option value="Ongoing">Ongoing</option>
-      <option value="Complete">Complete</option>
+
     </select>
     </br>
 

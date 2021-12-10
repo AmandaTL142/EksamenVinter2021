@@ -26,10 +26,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(WebRequest wr, HttpSession session) throws SQLException {
-        int employee_id = Integer.parseInt(Objects.requireNonNull(wr.getParameter("employee_id")));
+        int employee_id = Integer.parseInt(wr.getParameter("employee_id"));
         String password = wr.getParameter("password");
 
-        //Evaluer hvis login matcher database
+        //Evaluer om login matcher database
         boolean validPass = LoginService.login(employee_id, password);
 
         //Sæt en bruger som enten Manager eller Medarbejder allerede ved login
@@ -55,5 +55,9 @@ public class LoginController {
         }
     }
 
-
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("employee", null);
+        return "redirect:/";
+    }
 }

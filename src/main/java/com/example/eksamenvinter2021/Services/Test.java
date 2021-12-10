@@ -1,17 +1,65 @@
 package com.example.eksamenvinter2021.Services;
 
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Utility.JDBC;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Test {
+    ProjectRepo pr = new ProjectRepo();
+    SubprojectRepo spr = new SubprojectRepo();
+    SubprojectService sps = new SubprojectService();
+    ProjectService ps = new ProjectService();
+    LinkTabelRepo ltr = new LinkTabelRepo();
 
     public static void main(String[] args) {
-        ProjectRepo pr = new ProjectRepo();
-        SubprojectRepo spr = new SubprojectRepo();
-        SubprojectService sps = new SubprojectService();
-        ProjectService ps = new ProjectService();
-        LinkTabelRepo ltr = new LinkTabelRepo();
+        System.out.println(getTaskFromDatabase(5));
+
+    }
+
+
+    public static Task getTaskFromDatabase(int id) {
+        Task t = new Task();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "tasks WHERE task_id=?;");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int taskId = rs.getInt("task_id");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String status = rs.getString("status");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
+            Double estimatedTime = rs.getDouble("estimated_time");
+            Double timeUsed = rs.getDouble("time_used");
+            t = new Task(taskId, title, description, estimatedTime, timeUsed, status, startDate, endDate);
+            t.setTaskID(taskId);
+
+            if (description != null && description != ""){
+                t.setDescription(description);
+            }
+
+            if (startDate != null && startDate != ""){
+                t.setStartDate(startDate);
+            }
+
+            if (endDate != null && endDate != ""){
+                t.setEndDate(endDate);
+            }
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get task with id " + id + " from database");
+            System.out.println(e.getMessage());
+        }
+        return t;
+    }
         /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("UPDATE `heroku_7aba49c42d6c0f0`." +
@@ -21,7 +69,12 @@ public class Test {
             System.out.println("Test failed");
             System.out.println(e.getMessage());
         }
-*/
+        }
+        */
+
+
+
+
 /*
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
@@ -116,6 +169,6 @@ public class Test {
         //System.out.println(ltr.getActiveProjectsConnectedToEmployee(5));
         //System.out.println(ltr.getEmployeesFromSubproject(45));
         //ltr.removeEmployeeFromSubproject(1, 45);
-    }
-    }
+
+}
 

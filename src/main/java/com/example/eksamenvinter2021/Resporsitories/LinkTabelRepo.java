@@ -1,9 +1,10 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
-import com.example.eksamenvinter2021.Models.Employee;
-import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.*;
 import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.ProjectService;
+import com.example.eksamenvinter2021.Services.SubprojectService;
+import com.example.eksamenvinter2021.Services.TaskService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ public class LinkTabelRepo {
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();
     SubprojectService sps = new SubprojectService();
+    TaskService ts = new TaskService();
 
     public ArrayList<Project> getActiveProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
@@ -47,11 +49,15 @@ public class LinkTabelRepo {
                 Project projectObject = projectObjects.get(i);
                 String status = projectObject.getStatus();
 
+                /*if (status == null) {//TODO: create method 'changeStatus' to set a project's status to ongoing
+                    System.out.println("Project status should not be null.");
+                    projectObject.changeStatus("ongoing");
+                    activeProjectObjects.add(projectObject);
+                }*/
                 if (!status.equalsIgnoreCase("complete")){
                     activeProjectObjects.add(projectObject);
                 }
             }
-
         } catch(Exception e){
             System.out.println("Couldn't get projects for employee with id " + employeeId + " from database");
             System.out.println(e.getMessage());
@@ -121,6 +127,48 @@ public class LinkTabelRepo {
         }
         return subProjects;
     }
+    /*
+    public ArrayList<Task> getTasksConnectedToSubProjectsAndEmployee(int subprojectId, int employeeId) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT task_id FROM " +
+                    "link_tabel WHERE subproject_id = ? AND employee_id = ?;");
+            stmt.setInt(1, subprojectId);
+            stmt.setInt(2, employeeId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int taskId = rs.getInt("task_id");
+                Task temp = ts.getTaskObject(taskId);
+                tasks.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Could not get tasks for employee ID" + employeeId +
+                    " and subproject ID " + subprojectId);
+            System.out.println(e.getMessage());
+        }
+        return tasks;
+    }
+
+    public ArrayList<SubTask> getSubtasksConnectedToTasksAndEmployee(int taskId, int employeeId) {
+        ArrayList<SubTask> subTasks = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subtask_id FROM " +
+                    "link_tabel WHERE task_id = ? AND employee_id = ?;");
+            stmt.setInt(1, taskId);
+            stmt.setInt(2, employeeId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int subTaskId = rs.getInt("subproject_id");
+                SubTask temp = sps.getSubTaskObject(subTaskId);
+                subTasks.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Could not get subprojects for employee ID" + employeeId +
+                    " and project ID " + taskId);
+            System.out.println(e.getMessage());
+        }
+        return subTasks;
+    }*/
 
     public ArrayList<Employee> getEmployeesFromProject(int projectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
@@ -238,5 +286,4 @@ public class LinkTabelRepo {
             System.out.println(e.getMessage());
         }
     }
-
 }

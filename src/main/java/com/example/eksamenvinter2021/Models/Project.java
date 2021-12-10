@@ -15,7 +15,6 @@ public class Project {
     private int projectId;
     private String startDate;
     private String endDate;
-    private int projectId;
 
     LinkTabelRepo ltr = new LinkTabelRepo();
 

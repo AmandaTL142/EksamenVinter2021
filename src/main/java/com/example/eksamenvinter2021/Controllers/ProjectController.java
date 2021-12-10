@@ -207,7 +207,7 @@ public class ProjectController {
     @GetMapping("/showProjects")
     public String showProjects(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employee.getEmployeeId());
+        ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employee.getEmployeeId());
         //Arraylist subprojects
         ArrayList<Subproject> subprojects = new ArrayList<>();
         for (Project p : projects) {

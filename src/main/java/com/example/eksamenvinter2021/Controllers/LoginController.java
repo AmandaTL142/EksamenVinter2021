@@ -26,17 +26,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(WebRequest wr, HttpSession session) throws SQLException {
-        int employee_id = Integer.parseInt(Objects.requireNonNull(wr.getParameter("employee_id")));
+        int employee_id = Integer.parseInt(wr.getParameter("employee_id"));
         String password = wr.getParameter("password");
 
-        //Evaluer hvis login matcher database
+        //Evaluer om login matcher database
         boolean validPass = LoginService.login(employee_id, password);
 
         //Sæt en bruger som enten Manager eller Medarbejder allerede ved login
         if (validPass) {
             Employee employee = es.showEmployee(employee_id);
             session.setAttribute("employee", employee);
-            return "redirect:/employee"; //Mangler projekt-id for at vise korrekt projekt
+            return "redirect:/frontpage"; //Mangler projekt-id for at vise korrekt projekt
             //Vis forskellige sider til manager og medarbejder
             //Hvis ingen aktiv session --> websiden vises ikke, henviser til login
             //Alle sider implementerer metode der tjekker om logget ind
@@ -46,7 +46,7 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/employee")
+    @GetMapping("/frontpage")
     public String employee(HttpSession session) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
@@ -55,5 +55,9 @@ public class LoginController {
         }
     }
 
-
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("employee", null);
+        return "redirect:/";
+    }
 }

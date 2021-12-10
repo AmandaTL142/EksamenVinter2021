@@ -8,9 +8,8 @@
 
 <h1 th:text="${session.employee.employeeName}">Navn</h1>
 
-<th  th:if = "${session.employee.role == 'MANAGER'}">Du er manager</th>
-<th  th:unless = "${session.employee.role == 'MANAGER'}">Du er ikke manager</th>
-
+    <p th:if = "${session.employee.role == 'MANAGER'}">Du er manager</p>
+    <p th:unless = "${session.employee.role == 'MANAGER'}">Du er ikke manager</p>
 
 </body>
 </html>

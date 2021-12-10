@@ -2,6 +2,7 @@ package com.example.eksamenvinter2021.Controllers;
 
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
@@ -201,6 +202,22 @@ public class ProjectController {
         ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employeeId);
         model.addAttribute("Projects", projects);
         return "fragments/projectsConnectedToEmployee.html";
+    }
+
+    @GetMapping("/showProjects")
+    public String showProjects(HttpSession session, Model model) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employee.getEmployeeId());
+        //Arraylist subprojects
+        ArrayList<Subproject> subprojects = new ArrayList<>();
+        for (Project p : projects) {
+            subprojects = ltr.getSubprojectsConnectedToProjectsAndEmployee(p.getProjectId(), employee.getEmployeeId());
+        }
+
+        //Map 'subprojects' to model, name 'Subprojects'
+        model.addAttribute("Projects", projects);
+        model.addAttribute("Subprojects", subprojects);
+        return "project_html/showProjects";
     }
 
     @GetMapping("/addEmployeeToProject/{thisProject}")

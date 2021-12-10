@@ -164,6 +164,7 @@ public class SubprojectController {
         int employeeId = Integer.parseInt(employeeIdString);
         int subprojectId = editThisSubproject.getSubprojectId();
         int projectId = editThisSubproject.getProjectId();
+        //Nedenstående er ikke testet
         ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
         return "confirmationPage";
     }

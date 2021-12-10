@@ -18,11 +18,11 @@ public class Test {
     LinkTabelRepo ltr = new LinkTabelRepo();
 
     public static void main(String[] args) {
-        System.out.println(getTaskFromDatabase(5));
+        //System.out.println(getTaskFromDatabase(5));
 
     }
 
-
+/*
     public static Task getTaskFromDatabase(int id) {
         Task t = new Task();
         try {

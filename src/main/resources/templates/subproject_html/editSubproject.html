@@ -25,8 +25,13 @@
     <!--https://www.w3schools.com/tags/att_select_form.asp-->
     <label for="status">Status:</label>
     <br>
-    <select name="subproject-status-input" id="status" required>
-      <option selected disabled></option>
+    <select name="project-status-input" id="status" required>
+      <div th:switch="${Project.getStatus()}">
+        <option th:case="'On hold'">On hold</option>
+        <option th:case="'Ongoing'">Ongoing</option>
+        <option th:case="'Complete'">Complete</option>
+        <option th:case="*" selected disabled></option>
+      </div>
       <option value="On hold">On hold</option>
       <option value="Ongoing">Ongoing</option>
       <option value="Complete">Complete</option>

@@ -1,6 +1,8 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Customer;
+import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Services.CustomerService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
@@ -30,7 +32,8 @@ public class CustomerRepo {
                     "SELECT * FROM " + "heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            String name = rs.getString("customerName");
+            rs.next();
+            String name = rs.getString("name");
             cus = new Customer(name);
 
 
@@ -95,7 +98,7 @@ public class CustomerRepo {
                     "SELECT * FROM " + "heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
-            name = rs.getString("customerName");
+            name = rs.getString("name");
 
         } catch(SQLException e){
             System.out.println("Couldn't get the customer with id: " + customerId + " from the database");
@@ -104,4 +107,29 @@ public class CustomerRepo {
         return name;
     }
 
-}
+    public ArrayList <Customer> allCustomers(){
+        ArrayList<Customer> customerList = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.customers;");
+            ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int customerId = rs.getInt("customer_id");
+                    String customerName = rs.getString("name");
+
+                    Customer tempCustomer = new Customer(customerId, customerName);
+                    tempCustomer.setCustomerId(customerId);
+                    tempCustomer.setCustomerName(customerName);
+
+                    customerList.add(tempCustomer);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Couldn't get customers from database");
+                System.out.println(e.getMessage());
+            }
+            return customerList;
+        }
+    }
+

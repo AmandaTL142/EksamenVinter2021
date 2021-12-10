@@ -22,6 +22,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
+    public Customer(int customerId, String customerName) {
+        this.customerName = customerName;
+        this.customerId = customerId;
+    }
+
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }

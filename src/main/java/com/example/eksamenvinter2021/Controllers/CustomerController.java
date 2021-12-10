@@ -25,18 +25,34 @@ public class CustomerController {
 
 
     @GetMapping("/Customer")
-    public String Customer(HttpSession session, Model model, int customer) {
+    public String Customer(HttpSession session, Model model) {
         if (ls.notLoggedIn(session)) {
-            return "reirect:/";
+            return "reirect:/index";
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
-            model.addAttribute("customer", cs.showCustomer(customer));
             if (employee.getRole().equals("MANAGER")) {
-                return "Customer";
+                model.addAttribute("customerList", cs.getAllCustomers());
+                return "customer/Customer";
             } else {
                 return "error";
             }
         }
+    }
+
+    @GetMapping("/newCustomer")
+    public String newProject(HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                return "customer/newCustomer";
+            }
+            else{
+                return "error";
+            }
+        }
+
     }
 
     @PostMapping("/createNewCustomer")
@@ -44,17 +60,33 @@ public class CustomerController {
 
         String costumerName = webr.getParameter("customer-name-input");
 
-
         //Create customer-object
         Customer currentCustomer = cs.createNewCustomer(costumerName);
 
         //Add customer to DB
         cr.insertCustomerIntoDatabase(currentCustomer);
 
-        return "frontPage";
+        return "customer/Customer";
     }
 
-    //Denne virker
+    @GetMapping("/editCustomer/{thisCustomer}")
+    public String editProjectGetProject(@PathVariable("thisCustomer") int thisCustomer, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            editThisCustomer = cs.getCustomerObject(thisCustomer);
+            model.addAttribute("customer", cs.getCustomerObject(thisCustomer));
+
+            //Checks if the user is a manager and thus allowed to access the site
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                return "customer/editCustomer";
+            }
+            else{
+                return "error";
+            }
+        }
+    }
     @RequestMapping("/editCustomer")
     public String editCustomer(WebRequest webr) {
         String title = webr.getParameter("name");
@@ -65,7 +97,7 @@ public class CustomerController {
         //Update customer in DB
         cr.updateCustomerInDatabase(editThisCustomer);
 
-        return "frontpage";
+        return "customer/Customer";
     }
 
     @GetMapping("/deleteCustomer/{customerId}")
@@ -76,7 +108,7 @@ public class CustomerController {
         if (employee.getRole().equals("MANAGER")){
             int id = Integer.parseInt(customerId);
             cs.deleteCustomer(id);
-            return "frontPage";
+            return "customer/Customer";
         }
         else{
             return "error";

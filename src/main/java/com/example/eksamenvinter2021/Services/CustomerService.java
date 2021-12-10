@@ -1,11 +1,15 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Customer;
+import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
+
+import java.util.List;
 
 public class CustomerService {
 
     CustomerRepo customerRepo = new CustomerRepo();
+
 
     public Customer createNewCustomer(String customerName) {
         Customer customer = new Customer(customerName);
@@ -21,12 +25,13 @@ public class CustomerService {
         customerRepo.deleteCustomerFromDatabase(customerId);
     }
 
-
-    public Customer showCustomer (int customerId) {
+    public Customer getCustomerObject(int customerId) {
         return customerRepo.getCustomerFromDatabase(customerId);
     }
 
-    public String getCustomerName(int customerId) {
-        return customerRepo.returnCustomerNameFromId(customerId);
+    public List<Customer> getAllCustomers()
+    {
+        List<Customer> customerList = customerRepo.allCustomers();
+        return customerList;
     }
 }

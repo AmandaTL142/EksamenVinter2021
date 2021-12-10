@@ -2,6 +2,7 @@ package com.example.eksamenvinter2021.Models;
 
 public class SubTask {
 
+    private int subtaskID;
     private String title;
     private String description;
     private String estimatedTime;
@@ -11,14 +12,16 @@ public class SubTask {
     private int taskID;
     private String startDate;
     private String endDate;
-    private int subtaskID;
-
 
 
     public SubTask() {
     }
 
-    public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, int projectID, int taskID, String startDate, String endDate) {
+    public SubTask(int subtaskID, String title,
+                   String description, String estimatedTime,
+                   String timeUsed, String status, int projectID,
+                   int taskID, String startDate, String endDate) {
+        this.subtaskID = subtaskID;
         this.title = title;
         this.description = description;
         this.estimatedTime = estimatedTime;
@@ -30,7 +33,15 @@ public class SubTask {
         this.endDate = endDate;
     }
 
-    public SubTask(int subtaskId, String title, String status, int taskID, String startDate, String endDate) {
+    public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, int projectID, int taskID, String startDate, String endDate) {
+    }
+
+    public int getSubtaskID() {
+        return subtaskID;
+    }
+
+    public void setSubtaskID(int subtaskID) {
+        this.subtaskID = subtaskID;
     }
 
     public String getTitle() {
@@ -103,13 +114,5 @@ public class SubTask {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-    }
-
-    public int getSubtaskID() {
-        return subtaskID;
-    }
-
-    public void setSubtaskID(int subtaskID) {
-        this.subtaskID = subtaskID;
     }
 }

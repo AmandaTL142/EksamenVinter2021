@@ -3,6 +3,7 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
@@ -36,8 +37,7 @@ public class TaskRepo {
             stmt.setString(7, task.getStartDate());
             stmt.setString(8,task.getEndDate());
 
-            //stmt.setInt(6,getProjectId("projectTitle"));
-            //stmt.setInt(7,getSubProjectId("subProjectTitle"));
+
             stmt.executeUpdate();
 
 
@@ -96,8 +96,8 @@ public class TaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(8,task.getId());
 
+            stmt.setInt(8,task.getId());
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
             stmt.setString(3,task.getEstimatedTime());
@@ -134,7 +134,7 @@ public class TaskRepo {
         return 0;
     }
 
-    public ArrayList<Task> getAllTasksInnProject(int pID){
+    public ArrayList<Task> getAllTasksInProject(int pID){
         ArrayList<Task> allTasks = new ArrayList<>();
         try {
 
@@ -145,6 +145,7 @@ public class TaskRepo {
 
 
             while(rs.next()){
+                int taskID = rs.getInt("task_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
                 String estimated_time = rs.getString("estimated_time");
@@ -168,9 +169,9 @@ public class TaskRepo {
     }
 
     public void deleteTask(int taskID){
-        PreparedStatement stmt = null;
+
         try {
-            stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
             stmt.setInt(1, taskID);
             stmt.executeUpdate();
 
@@ -337,4 +338,7 @@ public class TaskRepo {
     }
 
 
+    public ArrayList<Task> getTaskInArrayForGantt(){
+
+    }
 }

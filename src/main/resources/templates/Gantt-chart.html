@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title> Gantt Chart</title>
+    <script type="text/javascript"
+            src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart'],'language':'ru'}]}">
+    </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" th:inline="javascript">
 
@@ -12,7 +16,7 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Task ID');
             data.addColumn('string', 'Task Name');
-            data.addColumn('string', 'Resource');
+            data.addColumn('string', 'Customer');
             data.addColumn('date', 'Start Date');
             data.addColumn('date', 'End Date');
             data.addColumn('number', 'Duration');
@@ -31,33 +35,24 @@
                 let projectStartDate = new Date (projects[project].startDate);
                 let projectEndDate = new Date (projects[project].endDate);
 
-                console.log(currentProjectId)
-                console.log(currentProjectName)
-                console.log(projectStatus)
-                console.log(currentCustomerId)
-                console.log(projectStartDate)
-                console.log(projectEndDate)
 
 
-                projectStatus = "Complete"
                 let projectStatusAsInt = 0;
+                    if(projectStatus === "Pending"){
+                        projectStatusAsInt = 0;
+                    } else if(projectStatus === "OnGoing"){
+                        projectStatusAsInt = 50;
+                    } else {
+                        projectStatusAsInt = 100;
+                    }
 
-
-            if(projectStatus === "Pending"){
-                projectStatusAsInt = 0;
-            } else if(projectStatus === "OnGoing"){
-                projectStatusAsInt = 50;
-            } else {
-                projectStatusAsInt = 100;
-            }
+                    console.log(projectStartDate);
+                    console.log(projectEndDate);
 
                 data.addRows
                 ([
                     [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
                 ]);
-
-
-
 
                 var options = {
                     height: 400,
@@ -74,6 +69,7 @@
     </script>
 </head>
 <body>
+
 <div th:if = "${session.employee.role == 'MANAGER'}">
 
     <div th:replace="fragments/headers :: Manager-header"></div>
@@ -85,7 +81,10 @@
     <div th:replace="fragments/headers :: Employee-header"></div>
 
 </div>
-<h1> Your Gannt chart</h1>
+
+
+
+
 <div id="chart_div"></div>
 
 </body>

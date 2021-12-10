@@ -36,7 +36,7 @@ public class LoginController {
         if (validPass) {
             Employee employee = es.showEmployee(employee_id);
             session.setAttribute("employee", employee);
-            return "redirect:/employee"; //Mangler projekt-id for at vise korrekt projekt
+            return "redirect:/frontpage"; //Mangler projekt-id for at vise korrekt projekt
             //Vis forskellige sider til manager og medarbejder
             //Hvis ingen aktiv session --> websiden vises ikke, henviser til login
             //Alle sider implementerer metode der tjekker om logget ind
@@ -46,7 +46,7 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/employee")
+    @GetMapping("/frontpage")
     public String employee(HttpSession session) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";

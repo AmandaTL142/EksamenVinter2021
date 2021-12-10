@@ -11,6 +11,10 @@
 <th  th:if = "${session.employee.role == 'MANAGER'}">Du er manager</th>
 <th  th:unless = "${session.employee.role == 'MANAGER'}">Du er ikke manager</th>
 
+<h1>Logout</h1>
+<form id="logout" method="POST" action="/logout">
+    <input type="submit" value="logout">
+</form>
 
 </body>
 </html>

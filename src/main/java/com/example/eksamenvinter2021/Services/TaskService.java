@@ -12,6 +12,13 @@ public class TaskService {
 
     TaskRepo tr = new TaskRepo();
 
+    public void insertNewTaskkToDB (Task task){
+        Task t = new Task();
+
+        tr.insertNewTaskToDB(t);
+    }
+
+
     public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
         Task task = new Task(title, description, estimatedTime, timeUsed, status);
         //tr.insertNewTaskToDB(task);
@@ -26,10 +33,10 @@ public class TaskService {
 
     }
 
-
-    public ArrayList<Task> getAllTasks(int taskID){
-        return tr.getAllTasksInnProject(taskID);
+    public ArrayList<Task> getAllTasksInArray(){
+        return tr.getTasksInArray();
     }
+
 
     public Task getTaskObject(int taskId) {
         return tr.getTaskFromDB(taskId);

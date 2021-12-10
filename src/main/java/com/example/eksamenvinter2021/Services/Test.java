@@ -127,14 +127,30 @@ public class Test {
          */
         //ps.deleteProjectFromDatabase(135);
         //System.out.println(ltr.getProjectsConnectedToEmployee(5));
-
+/*
         task.setTitle("gaver!!!");
         task.setEstimatedTime("10");
         task.setStatus("hej");
         task.setProjectId(15);
 
 
-        tr.insertNewTaskToDB(task);
+
+
+
+ */
+        Task task2 = tr.getTaskFromDB(5);
+
+        System.out.println(task2);
+
+        task2.setTitle("c");
+        tr.updateTask(task2);
+
+        System.out.println(task2);
+
+
+
+
+
     }
     }
 

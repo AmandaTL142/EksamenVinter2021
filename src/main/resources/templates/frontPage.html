@@ -49,6 +49,15 @@
 
 <div id="finishedProjects" hidden>
     <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Start date</th>
+            <th> End date</th>
+            <th>Employees</th>
+        </tr>
         <tr
                 th:each="project : ${session.employee.getCompletedProjectArray()}">
             <td th:text="${project.getProjectTitle()}"></td>

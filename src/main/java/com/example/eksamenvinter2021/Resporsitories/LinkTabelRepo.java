@@ -36,10 +36,10 @@ public class LinkTabelRepo {
             projectIds.clear();
             projectIds.addAll(projectIdsHashset);
 
-
             projectIds.forEach((projectId) -> {
                 projectObjects.add(ps.getProjectObject(projectId));
             });
+
 
             for (int i = 0; i < projectObjects.size(); i++) {
                 Project projectObject = projectObjects.get(i);
@@ -173,13 +173,15 @@ public class LinkTabelRepo {
         }
     }
 
-    public void insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(int employeeId, int subprojectId) {
+    public void insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(int employeeId, int subprojectId, int projectId) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subproject_id`) " +
-                            "VALUES (?, ?);");
+                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subproject_id`, `project_Id`) " +
+                            "VALUES (?, ?, ?);");
             stmt.setInt(1, employeeId);
             stmt.setInt(2, subprojectId);
+            stmt.setInt(3, projectId);
+
 
             stmt.executeUpdate();
         } catch (Exception e) {

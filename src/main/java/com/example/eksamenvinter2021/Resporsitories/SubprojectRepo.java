@@ -170,4 +170,24 @@ public class SubprojectRepo {
         return subprojects;
     }
 
+    public int getSubprojectIdByTitle(String title) {
+        Subproject sp = new Subproject();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.subprojects WHERE title=?;");
+            stmt.setString(1, title);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int subprojectId = rs.getInt("subproject_id");
+
+            return subprojectId;
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get subproject with title " + title + " from database");
+            System.out.println(e.getMessage());
+
+            return 0;
+        }
+    }
+
 }

@@ -56,7 +56,7 @@ public class SubprojectController {
 
     //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
     @PostMapping("/createNewSubproject")
-    public String createNewSubproject(WebRequest webr) {
+    public String createNewSubproject(HttpSession session, WebRequest webr) {
         //model.addAttribute("projects", projectArray);
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
@@ -74,6 +74,14 @@ public class SubprojectController {
 
         //Add subproject to DB
         spr.insertSubprojectIntoDatabase(currentSubproject);
+
+        //Get subproject ID
+        int subprojectId = spr.getSubprojectIdByTitle(currentSubproject.getSubprojectTitle());
+
+        //Insert link between  subproject and creator
+        Employee employee = (Employee) session.getAttribute("employee");
+        int employeeId = employee.getEmployeeId();
+        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
 
         return "confirmationPage";
     }
@@ -155,7 +163,8 @@ public class SubprojectController {
         String employeeIdString = webr.getParameter("subproject-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
         int subprojectId = editThisSubproject.getSubprojectId();
-        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId);
+        int projectId = editThisSubproject.getProjectId();
+        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
         return "confirmationPage";
     }
 
@@ -181,8 +190,6 @@ public class SubprojectController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
                 int subprojectId = editThisSubproject.getSubprojectId();
-                System.out.println("employeeId: " + employeeId);
-                System.out.println("subprojectId: " + subprojectId);
                 ltr.removeEmployeeFromSubproject(employeeId, subprojectId);
                 return "confirmationPage";
             }

@@ -103,9 +103,6 @@ public class TaskController {
     public String tasks(@PathVariable("thisProject") int thisProject, Model m){
         int pID = thisProject;
 
-        System.out.println(tr.getTasksInArray());
-        System.out.println(pID);
-
         m.addAttribute("tasks", tr.getTasksInArray());
         m.addAttribute("project", ps.getProjectObject(pID));
 
@@ -119,9 +116,12 @@ public class TaskController {
     @GetMapping("/editTask/{thisTask}")
     public String editTask(@PathVariable("thisTask") int thisTask, Model m){
         int id = thisTask;
+        edithThisTask = tr.getTaskFromDB(id);
 
-        m.addAttribute("tasks",ts.getTaskObject(id));
+
+        m.addAttribute("tasks",edithThisTask);
         m.addAttribute("project",sharedProject);
+
 
         return "task_html/editTask";
     }
@@ -140,23 +140,23 @@ public class TaskController {
 
 
         if (title != "" && title != null) {
-            t.setTitle(title);
+            edithThisTask.setTitle(title);
         }
 
         if (description != "" && description != null) {
-            t.setDescription(description);
+            edithThisTask.setDescription(description);
         }
 
         if (estimated_time != "" && estimated_time != null) {
-            t.setEstimatedTime(estimated_time);
+            edithThisTask.setEstimatedTime(estimated_time);
         }
 
         if (timeUsed != "" && timeUsed != null) {
-            t.setStatus(timeUsed);
+            edithThisTask.setStatus(timeUsed);
         }
 
         if (status != "" && status != null) {
-            t.setStatus(status);
+            edithThisTask.setStatus(status);
         }
 
         tr.updateTask(edithThisTask);

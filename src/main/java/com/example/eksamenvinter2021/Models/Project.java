@@ -12,9 +12,9 @@ public class Project {
     private double totalPrice;
     private int totalTime;
     private int customerId;
+    private int projectId;
     private String startDate;
     private String endDate;
-    private int projectId;
 
     LinkTabelRepo ltr = new LinkTabelRepo();
 

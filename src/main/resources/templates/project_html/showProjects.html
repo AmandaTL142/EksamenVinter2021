@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Show All Projects</title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="../../static/javascript/js.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/style/collapseStyle.css">
+
 </head>
 <body>
 
@@ -12,6 +16,40 @@
 
 </div>
 
+
+<table>
+    <thead>
+        <!---Table headings--->
+        <tr>
+            <th>Projektnavn</th>
+            <th>ID</th>
+            <th>Deadline</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tbody class="labels">
+            <tr>
+                <td colspan="3">
+                    <label  for="Projektnavn">Projektnavn</label>
+                    <input type="checkbox" name="Projektnavn" id="Projektnavn" data-toggle="toggle">
+                </td>
+            </tr>
+        </tbody>
+        <tbody class="hide">
+            <tr th:each= "project : ${Projects}">
+                <td class="collapsible" th:text="${project.getProjectTitle()}">Title</td>
+                <td class="collapsible" th:text="${project.getProjectId()}">ID</td>
+                <td class="collapsible" th:text="${project.getProjectDeadline()}">Deadline</td>
+                    <tbody class="hide">
+                        <tr th:each="subproject : ${Subprojects}">
+                            <td class="collapsible" th:text="${subproject.getSubprojectTitle()}">Title</td>
+                            <td class="collapsible" th:text="${subproject.getSubprojectId()}">ID</td>
+                            <td class="collapsible" th:text="${subproject.getSubprojectDeadline()}">Deadline</td>
+                    </tbody>
+                </tr>
+            </tr>
+        </tbody>
+</table>
 
 </body>
 </html>

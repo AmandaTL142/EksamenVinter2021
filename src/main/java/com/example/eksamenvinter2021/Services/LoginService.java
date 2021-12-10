@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
 import com.example.eksamenvinter2021.Utility.JDBC;
 import javax.servlet.http.HttpSession;
 import java.sql.PreparedStatement;
@@ -9,6 +10,9 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class LoginService {
+
+    EmployeeRepo er = new EmployeeRepo();
+    //TODO:
     //LoginService should contact database via repository, not in this class
     //This will be implemented when EmployeeRepo finished
     public static boolean login(int employee_id, String password) {

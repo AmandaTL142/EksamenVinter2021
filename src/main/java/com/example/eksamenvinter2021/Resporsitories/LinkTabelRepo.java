@@ -4,6 +4,7 @@ import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.ProjectService;
+import com.example.eksamenvinter2021.Services.TaskService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ public class LinkTabelRepo {
 
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();
+
+    TaskService ts = new TaskService();
 
     public ArrayList<Project> getProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
@@ -31,10 +34,12 @@ public class LinkTabelRepo {
             }
 
             //Prevents doubles
+            //TODO jeg forstår ikke årsag til at forhindre doubles?????
             Set<Integer> projectIdsHashset = new HashSet<>(projectIds);
             projectIds.clear();
             projectIds.addAll(projectIdsHashset);
 
+            //TODO gør pilen noget???
             projectIds.forEach((projectId) -> {
                 projectObjects.add(ps.getProjectObject(projectId));
             });

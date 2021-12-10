@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 
+import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Utility.JDBC;
@@ -10,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TaskRepo {
 
@@ -258,5 +261,72 @@ public class TaskRepo {
         }
         return taskArray;
     }
+
+    public ArrayList<Task> getTaskConnectedToEmployee(int employeeID){
+        ArrayList<Integer> taskIDs = new ArrayList<>();
+        ArrayList<Task> taskObjects = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.link_tabel WHERE employee_id=?;");
+            stmt.setInt(1,employeeID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                int taskID = rs.getInt("task_id");
+                taskIDs.add(taskID);
+            }
+
+            /*Set<Integer> taskIDHashSet = new HashSet<>();
+            taskIDs.clear();
+            taskIDs.addAll(taskIDHashSet);
+
+            taskIDs.forEach(taskId){
+            taskObject.add(ts.getTaskOBject(taskId))}*/
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    return taskObjects;
+    }
+
+    public  ArrayList<Employee> getEmployeeFromTask(int taskID){
+        ArrayList<Integer> employeeIDs = new ArrayList<>();
+        ArrayList<Employee> employeeObjects = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.link_tabel WHERE task_id=?;");
+            stmt.setInt(1,taskID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                int emmployeeID = rs.getInt("employee_id");
+                employeeIDs.add(emmployeeID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeeObjects;
+    }
+
+    public void insertLinkTableWithEmployeeAndTaskInDB(int employeeID, int taskID){
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `task_id`) " +
+                            "VALUES (?, ?);");
+
+            stmt.setInt(1,employeeID);
+            stmt.setInt(2,taskID);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println("Information could not be inserted into database");
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 }

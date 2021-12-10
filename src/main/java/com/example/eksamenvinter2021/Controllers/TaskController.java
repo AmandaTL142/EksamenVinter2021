@@ -173,6 +173,49 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
         return "confirmationPage";
 
     }
+
+    @GetMapping("/getTaskForEmployee")
+    public String getTaskForEmployee(HttpSession session, Model m){
+        Employee emp;
+        emp = (Employee) session.getAttribute("employee");
+        int employeeID = emp.getEmployeeId();
+        ArrayList<Task> tasks = tr.getTaskConnectedToEmployee(employeeID);
+        m.addAttribute("tasks",tasks);
+        return "fragments/taskConnectedToEmployee";
+    }
+
+    @GetMapping("/addEmployeeToTask/{thisTask}")
+    public String addEmployeeToTask(@PathVariable("thisTask") int thisTask, Model m){
+        //manage employee
+        ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+        m.addAttribute("alllEmployees",allEmployees);
+
+        //connects task to employee
+        ArrayList<Employee> taskEmployee = tr.getEmployeeFromTask(thisTask);
+        m.addAttribute("taskEMployee",taskEmployee);
+
+        //manage task
+        edithThisTask = ts.getTaskObject(thisTask);
+        m.addAttribute("task",edithThisTask);
+
+        return "task_html/addEmployeeToTask";
+    }
+
+
+    @PostMapping("/addEmployeeToTaskInput")
+    public String addEmployeeToTask(WebRequest wr){
+        String employeeIDString = wr.getParameter("task-employeeID-input");
+
+        int employeeID = Integer.parseInt(employeeIDString);
+
+        int taskID = edithThisTask.getId();
+
+        tr.insertLinkTableWithEmployeeAndTaskInDB(employeeID,taskID);
+
+        return "confirmationPage";
+    }
+
+
 }
 
 //transform string til datetime-java-format (loacltime) parToDateTime

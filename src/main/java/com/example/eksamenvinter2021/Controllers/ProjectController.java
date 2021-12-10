@@ -196,6 +196,7 @@ public class ProjectController {
     @GetMapping("/getProjectsForEmployee")
     public String getProjectsForEmployee(HttpSession session, Model model) {
         Employee employee;
+        //TODO hvorfor skal employee-object stå i parantes???
         employee = (Employee) session.getAttribute("employee");
         int employeeId = employee.getEmployeeId();
         ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
@@ -207,6 +208,7 @@ public class ProjectController {
     public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
         ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
         model.addAttribute("allEmployees", allEmployees);
+
         ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
         model.addAttribute("projectEmployees", projectEmployees);
         editThisProject = ps.getProjectObject(thisProject);
@@ -220,6 +222,7 @@ public class ProjectController {
     public String addEmployeeToProject(WebRequest webr) {
         String employeeIdString = webr.getParameter("project-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
+
         int projectId = editThisProject.getProjectId();
         ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "confirmationPage";

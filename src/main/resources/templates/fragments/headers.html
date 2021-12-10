@@ -47,6 +47,13 @@
 
 <footer th:fragment="footer">
 
+	<p th:if="${session.employee == null}"></p>
+	<h1>Logout</h1>
+	<form id="logout" method="POST" action="/logout">
+		<input type="submit" value="logout">
+	</form>
+
+	<p th:unless="${session.employee == null}"></p>
 
 </footer>
 

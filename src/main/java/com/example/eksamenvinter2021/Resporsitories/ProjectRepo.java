@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Services.CustomerService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Date;
@@ -185,6 +186,7 @@ public class ProjectRepo {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
+            CustomerService cs = new CustomerService();
 
             while (rs.next()) {
                 int projectId = rs.getInt("project_id");
@@ -193,13 +195,13 @@ public class ProjectRepo {
                 int customerId = rs.getInt("customer_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
+                //ArrayList < =
 
                 Project p = new Project(projectId, title, status, customerId, startDate, endDate);
                 p.setProjectId(projectId);
                 p.setProjectTitle(title);
                 p.setStatus(status);
                 p.setCustomerId(customerId);
-
 
                 if(startDate != null && !startDate.isEmpty() ) {
                     if (endDate != null && !endDate.isEmpty()) {

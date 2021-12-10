@@ -26,4 +26,7 @@ public class CustomerService {
         return customerRepo.getCustomerFromDatabase(customerId);
     }
 
+    public String getCustomerName(int customerId) {
+        return customerRepo.returnCustomerNameFromId(customerId);
+    }
 }

@@ -17,11 +17,13 @@ public class GanttController {
     LoginService ls = new LoginService();
 
     @GetMapping("/gantt")
-    public String gant(Model model) {
-
-        model.addAttribute("projects", pr.getProjectsInArrayForGantt());
-        return "/Gantt-chart";
-    }
+    public String gant(Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("projects", pr.getProjectsInArrayForGantt());
+            return "/Gantt-chart";
+        }
 
 
 
@@ -39,6 +41,7 @@ public class GanttController {
     }
 
      */
+    }
 }
 
 

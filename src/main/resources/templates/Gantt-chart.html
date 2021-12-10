@@ -32,6 +32,7 @@
                 let currentProjectName = projects[project].projectTitle;
                 let projectStatus = projects[project].status;
                 let currentCustomerId = projects[project].customerId.toString();
+                let currentCustomerName = projects[project].customerName;
                 let projectStartDate = new Date (projects[project].startDate);
                 let projectEndDate = new Date (projects[project].endDate);
 
@@ -51,7 +52,7 @@
 
                 data.addRows
                 ([
-                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+                    [currentProjectId, "Project: " + currentProjectName,currentCustomerId + ': ' + currentCustomerName, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
                 ]);
 
                 var options = {

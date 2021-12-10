@@ -6,6 +6,7 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerRepo {
 
@@ -84,4 +85,23 @@ public class CustomerRepo {
         }
         return customer_id;
     }
+
+    public String returnCustomerNameFromId(int customerId){
+
+        String name = null;
+
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+                    "SELECT * FROM " + "heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+            name = rs.getString("customerName");
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get the customer with id: " + customerId + " from the database");
+            System.out.println(e.getMessage());
+        }
+        return name;
+    }
+
 }

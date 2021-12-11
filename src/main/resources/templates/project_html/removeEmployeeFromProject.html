@@ -9,6 +9,12 @@
 <h1 ><td th:text="${project.getProjectTitle()}"></h1>
 
     <a th:if="${projectEmployees.size() == 1}">
+
+        <h2>Connected employees</h2>
+        <tr
+                th:each="employee : ${projectEmployees}">
+            <td th:text="${employee.getEmployeeName()}"></td>
+
         <h2>You can't remove the last employee from the project. Add another employee first or delete the project.</h2>
     </a>
 <a th:unless="${projectEmployees.size() == 1}">

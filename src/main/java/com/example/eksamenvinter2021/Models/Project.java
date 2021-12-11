@@ -155,11 +155,6 @@ public class Project {
             employeeNameList.add(Employee.getEmployeeName());
         });
 
-        employeeList.forEach((Employee) -> {
-            employeeNameList.add(Employee.getEmployeeName());
-        });
-
-
         return employeeNameList;
     }
 }

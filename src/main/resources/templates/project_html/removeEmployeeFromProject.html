@@ -20,7 +20,8 @@
             th:each="employee : ${projectEmployees}">
         <td th:text="${employee.getEmployeeName()}"></td>
 
-        <a  th:if = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}" onclick="return confirm('You can\'t remove the last manager from a project. ' +
+        <a  th:if = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}"
+            onclick="return confirm('You can\'t remove the last manager from a project. ' +
              'Add a manager or delete the project.');">Remove</a>
 
         <a  th:unless = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}">
@@ -47,6 +48,10 @@
 
     </form>
 </a>
+
+<form>
+    <input type="button" value="Back" onclick="history.go(-1)">
+</form>
 
 </body>
 </html>

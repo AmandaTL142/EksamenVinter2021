@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Services;
 
+import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
@@ -9,6 +10,8 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 public class Test {
     ProjectRepo pr = new ProjectRepo();
@@ -17,8 +20,15 @@ public class Test {
     ProjectService ps = new ProjectService();
     LinkTabelRepo ltr = new LinkTabelRepo();
 
-    public static void main(String[] args) {
+    public Test() throws ParseException {
+    }
+
+    public static void main(String[] args) throws ParseException {
+        ProjectRepo pr = new ProjectRepo();
         //System.out.println(getTaskFromDatabase(5));
+        Project project = pr.getProjectFromDatabase(15);
+        //Date date = project.getDateinDateFormat();
+        //System.out.println(date);
 
     }
 
@@ -169,6 +179,7 @@ public class Test {
         //System.out.println(ltr.getActiveProjectsConnectedToEmployee(5));
         //System.out.println(ltr.getEmployeesFromSubproject(45));
         //ltr.removeEmployeeFromSubproject(1, 45);
+
 
 }
 

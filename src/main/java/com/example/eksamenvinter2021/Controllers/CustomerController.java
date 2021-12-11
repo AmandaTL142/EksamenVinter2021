@@ -89,10 +89,10 @@ public class CustomerController {
     }
     @RequestMapping("/editCustomer")
     public String editCustomer(WebRequest webr) {
-        String title = webr.getParameter("name");
+        String newName = webr.getParameter("customer-Name-input");
 
-        if (title!="" && title!=null){
-            editThisCustomer.setCustomerName(title);
+        if (newName != "" && newName !=null ){
+            editThisCustomer.setCustomerName(newName);
         }
         //Update customer in DB
         cr.updateCustomerInDatabase(editThisCustomer);

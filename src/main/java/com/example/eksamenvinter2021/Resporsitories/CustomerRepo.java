@@ -33,9 +33,12 @@ public class CustomerRepo {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            String name = rs.getString("name");
-            cus = new Customer(name);
 
+            String name = rs.getString("name");
+
+            cus = new Customer(name);
+            cus.setCustomerId(id);
+            cus.setCustomerName(name);
 
         } catch(SQLException e){
             System.out.println("Couldn't get the customer with id: " + id + " from the database");
@@ -59,13 +62,15 @@ public class CustomerRepo {
     public void updateCustomerInDatabase(Customer customer) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("UPDATE `heroku_7aba49c42d6c0f0`.`customers` SET `name` = ?, WHERE (`customer_id` = ?;");
+                    ("UPDATE `heroku_7aba49c42d6c0f0`.`customers` SET `name` = ? WHERE (`customer_id` = ?);");
 
             stmt.setString(1, customer.getCustomerName());
+            stmt.setInt(2, customer.getCustomerId());
+            System.out.println("update method CR: " +customer);
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Couldn't update Customer: " + customer.getCustomerName() + " in database");
+            System.out.println("Couldn't update Customer: '" + customer.getCustomerName() + "' ID: " + customer.getCustomerId() +" in database");
             System.out.println(e.getMessage());
         }
 

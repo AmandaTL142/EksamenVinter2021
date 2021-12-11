@@ -260,7 +260,9 @@ public class ProjectController {
     @GetMapping("/removeEmployeeFromProject/{thisProject}")
     public String removeEmployeeFromProject(@PathVariable("thisProject") int thisProject, Model model) {
         ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+        ArrayList<Employee> projectManagers = ltr.getManagersFromProject(thisProject);
         model.addAttribute("projectEmployees", projectEmployees);
+        model.addAttribute("projectManagers", projectManagers);
         editThisProject = ps.getProjectObject(thisProject);
         model.addAttribute("project", editThisProject);
         return "project_html/removeEmployeeFromProject.html";

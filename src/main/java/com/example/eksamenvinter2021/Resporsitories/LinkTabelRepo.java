@@ -199,6 +199,38 @@ public class LinkTabelRepo {
         return employeeObjects;
     }
 
+    public ArrayList<Employee> getManagersFromProject(int projectId) {
+        ArrayList<Integer> employeeIds = new ArrayList<>();
+        ArrayList<Employee> managerObjects = new ArrayList<>();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.link_tabel WHERE project_id=?;");
+            stmt.setInt(1, projectId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int employeeId = rs.getInt("employee_id");
+                employeeIds.add(employeeId);
+            }
+
+            //Prevents doubles
+            Set<Integer> projectIdsHashset = new HashSet<>(employeeIds);
+            employeeIds.clear();
+            employeeIds.addAll(projectIdsHashset);
+
+            employeeIds.forEach((employeeId) -> {
+                if (es.showEmployee(employeeId).getRole().equalsIgnoreCase("MANAGER")){
+                    managerObjects.add(es.showEmployee(employeeId));
+                }
+            });
+
+        } catch(Exception e){
+            System.out.println("Couldn't get employees for project with id " + projectId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return managerObjects;
+    }
+
+
     public ArrayList<Employee> getEmployeesFromSubproject(int subprojectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();

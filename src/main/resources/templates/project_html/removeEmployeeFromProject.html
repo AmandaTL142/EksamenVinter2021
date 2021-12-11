@@ -20,7 +20,10 @@
             th:each="employee : ${projectEmployees}">
         <td th:text="${employee.getEmployeeName()}"></td>
 
+        <a  th:if = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}" onclick="return confirm('You can\'t remove the last manager from a project. ' +
+             'Add a manager or delete the project.');">Remove</a>
 
+        <a  th:unless = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}">
         <td>
             <a th:if = "${session.employee.employeeId == employee.getEmployeeId()}"
                th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
@@ -33,6 +36,8 @@
                th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
                onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
         </td>
+
+        </a>
 
         <br>
 

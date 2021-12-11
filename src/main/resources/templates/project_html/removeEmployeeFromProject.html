@@ -22,9 +22,18 @@
 
 
         <td>
-            <a th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
+            <a th:if = "${session.employee.employeeId == employee.getEmployeeId()}"
+               th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
+               onclick="return confirm('Are you sure you want to remove yourself from this project? ' +
+                'You will no longer have access to it.');">Remove</a>
+        </td>
+
+        <td>
+            <a th:unless = "${session.employee.employeeId == employee.getEmployeeId()}"
+               th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
                onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
         </td>
+
         <br>
 
     </tr>

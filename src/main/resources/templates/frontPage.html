@@ -44,8 +44,8 @@
 
     </tr>
 </table>
-
-<button onclick="myFunction()">Show finished projects</button>
+<button th:if = "${session.employee.hasCompletedProjects() == false}" class="button" onclick="myFunction()" disabled>Show finished projects</button>
+<button th:unless = "${session.employee.hasCompletedProjects() == false}" class="button" onclick="myFunction()">Show finished projects</button>
 
 <div id="finishedProjects" hidden>
     <table>

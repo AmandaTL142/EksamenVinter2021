@@ -81,6 +81,15 @@ public class Employee {
         return ltr.getCompletedProjectsConnectedToEmployee(employeeId);
     }
 
+    public boolean hasCompletedProjects() {
+        int noOfComProj = getCompletedProjectArray().size();
+        if (noOfComProj == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Employee)) {

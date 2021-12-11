@@ -2,7 +2,10 @@ package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Project {
     private String projectTitle;
@@ -133,6 +136,11 @@ public class Project {
 
     public String getStartDate() {
         return startDate;
+    }
+
+    public Date getDateinDateFormat(String dateInput) throws ParseException {
+        Date returnDate=new SimpleDateFormat("yyyy-MM-dd").parse(dateInput);
+        return returnDate;
     }
 
     public void setStartDate(String startDate) {

@@ -27,7 +27,7 @@
             th:each="project : ${session.employee.getActiveProjectArray()}">
         <td th:text="${project.getProjectTitle()}"></td>
         <td th:text="${project.getDescription()}"></td>
-        <td th:text="${project.getProjectDeadline()}"></td>
+        <td th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
         <td th:text="${project.getStatus()}"></td>
         <td th:text="${project.getStartDate()}"></td>
         <td th:text="${project.getEndDate()}"></td>
@@ -62,7 +62,7 @@
                 th:each="project : ${session.employee.getCompletedProjectArray()}">
             <td th:text="${project.getProjectTitle()}"></td>
             <td th:text="${project.getDescription()}"></td>
-            <td th:text="${project.getProjectDeadline()}"></td>
+            <td th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
             <td th:text="${project.getStatus()}"></td>
             <td th:text="${project.getStartDate()}"></td>
             <td th:text="${project.getEndDate()}"></td>

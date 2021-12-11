@@ -117,7 +117,7 @@ public class ProjectRepo {
             return id;
 
         } catch(SQLException e){
-            System.out.println("Couldn't get id for with title " + projectTitle + " from database");
+            System.out.println("Couldn't get id for project with title " + projectTitle + " from database");
             System.out.println(e.getMessage());
 
             return 0;

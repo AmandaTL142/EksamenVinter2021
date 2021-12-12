@@ -1,8 +1,8 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Project {
     private String projectTitle;
@@ -15,6 +15,7 @@ public class Project {
     private String startDate;
     private String endDate;
     private int projectId;
+    private List<Subproject> associatedSubprojects;
 
     LinkTabelRepo ltr = new LinkTabelRepo();
 
@@ -76,7 +77,6 @@ public class Project {
         this.customerId = customerId;
     }
 
-
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
@@ -92,6 +92,17 @@ public class Project {
     public int getTotalTime() {
         return totalTime;
     }
+
+    public List<Subproject> getAssociatedSubprojects()
+    {
+        return associatedSubprojects;
+    }
+
+    public void setAssociatedSubprojects(List<Subproject> associatedSubprojects)
+    {
+        this.associatedSubprojects = associatedSubprojects;
+    }
+
 
     public Project(String title, String projectDeadline, String status, double basePrice, int customerId) {
         this.projectTitle = title;
@@ -109,6 +120,7 @@ public class Project {
         this.customerId = customerId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.associatedSubprojects = new ArrayList<>();
     }
 
     public Project() {
@@ -127,7 +139,8 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", projectId=" + projectId +
                 ", startDate=" + startDate + '\'' +
-                ", endDate=" + endDate +
+                ", endDate=" + endDate + '\'' +
+                ", associatedSubprojects=" + associatedSubprojects +
                 '}';
     }
 

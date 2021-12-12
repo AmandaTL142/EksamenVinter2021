@@ -152,14 +152,15 @@ public class SubprojectRepo {
                 }
 
                 if (startDate != null && startDate != ""){
-                    sp.setStartDate(startDate);
+                    sp.setStartDate(startDate.replace("-",","));
                 }
 
                 if (endDate != null && endDate != ""){
-                    sp.setEndDate(endDate);
+                    sp.setEndDate(endDate.replace("-",","));
                 }
 
                 subprojects.add(sp);
+
             }
 
 

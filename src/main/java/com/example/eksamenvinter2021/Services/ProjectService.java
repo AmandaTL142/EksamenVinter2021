@@ -2,14 +2,13 @@ package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
-
-import java.sql.PreparedStatement;
-import java.util.Date;
+import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 import java.util.List;
 
 public class ProjectService {
     ProjectRepo pr = new ProjectRepo();
+    SubprojectRepo spr = new SubprojectRepo();
+    SubprojectService sps = new SubprojectService();
 
     public Project createNewProjectObject(String title, String projectDeadline, String status, double basePrice,
                                  int customerId) {
@@ -37,6 +36,16 @@ public class ProjectService {
 
     public void deleteProjectFromDatabase(int id) {
         pr.deleteProjectFromDatabase(id);
+    }
+
+    public List<Project> getAllProjectsAndSubprojects()
+    {
+        List<Project> allProjects = pr.getAllProjects();
+
+        for (Project project : allProjects) {
+            project.setAssociatedSubprojects(sps.showSubprojectLinkedToProject(project.getProjectId()));
+        }
+        return allProjects;
     }
 
     /*

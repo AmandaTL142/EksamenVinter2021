@@ -2,6 +2,7 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Services.CustomerService;
+import com.example.eksamenvinter2021.Services.SubprojectService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Date;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepo {
+
+    SubprojectService sps = new SubprojectService();
 
     //Testet i "test"
     public void insertProjectIntoDatabase(Project p) {
@@ -180,13 +183,12 @@ public class ProjectRepo {
     }
 
     //Casper har lavet denne
-    public ArrayList<Project> getProjectsInArrayForGantt() {
+    public ArrayList<Project> getAllProjects() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
-            CustomerService cs = new CustomerService();
 
             while (rs.next()) {
                 int projectId = rs.getInt("project_id");
@@ -195,7 +197,6 @@ public class ProjectRepo {
                 int customerId = rs.getInt("customer_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
-                //ArrayList < =
 
                 Project p = new Project(projectId, title, status, customerId, startDate, endDate);
                 p.setProjectId(projectId);
@@ -211,6 +212,8 @@ public class ProjectRepo {
 
                         p.setStartDate(newStartDate);
                         p.setEndDate(newEndDate);
+                        p.setAssociatedSubprojects(sps.showSubprojectLinkedToProject(projectId));
+
 
                         projectArray.add(p);
                     }

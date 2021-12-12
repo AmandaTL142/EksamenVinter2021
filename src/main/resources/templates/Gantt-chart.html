@@ -14,58 +14,95 @@
         function drawChart() {
 
             var data = new google.visualization.DataTable();
+            let projects = [[${projects}]];
+
             data.addColumn('string', 'Task ID');
             data.addColumn('string', 'Task Name');
-            data.addColumn('string', 'Customer');
+            data.addColumn('string', 'Resources');
             data.addColumn('date', 'Start Date');
             data.addColumn('date', 'End Date');
             data.addColumn('number', 'Duration');
             data.addColumn('number', 'Percent Complete');
             data.addColumn('string', 'Dependencies');
 
+            for (let project = 0; project < projects.length; project++){
 
-            let projects = [[${projects}]];
-
-            for (let project = 0; project < projects.length; project++) {
-
-                let currentProjectId =  projects[project].projectId.toString();
+                let currentProjectId = projects[project].projectId.toString();
                 let currentProjectName = projects[project].projectTitle;
                 let projectStatus = projects[project].status;
                 let currentCustomerId = projects[project].customerId.toString();
-                let currentCustomerName = projects[project].customerName;
-                let projectStartDate = new Date (projects[project].startDate);
-                let projectEndDate = new Date (projects[project].endDate);
+                let projectStartDate = new Date(projects[project].startDate);
+                let projectEndDate = new Date(projects[project].endDate);
+
+                let subProjects = projects[project].associatedSubprojects;
+
+                let projectStatusAsInt = 100;
+                if (projectStatus === "Pending") {
+                    projectStatusAsInt = 0;
+                } else if (projectStatus === "Ongoing") {
+                    projectStatusAsInt = 50;
+                }
+
+                console.log("--NEW PROJECT--");
+                console.log("currentProjectId; " + currentProjectId);
+                console.log("currentProjectName; " + currentProjectName);
+                console.log("projectStatus; " + projectStatus);
+                console.log("currentCustomerId; " + currentCustomerId);
+                console.log("projectStartDate; " + projectStartDate);
+                console.log("projectEndDate; " + projectEndDate);
+                console.log("subProjects; " + subProjects.length);
 
 
-
-                let projectStatusAsInt = 0;
-                    if(projectStatus === "Pending"){
-                        projectStatusAsInt = 0;
-                    } else if(projectStatus === "OnGoing"){
-                        projectStatusAsInt = 50;
-                    } else {
-                        projectStatusAsInt = 100;
-                    }
-
-                    console.log(projectStartDate);
-                    console.log(projectEndDate);
 
                 data.addRows
                 ([
-                    [currentProjectId, "Project: " + currentProjectName,currentCustomerId + ': ' + currentCustomerName, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
                 ]);
 
-                var options = {
-                    height: 400,
-                    gantt: {
-                        trackHeight: 30
-                    }
-                };
+                    for (let subProject = 0; subProject < subProjects.length; subProject++) {
 
-                var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+                        let currentSubprojectProjectId = subProjects[subProject].subprojectId.toString();
+                        let currentSubprojectName = subProjects[subProject].subprojectTitle;
+                        let SubprojectStatus = subProjects[subProject].subprojectStatus;
+                        let SubprojectStartDate = new Date(subProjects[subProject].startDate);
+                        let SubprojectEndDate = new Date(subProjects[subProject].endDate);
 
-                chart.draw(data, options);
+                        let subprojectStatusAsInt = 100;
+                        if (SubprojectStatus === "Pending") {
+                            subprojectStatusAsInt = 0;
+                        } else if (SubprojectStatus === "Ongoing") {
+                            subprojectStatusAsInt = 50;
+                        }
+
+                        console.log("--NEW SUBPROJECT--");
+                        console.log("currentSubprojectProjectId; " + currentSubprojectProjectId);
+                        console.log("currentSubprojectName; " + currentSubprojectName);
+                        console.log("SubprojectStatus; " + SubprojectStatus);
+                        console.log("SubprojectStartDate; " + SubprojectStartDate);
+                        console.log("SubprojectEndDate; " + SubprojectEndDate);
+
+
+                        data.addRows
+                        ([
+                            [currentSubprojectProjectId, "Sub-Project: " + currentSubprojectName, null, SubprojectStartDate, SubprojectEndDate, null, subprojectStatusAsInt, null]
+                        ]);
+
+                }
             }
+
+            const options = {
+                height: 500,
+
+
+                gantt: {
+                    trackHeight: 30,
+                    sortTasks: false
+                }
+            };
+
+            const chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
         }
     </script>
 </head>
@@ -87,6 +124,7 @@
 
 
 <div id="chart_div"></div>
+
 
 </body>
 </html>

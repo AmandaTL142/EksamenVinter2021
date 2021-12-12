@@ -2,7 +2,6 @@ package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
-
 import java.util.ArrayList;
 
 public class SubprojectService {
@@ -31,7 +30,10 @@ public class SubprojectService {
         return spr.getSubprojectsLinkedToProject(thisProjectId);
     }
 
+
     public void deleteSubprojectFromDatabase(int id) {
         spr.deleteSubprojectFromDatabase(id);
     }
+
+
 }

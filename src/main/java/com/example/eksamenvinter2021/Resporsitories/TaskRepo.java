@@ -25,7 +25,7 @@ public class TaskRepo {
 
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
                     "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
-                    "`subproject_id`, `start_date`) VALUES (?, ?, ?, ?, ?,?,?,?)");
+                    "`subproject_id`, `start_date`) VALUES (?,?,?,?,?,?,?,?)");
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());

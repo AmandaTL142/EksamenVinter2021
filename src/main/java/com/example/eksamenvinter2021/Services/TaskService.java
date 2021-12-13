@@ -21,26 +21,27 @@ public class TaskService {
 
     public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
         Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
-        //tr.insertNewTaskToDB(task);
+
         return task;
     }
 
-    public Task updateTask(String title, String description, String estimatedTime, String timeUsed, String status) {
-        Task t = new Task(title, description, estimatedTime, timeUsed, status);
-        tr.updateTask(t);
+    public void updateTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+        Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
 
-        return t;
-
+        tr.updateTask(task);
     }
+
+    public Task getTaskObject(int taskId) {
+        return tr.getTaskFromDB(taskId);
+    }
+
 
     public ArrayList<Task> getAllTasksInArray(){
         return tr.getTasksInArray();
     }
 
 
-    public Task getTaskObject(int taskId) {
-        return tr.getTaskFromDB(taskId);
-    }
+
 
     public void deleteTask(int taskID){
         tr.deleteTask(taskID);

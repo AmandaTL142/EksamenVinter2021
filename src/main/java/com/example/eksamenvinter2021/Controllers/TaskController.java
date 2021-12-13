@@ -54,8 +54,9 @@ public class TaskController {
     public String tasks(@PathVariable("thisProject") int thisProject, Model m){
         int pID = thisProject;
 
-        m.addAttribute("tasks", tr.getTasksInArray());
+        m.addAttribute("tasks", ts.getAllTasksInArray());
         m.addAttribute("project", ps.getProjectObject(pID));
+
 
         sharedProject = ps.getProjectObject(thisProject);
 
@@ -115,7 +116,7 @@ public class TaskController {
 @GetMapping("/editTask/{thisTask}")
 public String editTask(@PathVariable("thisTask") int thisTask, Model m){
     int id = thisTask;
-    edithThisTask = tr.getTaskFromDB(id);
+    edithThisTask = ts.getTaskObject(id);
 
 
     m.addAttribute("tasks",edithThisTask);
@@ -127,7 +128,6 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
 
     @PostMapping("/editTaskChanges")
     public String editTask(WebRequest wr){
-        //TODO få den connected med det rigtige taskID/projectID
         //@PathVariable("thisTask")
 
         String title=wr.getParameter("new-task-title");
@@ -169,7 +169,10 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
             edithThisTask.setEndDate(endtDate);
         }
 
-        tr.updateTask(edithThisTask);
+        ts.updateTask(edithThisTask);
+        edithThisTask.setProjectId(sharedProject.getProjectId());
+
+        ts.updateTask(edithThisTask);
 
         return "task_html/editTask";
     }

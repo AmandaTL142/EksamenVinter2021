@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer</title>
+</head>
+<body>
+
+<h1> Edit Customer </h1>
+
+<div>
+    <form method="POST" action="/editCustomer">
+        <label>Name:</label><br>
+        <input name="customer-Name-input" th:value="${customer.getCustomerName()}" type="text"><br>
+        <br><input type="submit" value="Done">
+    </form>
+</div>
+
+</body>
+</html>

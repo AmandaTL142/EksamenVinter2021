@@ -6,7 +6,6 @@ import com.example.eksamenvinter2021.Services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,28 +16,17 @@ public class GanttController {
     LoginService ls = new LoginService();
 
     @GetMapping("/gantt")
-    public String gant(Model model) {
-
-        model.addAttribute("projects", pr.getProjectsInArrayForGantt());
-        return "/Gantt-chart";
-    }
-
-
-
-    /*
-    //Denne virker
-    @GetMapping("/gantt/{thisProject}")
-    public String ganttProject(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+    public String gant(Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {
-            return  "redirect:/";
+            return "redirect:/";
         } else {
-            //int id = Integer.parseInt(thisProject);
-            model.addAttribute("Project", ps.getProjectObject(thisProject));
+            model.addAttribute("projects", ps.getAllProjectsAndSubprojects());
+            System.out.println(ps.getAllProjectsAndSubprojects().toString());
+
             return "/Gantt-chart";
         }
-    }
 
-     */
+    }
 }
 
 

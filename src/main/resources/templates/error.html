@@ -21,19 +21,21 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" type="text/css" href="../static/style/errorStyle.css">
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
+
 </head>
 
 <body>
 
-<div class="errorPage">
+<div class="background">
 
     <h1>Error</h1>
 
     <h2>An error as occurred <br> please return to where you came from! </h2>
 
-    <form>
-        <input type="button" value="Head back to previous page!" onclick="history.go(-1)">
+    <form id="error">
+        <input id="returnButton" type="button" value="Head back to previous page!" onclick="history.go(-1)">
     </form>
 </div>
 

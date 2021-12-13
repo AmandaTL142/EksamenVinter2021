@@ -1,112 +1,125 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Gantt Chart</title>
+    <title>Gantt Chart</title>
+
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
+
     <script type="text/javascript"
             src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart'],'language':'ru'}]}">
-    </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script type="text/javascript" th:inline="javascript">
 
-        google.charts.load('current', {'packages':['gantt']});
-        google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+    function drawChart() {
 
-            var data = new google.visualization.DataTable();
-            let projects = [[${projects}]];
+        var data = new google.visualization.DataTable();
+        let projects = [[${projects}]];
 
-            data.addColumn('string', 'Task ID');
-            data.addColumn('string', 'Task Name');
-            data.addColumn('string', 'Resources');
-            data.addColumn('date', 'Start Date');
-            data.addColumn('date', 'End Date');
-            data.addColumn('number', 'Duration');
-            data.addColumn('number', 'Percent Complete');
-            data.addColumn('string', 'Dependencies');
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resources');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
 
-            for (let project = 0; project < projects.length; project++){
+        for (let project = 0; project < projects.length; project++) {
 
-                let currentProjectId = projects[project].projectId.toString();
-                let currentProjectName = projects[project].projectTitle;
-                let projectStatus = projects[project].status;
-                let currentCustomerId = projects[project].customerId.toString();
-                let projectStartDate = new Date(projects[project].startDate);
-                let projectEndDate = new Date(projects[project].endDate);
+            let currentProjectId = projects[project].projectId.toString();
+            let currentProjectName = projects[project].projectTitle;
+            let projectStatus = projects[project].status;
+            let currentCustomerId = projects[project].customerId.toString();
+            let projectStartDate = new Date(projects[project].startDate);
+            let projectEndDate = new Date(projects[project].endDate);
 
-                let subProjects = projects[project].associatedSubprojects;
+            let subProjects = projects[project].associatedSubprojects;
 
-                let projectStatusAsInt = 100;
-                if (projectStatus === "Pending") {
-                    projectStatusAsInt = 0;
-                } else if (projectStatus === "Ongoing") {
-                    projectStatusAsInt = 50;
+            let projectStatusAsInt = 100;
+            if (projectStatus === "Pending") {
+                projectStatusAsInt = 0;
+            } else if (projectStatus === "Ongoing") {
+                projectStatusAsInt = 50;
+            }
+
+            console.log("--NEW PROJECT--");
+            console.log("currentProjectId; " + currentProjectId);
+            console.log("currentProjectName; " + currentProjectName);
+            console.log("projectStatus; " + projectStatus);
+            console.log("currentCustomerId; " + currentCustomerId);
+            console.log("projectStartDate; " + projectStartDate);
+            console.log("projectEndDate; " + projectEndDate);
+            console.log("subProjects; " + subProjects.length);
+
+
+            data.addRows
+            ([
+                [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+            ]);
+
+            for (let subProject = 0; subProject < subProjects.length; subProject++) {
+
+                let currentSubprojectId = subProjects[subProject].subprojectId.toString();
+                let currentSubprojectName = subProjects[subProject].subprojectTitle;
+                let SubprojectStatus = subProjects[subProject].subprojectStatus;
+                let SubprojectStartDate = new Date(subProjects[subProject].startDate);
+                let SubprojectEndDate = new Date(subProjects[subProject].endDate);
+
+                let subprojectStatusAsInt = 100;
+                if (SubprojectStatus === "Pending") {
+                    subprojectStatusAsInt = 0;
+                } else if (SubprojectStatus === "Ongoing") {
+                    subprojectStatusAsInt = 50;
                 }
 
-                console.log("--NEW PROJECT--");
-                console.log("currentProjectId; " + currentProjectId);
-                console.log("currentProjectName; " + currentProjectName);
-                console.log("projectStatus; " + projectStatus);
-                console.log("currentCustomerId; " + currentCustomerId);
-                console.log("projectStartDate; " + projectStartDate);
-                console.log("projectEndDate; " + projectEndDate);
-                console.log("subProjects; " + subProjects.length);
-
+                console.log("--NEW SUBPROJECT--");
+                console.log("currentSubprojectProjectId; " + currentSubprojectId);
+                console.log("currentSubprojectName; " + currentSubprojectName);
+                console.log("SubprojectStatus; " + SubprojectStatus);
+                console.log("SubprojectStartDate; " + SubprojectStartDate);
+                console.log("SubprojectEndDate; " + SubprojectEndDate);
 
 
                 data.addRows
                 ([
-                    [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+                    ["Subproject-Id: " + currentSubprojectId, "Sub-Project - " + currentSubprojectName, null, SubprojectStartDate, SubprojectEndDate, null, 0, null]
                 ]);
 
-                    for (let subProject = 0; subProject < subProjects.length; subProject++) {
+            }
+        }
 
-                        let currentSubprojectProjectId = subProjects[subProject].subprojectId.toString();
-                        let currentSubprojectName = subProjects[subProject].subprojectTitle;
-                        let SubprojectStatus = subProjects[subProject].subprojectStatus;
-                        let SubprojectStartDate = new Date(subProjects[subProject].startDate);
-                        let SubprojectEndDate = new Date(subProjects[subProject].endDate);
+        const options = {
 
-                        let subprojectStatusAsInt = 100;
-                        if (SubprojectStatus === "Pending") {
-                            subprojectStatusAsInt = 0;
-                        } else if (SubprojectStatus === "Ongoing") {
-                            subprojectStatusAsInt = 50;
-                        }
-
-                        console.log("--NEW SUBPROJECT--");
-                        console.log("currentSubprojectProjectId; " + currentSubprojectProjectId);
-                        console.log("currentSubprojectName; " + currentSubprojectName);
-                        console.log("SubprojectStatus; " + SubprojectStatus);
-                        console.log("SubprojectStartDate; " + SubprojectStartDate);
-                        console.log("SubprojectEndDate; " + SubprojectEndDate);
+            height: 500,
 
 
-                        data.addRows
-                        ([
-                            [currentSubprojectProjectId, "Sub-Project: " + currentSubprojectName, null, SubprojectStartDate, SubprojectEndDate, null, subprojectStatusAsInt, null]
-                        ]);
-
-                }
+            gantt: {
+                trackHeight: 30,
+                sortTasks: false,
+                lableStyle:
+                    {
+                        fontStyle: 18,
+                    }
             }
 
-            const options = {
-                height: 500,
+        };
 
+        const chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
-                gantt: {
-                    trackHeight: 30,
-                    sortTasks: false
-                }
-            };
+        chart.draw(data, options);
+    }
 
-            const chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-
-            chart.draw(data, options);
-        }
     </script>
+
+
 </head>
 <body>
+<div class="background">
 
 <div th:if = "${session.employee.role == 'MANAGER'}">
 
@@ -117,13 +130,10 @@
 <div th:if = "${session.employee.role == 'STAFF'}">
 
     <div th:replace="fragments/headers :: Employee-header"></div>
-
 </div>
 
-
-
-
-<div id="chart_div"></div>
+    <div id="chart_div"></div>
+</div>
 
 
 </body>

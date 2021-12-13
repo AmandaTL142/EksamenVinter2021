@@ -108,7 +108,9 @@ public class TaskController {
         Metoden indsætter de givende informationer ind til DB.
         I parantesen siges der, at disse værdier, som er indtastet af brugeren, i task-objektet
         og på denne måde instanzieres objektet*/
+
         tr.insertNewTaskToDB(tempTask);
+
 
         return "confirmationPage";
     }
@@ -169,7 +171,6 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
             edithThisTask.setEndDate(endtDate);
         }
 
-        ts.updateTask(edithThisTask);
         edithThisTask.setProjectId(sharedProject.getProjectId());
 
         ts.updateTask(edithThisTask);
@@ -181,14 +182,11 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
     @GetMapping("/deleteTask/{taskId}")
     public String deleteTask(@PathVariable("taskId") int taskId, Model m) {
         int id = taskId;
-        tr.deleteTask(id);
+        ts.deleteTask(id);
 
         return "confirmationPage";
 
     }
-
-
-
 
 
     @GetMapping("/getTaskForEmployee")

@@ -20,13 +20,12 @@ public class TaskRepo {
     Connection conn = JDBC.getConnection();
 
     public void insertNewTaskToDB(Task task){
-        //int projectId= getProjectId("projectTitle");
-        //int subProjectID= getSubProjectId("subProjectTitle");
 
         try{
 
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` " +
-                    "(`title`, `description`, `estimated_time`, `time_used`, `status`, `project_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?,?,?,?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
+                    "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
+                    "`subproject_id`, `start_date`) VALUES (?, ?, ?, ?, ?,?,?,?)");
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
@@ -37,14 +36,12 @@ public class TaskRepo {
             stmt.setString(7, task.getStartDate());
             stmt.setString(8,task.getEndDate());
 
-
             stmt.executeUpdate();
 
 
         } catch (SQLException e) {
-            System.out.println("connection not found");
+            System.out.println("Task could not be inserted into database");
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 

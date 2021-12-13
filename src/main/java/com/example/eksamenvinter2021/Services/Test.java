@@ -138,14 +138,17 @@ public class Test {
 
 
  */
-        Task task2 = tr.getTaskFromDB(5);
+       task.setTitle("AndreaTester");
+       task.setDescription("hej emd dig");
+       task.setEstimatedTime("12.30");
+       task.setStatus("hej");
+       task.setProjectId(15);
+       task.setTimeUsed("12.30");
+       task.setStartDate("2021-12-23");
+       task.setEndDate("2021-12-23");
 
-        System.out.println(task2);
+       tr.insertNewTaskToDB(task);
 
-        task2.setTitle("c");
-        tr.updateTask(task2);
-
-        System.out.println(task2);
 
 
 

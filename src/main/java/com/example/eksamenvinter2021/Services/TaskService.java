@@ -12,12 +12,6 @@ public class TaskService {
 
     TaskRepo tr = new TaskRepo();
 
-    public void insertNewTaskkToDB (Task task){
-        Task t = new Task();
-
-        tr.insertNewTaskToDB(t);
-    }
-
 
     public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
         Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
@@ -25,10 +19,14 @@ public class TaskService {
         return task;
     }
 
-    public void updateTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
-        Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
+    public void insertNewTaskToDB(Task task){
+        tr.insertNewTaskToDB(task);
+    }
 
-        tr.updateTask(task);
+
+    public void updateTask(Task t) {
+
+        tr.updateTask(t);
     }
 
     public Task getTaskObject(int taskId) {
@@ -40,18 +38,9 @@ public class TaskService {
         return tr.getTasksInArray();
     }
 
-
-
-
     public void deleteTask(int taskID){
         tr.deleteTask(taskID);
     }
-
-    public ArrayList<Task> showTaskLinkedToProject(int thisProject){
-        return tr.getTasksInArray();
-    }
-
-
 
 }
 

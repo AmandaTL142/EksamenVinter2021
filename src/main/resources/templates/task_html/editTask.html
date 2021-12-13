@@ -14,22 +14,20 @@
             <div class = "container">
 
                 <label>Title: </label>
-                <input name="new-task-title" type="text" th:placeholder="${task.title}" ><br>
+                <input name="new-task-title" type="text" th:value="${task.title}" ><br>
 
 
                 <label>Description: </label>
-                <input name="new-task-description" type="text" th:placeholder="${task.description}"><br>
+                <input name="new-task-description" type="text" th:value="${task.description}"><br>
 
                 <label>estimatedTime: </label>
-                <input name="new-task-estimatedTime" type="text" th:placeholder="${task.estimatedTime}"><br>
+                <input name="new-task-estimatedTime" type="text" th:value="${task.estimatedTime}"><br>
 
                 <label>TimeUsed: </label>
-                <input name="new-task-timeUsed" type="text" th:placeholder="${task.timeUsed}"><br>
+                <input name="new-task-timeUsed" type="text" th:value="${task.timeUsed}"><br>
 
 
                 <label>status: </label>
-                <input name="new-task-status" type="text" th:placeholder="${task.status}"><br>
-
                 <select name="new-task-status" id="status">
                     <option value="Ikke påbegyndt">On Hold</option>
                     <option value="Påbegyndt">Pending</option>

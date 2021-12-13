@@ -103,4 +103,48 @@ public class EmployeeRepo {
         return employeeList;
     }
 
+    //Login methods
+    public static boolean login(int employee_id, String password) {
+        int checkId = 0;
+        String checkPassword = "";
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees WHERE employee_id= ? AND password= ?;");
+            stmt.setInt(1, employee_id);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                checkId = rs.getInt("employee_id");
+                checkPassword = rs.getString("password");
+            }
+            if (checkId == employee_id) {
+                if (checkPassword.equals(password)) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean isManager(int userId) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees where employee_id=?;");
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String role = String.valueOf(rs.getInt(1));//Henviser til kolonne hvor 'rolle' står som MANAGER
+                if (role.matches("MANAGER")) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
 }

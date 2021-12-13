@@ -22,7 +22,9 @@
 		</span>
 
     <span>
-			<a href="/" class="nav-bar">Log out</a>
+			<form class="logout" method="POST" action="/logout">
+				<input type="submit" value="logout">
+			</form>
 		</span>
 
 
@@ -40,20 +42,16 @@
 		</span>
 
 	<span>
-			<a href="/" class="nav-bar">Log out</a>
+			<form class="logout"  method="POST" action="/logout">
+				<input type="submit" value="logout">
+			</form>
 		</span>
 
 </header>
 
 <footer th:fragment="footer">
 
-	<p th:if="${session.employee == null}"></p>
-	<h1>Logout</h1>
-	<form id="logout" method="POST" action="/logout">
-		<input type="submit" value="logout">
-	</form>
 
-	<p th:unless="${session.employee == null}"></p>
 
 </footer>
 

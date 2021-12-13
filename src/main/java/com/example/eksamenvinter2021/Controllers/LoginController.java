@@ -57,7 +57,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
-        session.setAttribute("employee", null);
+        session.invalidate();
         return "redirect:/";
     }
 }

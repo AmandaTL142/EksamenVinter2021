@@ -245,16 +245,17 @@ public class ProjectController {
     }
 
     @GetMapping("/frontPage")
-    public String frontPage(HttpSession session) {
+    public String frontPage(HttpSession session, Model model) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
+            //Employee employee = (Employee) session.getAttribute("employee");
+            //int employeeId = employee.getEmployeeId();
+            //ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employeeId);
+            //model.addAttribute("projects", projects);
             return "frontPage";
         }
-        //Employee employee = (Employee) session.getAttribute("employee");
-        //int employeeId = employee.getEmployeeId();
-        //ArrayList<Project> projects = ltr.getProjectsConnectedToEmployee(employeeId);
-        //model.addAttribute("projects", projects);
+
     }
 
     @GetMapping("/removeEmployeeFromProject/{thisProject}")

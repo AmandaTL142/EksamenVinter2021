@@ -41,6 +41,14 @@
                 <td class="collapsible" th:text="${project.getProjectId()}">ID</td>
                 <td class="collapsible" th:text="${project.getProjectDeadline()}">Deadline</td>
                     <tbody class="hide">
+                        <tbody class="labels">
+                        <tr>
+                            <td colspan="3">
+                                <label  for="Projektnavn">Projektnavn</label>
+                                <input type="checkbox" name="Projektnavn" id="Projektnavn" data-toggle="toggle">
+                            </td>
+                        </tr>
+                        </tbody>
                         <tr th:each="subproject : ${Subprojects}">
                             <td class="collapsible" th:text="${subproject.getSubprojectTitle()}">Title</td>
                             <td class="collapsible" th:text="${subproject.getSubprojectId()}">ID</td>

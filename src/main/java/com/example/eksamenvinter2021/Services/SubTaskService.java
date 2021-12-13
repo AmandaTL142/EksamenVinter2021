@@ -6,8 +6,8 @@ import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
 public class SubTaskService {
     SubTaskRepo sr = new SubTaskRepo();
 
-    public SubTask createNewSubtask( String title, String description, String estimatedTime, String timeUsed, String status, int projectID, int taskID,String startDate, String endDate){
-        SubTask sb = new SubTask(title,description,estimatedTime,timeUsed,status,projectID,taskID,startDate,endDate);
+    public SubTask createNewSubtask( String title, String description, String estimatedTime, String timeUsed, String status,String startDate, String endDate){
+        SubTask sb = new SubTask(title,description,estimatedTime,timeUsed,status,startDate,endDate);
 
         return sb;
     }

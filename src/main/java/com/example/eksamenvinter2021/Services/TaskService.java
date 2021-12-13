@@ -19,8 +19,8 @@ public class TaskService {
     }
 
 
-    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status) {
-        Task task = new Task(title, description, estimatedTime, timeUsed, status);
+    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+        Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
         //tr.insertNewTaskToDB(task);
         return task;
     }

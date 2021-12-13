@@ -36,6 +36,9 @@ public class SubTask {
     public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, int projectID, int taskID, String startDate, String endDate) {
     }
 
+    public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+    }
+
     public int getSubtaskID() {
         return subtaskID;
     }

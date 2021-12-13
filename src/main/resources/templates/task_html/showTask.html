@@ -9,6 +9,12 @@
 
 <h1><td th:text="${project.getProjectTitle()}"></h1></td>
 
+
+<button>
+    <a th:href="@{/createTask/{id}(id=${project.getProjectId()})}">Create Task</a>
+</button>
+
+
 <table>
 
     <tr>
@@ -33,9 +39,6 @@
         <td th:text="${task.getEndDate()}"></td>
 
 
-
-
-
         <td>
             <button class="taskbutton">
                 <a th:href="@{/editTask/{thisTask}(thisTask=${task.getId()})}">Edit task</a>
@@ -54,9 +57,6 @@
 
     </tr>
 
-    <button>
-        <a th:href="@{/createTask/{id}(id=${project.getProjectId()})}">Create Task</a>
-    </button>
 
 </table>
 

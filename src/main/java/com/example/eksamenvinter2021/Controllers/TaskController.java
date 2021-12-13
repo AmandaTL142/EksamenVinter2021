@@ -50,6 +50,19 @@ public class TaskController {
 
 
 
+    @GetMapping("/showTask/{thisProject}")
+    public String tasks(@PathVariable("thisProject") int thisProject, Model m){
+        int pID = thisProject;
+
+        m.addAttribute("tasks", tr.getTasksInArray());
+        m.addAttribute("project", ps.getProjectObject(pID));
+
+        sharedProject = ps.getProjectObject(thisProject);
+
+        return "task_html/showTask";
+    }
+
+
     //man skal indtaste et projectId, for at komme på det rigtige projekt
     @GetMapping("/createTask/{thisProjectId}")
     public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
@@ -78,10 +91,12 @@ public class TaskController {
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
+        String startDate = wr.getParameter("new-subtask-startDate");
+        String endtDate = wr.getParameter("new-subtask-endDate");
 
 
         //Create task-object
-        Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status);
+        Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
         /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
         ProjectId sættes til i første omgang at være et tomt project, hvor det herefter er muligt at
@@ -96,22 +111,6 @@ public class TaskController {
 
         return "confirmationPage";
     }
-
-
-
-    @GetMapping("/showTask/{thisProject}")
-    public String tasks(@PathVariable("thisProject") int thisProject, Model m){
-        int pID = thisProject;
-
-        m.addAttribute("tasks", tr.getTasksInArray());
-        m.addAttribute("project", ps.getProjectObject(pID));
-
-        sharedProject = ps.getProjectObject(thisProject);
-
-        return "task_html/showTask";
-    }
-
-
 
 @GetMapping("/editTask/{thisTask}")
 public String editTask(@PathVariable("thisTask") int thisTask, Model m){
@@ -135,8 +134,12 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
         String description = wr.getParameter("new-task-description");
 
         String estimated_time = wr.getParameter("new-task-estimatedTime");
+
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
+
+        String startDate = wr.getParameter("new-subtask-startDate");
+        String endtDate = wr.getParameter("new-subtask-endDate");
 
 
         if (title != "" && title != null) {
@@ -159,6 +162,13 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
             edithThisTask.setStatus(status);
         }
 
+        if (startDate != "" && startDate != null) {
+            edithThisTask.setStartDate(startDate);
+        }
+        if (endtDate != "" && endtDate != null) {
+            edithThisTask.setEndDate(endtDate);
+        }
+
         tr.updateTask(edithThisTask);
 
         return "task_html/editTask";
@@ -173,6 +183,10 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
         return "confirmationPage";
 
     }
+
+
+
+
 
     @GetMapping("/getTaskForEmployee")
     public String getTaskForEmployee(HttpSession session, Model m){

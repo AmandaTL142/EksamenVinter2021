@@ -339,6 +339,49 @@ public class TaskRepo {
 
 
     public ArrayList<Task> getTaskInArrayForGantt(){
+        ArrayList<Task> taskArray = new ArrayList<>();
 
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks;");
+
+            ResultSet rs= stmt.executeQuery();
+
+            while(rs.next()){
+                int taskID = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task t = new Task();
+                t.setId(taskID);
+                t.setTitle(title);
+                t.setStatus(status);
+                t.setProjectId(projectID);
+                t.setStartDate(startDate);
+                t.setEndDate(endDate);
+
+                if(startDate != null && !startDate.isEmpty() ) {
+                    if (endDate != null && !endDate.isEmpty()) {
+
+                        String newStartDate = startDate.replace("-",",").replace("'","");
+                        String newEndDate = endDate.replace("-",",").replace("'","");
+
+                        t.setStartDate(newStartDate);
+                        t.setEndDate(newEndDate);
+
+                        taskArray.add(t);
+                    }
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+return taskArray;
     }
 }

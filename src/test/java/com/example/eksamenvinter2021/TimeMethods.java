@@ -1,7 +1,9 @@
 package com.example.eksamenvinter2021;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 import com.example.eksamenvinter2021.Utility.JDBC;
 import net.bytebuddy.dynamic.scaffold.MethodRegistry;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Date;
 @SpringBootTest
 public class TimeMethods {
+    //Forfatter: Christian Hundahl
     //Tidsmetoder
+    TaskRepo tr = new TaskRepo();
 
     @Test
     public static void main(String[] args) {
@@ -59,9 +63,28 @@ public class TimeMethods {
     }
 
     //GetTotalHours
-    /*Public int getTotalHours (project p) {
-        calculates total hours spend by adding together all reported hours spent by employees
-    }*/
+    public int totalTimeUsed (Project p) {
+        //calculates total hours spend by adding together all reported hours spent by employees
+        int totalHoursSpent = 0;
+
+        for (Task t : tr.getAllTasksInnProject(p.getProjectId())) {
+            if (t.getStatus().equals("complete")) {
+                totalHoursSpent += Integer.parseInt(t.getTimeUsed());
+            }
+        }
+        return totalHoursSpent;
+    }
+
+    //GetEstimatedHours
+    public int totalEstimatedHours(Project p) {
+        //calculates endTimes reported by employees
+        int totalHoursEstimated = 0;
+
+        for (Task t : tr.getAllTasksInnProject(p.getProjectId())) {
+            totalHoursEstimated += Integer.parseInt(t.getEstimatedTime());
+        }
+       return totalHoursEstimated;
+    }
 
     /*Public int hours worked employee (employee e, project p) {
         totals hours spend by one employee on one project
@@ -71,5 +94,4 @@ public class TimeMethods {
         Shows total hours used on all projects by an employee
     }*
     */
-
 }

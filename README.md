@@ -15,3 +15,6 @@ For at køre programmet skal en bruger have
 4. Deploy til Heroku via egen konto
 
 Du kan nu køre projektet og lave dine egne projekter!
+
+##Udviklere
+[@ChristianHundahl](https://github.com/ChristianHundahl/ "Min GitHub")

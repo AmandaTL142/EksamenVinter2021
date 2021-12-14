@@ -98,7 +98,7 @@ public class ProjectController {
         int employeeID = employee.getEmployeeId();
         ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 
     //Denne virker
@@ -175,7 +175,7 @@ public class ProjectController {
         //Update project in DB
         pr.updateProjectInDatabase(editThisProject);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 
     @GetMapping("/deleteProject/{projectId}")
@@ -186,7 +186,7 @@ public class ProjectController {
         if (employee.getRole().equals("MANAGER")){
             int id = Integer.parseInt(projectId);
             ps.deleteProjectFromDatabase(id);
-            return "confirmationPage";
+            return "frontPage";
         }
         else{
             return "error";
@@ -241,7 +241,7 @@ public class ProjectController {
         int employeeId = Integer.parseInt(employeeIdString);
         int projectId = editThisProject.getProjectId();
         ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
-        return "confirmationPage";
+        return "frontPage";
     }
 
     @GetMapping("/frontPage")
@@ -280,7 +280,7 @@ public class ProjectController {
             if (employee.getRole().equals("MANAGER")){
                 int projectId = editThisProject.getProjectId();
                ltr. removeEmployeeFromProject(employeeId, projectId);
-                return "confirmationPage";
+                return "frontPage";
             }
             else{
                 return "error";

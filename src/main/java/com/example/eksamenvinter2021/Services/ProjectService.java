@@ -18,7 +18,7 @@ public class ProjectService {
         return p;
     }
 
-    //Jeg har ikke integreret, hvordan metoden får ændringerne fra brugeren.
+
     public void updateProject(Project p, String title, String projectDeadline, String status, double basePrice,
                               int costumerId, String description) {
         p.setProjectTitle(title);

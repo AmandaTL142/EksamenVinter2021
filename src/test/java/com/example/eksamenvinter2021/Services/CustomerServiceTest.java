@@ -21,8 +21,19 @@ class CustomerServiceTest {
         expected1.setCustomerId(5);
         expected1.setCustomerName("Amanda");
 
+        Customer notExpected1 = new Customer();
+        notExpected1.setCustomerId(0);
+        notExpected1.setCustomerName("Amanda");
+
+        Customer notExpected2 = new Customer();
+        notExpected2.setCustomerId(5);
+        notExpected2.setCustomerName("");
+
+
 
         //Assert
         assertEquals(expected1, customerTest1);
+        assertNotEquals(notExpected1, customerTest1);
+        assertNotEquals(notExpected2, customerTest1);
     }
 }

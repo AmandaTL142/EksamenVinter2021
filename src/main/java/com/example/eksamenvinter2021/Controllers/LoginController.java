@@ -20,8 +20,11 @@ public class LoginController {
     LoginService ls = new LoginService();
 
     @GetMapping("/")
-    public String login() {
-        return "index";
+    public String login( HttpSession session) {
+        if(ls.notLoggedIn(session)){
+            return "index";
+        }
+        return "frontPage";
     }
 
     @PostMapping("/login")

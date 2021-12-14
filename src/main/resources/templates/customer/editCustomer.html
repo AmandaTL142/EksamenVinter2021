@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer</title>
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div class="background">
+
+    <h1> Edit Customer </h1>
+    <div>
+        <form method="POST" action="/editCustomer">
+            <label>Name:</label><br>
+            <input name="customer-Name-input" th:value="${customer.getCustomerName()}" type="text"><br>
+            <br><input type="submit" value="Done">
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

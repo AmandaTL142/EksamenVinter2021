@@ -1,6 +1,8 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Services.CustomerService;
+import com.example.eksamenvinter2021.Services.SubprojectService;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Date;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepo {
+
+    SubprojectService sps = new SubprojectService();
 
     //Testet i "test"
     public void insertProjectIntoDatabase(Project p) {
@@ -179,7 +183,7 @@ public class ProjectRepo {
     }
 
     //Casper har lavet denne
-    public ArrayList<Project> getProjectsInArrayForGantt() {
+    public ArrayList<Project> getAllProjects() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
@@ -200,7 +204,6 @@ public class ProjectRepo {
                 p.setStatus(status);
                 p.setCustomerId(customerId);
 
-
                 if(startDate != null && !startDate.isEmpty() ) {
                     if (endDate != null && !endDate.isEmpty()) {
 
@@ -209,6 +212,8 @@ public class ProjectRepo {
 
                         p.setStartDate(newStartDate);
                         p.setEndDate(newEndDate);
+                        p.setAssociatedSubprojects(sps.showSubprojectLinkedToProject(projectId));
+
 
                         projectArray.add(p);
                     }

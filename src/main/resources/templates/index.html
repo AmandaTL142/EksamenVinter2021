@@ -3,52 +3,62 @@
 
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
+
     <title>Startside</title>
 
-    <link rel="apple-touch-icon" sizes="57x57" href="/static/styles/stylesheets/images/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/static/styles/stylesheets/images/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/static/styles/stylesheets/images/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/styles/stylesheets/images/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/static/styles/stylesheets/images/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/static/styles/stylesheets/images/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/static/styles/stylesheets/images/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/static/styles/stylesheets/images/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/styles/stylesheets/images/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/static/styles/stylesheets/images/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/styles/stylesheets/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/styles/stylesheets/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/styles/stylesheets/images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/static/styles/stylesheets/images/favicon/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/static/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/images/favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
 </head>
 <body>
-
+<div class="background">
 <h1>Velkommen til projektstyring</h1>
-<div>
-    <p>Login</p>
-        <form id="login-form" method="POST" action="/login">
-            <input type="text" placeholder="ID" name="employee_id" required>
-            <input type="password" placeholder="Password" name="password" id="password" required>
-            <input type="checkbox" onclick="myFunction()">Show Password
-            <input type="submit" value="Login">
+    <div>
+        <p id="login">Login</p>
+        <form id="loginContent" method="POST" action="/login">
+            <input class="loginform" type="text" placeholder="ID" name="employee_id" required>
+            <input class="loginform" type="password" placeholder="Password" name="password" id="password" required>
+            <input id="showPassword" type="button" onclick="hidePassword(); change()" value="Show Password"> <br>
+            <input id="submit" type="submit" value="Login">
         </form>
 
-    <!-- https://www.w3schools.com/howto/howto_js_toggle_password.asp -->
-    <script>
-        function myFunction() {
-            var x = document.getElementById("password");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
+        <!-- https://www.w3schools.com/howto/howto_js_toggle_password.asp -->
+        <script>
+            function hidePassword() {
+                var x = document.getElementById("password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
             }
-        }
-    </script>
+            function change() {
+                var elem = document.getElementById("showPassword");
+                if (elem.value=="Hide Password") elem.value = "Show Password";
+                else elem.value = "Hide Password";
+            }
+
+        </script>
 
 
+    </div>
 </div>
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+
+<div th:if = "${session.employee.role == 'MANAGER'}">
+    <div th:replace="fragments/headers :: Manager-header"></div>
+</div>
+
+<div th:if = "${session.employee.role == 'STAFF'}">
+    <div th:replace="fragments/headers :: Employee-header"></div>
+</div>
+
+<h1>Our Customers</h1>
+
+<a href="/newCustomer"> Create new Customer </a>
+
+<table>
+    <tr>
+        <th id="ID">ID</th>
+        <th id="CustomerName">Name</th>
+    </tr>
+    <tr
+        th:each="customer : ${customerList}"} >
+    <td th:text="${customer.getCustomerId()}"></td>
+    <td th:text="${customer.getCustomerName()}"></td>
+
+        <td>
+            <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editCustomer/{id}(id=${customer.getCustomerId()})}"> Edit </a>
+        </td>
+
+        <td>
+            <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteCustomer/{id}(id=${customer.getCustomerId()})}"
+            onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

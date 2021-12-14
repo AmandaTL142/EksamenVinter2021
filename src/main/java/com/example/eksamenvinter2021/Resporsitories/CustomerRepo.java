@@ -86,6 +86,9 @@ public class CustomerRepo {
             rs.next();
             int id = rs.getInt("customer_id");
 
+            //Tilføjet af Amanda ifm. unit-test
+            customer_id = id;
+
 
         } catch(SQLException e){
             System.out.println("Couldn't get the customer-id for customer with name " + name + " from the database");
@@ -100,9 +103,10 @@ public class CustomerRepo {
 
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
-                    "SELECT * FROM " + "heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
+                    "SELECT * FROM heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
+            rs.next();  //Tilføjet af Amanda ifm. unit-test
             name = rs.getString("name");
 
         } catch(SQLException e){

@@ -2,6 +2,7 @@ package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
+import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
@@ -25,10 +26,12 @@ public class Test {
 
     public static void main(String[] args) throws ParseException {
         ProjectRepo pr = new ProjectRepo();
+        CustomerRepo cr = new CustomerRepo();
         //System.out.println(getTaskFromDatabase(5));
         Project project = pr.getProjectFromDatabase(15);
         //Date date = project.getDateinDateFormat();
         //System.out.println(date);
+        System.out.println(cr.returnCustomerNameFromId(5));
 
     }
 
@@ -179,7 +182,6 @@ public class Test {
         //System.out.println(ltr.getActiveProjectsConnectedToEmployee(5));
         //System.out.println(ltr.getEmployeesFromSubproject(45));
         //ltr.removeEmployeeFromSubproject(1, 45);
-
 
 }
 

@@ -40,5 +40,23 @@ public class Customer {
                 ", ID = " + customerId;
 
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Customer)) {
+            return false;
+        } else {
+            Customer otherCustomer = (Customer) other;
+            boolean theSameId = otherCustomer.getCustomerId() == this.getCustomerId();
+            boolean theSameName = otherCustomer.getCustomerName().equals(this.getCustomerName());
+
+            if (theSameId == true && theSameName == true){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 }
 

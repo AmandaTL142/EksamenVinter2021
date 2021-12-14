@@ -83,7 +83,7 @@ public class SubprojectController {
         int employeeId = employee.getEmployeeId();
         ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 
     //Denne virker
@@ -91,7 +91,7 @@ public class SubprojectController {
     public String deleteSubproject(@PathVariable String subprojectId) throws SQLException {
         int id = Integer.parseInt(subprojectId);
         sps.deleteSubprojectFromDatabase(id);
-        return "confirmationPage";
+        return "frontPage";
     }
 
     //Denne virker
@@ -130,7 +130,7 @@ public class SubprojectController {
         //Update project in DB
         spr.updateSubprojectInDatabase(editThisSubproject);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 
     //Denne virker
@@ -166,7 +166,7 @@ public class SubprojectController {
         int projectId = editThisSubproject.getProjectId();
         //Nedenstående er ikke testet
         ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
-        return "confirmationPage";
+        return "frontPage";
     }
 
 
@@ -192,7 +192,7 @@ public class SubprojectController {
             if (employee.getRole().equals("MANAGER")){
                 int subprojectId = editThisSubproject.getSubprojectId();
                 ltr.removeEmployeeFromSubproject(employeeId, subprojectId);
-                return "confirmationPage";
+                return "frontPage";
             }
             else{
                 return "error";

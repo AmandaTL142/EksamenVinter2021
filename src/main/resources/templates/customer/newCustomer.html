@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <title>Create Customer</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
 
 </head>
 <body>
 
-<h1>Create new Customer</h1>
-<div>
+<div class="background">
+    <div class="content-form">
+<h2>Create new Customer</h2>
     <form method="POST" action="/createNewCustomer">
         <input name="customer-name-input" type="text" placeholder="Customer Name" required ><br>
         <br><input type="submit" value="Create"></br>
     </form>
-</div>
 
+</div>
+</div>
 </body>
 </html>

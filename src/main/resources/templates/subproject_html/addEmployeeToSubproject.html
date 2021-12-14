@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
+
 
 </head>
 <body>
-
+<div class="background">
 <h1 ><td th:text="${subproject.getSubprojectTitle()}"></h1>
 <h1>Edit employees</h1>
 
@@ -41,6 +45,6 @@
 <form>
     <input type="button" value="Back" onclick="history.go(-1)">
 </form>
-
+</div>
 </body>
 </html>

@@ -56,12 +56,16 @@ public class ProjectRepo {
             String description = rs.getString("description");
             String startDate = rs.getString("start_date");
             String endDate = rs.getString("end_date");
+            int totalPrice = rs.getInt("total_price");
+            int totalTime = rs.getInt("total_time");
 
             p = new Project(title, deadline, status, price, customerId);
             p.setProjectId(id);
             p.setDescription(description);
             p.setStartDate(startDate);
             p.setEndDate(endDate);
+            p.setTotalPrice(totalPrice);
+            p.setTotalTime(totalTime);
 
         } catch(SQLException e){
             System.out.println("Couldn't get project with id " + id + " from database");

@@ -184,4 +184,22 @@ public class Project {
 
         return employeeNameList;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Project)) {
+            return false;
+        } else {
+            Project otherProject = (Project) other;
+            boolean theSameId = otherProject.getProjectId() == this.getProjectId();
+            boolean theSameTitle = otherProject.getProjectTitle().equals(this.getProjectTitle());
+            boolean theSameDescription = otherProject.getDescription().equals(this.getDescription());
+
+            if (theSameId == true && theSameTitle == true && theSameDescription == true){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

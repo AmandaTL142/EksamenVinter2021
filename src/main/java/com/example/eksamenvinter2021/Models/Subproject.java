@@ -98,4 +98,23 @@ public class Subproject {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Subproject)) {
+            return false;
+        } else {
+            Subproject otherSubproject = (Subproject) other;
+            boolean theSameId = otherSubproject.getSubprojectId() == this.getSubprojectId();
+            boolean theSameProjectId = otherSubproject.getProjectId() == this.getProjectId();
+            boolean theSameTitle = otherSubproject.getSubprojectTitle().equals(this.getSubprojectTitle());
+            boolean theSameDescription = otherSubproject.getSubprojectDescription().equals(this.getSubprojectDescription());
+
+            if (theSameId == true && theSameTitle == true && theSameDescription == true && theSameProjectId == true){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

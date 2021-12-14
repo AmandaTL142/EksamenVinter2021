@@ -3,7 +3,6 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Project;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 

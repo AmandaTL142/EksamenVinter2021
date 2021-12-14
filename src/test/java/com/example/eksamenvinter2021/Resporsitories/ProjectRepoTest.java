@@ -1,7 +1,5 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
-import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Services.ProjectService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

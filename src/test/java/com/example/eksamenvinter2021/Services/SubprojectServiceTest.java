@@ -1,6 +1,5 @@
 package com.example.eksamenvinter2021.Services;
 
-import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
 import org.junit.jupiter.api.Test;
 

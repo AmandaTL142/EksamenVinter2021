@@ -2,50 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Fragment</title>
+	<link href="../../static/style/header.css" rel="stylesheet" type="text/css">
+	<link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+	<link href="style/Style.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
 
 <header th:fragment="Manager-header" class="header">
-    <a href="/frontPage" class="header-nav-bar"><h1>Projects</h1></a>
+	<div class="logo-header">
+		<img class="logo" src="../../static/images/logo.png" alt="logo" href="/frontpage">
 
-	<span>
+    <a href="/frontPage" class="header-nav-bar"><h1>Projects</h1></a> <br>
+		<form class="nav-bar-logout" method="POST" action="/logout">
+			<input type="submit" value="log out">
+		</form>
+	</div>
+		<div class="content">
+
+			<span>
 			<a href="/newProject" class="nav-bar">New Project</a>
-		</span>
+			</span>
 
-	<span>
-			<a href="/Customer" class="nav-bar">Customers</a>
-		</span>
+			<span>
+					<a href="/Customer" class="nav-bar">Customers</a>
+				</span>
 
-	<span>
-			<a href="/gantt" class="nav-bar">Gantt Chart</a>
-		</span>
+			<span>
+					<a href="/gantt" class="nav-bar">Gantt Chart</a>
+				</span>
 
-    <span>
-			<form class="logout" method="POST" action="/logout">
-				<input type="submit" value="logout">
-			</form>
-		</span>
-
+		</div>
 </header>
 
 <header th:fragment="Employee-header" class="header">
+	<div class="logo-header">
+		<img class="logo" src="../../static/images/logo.png" alt="logo" href="/frontpage">
 
-	<a href="/frontPage" class="header-nav-bar"><h1>Tasks</h1></a>
+		<a href="/frontPage" class="header-nav-bar"><h1>Tasks</h1></a> <br>
+		<form class="nav-bar-logout"  method="POST" action="/logout">
+			<input type="submit" value="log out">
+		</form>
+	</div>
 
-	<span>
-			<a href="task/newTask" class="nav-bar">New Task</a>
-		</span>
+	<div class="content">
+		<span>
+				<a href="task/newTask" class="nav-bar">New Task</a>
+			</span>
 
-	<span>
-			<a href="/gantt" class="nav-bar">Gantt Chart</a>
-		</span>
+		<span>
+				<a href="/gantt" class="nav-bar">Gantt Chart</a>
+			</span>
 
-	<span>
-			<form class="logout"  method="POST" action="/logout">
-				<input type="submit" value="logout">
-			</form>
-		</span>
 
+
+	</div>
 </header>
 
 <footer th:fragment="footer">

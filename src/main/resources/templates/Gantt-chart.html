@@ -5,6 +5,11 @@
 
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
     <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/header.css" type="text/css" rel="stylesheet">
+    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
+    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
+
 
     <script type="text/javascript"
             src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart'],'language':'ru'}]}">
@@ -130,6 +135,10 @@
 <div th:if = "${session.employee.role == 'STAFF'}">
 
     <div th:replace="fragments/headers :: Employee-header"></div>
+
+    <div>
+        <p> All projects need to have a start date and end date to be shown in the view below.</p>
+    </div>
 </div>
 
     <div id="chart_div"></div>

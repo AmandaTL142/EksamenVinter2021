@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <title>Redigér projekt</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
+
+
 
 </head>
 <body>
-<h1> Redigér projekt </h1>
+<div class="background">
+    <div class="content-form">
+<h1> Edit Project </h1>
 
-<div>
+
     <form method="POST" action="/editProjectChanges">
         <label>Titel:</label><br>
         <input name="project-title-input" th:placeholder="${Project.getProjectTitle()}" type="text"><br>
@@ -67,25 +74,23 @@
         <label>End date:</label><br>
         <input type="date" name="project-enddate-input" th:placeholder="${Project.getEndDate()}"></br>
 
-        <br><input type="submit" value="Opdatér"></br>
+        <br>
+
+        <td>
+            <a class="link" th:href="@{/addEmployeeToProject/{id}(id=${Project.getProjectId()})}"> Add employee </a>
+        </td>
+
+        <td>
+            <a class="link" th:href="@{/removeEmployeeFromProject/{id}(id=${Project.getProjectId()})}"> Remove employee </a>
+        </td>
+        <br>
+        <input type="submit" value="Update"></br>
 
 
-    </form>
-
-    <td>
-        <a th:href="@{/addEmployeeToProject/{id}(id=${Project.getProjectId()})}"> Add employee </a>
-    </td>
-
-    <td>
-        <a th:href="@{/removeEmployeeFromProject/{id}(id=${Project.getProjectId()})}"> Remove employee </a>
-    </td>
-
-
-</div>
-
-<form>
     <input type="button" value="Back" onclick="history.go(-1)">
-</form>
 
+</form>
+    </div>
+</div>
 </body>
 </html>

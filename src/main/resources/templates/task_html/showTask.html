@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <title>show Task</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
+
 
 </head>
 <body>
+<div class="background">
 <h1>Overview Task</h1>
 
 <h1><td th:text="${project.getProjectTitle()}"></h1></td>
@@ -68,6 +73,6 @@
 lav en delete knap her
 evt. advarselsbesked når man sletter
 -->
-
+</div>
 </body>
 </html>

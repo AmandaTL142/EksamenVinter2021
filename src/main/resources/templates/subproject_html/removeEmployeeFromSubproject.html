@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
 
 </head>
+
+
 <body>
 
-<h1 ><td th:text="${subproject.getSubprojectTitle()}"></h1>
-<h1>Edit employees</h1>
+<div class="background">
+    <form>
+        <input type="button" value="Back" onclick="history.go(-1)">
+    </form>
+    <h1 ><td th:text="${subproject.getSubprojectTitle()}"></h1>
+    <h1>Edit employees</h1>
 
-<form method="POST">
+    <form method="POST">
 
-    <h2>Connected employees</h2>
-    <tr
-            th:each="employee : ${subprojectEmployees}">
-        <td th:text="${employee.getEmployeeName()}"></td>
+        <h2>Connected employees</h2>
+        <tr
+                th:each="employee : ${subprojectEmployees}">
+            <td th:text="${employee.getEmployeeName()}"></td>
 
-        <!--This remove-button is a work in progress-->
-        <td>
-            <a th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
-               onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
-        </td>
+            <!--This remove-button is a work in progress-->
+            <td>
+                <a th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
+                   onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
+            </td>
+            <br>
+
+        </tr>
+
         <br>
 
-    </tr>
-
-    <br>
-
-</form>
+    </form>
+</div>
 
 </body>
-
-<form>
-    <input type="button" value="Back" onclick="history.go(-1)">
-</form>
-
 </html>

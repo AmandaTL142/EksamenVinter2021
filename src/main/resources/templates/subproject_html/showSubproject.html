@@ -22,10 +22,16 @@
     <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/header.css" type="text/css" rel="stylesheet">
+    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
+    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
 
 
 </head>
 <body>
+<div class="background">
 <div th:if = "${session.employee.role == 'MANAGER'}">
 
     <div th:replace="fragments/headers :: Manager-header"></div>
@@ -53,11 +59,10 @@
     <td th:text="${Subproject.getEndDate()}"></td>
 
 </tr>
-
+    <form>
+        <input type="button" value="Back" onclick="history.go(-1)">
+    </form>
+</div>
 </body>
-
-<form>
-    <input type="button" value="Back" onclick="history.go(-1)">
-</form>
 
 </html>

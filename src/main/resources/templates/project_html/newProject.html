@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <title>Opret projekt</title>
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
 
 </head>
 <body>
-<h1> Opret projekt </h1>
+<div class="background">
+    <div class="content-form">
+<h1> Create new project </h1>
 
 <div>
     <form method="POST" action="/createNewProject">
@@ -37,7 +42,7 @@
         </select>
         </br>
 
-        <br><input type="submit" value="Opret"></br>
+        <br><input type="submit" value="Create"></br>
 
     </form>
 
@@ -47,6 +52,8 @@
 <form>
     <input type="button" value="Back" onclick="history.go(-1)">
 </form>
+    </div>
+</div>
 
 </body>
 </html>

@@ -25,11 +25,17 @@
     <link rel="stylesheet" type="text/css" href="/static/styles/background.css">
     <link rel="stylesheet" type="text/css" href="/static/styles/mainPage.css">
     <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/header.css" type="text/css" rel="stylesheet">
+    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
+    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
+
 
 
 </head>
 <body>
-
+<div class="background">
     <div th:if = "${session.employee.role == 'MANAGER'}">
 
         <div th:replace="fragments/headers :: Manager-header"></div>
@@ -38,6 +44,7 @@
 
 <body>
 <h1><td th:text="${project.getProjectTitle()}"></h1></td>
+
 <table>
     <tr>
         <th id="Titel">Title</th>
@@ -71,6 +78,6 @@
     <form>
         <input type="button" value="Back" onclick="history.go(-1)">
     </form>
-
+</div>
 </body>
 </html>

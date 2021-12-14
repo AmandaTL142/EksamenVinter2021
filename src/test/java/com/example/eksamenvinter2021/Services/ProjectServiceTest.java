@@ -53,7 +53,7 @@ class ProjectServiceTest {
         Project notExpected3 = new Project();
         notExpected3.setProjectTitle("Jul");
         notExpected3.setDescription("Et meget spændende projekt!");
-        notExpected3.setProjectId(0);
+        notExpected3.setProjectId(5);
 
 
         //Assert

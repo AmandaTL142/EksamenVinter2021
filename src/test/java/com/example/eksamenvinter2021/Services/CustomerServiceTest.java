@@ -22,7 +22,7 @@ class CustomerServiceTest {
         expected1.setCustomerName("Amanda");
 
         Customer notExpected1 = new Customer();
-        notExpected1.setCustomerId(0);
+        notExpected1.setCustomerId(15);
         notExpected1.setCustomerName("Amanda");
 
         Customer notExpected2 = new Customer();

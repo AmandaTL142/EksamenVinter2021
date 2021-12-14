@@ -24,7 +24,7 @@ class SubprojectServiceTest {
         expected1.setProjectId(15);
 
         Subproject notExpected1 = new Subproject();
-        notExpected1.setSubprojectId(0);
+        notExpected1.setSubprojectId(5);
         notExpected1.setSubprojectTitle("1. søndag i advent");
         notExpected1.setSubprojectDescription("Lys og konfekt.");
         notExpected1.setProjectId(15);

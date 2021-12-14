@@ -71,6 +71,7 @@ public class Subproject {
         this.projectId = projectId;
     }
 
+    //Christian Hundahl
     @Override
     public String toString() {
         return "Subproject{" +

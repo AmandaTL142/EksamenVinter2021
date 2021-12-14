@@ -27,14 +27,16 @@ public class TimeMethods {
         findFinalEndTime(p);
     }
 
-    public static void findFinalEndTime(Project p) {
+    public static Date findFinalEndTime(Project p) {
 
+        Date maxDate = null;
+        String finalEndDates = "";
         ArrayList<Date> dates = new ArrayList<>();
         //Udregner faktisk dato projekt færdigt
         //Find størst endDate ud af alle tabeller hvor project_id = ?
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
-                    "call find_deadline(?);");
+                    "call find_deadline(?);");//Finder den seneste deadline i kategorierne project, subproject, task, subtask for project_id = p
             stmt.setInt(1, p.getProjectId());
             ResultSet rs = stmt.executeQuery();
             rs.next();
@@ -47,19 +49,20 @@ public class TimeMethods {
             dates.add(subprojectEndDate);
             dates.add(taskEndDate);
             dates.add(subtaskEndDate);
-            final Date maxDate = dates.stream().max(Date::compareTo).get();
+            maxDate = dates.stream().max(Date::compareTo).get();
 
-            System.out.println("Project ends on " + projectEndDate +
+            finalEndDates = "Project ends on " + projectEndDate +
                     "\nSubprojects ends on " + subprojectEndDate +
                     "\nTasks ends on " + taskEndDate +
                     "\nSubtasks ends on " + subtaskEndDate +
-                    "\nThe final project end date is " + maxDate);
-
+                    "\nThe final project end date is " + maxDate;
 
         } catch (Exception e) {
             System.out.println("Final project deadline could not be calculated");
             System.out.println(e.getMessage());
         }
+        System.out.println(finalEndDates);
+        return maxDate;
     }
 
     //GetTotalHours

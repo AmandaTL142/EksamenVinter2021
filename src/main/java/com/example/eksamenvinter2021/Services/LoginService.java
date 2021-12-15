@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class LoginService {
-
+    //Christian Hundahl
     //TODO:
     //LoginService should contact database via repository, not in this class
     //This will be implemented when EmployeeRepo finished

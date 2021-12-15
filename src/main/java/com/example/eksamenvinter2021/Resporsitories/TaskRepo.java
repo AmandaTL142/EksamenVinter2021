@@ -325,6 +325,27 @@ public class TaskRepo {
 
     }
 
+    //Lavet af Amanda på baggrund af insertTaskToLinktable()
+    public void insertTaskToLinktableWithSubproject(int employeeID, int taskID, int projectID, int subprojectId){
+        try  {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
+                    "(`employee_id`, `project_id`, `task_id`, `subproject_id`) " +
+                    "VALUES (?,?,?);");
+
+            stmt.setInt(1,employeeID);
+            stmt.setInt(2,projectID);
+            stmt.setInt(3,taskID);
+            stmt.setInt(4,subprojectId);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public  ArrayList<Employee> getEmployeeFromTask(int taskID){
         ArrayList<Integer> employeeIDs = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();

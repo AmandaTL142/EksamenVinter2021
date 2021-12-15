@@ -180,20 +180,24 @@ public class ProjectController {
 
     @GetMapping("/deleteProject/{projectId}")
     public String deleteSubproject(@PathVariable("projectId") String projectId, HttpSession session){
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            //Checks if the user is a manager and thus allowed to delete the project
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")){
+                int id = Integer.parseInt(projectId);
+                ps.deleteProjectFromDatabase(id);
+                return "frontPage";
+            }
+            else{
+                return "error";
+            }
+        }
 
-        //Checks if the user is a manager and thus allowed to delete the project
-        Employee employee = (Employee) session.getAttribute("employee");
-        if (employee.getRole().equals("MANAGER")){
-            int id = Integer.parseInt(projectId);
-            ps.deleteProjectFromDatabase(id);
-            return "frontPage";
-        }
-        else{
-            return "error";
-        }
     }
 
-    //Virker
+    //Skal denne bruges?
     @GetMapping("/getProjectsForEmployee")
     public String getProjectsForEmployee(HttpSession session, Model model) {
         Employee employee;
@@ -204,6 +208,7 @@ public class ProjectController {
         return "fragments/projectsConnectedToEmployee.html";
     }
 
+    //Skal denne bruges?
     @GetMapping("/showProjects")
     public String showProjects(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -221,17 +226,21 @@ public class ProjectController {
     }
 
     @GetMapping("/addEmployeeToProject/{thisProject}")
-    public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model) {
-        ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
-        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+    public String addEmployeeToProject(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+            ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
 
-        allEmployees.removeAll(projectEmployees);
+            allEmployees.removeAll(projectEmployees);
 
-        model.addAttribute("projectEmployees", projectEmployees);
-        model.addAttribute("allEmployees", allEmployees);
-        editThisProject = ps.getProjectObject(thisProject);
-        model.addAttribute("project", editThisProject);
-        return "project_html/addEmployeeToProject.html";
+            model.addAttribute("projectEmployees", projectEmployees);
+            model.addAttribute("allEmployees", allEmployees);
+            editThisProject = ps.getProjectObject(thisProject);
+            model.addAttribute("project", editThisProject);
+            return "project_html/addEmployeeToProject.html";
+        }
     }
 
 
@@ -259,14 +268,18 @@ public class ProjectController {
     }
 
     @GetMapping("/removeEmployeeFromProject/{thisProject}")
-    public String removeEmployeeFromProject(@PathVariable("thisProject") int thisProject, Model model) {
-        ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
-        ArrayList<Employee> projectManagers = ltr.getManagersFromProject(thisProject);
-        model.addAttribute("projectEmployees", projectEmployees);
-        model.addAttribute("projectManagers", projectManagers);
-        editThisProject = ps.getProjectObject(thisProject);
-        model.addAttribute("project", editThisProject);
-        return "project_html/removeEmployeeFromProject.html";
+    public String removeEmployeeFromProject(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+            ArrayList<Employee> projectManagers = ltr.getManagersFromProject(thisProject);
+            model.addAttribute("projectEmployees", projectEmployees);
+            model.addAttribute("projectManagers", projectManagers);
+            editThisProject = ps.getProjectObject(thisProject);
+            model.addAttribute("project", editThisProject);
+            return "project_html/removeEmployeeFromProject.html";
+        }
     }
 
     @GetMapping("/removeEmployee/{employeeId}")
@@ -287,6 +300,5 @@ public class ProjectController {
             }
         }
     }
-
 
 }

@@ -38,7 +38,7 @@ public class SubprojectController {
     ArrayList<Project> projectArray = pr.getProjectsInArray();
 
 
-    //Denne virker
+    //Skal denne bruges?
     @GetMapping("/subproject/{thisSubproject}")
     public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
         int id = Integer.parseInt(thisSubproject);
@@ -47,14 +47,18 @@ public class SubprojectController {
         return "subproject_html/showSubproject";
     }
 
-    //Denne virker
+
     @GetMapping("/newSubproject/{thisProjectId}")
-    public String newSubproject(@PathVariable("thisProjectId") int thisProjectId) {
-        projectConnectedToSubproject = pr.getProjectFromDatabase(thisProjectId);
-        return "subproject_html/newSubproject";
+    public String newSubproject(@PathVariable("thisProjectId") int thisProjectId, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            projectConnectedToSubproject = pr.getProjectFromDatabase(thisProjectId);
+            return "subproject_html/newSubproject";
+        }
     }
 
-    //Denne virker i det basale, men jeg er ved at udvide den, så man kan vælge mellem de eksisterende projekter.
+
     @PostMapping("/createNewSubproject")
     public String createNewSubproject(HttpSession session, WebRequest webr) {
         //model.addAttribute("projects", projectArray);
@@ -86,23 +90,31 @@ public class SubprojectController {
         return "frontPage";
     }
 
-    //Denne virker
+
     @GetMapping("/deleteSubproject/{subprojectId}")
-    public String deleteSubproject(@PathVariable String subprojectId) throws SQLException {
-        int id = Integer.parseInt(subprojectId);
-        sps.deleteSubprojectFromDatabase(id);
-        return "frontPage";
+    public String deleteSubproject(@PathVariable String subprojectId, HttpSession session) throws SQLException {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            int id = Integer.parseInt(subprojectId);
+            sps.deleteSubprojectFromDatabase(id);
+            return "frontPage";
+        }
     }
 
-    //Denne virker
+
     @GetMapping("/editSubproject/{thisSubproject}")
-    public String editSubrojectGetSubproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
-        int id = Integer.parseInt(thisSubproject);
-        editThisSubproject = sps.getSubprojectObject(id);
-        //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
-        model.addAttribute("Subproject", sps.getSubprojectObject(id));
-        model.addAttribute("Project", pr.getProjectFromDatabase(editThisSubproject.getProjectId()));
-        return "subproject_html/editSubproject";
+    public String editSubrojectGetSubproject(@PathVariable("thisSubproject") String thisSubproject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            int id = Integer.parseInt(thisSubproject);
+            editThisSubproject = sps.getSubprojectObject(id);
+            //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
+            model.addAttribute("Subproject", sps.getSubprojectObject(id));
+            model.addAttribute("Project", pr.getProjectFromDatabase(editThisSubproject.getProjectId()));
+            return "subproject_html/editSubproject";
+        }
     }
 
     //Denne virker
@@ -133,7 +145,7 @@ public class SubprojectController {
         return "frontPage";
     }
 
-    //Denne virker
+    //Skal denne bruges?
     @GetMapping("/showSubprojects/{thisProject}")
     public String subProjects(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
@@ -144,17 +156,21 @@ public class SubprojectController {
 
 
     @GetMapping("/addEmployeeToSubproject/{thisSubproject}")
-    public String addEmployeeToSubproject1(@PathVariable("thisSubproject") int thisSubproject, Model model) {
-        ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
-        ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
+    public String addEmployeeToSubproject1(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
+            ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
 
-        allEmployees.removeAll(subprojectEmployees);
+            allEmployees.removeAll(subprojectEmployees);
 
-        model.addAttribute("allEmployees", allEmployees);
-        model.addAttribute("subprojectEmployees", subprojectEmployees);
-        editThisSubproject = sps.getSubprojectObject(thisSubproject);
-        model.addAttribute("subproject", editThisSubproject);
-        return "subproject_html/addEmployeeToSubproject.html";
+            model.addAttribute("allEmployees", allEmployees);
+            model.addAttribute("subprojectEmployees", subprojectEmployees);
+            editThisSubproject = sps.getSubprojectObject(thisSubproject);
+            model.addAttribute("subproject", editThisSubproject);
+            return "subproject_html/addEmployeeToSubproject.html";
+        }
     }
 
 
@@ -171,12 +187,16 @@ public class SubprojectController {
 
 
     @GetMapping("/removeEmployeeFromSubproject/{thisSubproject}")
-    public String removeEmployeeFromSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model) {
-        ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
-        model.addAttribute("subprojectEmployees", subprojectEmployees);
-        editThisSubproject = sps.getSubprojectObject(thisSubproject);
-        model.addAttribute("subproject", editThisSubproject);
-        return "subproject_html/removeEmployeeFromSubproject.html";
+    public String removeEmployeeFromSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            ArrayList<Employee> subprojectEmployees = ltr.getEmployeesFromSubproject(thisSubproject);
+            model.addAttribute("subprojectEmployees", subprojectEmployees);
+            editThisSubproject = sps.getSubprojectObject(thisSubproject);
+            model.addAttribute("subproject", editThisSubproject);
+            return "subproject_html/removeEmployeeFromSubproject.html";
+        }
     }
 
 

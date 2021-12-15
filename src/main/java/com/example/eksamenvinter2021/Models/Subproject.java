@@ -1,5 +1,8 @@
 package com.example.eksamenvinter2021.Models;
 
+import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Subproject {
@@ -11,6 +14,8 @@ public class Subproject {
     private int projectId;
     private String startDate;
     private String endDate;
+
+    SubprojectRepo spr = new SubprojectRepo();
 
     public Subproject() {
     }
@@ -118,4 +123,9 @@ public class Subproject {
             }
         }
     }
+
+    public ArrayList<Task> getTasksLinkedToSubproject() {
+        return spr.getTasksLinkedToSubproject(subprojectId);
+    }
+
 }

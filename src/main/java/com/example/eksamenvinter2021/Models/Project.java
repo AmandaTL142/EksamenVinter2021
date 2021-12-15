@@ -1,6 +1,9 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
+import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
+import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +25,9 @@ public class Project {
     private List<Subproject> associatedSubprojects;
 
     LinkTableRepo ltr = new LinkTableRepo();
+    SubprojectRepo spr = new SubprojectRepo();
+    ProjectRepo pr = new ProjectRepo();
+    TaskRepo tr = new TaskRepo();
 
     public String getDescription() {
         return description;
@@ -202,4 +208,19 @@ public class Project {
             }
         }
     }
+
+    public ArrayList<Subproject> getSubprojectsLinkedToProject() {
+        return spr.getSubprojectsLinkedToProject(projectId);
+    }
+
+    public boolean doesProjectHaveSubprojects() {
+        return pr.doesProjectHaveSubprojects(projectId);
+    }
+
+
+    public ArrayList<Task> getAllTasksInProject() {
+        return tr.getAllTasksInProject(projectId);
+    }
+
+
 }

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Collabsible</title>
+</head>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+      background-color: #555;
+    }
+
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<p>
+
+<h1 th:text="${Project.getProjectTitle()}">Projekttitel</h1>
+
+
+<body>
+    <button type="button" class="collapsible">Subprojects:</button>
+    <div class="content">
+<tr th:each="subproject : ${Project.getSubprojectsLinkedToProject()}">
+    <button type="button" class="collapsible" th:text="${subproject.getSubprojectTitle()}">
+    </button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Start date</th>
+                <th>End date</th>
+            </tr>
+        <td th:text="${subproject.getSubprojectTitle()}"></td>
+        <td th:text="${subproject.getSubprojectDescription()}"></td>
+        <td th:text="${subproject.getSubprojectDeadline()}"></td>
+        <td th:text="${subproject.getSubprojectStatus()}"></td>
+        <td th:text="${subproject.getStartDate()}"></td>
+        <td th:text="${subproject.getEndDate()}"></td>
+        </table>
+
+
+        <div>
+            <button type="button" class="collapsible">Tasks:</button>
+            <div class="content">
+                <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
+                <button type="button" class="collapsible" th:text="${task.getTitle()}">
+                </button>
+                    <div class="content">
+                        <table>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Start date</th>
+                                <th>End date</th>
+                            </tr>
+                        <td th:text="${task.getTitle()}"></td>
+                        <td th:text="${task.getDescription()}"></td>
+                        <td th:text="${task.getStatus()}"></td>
+                        <td th:text="${task.getStartDate()}"></td>
+                        <td th:text="${task.getEndDate()}"></td>
+                        </table>
+
+                        <div>
+                            <button type="button" class="collapsible">Subtasks:</button>
+                            <div class="content">
+                                <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                    <button type="button" class="collapsible" th:text="${subtask.getTitle()}">
+                                    </button>
+                                    <div class="content">
+                                        <table>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Start date</th>
+                                                <th>End date</th>
+                                            </tr>
+                                        <td th:text="${subtask.getTitle()}"></td>
+                                        <td th:text="${subtask.getDescription()}"></td>
+                                        <td th:text="${subtask.getStatus()}"></td>
+                                        <td th:text="${subtask.getStartDate()}"></td>
+                                        <td th:text="${subtask.getEndDate()}"></td>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</tr>
+</div>
+
+</div>
+
+
+
+
+
+    <div>
+        <button type="button" class="collapsible">Your tasks:</button>
+        <div class="content">
+            <div th:each="task : ${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId())}">
+                <button type="button" class="collapsible" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+                    </table>
+
+                    <div>
+                        <button type="button" class="collapsible">Subtasks:</button>
+                        <div class="content">
+                            <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                <button type="button" class="collapsible" th:text="${subtask.getTitle()}">
+                                </button>
+                                <div class="content">
+                                    <table>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                        </tr>
+                                    <td th:text="${subtask.getTitle()}"></td>
+                                    <td th:text="${subtask.getDescription()}"></td>
+                                    <td th:text="${subtask.getStatus()}"></td>
+                                    <td th:text="${subtask.getStartDate()}"></td>
+                                    <td th:text="${subtask.getEndDate()}"></td>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <button type="button" class="collapsible">All tasks connected to project:</button>
+        <div class="content">
+            <div th:each="task : ${Project.getAllTasksInProject()}">
+                <button type="button" class="collapsible" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+                    </table>
+
+                    <div>
+                        <button type="button" class="collapsible">Subtasks:</button>
+                        <div class="content">
+                            <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                <button type="button" class="collapsible" th:text="${subtask.getTitle()}">
+                                </button>
+                                <div class="content">
+                                    <table>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                        </tr>
+                                    <td th:text="${subtask.getTitle()}"></td>
+                                    <td th:text="${subtask.getDescription()}"></td>
+                                    <td th:text="${subtask.getStatus()}"></td>
+                                    <td th:text="${subtask.getStartDate()}"></td>
+                                    <td th:text="${subtask.getEndDate()}"></td>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--
+    <div>
+        <button type="button" class="collapsible">Tasks:</button>
+        <div class="content">
+            <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
+                <button type="button" class="collapsible" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+        <button type="button" class="collapsible">Tasks without a subproject:</button>
+        <div class="content">
+            <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
+                <button type="button" class="collapsible" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+
+</body>
+</html>
+
+<!--
+<p>Tasks:</p>
+
+<tr th:each="subproject : ${session.employee.getSubrojectArray()}">
+    <button type="button" class="collapsible" th:text="${subproject.getTitle()}">
+    </button>
+    <div class="content">
+        <td th:text="${subproject.getProjectTitle()}"></td>
+        <td th:text="${subproject.getDescription()}"></td>
+        <td th:text="${subproject.getProjectDeadline()}"></td>
+        <td th:text="${project.getStatus()}"></td>
+        <td th:text="${project.getStartDate()}"></td>
+        <td th:text="${project.getEndDate()}"></td>
+        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+    </div>
+
+</tr>
+
+
+<p>Subtasks:</p>
+
+<tr th:each="subproject : ${session.employee.getSubrojectArray()}">
+    <button type="button" class="collapsible" th:text="${subproject.getTitle()}">
+    </button>
+    <div class="content">
+        <td th:text="${subproject.getProjectTitle()}"></td>
+        <td th:text="${subproject.getDescription()}"></td>
+        <td th:text="${subproject.getProjectDeadline()}"></td>
+        <td th:text="${project.getStatus()}"></td>
+        <td th:text="${project.getStartDate()}"></td>
+        <td th:text="${project.getEndDate()}"></td>
+        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+    </div>
+
+</tr>
+-->
+
+
+<!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+
+  function myFunction() {
+      var x = document.getElementById("finishedProjects");
+      if (x.style.display === "block") {
+          x.style.display = "none";
+      } else {
+          x.style.display = "block";
+      }
+  }
+
+</script>

@@ -301,4 +301,15 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/collapsible/{thisProject}")
+    public String collabsible(@PathVariable("thisProject") int thisProject, Model model, HttpSession session) {
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            model.addAttribute("Project", ps.getProjectObject(thisProject));
+            return "project_html/amandasCollabsible.html";
+        }
+    }
+
+
 }

@@ -1,5 +1,8 @@
 package com.example.eksamenvinter2021.Models;
 
+import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
+import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -14,6 +17,8 @@ public class Task {
     private int subprojectId;
     private String startDate;
     private String endDate;
+
+    SubTaskRepo str = new SubTaskRepo();
 
 
     private ArrayList<Task> tasks;
@@ -160,4 +165,9 @@ public class Task {
                 ", tasks=" + tasks +
                 '}';
     }
+
+    public ArrayList<SubTask> getAllSubtaskInTask() {
+        return str.getAllSubtaskInTask(id);
+    }
+
 }

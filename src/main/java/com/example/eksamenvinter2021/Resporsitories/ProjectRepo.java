@@ -230,4 +230,20 @@ public class ProjectRepo {
         }
         return projectArray;
     }
+
+    public boolean doesProjectHaveSubprojects(int projectId) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("SELECT project_id FROM heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
+            stmt.setInt(1, projectId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            System.out.println("Couldn't check subprojects connected to project with id " + projectId + " from database");
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
 }

@@ -277,6 +277,7 @@ public class TaskRepo {
         return taskArray;
     }
 
+    //Denne virker ikke
     public ArrayList<Task> getTaskConnectedToEmployee(int employeeID){
         ArrayList<Integer> taskIDs = new ArrayList<>();
         ArrayList<Task> taskObjects = new ArrayList<>();
@@ -408,5 +409,119 @@ public class TaskRepo {
             e.printStackTrace();
         }
         return taskArray;
+    }
+
+
+    /*
+    public ArrayList<Task> getAllTasksInArray(){
+        ArrayList<Task> taskArray = new ArrayList<>();
+
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks;");
+
+            ResultSet rs= stmt.executeQuery();
+
+            while(rs.next()){
+                int taskID = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task t = new Task();
+                t.setId(taskID);
+                t.setTitle(title);
+                t.setStatus(status);
+                t.setProjectId(projectID);
+                t.setStartDate(startDate);
+                t.setEndDate(endDate);
+
+                taskArray.add(t);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taskArray;
+    }
+
+     */
+
+
+    //Amanda
+    public Task getTaskFromDatabase(int taskId) {
+        Task t = new Task();
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks WHERE task_id=?;");
+            stmt.setInt(1, taskId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String estimatedTime = rs.getString("estimated_time");
+            String timeUsed = rs.getString("time_used");
+            String status = rs.getString("status");
+            int projectId = rs.getInt("project_id");
+            int subprojectId = rs.getInt("subproject_id");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
+
+
+            t.setTitle(title);
+            t.setDescription(description);
+            t.setEstimatedTime(estimatedTime);
+            t.setTimeUsed(timeUsed);
+            t.setStatus(status);
+            t.setProjectId(projectId);
+            t.setSubprojectId(subprojectId);
+            t.setStartDate(startDate);
+            t.setEndDate(endDate);
+            t.setId(taskId);
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get task with id " + taskId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return t;
+    }
+
+    //Amanda
+    public ArrayList<Task> getTaskConnectedToEmployeeAndProject(int employeeID, int projectId){
+        ArrayList<Integer> tempTaskIDs = new ArrayList<>();
+        ArrayList<Integer> taskIDs = new ArrayList<>();
+        ArrayList<Task> taskObjects = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT task_id FROM " +
+                    "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=? AND project_id=?;");
+            stmt.setInt(1,employeeID);
+            stmt.setInt(2,projectId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                int taskId = rs.getInt("task_id");
+                if(taskId != 0){
+                    tempTaskIDs.add(taskId);
+
+                    //Forhindrer gentagelser
+                    if (!taskIDs.contains(taskId)) {
+                        taskIDs.add(taskId);
+                        Task tempTask = getTaskFromDatabase(taskId);
+                        taskObjects.add(tempTask);
+                    }
+
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taskObjects;
     }
 }

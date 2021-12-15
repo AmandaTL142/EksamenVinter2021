@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit task</title>
-    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
-    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
-    <link href="style/Style.css" type="text/css" rel="stylesheet">
-
-
-
 </head>
 <body>
-<div class="background">
-    <div class="content-form">
 <h1>Edit task </h1>
 
 <form method="POST" action="/editTaskChanges">
@@ -21,23 +13,33 @@
         <tr th:each="task:${tasks}">
             <div class = "container">
 
-                <type>Title: </type> <br>
+                <label>Title: </label>
                 <input name="new-task-title" type="text" th:value="${task.title}" ><br>
 
 
-                <label>Description: </label><br>
+                <label>Description: </label>
                 <input name="new-task-description" type="text" th:value="${task.description}"><br>
 
-                <label>Estimated Time: </label><br>
+                <label>estimatedTime: </label>
                 <input name="new-task-estimatedTime" type="text" th:value="${task.estimatedTime}"><br>
 
-                <label>Time Used: </label><br>
+                <label>TimeUsed: </label>
                 <input name="new-task-timeUsed" type="text" th:value="${task.timeUsed}"><br>
 
+                <label>Start date: </label>
+                <input name="new-task-startDate" type="text" th:value="${task.startDate}"><br>
+
+                <label> End date: </label>
+                <input name="new-task-endDate" type="text" th:value="${task.endDate}"><br>
+
+
+
+
+                <label>status: </label>
                 <select name="new-task-status" id="status">
-                    <option value="Pending">Pending</option>
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Complete">Complete</option>
+                    <option value="Ikke påbegyndt">On Hold</option>
+                    <option value="Påbegyndt">Pending</option>
+                    <option value="Færdig">Complete</option>
                 </select>
                 </br>
 
@@ -51,7 +53,6 @@
     </table>
 
 </form>
-</div>
-</div>
+
 </body>
 </html>

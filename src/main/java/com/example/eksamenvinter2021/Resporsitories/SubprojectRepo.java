@@ -139,25 +139,20 @@ public class SubprojectRepo {
                 int subprojectId = rs.getInt("subproject_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
-                String date = rs.getString("subproject_deadline");
+                String deadline = rs.getString("subproject_deadline");
                 String status = rs.getString("status");
                 int projectId = rs.getInt("project_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
-                sp = new Subproject(title, date, status, projectId);
+                sp = new Subproject();
                 sp.setSubprojectId(subprojectId);
-
-                if (description != null && description != ""){
-                    sp.setSubprojectDescription(description);
-                }
-
-                if (startDate != null && startDate != ""){
-                    sp.setStartDate(startDate.replace("-",","));
-                }
-
-                if (endDate != null && endDate != ""){
-                    sp.setEndDate(endDate.replace("-",","));
-                }
+                sp.setSubprojectTitle(title);
+                sp.setSubprojectDeadline(deadline);
+                sp.setSubprojectStatus(status);
+                sp.setProjectId(projectId);
+                sp.setStartDate(startDate);
+                sp.setEndDate(endDate);
+                sp.setSubprojectDescription(description);
 
                 subprojects.add(sp);
 

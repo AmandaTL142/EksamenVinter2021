@@ -177,6 +177,7 @@ public class LinkTableRepo {
     public ArrayList<Employee> getEmployeesFromProject(int projectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
+
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE project_id=?;");
@@ -194,6 +195,7 @@ public class LinkTableRepo {
 
             employeeIds.forEach((employeeId) -> {
                 employeeObjects.add(es.showEmployee(employeeId));
+                System.out.println("Employees efter metoden i linkrepo: " + employeeObjects);
             });
 
         } catch(Exception e){

@@ -243,7 +243,7 @@ public class SubTaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.link_tabel WHERE employee_id=?;");
+                    "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
             stmt.setInt(1,employeeID);
 
             ResultSet rs = stmt.executeQuery();
@@ -266,7 +266,7 @@ public class SubTaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.link_tabel WHERE task_id=?;");
+                    "heroku_7aba49c42d6c0f0.link_table WHERE task_id=?;");
             stmt.setInt(1,subtaskID);
             ResultSet rs = stmt.executeQuery();
 
@@ -283,7 +283,7 @@ public class SubTaskRepo {
 
     public void insertLinkTTableWithEmployeeAndTaskInDB(int employeeID, int subtaskID, int taskID){
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subtask_id`, `task_id`) " +
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `subtask_id`, `task_id`) " +
                     "VALUES (?, ?,?);");
 
             stmt.setInt(1,employeeID);

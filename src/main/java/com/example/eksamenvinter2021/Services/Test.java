@@ -1,25 +1,19 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 
 public class Test {
     ProjectRepo pr = new ProjectRepo();
     SubprojectRepo spr = new SubprojectRepo();
     SubprojectService sps = new SubprojectService();
     ProjectService ps = new ProjectService();
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
 
     public Test() throws ParseException {
     }

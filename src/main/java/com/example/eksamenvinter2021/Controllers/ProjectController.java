@@ -5,7 +5,7 @@ import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.LoginService;
@@ -23,7 +23,7 @@ public class ProjectController {
     ProjectService ps = new ProjectService();
     ProjectRepo pr = new ProjectRepo();
     CustomerRepo cr = new CustomerRepo();
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
     Project editThisProject = new Project();
     EmployeeRepo er = new EmployeeRepo();
     EmployeeService es = new EmployeeService();
@@ -93,10 +93,10 @@ public class ProjectController {
         int projectId = pr.getProjectId(title);
         currentProject.setProjectId(projectId);
 
-        //Connect project to manager via LinkTabel
+        //Connect project to manager via LinkTable
         Employee employee = (Employee) session.getAttribute("employee");
         int employeeID = employee.getEmployeeId();
-        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
+        ltr.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
 
         return "frontPage";
     }
@@ -249,7 +249,7 @@ public class ProjectController {
         String employeeIdString = webr.getParameter("project-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
         int projectId = editThisProject.getProjectId();
-        ltr.insertLinkTabelWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
+        ltr.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "frontPage";
     }
 

@@ -283,7 +283,7 @@ public class TaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.link_tabel WHERE employee_id=?;");
+                    "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
             stmt.setInt(1,employeeID);
             ResultSet rs = stmt.executeQuery();
 
@@ -307,7 +307,7 @@ public class TaskRepo {
 
     public void insertTaskToLinktable(int employeeID, int taskID, int projectID){
         try  {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` " +
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
                     "(`employee_id`, `project_id`, `task_id`) " +
                     "VALUES (?,?,?);");
 
@@ -330,7 +330,7 @@ public class TaskRepo {
 
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.link_tabel WHERE task_id=?;");
+                    "heroku_7aba49c42d6c0f0.link_table WHERE task_id=?;");
             stmt.setInt(1,taskID);
             ResultSet rs = stmt.executeQuery();
 
@@ -347,7 +347,7 @@ public class TaskRepo {
     public void insertLinkTableWithEmployeeAndTaskInDB(int employeeID, int taskID){
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
-                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `task_id`) " +
+                    ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `task_id`) " +
                             "VALUES (?, ?);");
 
             stmt.setInt(1,employeeID);

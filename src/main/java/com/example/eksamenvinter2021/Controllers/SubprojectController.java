@@ -4,7 +4,7 @@ import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 import com.example.eksamenvinter2021.Services.LoginService;
@@ -28,7 +28,7 @@ public class SubprojectController {
     Subproject sp = new Subproject();
     SubprojectService sps = new SubprojectService();
     SubprojectRepo spr = new SubprojectRepo();
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
     EmployeeRepo er = new EmployeeRepo();
     Subproject editThisSubproject = new Subproject();
     Project projectConnectedToSubproject = new Project();
@@ -85,7 +85,7 @@ public class SubprojectController {
         //Insert link between  subproject and creator
         Employee employee = (Employee) session.getAttribute("employee");
         int employeeId = employee.getEmployeeId();
-        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
+        ltr.insertLinkTableWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
 
         return "frontPage";
     }
@@ -181,7 +181,7 @@ public class SubprojectController {
         int subprojectId = editThisSubproject.getSubprojectId();
         int projectId = editThisSubproject.getProjectId();
         //Nedenstående er ikke testet
-        ltr.insertLinkTabelWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
+        ltr.insertLinkTableWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
         return "frontPage";
     }
 

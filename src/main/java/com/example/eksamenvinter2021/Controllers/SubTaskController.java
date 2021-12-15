@@ -4,7 +4,7 @@ import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 import com.example.eksamenvinter2021.Services.EmployeeService;
@@ -42,7 +42,7 @@ public class SubTaskController {
     EmployeeService es = new EmployeeService();
 
     //Methods
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
     LoginService ls = new LoginService();
 
     @GetMapping("/showSubtask/{thisTask}")

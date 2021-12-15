@@ -4,7 +4,7 @@ import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 import com.example.eksamenvinter2021.Services.EmployeeService;
@@ -45,7 +45,7 @@ public class TaskController {
     EmployeeService es = new EmployeeService();
 
     //Methods
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
     LoginService ls = new LoginService();
 
 

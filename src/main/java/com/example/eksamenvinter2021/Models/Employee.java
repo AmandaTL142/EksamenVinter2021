@@ -1,6 +1,6 @@
 package com.example.eksamenvinter2021.Models;
 
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class Employee {
     private String password;
     private String competence;
     private String role;
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
 
     public String getEmployeeName(){
         return employeeName;

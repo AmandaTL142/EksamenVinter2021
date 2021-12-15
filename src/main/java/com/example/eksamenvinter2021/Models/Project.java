@@ -1,6 +1,6 @@
 package com.example.eksamenvinter2021.Models;
 
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +21,7 @@ public class Project {
     private int projectId;
     private List<Subproject> associatedSubprojects;
 
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
 
     public String getDescription() {
         return description;

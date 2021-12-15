@@ -84,7 +84,7 @@
 <body>
 
 <div th:if = "${Project.getSubprojectsLinkedToProject().size() > 0}">
-    <button type="button" class="collapsible">Subprojects:</button>
+    <button type="button" class="collapsible">Subprojects</button>
     <div class="content">
 <tr th:each="subproject : ${Project.getSubprojectsLinkedToProject()}">
     <button type="button" class="collapsible2" th:text="${subproject.getSubprojectTitle()}">
@@ -118,7 +118,7 @@
 
 
         <div th:if = "${subproject.getTasksLinkedToSubproject().size() > 0}">
-            <button type="button" class="collapsible3">Tasks:</button>
+            <button type="button" class="collapsible3">Tasks</button>
             <div class="content">
                 <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -149,7 +149,7 @@
                         </table>
 
                         <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                            <button type="button" class="collapsible3">Subtasks:</button>
+                            <button type="button" class="collapsible3">Subtasks</button>
                             <div class="content">
                                 <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                     <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -197,7 +197,7 @@
 
 
     <div th:if = "${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() > 0}">
-        <button type="button" class="collapsible">Your tasks:</button>
+        <button type="button" class="collapsible">Your tasks</button>
         <div class="content">
             <div th:each="task : ${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId())}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -229,7 +229,7 @@
                     </table>
 
                     <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -269,7 +269,7 @@
 
 
     <div th:if = "${Project.getAllTasksInProject().size() > 0}">
-        <button type="button" class="collapsible">All tasks connected to project:</button>
+        <button type="button" class="collapsible">All tasks connected to project</button>
         <div class="content">
             <div th:each="task : ${Project.getAllTasksInProject()}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -300,7 +300,7 @@
                     </table>
 
                     <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -338,12 +338,10 @@
         </div>
     </div>
 
-<div th:if = "${Project.getSubprojectsLinkedToProject().size() == 0}">
-    <div th:if = "${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() == 0}">
-        <div th:if = "${Project.getAllTasksInProject().size() == 0}">
+<div th:if = "${Project.getSubprojectsLinkedToProject().size() == 0 and
+session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() == 0 and
+Project.getAllTasksInProject().size() == 0}">
             <h1>There's nothing to show</h1>
-        </div>
-    </div>
 </div>
 
 

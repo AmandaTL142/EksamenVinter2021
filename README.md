@@ -8,7 +8,7 @@ For at køre programmet skal en bruger have
 - Mulighed for at forbinde en database med projektet for at gøre brug af MySQL funktioner
 - Oprettet sin egen application.properties file med brugernavn, password og url på den tilknyttede database
 
-##Kørselsvejledning
+## Kørselsvejledning
 1. Fork repository fra GitHub
 2. Opret en database via de vedlagte MySQL scripts
 3. Opret en applications.properties fil med brugernavn, password og url til databasen
@@ -16,8 +16,11 @@ For at køre programmet skal en bruger have
 
 Du kan nu køre projektet og lave dine egne projekter!
 
-##Udviklere
+## Udviklere
 [Christian Hundahl](https://github.com/ChristianHundahl "Christians GitHub")
+
 [Andrea Brinkbøl](https://github.com/andjiao "Andreas GitHub") 
+
 [Casper Steengaard](https://github.com/CasperAa "Caspers GitHub")
+
 [Amanda Tolstrup Laursen](https://github.com/AmandaTL142 "Amandas GitHub")

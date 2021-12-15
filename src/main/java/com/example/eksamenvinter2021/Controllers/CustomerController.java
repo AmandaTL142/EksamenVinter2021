@@ -102,16 +102,19 @@ public class CustomerController {
 
     @GetMapping("/deleteCustomer/{customerId}")
     public String deleteCustomer(@PathVariable("customerId") String customerId, HttpSession session){
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
 
-        //Checks if the user is a manager and thus allowed to delete a Customer
-        Employee employee = (Employee) session.getAttribute("employee");
-        if (employee.getRole().equals("MANAGER")){
-            int id = Integer.parseInt(customerId);
-            cs.deleteCustomer(id);
-            return "customer/Customer";
-        }
-        else{
-            return "error";
+            //Checks if the user is a manager and thus allowed to delete a Customer
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("MANAGER")) {
+                int id = Integer.parseInt(customerId);
+                cs.deleteCustomer(id);
+                return "customer/Customer";
+            } else {
+                return "error";
+            }
         }
     }
 

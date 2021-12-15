@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
+
 public class SubTaskController {
 
     //Subtask methods
@@ -50,6 +52,8 @@ public class SubTaskController {
         m.addAttribute("subtasks", sr.getSubtaskInArray());
         m.addAttribute("task", tr.getTaskFromDB(tID));
 
+        sharedTask = tr.getTaskFromDB(thisTask);
+
         return "subtask_html/readSubtask";
     }
 
@@ -65,7 +69,7 @@ public class SubTaskController {
         return "subtask_html/createSubtask";
     }
     @PostMapping("/createNewSubtask")
-    public String createNewSubtask(WebRequest wr){
+    public String createNewSubtask(WebRequest wr, HttpSession session){
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
 
@@ -79,9 +83,18 @@ public class SubTaskController {
 
         SubTask tempSubtask = ss.createNewSubtask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-        tempSubtask.setTaskID(sharedTask.getId());
+        int taskID = sharedTask.getId();
+        tempSubtask.setTaskID(taskID);
+
 
         sr.insertNewSubtaskToDB(tempSubtask);
+
+        int subtaskID = sr.getSubtaskID(tempSubtask.getTitle());
+
+        Employee emp = (Employee) session.getAttribute("employee");
+        int employeeID = emp.getEmployeeId();
+        sr.insertLinkTTableWithEmployeeAndTaskInDB(employeeID, subtaskID, taskID);
+
 
         return "subtask_html/readSubtask";
     }
@@ -139,6 +152,8 @@ public class SubTaskController {
         if (endtDate != "" && endtDate != null) {
             editThisSubtask.setEndDate(endtDate);
         }
+
+        editThisSubtask.setTaskID(sharedTask.getId());
 
         sr.updateSubtask(editThisSubtask);
 

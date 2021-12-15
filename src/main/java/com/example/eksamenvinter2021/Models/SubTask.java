@@ -37,6 +37,15 @@ public class SubTask {
     }
 
     public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+
+        this.title = title;
+        this.description = description;
+        this.estimatedTime = estimatedTime;
+        this.timeUsed = timeUsed;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+
     }
 
     public int getSubtaskID() {

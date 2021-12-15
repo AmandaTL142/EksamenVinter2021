@@ -110,6 +110,8 @@ public class TaskController {
         Metoden indsætter de givende informationer ind til DB.
         I parantesen siges der, at disse værdier, som er indtastet af brugeren, i task-objektet
         og på denne måde instanzieres objektet*/
+
+
         tr.insertNewTaskToDB(tempTask);
         int taskID = tr.getTaskID(tempTask.getTitle());
         Employee emp = (Employee) session.getAttribute("employee");

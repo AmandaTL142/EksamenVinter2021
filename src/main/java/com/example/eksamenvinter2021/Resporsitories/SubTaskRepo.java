@@ -281,13 +281,14 @@ public class SubTaskRepo {
         return employeeObjects;
     }
 
-    public void insertLinkTTableWithEmployeeAndTaskInDB(int employeeID, int subtaskID){
+    public void insertLinkTTableWithEmployeeAndTaskInDB(int employeeID, int subtaskID, int taskID){
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subtask_id`) " +
-                    "VALUES (?, ?);");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` (`employee_id`, `subtask_id`, `task_id`) " +
+                    "VALUES (?, ?,?);");
 
             stmt.setInt(1,employeeID);
             stmt.setInt(2,subtaskID);
+            stmt.setInt(3,taskID);
 
             stmt.executeUpdate();
 

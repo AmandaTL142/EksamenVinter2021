@@ -26,7 +26,19 @@
         background-color: #36b4b4;
         color: white;
         cursor: pointer;
-        padding: 18px;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .collapsible3 {
+        background-color: #1a5b5b;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
         width: 100%;
         border: none;
         text-align: left;
@@ -40,6 +52,10 @@
 
     .active2, .collapsible2:hover {
         background-color: #247a7a;
+    }
+
+    .active3, .collapsible3:hover {
+        background-color: #124444;
     }
 
     .content {
@@ -98,7 +114,7 @@
 
 
         <div>
-            <button type="button" class="collapsible">Tasks:</button>
+            <button type="button" class="collapsible3">Tasks:</button>
             <div class="content">
                 <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -129,7 +145,7 @@
                         </table>
 
                         <div>
-                            <button type="button" class="collapsible">Subtasks:</button>
+                            <button type="button" class="collapsible3">Subtasks:</button>
                             <div class="content">
                                 <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                     <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -209,7 +225,7 @@
                     </table>
 
                     <div>
-                        <button type="button" class="collapsible">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks:</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -280,7 +296,7 @@
                     </table>
 
                     <div>
-                        <button type="button" class="collapsible">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks:</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -346,6 +362,21 @@
   for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
           this.classList.toggle("active2");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+              content.style.display = "none";
+          } else {
+              content.style.display = "block";
+          }
+      });
+  }
+
+  var coll = document.getElementsByClassName("collapsible3");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+          this.classList.toggle("active3");
           var content = this.nextElementSibling;
           if (content.style.display === "block") {
               content.style.display = "none";

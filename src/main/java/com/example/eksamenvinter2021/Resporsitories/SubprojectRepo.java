@@ -3,14 +3,13 @@ package com.example.eksamenvinter2021.Resporsitories;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Utility.JDBC;
-
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SubprojectRepo {
+    //Amanda Tolstrup Laursen
 
     public void insertSubprojectIntoDatabase(Subproject sp) {
         try {

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SubprojectService {
+    //Amanda Tolstrup Laursen
 
     SubprojectRepo spr = new SubprojectRepo();
 

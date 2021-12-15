@@ -9,12 +9,12 @@ import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class LinkTableRepo {
+    //Amanda Tolstrup Laursen
 
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();

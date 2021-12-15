@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Project {
+    //Amanda Tolstrup Laursen
     private String projectTitle;
     private String projectDeadline;
     private String status;

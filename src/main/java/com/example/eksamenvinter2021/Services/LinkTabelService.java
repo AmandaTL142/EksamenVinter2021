@@ -4,15 +4,11 @@ import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class LinkTabelService {
+    //Amanda Tolstrup Laursen
 
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();

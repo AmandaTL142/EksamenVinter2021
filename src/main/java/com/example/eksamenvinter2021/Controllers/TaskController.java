@@ -288,7 +288,7 @@ public class TaskController {
                 int id = taskId;
                 ts.deleteTask(id);
 
-                return "confirmationPage";
+                return "frontPage";
             }
             else{
                 return "error";
@@ -339,7 +339,7 @@ public class TaskController {
 
         tr.insertLinkTableWithEmployeeAndTaskInDB(employeeID,taskID);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 
 

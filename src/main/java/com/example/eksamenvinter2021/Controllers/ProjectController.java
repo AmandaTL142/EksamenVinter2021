@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
+    //Amanda Tolstrup Laursen
 
     ProjectService ps = new ProjectService();
     CustomerService cs = new CustomerService();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Subproject {
+    //Amanda Tolstrup Laursen
     private int subprojectId;
     private String subprojectTitle;
     private String subprojectDescription;

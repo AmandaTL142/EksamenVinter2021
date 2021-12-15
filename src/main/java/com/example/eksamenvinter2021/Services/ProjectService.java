@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectService {
+    //Amanda Tolstrup Laursen
+
     ProjectRepo pr = new ProjectRepo();
     SubprojectRepo spr = new SubprojectRepo();
     SubprojectService sps = new SubprojectService();

@@ -165,6 +165,6 @@ public class SubTaskController {
         int id = subtaskID;
         sr.deleteSubtaskFromDB(id);
 
-        return "confirmationPage";
+        return "frontPage";
     }
 }

@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class Employee {
     private String competence;
     private String role;
     LinkTableRepo ltr = new LinkTableRepo();
+    TaskRepo tr = new TaskRepo();
 
     public String getEmployeeName(){
         return employeeName;
@@ -101,5 +103,14 @@ public class Employee {
         }
     }
 
+
+    //Bruges ikke
+    public ArrayList<Task> getTaskConnectedToEmployee() {
+        return tr.getTaskConnectedToEmployee(employeeId);
+    }
+
+    public ArrayList<Task> getTaskConnectedToEmployeeAndProject(int projectId) {
+        return tr.getTaskConnectedToEmployeeAndProject(employeeId, projectId);
+    }
 
 }

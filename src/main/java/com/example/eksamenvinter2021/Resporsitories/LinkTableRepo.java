@@ -27,7 +27,7 @@ public class LinkTableRepo {
         ArrayList<Project> activeProjectObjects = new ArrayList<>();
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.table WHERE employee_id=?;");
+                    "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
             stmt.setInt(1, employeeId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){

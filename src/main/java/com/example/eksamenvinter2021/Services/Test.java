@@ -25,7 +25,8 @@ public class Test {
         Project project = pr.getProjectFromDatabase(15);
         //Date date = project.getDateinDateFormat();
         //System.out.println(date);
-        System.out.println(cr.returnCustomerNameFromId(5));
+        //System.out.println(cr.returnCustomerNameFromId(5));
+        System.out.println(pr.doesProjectHaveSubprojects(35));
 
     }
 
@@ -176,6 +177,7 @@ public class Test {
         //System.out.println(ltr.getActiveProjectsConnectedToEmployee(5));
         //System.out.println(ltr.getEmployeesFromSubproject(45));
         //ltr.removeEmployeeFromSubproject(1, 45);
+
 
 }
 

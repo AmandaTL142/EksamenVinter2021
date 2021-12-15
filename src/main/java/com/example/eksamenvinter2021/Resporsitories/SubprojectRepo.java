@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Subproject;
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
 import java.sql.Date;
@@ -190,5 +191,51 @@ public class SubprojectRepo {
             return 0;
         }
     }
+
+    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
+        Task task;
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks WHERE subproject_id=?;");
+            stmt.setInt(1, thisSubprojectId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+
+                int taskId = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimatedTime = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectId = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                task = new Task();
+                task.setSubprojectId(thisSubprojectId);
+                task.setEndDate(endDate);
+                task.setProjectId(projectId);
+                task.setStartDate(startDate);
+                task.setStatus(status);
+                task.setEstimatedTime(estimatedTime);
+                task.setId(taskId);
+                task.setDescription(description);
+                task.setTimeUsed(timeUsed);
+                task.setTitle(title);
+
+                tasks.add(task);
+
+            }
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get task for subproject with id " + thisSubprojectId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return tasks;
+    }
+
 
 }

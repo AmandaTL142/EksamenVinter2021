@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Collabsible</title>
+</head>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .collapsible2 {
+        background-color: #36b4b4;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .collapsible3 {
+        background-color: #1a5b5b;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+      background-color: #555;
+    }
+
+    .active2, .collapsible2:hover {
+        background-color: #247a7a;
+    }
+
+    .active3, .collapsible3:hover {
+        background-color: #124444;
+    }
+
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<p>
+
+<h1 th:text="${Project.getProjectTitle()}">Projekttitel</h1>
+
+<td>
+    <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/newSubproject/{id}(id=${Project.getProjectId()})}"> New subproject </a>
+</td>
+
+<td>
+    <a class="link" th:href="@{/createTask/{id}(id=${Project.getProjectId()})}"> New task </a>
+</td>
+
+
+<body>
+    <button type="button" class="collapsible">Subprojects:</button>
+    <div class="content">
+<tr th:each="subproject : ${Project.getSubprojectsLinkedToProject()}">
+    <button type="button" class="collapsible2" th:text="${subproject.getSubprojectTitle()}">
+    </button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Start date</th>
+                <th>End date</th>
+            </tr>
+        <td th:text="${subproject.getSubprojectTitle()}"></td>
+        <td th:text="${subproject.getSubprojectDescription()}"></td>
+        <td th:text="${subproject.getSubprojectDeadline()}"></td>
+        <td th:text="${subproject.getSubprojectStatus()}"></td>
+        <td th:text="${subproject.getStartDate()}"></td>
+        <td th:text="${subproject.getEndDate()}"></td>
+
+            <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubproject/{id}(id=${subproject.getSubprojectId()})}"> Edit </a>
+            </td>
+
+            <td>
+                <a class="link" th:href="@{/createTaskFromSubproject/{id}(id=${subproject.getSubprojectId()})}"> New task </a>
+            </td>
+
+        </table>
+
+
+        <div>
+            <button type="button" class="collapsible3">Tasks:</button>
+            <div class="content">
+                <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
+                <button type="button" class="collapsible2" th:text="${task.getTitle()}">
+                </button>
+                    <div class="content">
+                        <table>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Start date</th>
+                                <th>End date</th>
+                            </tr>
+                        <td th:text="${task.getTitle()}"></td>
+                        <td th:text="${task.getDescription()}"></td>
+                        <td th:text="${task.getStatus()}"></td>
+                        <td th:text="${task.getStartDate()}"></td>
+                        <td th:text="${task.getEndDate()}"></td>
+
+                            <td>
+                                <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                            </td>
+
+                            <td>
+                                <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                            </td>
+
+                        </table>
+
+                        <div>
+                            <button type="button" class="collapsible3">Subtasks:</button>
+                            <div class="content">
+                                <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                    <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
+                                    </button>
+                                    <div class="content">
+                                        <table>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Start date</th>
+                                                <th>End date</th>
+                                            </tr>
+                                        <td th:text="${subtask.getTitle()}"></td>
+                                        <td th:text="${subtask.getDescription()}"></td>
+                                        <td th:text="${subtask.getStatus()}"></td>
+                                        <td th:text="${subtask.getStartDate()}"></td>
+                                        <td th:text="${subtask.getEndDate()}"></td>
+
+                                            <td>
+                                                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                            </td>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</tr>
+</div>
+
+</div>
+
+
+
+
+
+    <div>
+        <button type="button" class="collapsible">Your tasks:</button>
+        <div class="content">
+            <div th:each="task : ${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId())}">
+                <button type="button" class="collapsible2" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+
+                        <td>
+                            <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                        </td>
+
+                        <td>
+                            <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                        </td>
+
+
+                    </table>
+
+                    <div>
+                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <div class="content">
+                            <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
+                                </button>
+                                <div class="content">
+                                    <table>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                        </tr>
+                                    <td th:text="${subtask.getTitle()}"></td>
+                                    <td th:text="${subtask.getDescription()}"></td>
+                                    <td th:text="${subtask.getStatus()}"></td>
+                                    <td th:text="${subtask.getStartDate()}"></td>
+                                    <td th:text="${subtask.getEndDate()}"></td>
+
+                                        <td>
+                                            <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                        </td>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <button type="button" class="collapsible">All tasks connected to project:</button>
+        <div class="content">
+            <div th:each="task : ${Project.getAllTasksInProject()}">
+                <button type="button" class="collapsible2" th:text="${task.getTitle()}">
+                </button>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+
+                        <td>
+                            <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                        </td>
+
+                        <td>
+                            <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                        </td>
+
+                    </table>
+
+                    <div>
+                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <div class="content">
+                            <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                                <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
+                                </button>
+                                <div class="content">
+                                    <table>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                        </tr>
+                                    <td th:text="${subtask.getTitle()}"></td>
+                                    <td th:text="${subtask.getDescription()}"></td>
+                                    <td th:text="${subtask.getStatus()}"></td>
+                                    <td th:text="${subtask.getStartDate()}"></td>
+                                    <td th:text="${subtask.getEndDate()}"></td>
+
+                                        <td>
+                                            <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                        </td>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+<!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+
+  var coll = document.getElementsByClassName("collapsible2");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+          this.classList.toggle("active2");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+              content.style.display = "none";
+          } else {
+              content.style.display = "block";
+          }
+      });
+  }
+
+  var coll = document.getElementsByClassName("collapsible3");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+          this.classList.toggle("active3");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+              content.style.display = "none";
+          } else {
+              content.style.display = "block";
+          }
+      });
+  }
+
+</script>

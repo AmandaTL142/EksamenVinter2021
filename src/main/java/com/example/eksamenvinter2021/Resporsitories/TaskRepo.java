@@ -3,6 +3,7 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Utility.JDBC;
 
@@ -19,13 +20,13 @@ public class TaskRepo {
     Connection conn = JDBC.getConnection();
 
     public void insertNewTaskToDB(Task task){
-        //int projectId= getProjectId("projectTitle");
-        //int subProjectID= getSubProjectId("subProjectTitle");
 
         try{
 
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` " +
-                    "(`title`, `description`, `estimated_time`, `time_used`, `status`, `project_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?,?,?,?)");
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
+                    "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
+                    "`subproject_id`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?);");
+
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
@@ -33,18 +34,23 @@ public class TaskRepo {
             stmt.setString(4,task.getTimeUsed());
             stmt.setString(5,task.getStatus());
             stmt.setInt(6,task.getProjectId());
-            stmt.setString(7, task.getStartDate());
-            stmt.setString(8,task.getEndDate());
 
-            //stmt.setInt(6,getProjectId("projectTitle"));
-            //stmt.setInt(7,getSubProjectId("subProjectTitle"));
+            stmt.setString(8, task.getStartDate());
+            stmt.setString(9,task.getEndDate());
+
+            if(task.getSubprojectId() != 0){
+                stmt.setInt(7,task.getSubprojectId());
+            }
+            else{
+                stmt.setString(7,null);
+            }
+
             stmt.executeUpdate();
 
 
         } catch (SQLException e) {
-            System.out.println("connection not found");
+            System.out.println("Task could not be inserted into database");
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -96,8 +102,8 @@ public class TaskRepo {
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(8,task.getId());
 
+            stmt.setInt(8,task.getId());
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
             stmt.setString(3,task.getEstimatedTime());
@@ -119,7 +125,7 @@ public class TaskRepo {
 
     public int getTaskID(String taskTitle){
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT task_id FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE title=?;");
             stmt.setString(1,taskTitle);
             ResultSet rs = stmt.executeQuery();
@@ -128,13 +134,13 @@ public class TaskRepo {
             int id = rs.getInt("task_id");
             return id;
         } catch (SQLException e) {
-            System.out.println("Couldn't get id for with title " + taskTitle + " from database");
+            System.out.println("Couldn't get id for task with title " + taskTitle + " from database");
             System.out.println(e.getMessage());
         }
         return 0;
     }
 
-    public ArrayList<Task> getAllTasksInnProject(int pID){
+    public ArrayList<Task> getAllTasksInProject(int pID){
         ArrayList<Task> allTasks = new ArrayList<>();
         try {
 
@@ -145,6 +151,7 @@ public class TaskRepo {
 
 
             while(rs.next()){
+                int taskID = rs.getInt("task_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
                 String estimated_time = rs.getString("estimated_time");
@@ -168,9 +175,9 @@ public class TaskRepo {
     }
 
     public void deleteTask(int taskID){
-        PreparedStatement stmt = null;
+
         try {
-            stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
             stmt.setInt(1, taskID);
             stmt.executeUpdate();
 
@@ -298,6 +305,25 @@ public class TaskRepo {
         return taskObjects;
     }
 
+    public void insertTaskToLinktable(int employeeID, int taskID, int projectID){
+        try  {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` " +
+                    "(`employee_id`, `project_id`, `task_id`) " +
+                    "VALUES (?,?,?);");
+
+            stmt.setInt(1,employeeID);
+            stmt.setInt(2,projectID);
+            stmt.setInt(3,taskID);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public  ArrayList<Employee> getEmployeeFromTask(int taskID){
         ArrayList<Integer> employeeIDs = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
@@ -337,4 +363,50 @@ public class TaskRepo {
     }
 
 
+    public ArrayList<Task> getTaskInArrayForGantt(){
+        ArrayList<Task> taskArray = new ArrayList<>();
+
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks;");
+
+            ResultSet rs= stmt.executeQuery();
+
+            while(rs.next()){
+                int taskID = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String status = rs.getString("status");
+                int projectID = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                Task t = new Task();
+                t.setId(taskID);
+                t.setTitle(title);
+                t.setStatus(status);
+                t.setProjectId(projectID);
+                t.setStartDate(startDate);
+                t.setEndDate(endDate);
+
+                if(startDate != null && !startDate.isEmpty() ) {
+                    if (endDate != null && !endDate.isEmpty()) {
+
+                        String newStartDate = startDate.replace("-",",").replace("'","");
+                        String newEndDate = endDate.replace("-",",").replace("'","");
+
+                        t.setStartDate(newStartDate);
+                        t.setEndDate(newEndDate);
+
+                        taskArray.add(t);
+                    }
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taskArray;
+    }
 }

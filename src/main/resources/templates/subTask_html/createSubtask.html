@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="dkk" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>newTask</title>
+    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
+
+
+
 </head>
 <body>
+<div class="background">
+    <div class="content-form">
 
+        <form method="POST" action="/createNewsubtask">
+            <h1 th:text="${task.getTitle()}"></h1>
+
+            <h2>Create a new task</h2>
+
+            <label for="status">Title:</label> <br>
+            <input type="text" name="new-subtask-title" required><br>
+
+            <label for="status">Description:</label><br>
+            <input type="text" name="new-subtask-description"><br>
+
+            <label for="status">Estimated Time:</label><br>
+            <input type="text" name="new-tsubask-estimatedTime" required><br>
+
+            <label for="status">Time Used:</label><br>
+            <input type="text" name="new-subtask-timeUsed" required><br>
+
+            <label for="status">Status:</label><br>
+            <select name="new-task-status" id="status">
+                <option value="Pending">Pending</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Complete">Complete</option>
+            </select> <br>
+
+            <input type="submit" value="Create Subtask">
+
+        </form>
+
+    </div>
+</div>
 </body>
 </html>

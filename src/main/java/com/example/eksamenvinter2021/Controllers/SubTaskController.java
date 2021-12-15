@@ -70,12 +70,12 @@ public class SubTaskController {
     }
     @PostMapping("/createNewSubtask")
     public String createNewSubtask(WebRequest wr, HttpSession session){
-        String title=wr.getParameter("new-task-title");
-        String description = wr.getParameter("new-task-description");
+        String title=wr.getParameter("new-subtask-title");
+        String description = wr.getParameter("new-subtask-description");
 
-        String estimated_time = wr.getParameter("new-task-estimatedTime");
+        String estimated_time = wr.getParameter("new-subtask-estimatedTime");
 
-        String timeUsed = wr.getParameter("new-task-timeUsed");
+        String timeUsed = wr.getParameter("new-subtask-timeUsed");
         String status = wr.getParameter("new-task-status");
 
         String startDate = wr.getParameter("new-subtask-startDate");

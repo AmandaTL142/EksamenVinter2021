@@ -14,6 +14,7 @@ import java.util.Objects;
 
 @Controller
 public class LoginController {
+    //Christian Hundahl
     //Her laver vi noget log-in logik
     //Benyt sessions
     EmployeeService es = new EmployeeService();

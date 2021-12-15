@@ -33,7 +33,7 @@ public class Task {
     public Task(String title, String description, String estimated_time, String timeUsed, String status, int projectID, int subprojectID, String startDate, String endDate) {
         this.title = title;
         this.description = description;
-        this.estimatedTime = estimatedTime;
+        this.estimatedTime = estimated_time;
         this.timeUsed = timeUsed;
         this.status = status;
         this.startDate=startDate;

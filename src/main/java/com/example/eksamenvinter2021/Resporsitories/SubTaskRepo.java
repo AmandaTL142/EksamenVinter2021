@@ -132,13 +132,13 @@ public class SubTaskRepo {
         }
     }
 
-    public ArrayList<SubTask> getAllSubtaskInProject(int pID){
+    public ArrayList<SubTask> getAllSubtaskInTask(int tID){
         ArrayList<SubTask> allSubtasks = new ArrayList<>();
 
         PreparedStatement stmt = null;
         try {
-            stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
-            stmt.setInt(1,pID);
+            stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.subtasks where task_id=?");
+            stmt.setInt(1,tID);
 
             ResultSet rs = stmt.executeQuery();
 

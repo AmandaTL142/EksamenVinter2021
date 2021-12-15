@@ -51,34 +51,55 @@ public class TaskController {
 
 
     @GetMapping("/showTask/{thisProject}")
-    public String tasks(@PathVariable("thisProject") int thisProject, Model m){
-        int pID = thisProject;
+    public String tasks(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
 
-        m.addAttribute("tasks", ts.getAllTasksInArray());
-        m.addAttribute("project", ps.getProjectObject(pID));
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("EMPLOYEE")){
 
+                int pID = thisProject;
 
-        sharedProject = ps.getProjectObject(thisProject);
+                m.addAttribute("tasks", ts.getAllTasksInArray());
+                m.addAttribute("project", ps.getProjectObject(pID));
 
-        return "task_html/showTask";
+                sharedProject = ps.getProjectObject(thisProject);
+
+                return "task_html/showTask";
+            }
+            else{
+                return "error";
+            }
+        }
+
     }
 
 
     //man skal indtaste et projectId, for at komme på det rigtige projekt
     @GetMapping("/createTask/{thisProjectId}")
-    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m) {
+    public String project(@PathVariable("thisProjectId") int thisProjectId, Model m, HttpSession session) {
         //Her gemmer vi projektID, som en int
-        int id = thisProjectId;
 
-        //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
-        Project p = ps.getProjectObject(thisProjectId);
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("EMPLOYEE")){
 
+                int id = thisProjectId;
 
-        sharedProject = p;
-        m.addAttribute("project",p);
+                //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
+                Project p = ps.getProjectObject(thisProjectId);
 
-        return"task_html/newTask";
-
+                sharedProject = p;
+                m.addAttribute("project",p);
+                return"task_html/newTask";
+            }
+            else{
+                return "error";
+            }
+        }
     }
 
     @PostMapping("/createNewTask")
@@ -123,16 +144,29 @@ public class TaskController {
     }
 
     @GetMapping("/editTask/{thisTask}")
-    public String editTask(@PathVariable("thisTask") int thisTask, Model m){
-        int id = thisTask;
-        edithThisTask = ts.getTaskObject(id);
+    public String editTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
+
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("EMPLOYEE")){
+                int id = thisTask;
+                edithThisTask = ts.getTaskObject(id);
+
+                m.addAttribute("tasks",edithThisTask);
+                m.addAttribute("project",sharedProject);
+
+                return "task_html/editTask";
+
+            }
+            else{
+                return "error";
+            }
+        }
 
 
-        m.addAttribute("tasks",edithThisTask);
-        m.addAttribute("project",sharedProject);
 
-
-        return "task_html/editTask";
     }
 
     @PostMapping("/editTaskChanges")
@@ -187,11 +221,23 @@ public class TaskController {
 
 
     @GetMapping("/deleteTask/{taskId}")
-    public String deleteTask(@PathVariable("taskId") int taskId, Model m) {
-        int id = taskId;
-        ts.deleteTask(id);
+    public String deleteTask(@PathVariable("taskId") int taskId, HttpSession session) {
 
-        return "confirmationPage";
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+            Employee employee = (Employee) session.getAttribute("employee");
+            if (employee.getRole().equals("EMPLOYEE")){
+                int id = taskId;
+                ts.deleteTask(id);
+
+                return "confirmationPage";
+            }
+            else{
+                return "error";
+            }
+        }
+
     }
 
 

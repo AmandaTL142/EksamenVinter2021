@@ -38,6 +38,14 @@
 
 <h1 th:text="${Project.getProjectTitle()}">Projekttitel</h1>
 
+<td>
+    <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/newSubproject/{id}(id=${Project.getProjectId()})}"> New subproject </a>
+</td>
+
+<td>
+    <a class="link" th:href="@{/createTask/{id}(id=${Project.getProjectId()})}"> New task </a>
+</td>
+
 
 <body>
     <button type="button" class="collapsible">Subprojects:</button>
@@ -61,6 +69,15 @@
         <td th:text="${subproject.getSubprojectStatus()}"></td>
         <td th:text="${subproject.getStartDate()}"></td>
         <td th:text="${subproject.getEndDate()}"></td>
+
+            <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubproject/{id}(id=${subproject.getSubprojectId()})}"> Edit </a>
+            </td>
+
+            <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubproject/{id}(id=${subproject.getSubprojectId()})}"> New task </a>
+            </td>
+
         </table>
 
 
@@ -84,6 +101,15 @@
                         <td th:text="${task.getStatus()}"></td>
                         <td th:text="${task.getStartDate()}"></td>
                         <td th:text="${task.getEndDate()}"></td>
+
+                            <td>
+                                <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                            </td>
+
+                            <td>
+                                <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                            </td>
+
                         </table>
 
                         <div>
@@ -106,6 +132,11 @@
                                         <td th:text="${subtask.getStatus()}"></td>
                                         <td th:text="${subtask.getStartDate()}"></td>
                                         <td th:text="${subtask.getEndDate()}"></td>
+
+                                            <td>
+                                                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                            </td>
+
                                         </table>
                                     </div>
                                 </div>
@@ -149,6 +180,16 @@
                     <td th:text="${task.getStatus()}"></td>
                     <td th:text="${task.getStartDate()}"></td>
                     <td th:text="${task.getEndDate()}"></td>
+
+                        <td>
+                            <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                        </td>
+
+                        <td>
+                            <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                        </td>
+
+
                     </table>
 
                     <div>
@@ -171,6 +212,11 @@
                                     <td th:text="${subtask.getStatus()}"></td>
                                     <td th:text="${subtask.getStartDate()}"></td>
                                     <td th:text="${subtask.getEndDate()}"></td>
+
+                                        <td>
+                                            <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                        </td>
+
                                     </table>
                                 </div>
                             </div>
@@ -206,6 +252,15 @@
                     <td th:text="${task.getStatus()}"></td>
                     <td th:text="${task.getStartDate()}"></td>
                     <td th:text="${task.getEndDate()}"></td>
+
+                        <td>
+                            <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                        </td>
+
+                        <td>
+                            <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                        </td>
+
                     </table>
 
                     <div>
@@ -228,6 +283,11 @@
                                     <td th:text="${subtask.getStatus()}"></td>
                                     <td th:text="${subtask.getStartDate()}"></td>
                                     <td th:text="${subtask.getEndDate()}"></td>
+
+                                        <td>
+                                            <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getId()})}"> Edit </a>
+                                        </td>
+
                                     </table>
                                 </div>
                             </div>
@@ -243,84 +303,8 @@
     </div>
 
 
-    <!--
-    <div>
-        <button type="button" class="collapsible">Tasks:</button>
-        <div class="content">
-            <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
-                <button type="button" class="collapsible" th:text="${task.getTitle()}">
-                </button>
-                <div class="content">
-                    <td th:text="${task.getTitle()}"></td>
-                    <td th:text="${task.getDescription()}"></td>
-                    <td th:text="${task.getStatus()}"></td>
-                    <td th:text="${task.getStartDate()}"></td>
-                    <td th:text="${task.getEndDate()}"></td>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div>
-        <button type="button" class="collapsible">Tasks without a subproject:</button>
-        <div class="content">
-            <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
-                <button type="button" class="collapsible" th:text="${task.getTitle()}">
-                </button>
-                <div class="content">
-                    <td th:text="${task.getTitle()}"></td>
-                    <td th:text="${task.getDescription()}"></td>
-                    <td th:text="${task.getStatus()}"></td>
-                    <td th:text="${task.getStartDate()}"></td>
-                    <td th:text="${task.getEndDate()}"></td>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
-
-
 </body>
 </html>
-
-<!--
-<p>Tasks:</p>
-
-<tr th:each="subproject : ${session.employee.getSubrojectArray()}">
-    <button type="button" class="collapsible" th:text="${subproject.getTitle()}">
-    </button>
-    <div class="content">
-        <td th:text="${subproject.getProjectTitle()}"></td>
-        <td th:text="${subproject.getDescription()}"></td>
-        <td th:text="${subproject.getProjectDeadline()}"></td>
-        <td th:text="${project.getStatus()}"></td>
-        <td th:text="${project.getStartDate()}"></td>
-        <td th:text="${project.getEndDate()}"></td>
-        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
-    </div>
-
-</tr>
-
-
-<p>Subtasks:</p>
-
-<tr th:each="subproject : ${session.employee.getSubrojectArray()}">
-    <button type="button" class="collapsible" th:text="${subproject.getTitle()}">
-    </button>
-    <div class="content">
-        <td th:text="${subproject.getProjectTitle()}"></td>
-        <td th:text="${subproject.getDescription()}"></td>
-        <td th:text="${subproject.getProjectDeadline()}"></td>
-        <td th:text="${project.getStatus()}"></td>
-        <td th:text="${project.getStartDate()}"></td>
-        <td th:text="${project.getEndDate()}"></td>
-        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
-    </div>
-
-</tr>
--->
 
 
 <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->

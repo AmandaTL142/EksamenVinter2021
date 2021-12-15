@@ -307,7 +307,7 @@ public class ProjectController {
             return  "redirect:/";
         } else {
             model.addAttribute("Project", ps.getProjectObject(thisProject));
-            return "project_html/amandasCollabsible.html";
+            return "project_html/amandasCollapsible.html";
         }
     }
 

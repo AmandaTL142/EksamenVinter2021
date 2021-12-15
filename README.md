@@ -9,7 +9,7 @@ For at køre programmet skal en bruger have
 - Oprettet sin egen application.properties file med brugernavn, password og url på den tilknyttede database
 
 ## Kørselsvejledning
-1. Fork repository fra GitHub
+1. Fork projektets repository fra GitHub
 2. Opret en database via de vedlagte MySQL scripts
 3. Opret en applications.properties fil med brugernavn, password og url til databasen
 4. Deploy til Heroku via egen konto - se [Herokus guide til deployment af GitHub repository](https://devcenter.heroku.com/articles/github-integration "Guide til Heroku deployment")

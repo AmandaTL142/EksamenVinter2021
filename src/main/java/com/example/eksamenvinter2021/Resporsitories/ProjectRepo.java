@@ -114,7 +114,7 @@ public class ProjectRepo {
     }
 
 
-    public int getProjectId(String projectTitle) {
+    public int getProjectIdFromTitle(String projectTitle) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE title=?;");

@@ -3,13 +3,7 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
-import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
-import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
-import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
-import com.example.eksamenvinter2021.Services.EmployeeService;
-import com.example.eksamenvinter2021.Services.LoginService;
-import com.example.eksamenvinter2021.Services.ProjectService;
+import com.example.eksamenvinter2021.Services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +15,9 @@ import java.util.ArrayList;
 public class ProjectController {
 
     ProjectService ps = new ProjectService();
-    ProjectRepo pr = new ProjectRepo();
-    CustomerRepo cr = new CustomerRepo();
-    LinkTableRepo ltr = new LinkTableRepo();
+    CustomerService cs = new CustomerService();
+    LinkTabelService lts = new LinkTabelService();
     Project editThisProject = new Project();
-    EmployeeRepo er = new EmployeeRepo();
     EmployeeService es = new EmployeeService();
     LoginService ls = new LoginService();
 
@@ -78,7 +70,7 @@ public class ProjectController {
             e.printStackTrace();
         }
 
-        int customerId = cr.getCustomerIdFromDatabase(costumerName);
+        int customerId = cs.getCustomerIdFromDatabase(costumerName);
 
 
         //Create project-object
@@ -87,16 +79,16 @@ public class ProjectController {
         currentProject.setDescription(description);
 
         //Add project to DB
-        pr.insertProjectIntoDatabase(currentProject);
+        ps.insertProjectIntoDatabase(currentProject);
 
         //Get project id
-        int projectId = pr.getProjectId(title);
+        int projectId = ps.getProjectIdFromTitle(title);
         currentProject.setProjectId(projectId);
 
         //Connect project to manager via LinkTable
         Employee employee = (Employee) session.getAttribute("employee");
         int employeeID = employee.getEmployeeId();
-        ltr.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
+        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
 
         return "frontPage";
     }
@@ -158,7 +150,7 @@ public class ProjectController {
             editThisProject.setDescription(description);
         }
         if (costumerName!="" && costumerName!=null){
-            int customerId = cr.getCustomerIdFromDatabase(costumerName);
+            int customerId = cs.getCustomerIdFromDatabase(costumerName);
             editThisProject.setCustomerId(customerId);
         }
 
@@ -173,7 +165,7 @@ public class ProjectController {
         }
 
         //Update project in DB
-        pr.updateProjectInDatabase(editThisProject);
+        ps.updateProjectInDatabase(editThisProject);
 
         return "frontPage";
     }
@@ -203,7 +195,7 @@ public class ProjectController {
         Employee employee;
         employee = (Employee) session.getAttribute("employee");
         int employeeId = employee.getEmployeeId();
-        ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employeeId);
+        ArrayList<Project> projects = lts.getActiveProjectsConnectedToEmployee(employeeId);
         model.addAttribute("Projects", projects);
         return "fragments/projectsConnectedToEmployee.html";
     }
@@ -212,11 +204,11 @@ public class ProjectController {
     @GetMapping("/showProjects")
     public String showProjects(HttpSession session, Model model) {
         Employee employee = (Employee) session.getAttribute("employee");
-        ArrayList<Project> projects = ltr.getActiveProjectsConnectedToEmployee(employee.getEmployeeId());
+        ArrayList<Project> projects = lts.getActiveProjectsConnectedToEmployee(employee.getEmployeeId());
         //Arraylist subprojects
         ArrayList<Subproject> subprojects = new ArrayList<>();
         for (Project p : projects) {
-            subprojects = ltr.getSubprojectsConnectedToProjectsAndEmployee(p.getProjectId(), employee.getEmployeeId());
+            subprojects = lts.getSubprojectsConnectedToProjectsAndEmployee(p.getProjectId(), employee.getEmployeeId());
         }
 
         //Map 'subprojects' to model, name 'Subprojects'
@@ -230,8 +222,8 @@ public class ProjectController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
-            ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
+            ArrayList<Employee> allEmployees = es.getAllEmployeesFromDatabase();
+            ArrayList<Employee> projectEmployees = lts.getEmployeesFromProject(thisProject);
 
             allEmployees.removeAll(projectEmployees);
 
@@ -249,7 +241,7 @@ public class ProjectController {
         String employeeIdString = webr.getParameter("project-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
         int projectId = editThisProject.getProjectId();
-        ltr.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
+        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "frontPage";
     }
 
@@ -272,8 +264,8 @@ public class ProjectController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            ArrayList<Employee> projectEmployees = ltr.getEmployeesFromProject(thisProject);
-            ArrayList<Employee> projectManagers = ltr.getManagersFromProject(thisProject);
+            ArrayList<Employee> projectEmployees = lts.getEmployeesFromProject(thisProject);
+            ArrayList<Employee> projectManagers = lts.getManagersFromProject(thisProject);
             model.addAttribute("projectEmployees", projectEmployees);
             model.addAttribute("projectManagers", projectManagers);
             editThisProject = ps.getProjectObject(thisProject);
@@ -292,7 +284,7 @@ public class ProjectController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
                 int projectId = editThisProject.getProjectId();
-               ltr. removeEmployeeFromProject(employeeId, projectId);
+               lts. removeEmployeeFromProject(employeeId, projectId);
                 return "frontPage";
             }
             else{

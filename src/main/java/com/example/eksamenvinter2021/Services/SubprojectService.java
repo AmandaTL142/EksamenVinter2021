@@ -1,7 +1,13 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Subproject;
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Utility.JDBC;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SubprojectService {
@@ -35,5 +41,24 @@ public class SubprojectService {
         spr.deleteSubprojectFromDatabase(id);
     }
 
+    public void insertSubprojectIntoDatabase(Subproject sp) {
+        spr.insertSubprojectIntoDatabase(sp);
+    }
+
+    public void updateSubprojectInDatabase(Subproject sp) {
+        spr.updateSubprojectInDatabase(sp);
+    }
+
+    public ArrayList<Subproject> getSubprojectsLinkedToProject(int thisProjectId) {
+        return spr.getSubprojectsLinkedToProject(thisProjectId);
+    }
+
+    public int getSubprojectIdByTitle(String title) {
+        return spr.getSubprojectIdByTitle(title);
+    }
+
+    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
+        return spr.getTasksLinkedToSubproject(thisSubprojectId);
+    }
 
 }

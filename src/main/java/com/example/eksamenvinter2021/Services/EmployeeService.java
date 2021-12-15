@@ -3,6 +3,8 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
 
+import java.util.ArrayList;
+
 public class EmployeeService {
 
     EmployeeRepo employeeRepo = new EmployeeRepo();
@@ -27,6 +29,10 @@ public class EmployeeService {
 
     public Employee showEmployee (int employeeId) {
         return employeeRepo.getEmployeeFromDatabase(employeeId);
+    }
+
+    public ArrayList<Employee> getAllEmployeesFromDatabase() {
+        return employeeRepo.getAllEmployeesFromDatabase();
     }
 
 }

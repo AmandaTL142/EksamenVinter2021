@@ -34,4 +34,9 @@ public class CustomerService {
         List<Customer> customerList = customerRepo.allCustomers();
         return customerList;
     }
+
+    public int getCustomerIdFromDatabase(String name) {
+        return customerRepo.getCustomerIdFromDatabase(name);
+    }
+
 }

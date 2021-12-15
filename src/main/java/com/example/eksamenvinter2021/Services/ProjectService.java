@@ -3,6 +3,12 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Utility.JDBC;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectService {
@@ -18,6 +24,10 @@ public class ProjectService {
         return p;
     }
 
+    public void insertProjectIntoDatabase(Project p) {
+        pr.insertProjectIntoDatabase(p);
+    }
+
 
     public void updateProject(Project p, String title, String projectDeadline, String status, double basePrice,
                               int costumerId, String description) {
@@ -27,6 +37,10 @@ public class ProjectService {
         p.setBasePrice(basePrice);
         p.setCustomerId(costumerId);
         p.setDescription(description);
+        pr.updateProjectInDatabase(p);
+    }
+
+    public void updateProjectInDatabase(Project p) {
         pr.updateProjectInDatabase(p);
     }
 
@@ -47,6 +61,28 @@ public class ProjectService {
         }
         return allProjects;
     }
+
+    public int getProjectIdFromTitle(String projectTitle) {
+        return pr.getProjectIdFromTitle(projectTitle);
+    }
+
+    public ArrayList<String> getProjectNamesInArray() {
+        return pr.getProjectNamesInArray();
+    }
+
+    public ArrayList<Project> getProjectsInArray() {
+        return pr.getProjectsInArray();
+    }
+
+    public ArrayList<Project> getAllProjects() {
+        return pr.getAllProjects();
+    }
+
+    public boolean doesProjectHaveSubprojects(int projectId) {
+        return pr.doesProjectHaveSubprojects(projectId);
+    }
+
+
 
     /*
 

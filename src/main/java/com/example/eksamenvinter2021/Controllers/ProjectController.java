@@ -284,7 +284,7 @@ public class ProjectController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
                 int projectId = editThisProject.getProjectId();
-               lts. removeEmployeeFromProject(employeeId, projectId);
+               lts.removeEmployeeFromProject(employeeId, projectId);
                 return "frontPage";
             }
             else{

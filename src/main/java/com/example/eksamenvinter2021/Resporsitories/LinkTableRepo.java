@@ -320,7 +320,7 @@ public class LinkTableRepo {
 
             stmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Employee could not be removed from project in database");
+            System.out.println("Employee could not be removed from subproject in database");
             System.out.println(e.getMessage());
         }
     }

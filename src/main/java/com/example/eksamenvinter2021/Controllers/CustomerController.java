@@ -27,7 +27,7 @@ public class CustomerController {
     @GetMapping("/Customer")
     public String Customer(HttpSession session, Model model) {
         if (ls.notLoggedIn(session)) {
-            return "reirect:/index";
+            return "reirect:/";
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")) {

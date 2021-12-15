@@ -28,7 +28,6 @@
         <th id="endDate">end date </th>
 
 
-
     </tr>
     <tr th:each="task:${tasks}">
         <td th:text ="${task.getTitle()}"></td>
@@ -38,9 +37,6 @@
         <td th:text="${task.getStatus()}"></td>
         <td th:text="${task.getStartDate()}"></td>
         <td th:text="${task.getEndDate()}"></td>
-
-
-
 
 
         <td>
@@ -57,8 +53,6 @@
         </td>
 
 
-
-
     </tr>
 
     <button>
@@ -67,12 +61,6 @@
 
 </table>
 
-
-
-<!---
-lav en delete knap her
-evt. advarselsbesked når man sletter
--->
 </div>
 </body>
 </html>

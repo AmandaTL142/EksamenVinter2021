@@ -79,11 +79,10 @@
     <a class="link" th:href="@{/createTask/{id}(id=${Project.getProjectId()})}"> New task </a>
 </td>
 
-
 <body>
 
 <div th:if = "${Project.getSubprojectsLinkedToProject().size() > 0}">
-    <button type="button" class="collapsible">Subprojects:</button>
+    <button type="button" class="collapsible">Subprojects</button>
     <div class="content">
 <tr th:each="subproject : ${Project.getSubprojectsLinkedToProject()}">
     <button type="button" class="collapsible2" th:text="${subproject.getSubprojectTitle()}">
@@ -117,7 +116,7 @@
 
 
         <div th:if = "${subproject.getTasksLinkedToSubproject().size() > 0}">
-            <button type="button" class="collapsible3">Tasks:</button>
+            <button type="button" class="collapsible3">Tasks</button>
             <div class="content">
                 <div th:each="task : ${subproject.getTasksLinkedToSubproject()}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -148,7 +147,7 @@
                         </table>
 
                         <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                            <button type="button" class="collapsible3">Subtasks:</button>
+                            <button type="button" class="collapsible3">Subtasks</button>
                             <div class="content">
                                 <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                     <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -196,7 +195,7 @@
 
 
     <div th:if = "${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() > 0}">
-        <button type="button" class="collapsible">Your tasks:</button>
+        <button type="button" class="collapsible">Your tasks</button>
         <div class="content">
             <div th:each="task : ${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId())}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -228,7 +227,7 @@
                     </table>
 
                     <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -268,7 +267,7 @@
 
 
     <div th:if = "${Project.getAllTasksInProject().size() > 0}">
-        <button type="button" class="collapsible">All tasks connected to project:</button>
+        <button type="button" class="collapsible">All tasks connected to project</button>
         <div class="content">
             <div th:each="task : ${Project.getAllTasksInProject()}">
                 <button type="button" class="collapsible2" th:text="${task.getTitle()}">
@@ -299,7 +298,7 @@
                     </table>
 
                     <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
-                        <button type="button" class="collapsible3">Subtasks:</button>
+                        <button type="button" class="collapsible3">Subtasks</button>
                         <div class="content">
                             <div th:each="subtask : ${task.getAllSubtaskInTask()}">
                                 <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
@@ -337,12 +336,10 @@
         </div>
     </div>
 
-<div th:if = "${Project.getSubprojectsLinkedToProject().size() == 0}">
-    <div th:if = "${session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() == 0}">
-        <div th:if = "${Project.getAllTasksInProject().size() == 0}">
-            <h1>There's nothing to show</h1>
-        </div>
-    </div>
+<div th:if = "${Project.getSubprojectsLinkedToProject().size() == 0 and
+session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() == 0 and
+Project.getAllTasksInProject().size() == 0}">
+    <h1>There's nothing to show</h1>
 </div>
 
 
@@ -352,11 +349,11 @@
 
 <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
 <script>
-  var coll = document.getElementsByClassName("collapsible");
+  var coll1 = document.getElementsByClassName("collapsible");
   var i;
 
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
+  for (i = 0; i < coll1.length; i++) {
+    coll1[i].addEventListener("click", function() {
       this.classList.toggle("active");
       var content = this.nextElementSibling;
       if (content.style.display === "block") {
@@ -367,11 +364,11 @@
     });
   }
 
-  var coll = document.getElementsByClassName("collapsible2");
+  var coll2 = document.getElementsByClassName("collapsible2");
   var i;
 
-  for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
+  for (i = 0; i < coll2.length; i++) {
+      coll2[i].addEventListener("click", function() {
           this.classList.toggle("active2");
           var content = this.nextElementSibling;
           if (content.style.display === "block") {
@@ -382,11 +379,11 @@
       });
   }
 
-  var coll = document.getElementsByClassName("collapsible3");
+  var coll3 = document.getElementsByClassName("collapsible3");
   var i;
 
-  for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
+  for (i = 0; i < coll3.length; i++) {
+      coll3[i].addEventListener("click", function() {
           this.classList.toggle("active3");
           var content = this.nextElementSibling;
           if (content.style.display === "block") {
@@ -395,6 +392,16 @@
               content.style.display = "block";
           }
       });
+  }
+
+  //https://codepen.io/jasonpaul/pen/NxjvjW
+
+  function collapseAll(){
+      $(".collapsible").removeClass(function(){
+          return "active";
+      });
+      $(".collapsible").collapsible({accordion: true});
+      $(".collapsible").collapsible({accordion: false});
   }
 
 </script>

@@ -26,13 +26,19 @@
             <input type="text" name="new-subtask-description"><br>
 
             <label for="status">Estimated Time:</label><br>
-            <input type="text" name="new-tsubask-estimatedTime" required><br>
+            <input type="text" name="new-subtask-estimatedTime" required><br>
 
             <label for="status">Time Used:</label><br>
             <input type="text" name="new-subtask-timeUsed" required><br>
 
+            <label for="status">Starte date:</label>
+            <input type="date" placeholder="startDate" name="new-subtask-startDate" required>
+
+            <label for="status">End date:</label>
+            <input type="date" placeholder="endDate" name="new-subtask-endDate" required>
+
             <label for="status">Status:</label><br>
-            <select name="new-task-status" id="status">
+            <select name="new-subtask-status" id="status">
                 <option value="Pending">Pending</option>
                 <option value="Ongoing">Ongoing</option>
                 <option value="Complete">Complete</option>

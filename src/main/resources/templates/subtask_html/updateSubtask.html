@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit task</title>
+</head>
+<body>
+<h1>Edit task </h1>
+
+<form method="POST" action="/editTaskChanges">
+
+    <table>
+        <tr th:each="subtask:${subtasks}">
+            <div class = "container">
+
+                <label>Title: </label>
+                <input name="new-subtask-title" type="text" th:value="${subtask.title}" ><br>
+
+
+                <label>Description: </label>
+                <input name="new-subtask-description" type="text" th:value="${subtask.description}"><br>
+
+                <label>estimatedTime: </label>
+                <input name="new-subtask-estimatedTime" type="text" th:value="${subtask.estimatedTime}"><br>
+
+                <label>TimeUsed: </label>
+                <input name="new-subtask-timeUsed" type="text" th:value="${subtask.timeUsed}"><br>
+
+                <label>Start date: </label>
+                <input name="new-subtask-startDate" type="text" th:value="${subtask.startDate}"><br>
+
+                <label> End date: </label>
+                <input name="new-subtask-endDate" type="text" th:value="${subtask.endDate}"><br>
+
+
+
+                <label>status: </label>
+                <select name="new-subtask-status" id="status">
+                    <option value="Ikke påbegyndt">On Hold</option>
+                    <option value="Påbegyndt">Pending</option>
+                    <option value="Færdig">Complete</option>
+                </select>
+                </br>
+
+            </div>
+
+            <div class="container">
+                <input type="submit" value="Update Subtask">
+            </div>
+
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

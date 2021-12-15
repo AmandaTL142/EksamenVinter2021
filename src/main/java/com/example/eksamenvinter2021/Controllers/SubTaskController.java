@@ -54,7 +54,7 @@ public class SubTaskController {
 
         sharedTask = tr.getTaskFromDB(thisTask);
 
-        return "subtask_html/readSubtask";
+        return "subtask_html/showSubtask";
     }
 
     @GetMapping("/createSubtask/{thisTaskID}")
@@ -66,7 +66,7 @@ public class SubTaskController {
         sharedTask = t;
         m.addAttribute("task",t);
 
-        return "subtask_html/createSubtask";
+        return "subtask_html/newSubtask";
     }
     @PostMapping("/createNewSubtask")
     public String createNewSubtask(WebRequest wr, HttpSession session){
@@ -76,7 +76,7 @@ public class SubTaskController {
         String estimated_time = wr.getParameter("new-subtask-estimatedTime");
 
         String timeUsed = wr.getParameter("new-subtask-timeUsed");
-        String status = wr.getParameter("new-task-status");
+        String status = wr.getParameter("new-subtask-status");
 
         String startDate = wr.getParameter("new-subtask-startDate");
         String endtDate = wr.getParameter("new-subtask-endDate");
@@ -96,7 +96,7 @@ public class SubTaskController {
         sr.insertLinkTTableWithEmployeeAndTaskInDB(employeeID, subtaskID, taskID);
 
 
-        return "subtask_html/readSubtask";
+        return "subtask_html/showSubtask";
     }
 
     @GetMapping("/editSubtask/{thisSubtask}")
@@ -116,11 +116,11 @@ public class SubTaskController {
 
 
         String title=wr.getParameter("new-task-title");
-        String description = wr.getParameter("new-task-description");
+        String description = wr.getParameter("new-subtask-description");
 
-        String estimated_time = wr.getParameter("new-task-estimatedTime");
+        String estimated_time = wr.getParameter("new-subtask-estimatedTime");
 
-        String timeUsed = wr.getParameter("new-task-timeUsed");
+        String timeUsed = wr.getParameter("new-subtask-timeUsed");
         String status = wr.getParameter("new-task-status");
 
         String startDate = wr.getParameter("new-subtask-startDate");

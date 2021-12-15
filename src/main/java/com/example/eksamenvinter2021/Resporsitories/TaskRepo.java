@@ -23,9 +23,10 @@ public class TaskRepo {
 
         try{
 
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
                     "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
-                    "`subproject_id`, `start_date`) VALUES (?,?,?,?,?,?,?,?)");
+                    "`subproject_id`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?);");
+
 
             stmt.setString(1,task.getTitle());
             stmt.setString(2,task.getDescription());
@@ -33,8 +34,16 @@ public class TaskRepo {
             stmt.setString(4,task.getTimeUsed());
             stmt.setString(5,task.getStatus());
             stmt.setInt(6,task.getProjectId());
-            stmt.setString(7, task.getStartDate());
-            stmt.setString(8,task.getEndDate());
+
+            stmt.setString(8, task.getStartDate());
+            stmt.setString(9,task.getEndDate());
+
+            if(task.getSubprojectId() != 0){
+                stmt.setInt(7,task.getSubprojectId());
+            }
+            else{
+                stmt.setString(7,null);
+            }
 
             stmt.executeUpdate();
 
@@ -116,7 +125,7 @@ public class TaskRepo {
 
     public int getTaskID(String taskTitle){
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT task_id FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE title=?;");
             stmt.setString(1,taskTitle);
             ResultSet rs = stmt.executeQuery();
@@ -125,7 +134,7 @@ public class TaskRepo {
             int id = rs.getInt("task_id");
             return id;
         } catch (SQLException e) {
-            System.out.println("Couldn't get id for with title " + taskTitle + " from database");
+            System.out.println("Couldn't get id for task with title " + taskTitle + " from database");
             System.out.println(e.getMessage());
         }
         return 0;
@@ -294,6 +303,25 @@ public class TaskRepo {
             e.printStackTrace();
         }
     return taskObjects;
+    }
+
+    public void insertTaskToLinktable(int employeeID, int taskID, int projectID){
+        try  {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_tabel` " +
+                "(`employee_id`, `project_id`, `task_id`) " +
+                "VALUES (?,?,?);");
+
+            stmt.setInt(1,employeeID);
+            stmt.setInt(2,projectID);
+            stmt.setInt(3,taskID);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public  ArrayList<Employee> getEmployeeFromTask(int taskID){

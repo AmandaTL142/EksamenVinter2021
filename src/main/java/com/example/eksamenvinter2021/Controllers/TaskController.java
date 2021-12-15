@@ -83,9 +83,9 @@ public class TaskController {
 
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
-    public String createNewTask(WebRequest wr){
+    public String createNewTask(WebRequest wr, HttpSession session){
         //Først fortælles, at der ønskes input fra bruger via browser
-        String title=wr.getParameter("new-task-title");
+        String title = wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
 
         String estimated_time = wr.getParameter("new-task-estimatedTime");
@@ -102,14 +102,19 @@ public class TaskController {
         /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
         ProjectId sættes til i første omgang at være et tomt project, hvor det herefter er muligt at
         kalde på metoden som henter projectId*/
-        tempTask.setProjectId(sharedProject.getProjectId());
+
+        int projectID = sharedProject.getProjectId();
+        tempTask.setProjectId(projectID);
 
         /*her gøres der brug af metoden insertNewTaskToDB, som er en metode fra Task repo.
         Metoden indsætter de givende informationer ind til DB.
         I parantesen siges der, at disse værdier, som er indtastet af brugeren, i task-objektet
         og på denne måde instanzieres objektet*/
-
         tr.insertNewTaskToDB(tempTask);
+        int taskID = tr.getTaskID(tempTask.getTitle());
+        Employee emp = (Employee) session.getAttribute("employee");
+        int employeeID = emp.getEmployeeId();
+        tr.insertTaskToLinktable(employeeID, taskID, projectID);
 
 
         return "confirmationPage";
@@ -185,15 +190,17 @@ public String editTask(@PathVariable("thisTask") int thisTask, Model m){
         ts.deleteTask(id);
 
         return "confirmationPage";
-
     }
 
 
     @GetMapping("/getTaskForEmployee")
+
+    //TODO skal den implementeres eller gør chrisitan det???
     public String getTaskForEmployee(HttpSession session, Model m){
         Employee emp;
         emp = (Employee) session.getAttribute("employee");
         int employeeID = emp.getEmployeeId();
+
         ArrayList<Task> tasks = tr.getTaskConnectedToEmployee(employeeID);
         m.addAttribute("tasks",tasks);
         return "fragments/taskConnectedToEmployee";

@@ -31,9 +31,23 @@ public class Task {
     }
 
     public Task(String title, String description, String estimated_time, String timeUsed, String status, int projectID, int subprojectID, String startDate, String endDate) {
+        this.title = title;
+        this.description = description;
+        this.estimatedTime = estimatedTime;
+        this.timeUsed = timeUsed;
+        this.status = status;
+        this.startDate=startDate;
+        this.endDate=endDate;
     }
 
     public Task(String title, String description, String estimated_time, String timeUsed, String status, String startDate, String endDate) {
+        this.title = title;
+        this.description = description;
+        this.estimatedTime = estimated_time;
+        this.timeUsed = timeUsed;
+        this.status = status;
+        this.startDate=startDate;
+        this.endDate=endDate;
     }
 
     public Task(int task_id, String title, String description, String estimated_time, String time_used, String status, int project_id, int subproject_id, String start_date, String end_date) {

@@ -147,7 +147,7 @@ public class Test {
        task.setStartDate("2021-12-23");
        task.setEndDate("2021-12-23");
 
-       tr.insertNewTaskToDB(task);
+        System.out.println(tr.getTaskID("hus"));
 
 
 

@@ -37,7 +37,7 @@
 
 <header th:fragment="Employee-header" class="header">
 	<div class="logo-header">
-		<img class="logo" src="../../static/images/logo.png" alt="logo" href="/frontpage">
+		<img class="logo" th:src="@{../static/images/logo.png}" alt="logo" href="/frontpage">
 
 		<a href="/frontPage" class="header-nav-bar"><h1>Tasks</h1></a> <br>
 		<form class="nav-bar-logout"  method="POST" action="/logout">

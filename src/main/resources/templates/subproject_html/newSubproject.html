@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="background">
-<h1> Opret delprojekt </h1>
+<h1> Create new subproject </h1>
 
 <div>
     <form method="POST" action="/createNewSubproject">
@@ -21,7 +21,7 @@
         <label>Deadline:</label><br>
         <input type="date" name="subproject-deadline-input" min="2018-01-01" max="2030-12-31"></br>
 
-        <label>Beskrivelse:</label><br>
+        <label>Description:</label><br>
         <input name="subproject-description-input" type="text" required></br>
         <!--
                 <label>Navn på projekt:</label>
@@ -49,13 +49,13 @@
         <label for="status">Status:</label>
         <br>
         <select name="subproject-status-input" id="status">
-            <option value="On hold">On hold</option>
+            <option value="Pending">Pending</option>
             <option value="Ongoing">Ongoing</option>
             <option value="Complete">Complete</option>
         </select>
         </br>
 
-        <br><input type="submit" value="Opret"></br>
+        <br><input type="submit" value="Create"></br>
 
     </form>
 

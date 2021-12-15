@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit employees</title>
-    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{../../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="style/Style.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>
+<div class="background">
 
 <h1 ><td th:text="${project.getProjectTitle()}"></h1>
 
@@ -17,7 +20,8 @@
                 th:each="employee : ${projectEmployees}">
             <td th:text="${employee.getEmployeeName()}"></td>
 
-        <h2>You can't remove the last employee from the project. Add another employee first or delete the project.</h2>
+        <h3>You can't remove the last employee from the project. <br>
+            Add another employee first or delete the project.</h3>
     </a>
 <a th:unless="${projectEmployees.size() == 1}">
     <h1>Edit employees</h1>
@@ -28,31 +32,25 @@
             th:each="employee : ${projectEmployees}">
         <td th:text="${employee.getEmployeeName()}"></td>
 
-        <a  th:if = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}"
+        <a class="link" th:if = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}"
             onclick="return confirm('You can\'t remove the last manager from a project. ' +
              'Add a manager or delete the project.');">Remove</a>
 
-        <a  th:unless = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}">
+        <a th:unless = "${employee.role == 'MANAGER'} and ${projectManagers.size() == 1}">
         <td>
-            <a th:if = "${session.employee.employeeId == employee.getEmployeeId()}"
+            <a class="link" th:if = "${session.employee.employeeId == employee.getEmployeeId()}"
                th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
                onclick="return confirm('Are you sure you want to remove yourself from this project? ' +
                 'You will no longer have access to it.');">Remove</a>
         </td>
 
         <td>
-            <a th:unless = "${session.employee.employeeId == employee.getEmployeeId()}"
+            <a class="link" th:unless = "${session.employee.employeeId == employee.getEmployeeId()}"
                th:href="@{/removeEmployee/{employeeId}(employeeId=${employee.getEmployeeId()})}"
                onclick="return confirm('Are you sure you want to remove this employee?');">Remove</a>
         </td>
-
         </a>
-
-        <br>
-
     </tr>
-
-    <br>
 
     </form>
 </a>
@@ -60,6 +58,6 @@
 <form>
     <input type="button" value="Back" onclick="history.go(-1)">
 </form>
-
+</div>
 </body>
 </html>

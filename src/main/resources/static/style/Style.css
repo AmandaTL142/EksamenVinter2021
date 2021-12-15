@@ -32,6 +32,15 @@ h2{
     text-align: center;
 
 }
+
+h3{
+    margin: 0;
+    padding-top: 30px;
+    font-size: 1.5rem;
+    color: black;
+    text-shadow: 1px 1.2px grey;
+    text-align: center;
+}
 #error{
     padding: 15px 10px;
     text-align: center;
@@ -55,19 +64,19 @@ h2{
 #login{
     text-align: center;
     font-size: 2rem;
+    margin: 20px;
 }
 
 #loginContent{
     display: block;
-    justify-content: center;
-    text-align: center;
+    position: relative;
+    left: 30%;
     background: whitesmoke;
     border: black solid 2px;
     max-width: 40%;
     min-width: 20%;
-    height: 150px;
-    margin: auto;
-    padding: 20px;
+    height: fit-content;
+    margin-top: 100px;
 
 
 }
@@ -98,14 +107,14 @@ h2{
 
 }
 .link2{
-    position: absolute;
-    right: 20%;
-
+    position: relative;
+    left: 20%;
+    width: fit-content;
 }
 
 .link{
     padding: 0;
-    margin: auto;
+    margin: 0;
     text-decoration: none;
     color: black;
 }
@@ -122,23 +131,12 @@ h2{
 .link:hover::after {
     width: 100%;
 }
-table{
-    margin-top: 30px;
-    position: absolute;
-    left: 20%;
-}
 
-tr{
-    margin-top: 20px;
-    min-width: 50px;
-    max-width: 200px;
-}
-
-td th{
-    min-width: 50px;
-    max-width: 200px;
-    margin: 20px;
-    padding-left: 40px;
+.showData{
+    width: 60%;
+    position: relative;
+    padding-top: 30px;
+    margin-left: 20%;
 }
 
 .content-form{
@@ -149,7 +147,10 @@ td th{
     background-color: whitesmoke;
     margin: auto;
     position: relative;
-    top: 100px;
+
+}
+tbody{
+    padding-left: 100px;
 }
 
 form{
@@ -157,12 +158,53 @@ form{
     text-align: center;
     position: relative;
 }
+#ID{
+    place-content: start;
+}
+#CustomerName{
+    place-content: start;
+}
+th{
+
+}
 
 input{
     padding: 6px 15px;
     margin: 10px 0 20px 0;
+    font-size: 16px;
 
 }
 #status{
     padding: 6px 10px;
+}
+
+.deleteLink{
+    position: relative;
+    right: 0;
+
+}
+.editLink{
+    position: relative;
+    right: 5%;
+
+}
+
+.contentTable{
+    padding-top: 30px;
+    text-align: left;
+
+}
+
+.hideStuff{
+    display: flex;
+    margin: auto;
+    padding: 8px 10px;
+}
+
+select{
+    margin-top: 30px;
+    padding: 10px 100px;
+}
+.newRowInTable{
+    border-bottom: black solid 1px;
 }

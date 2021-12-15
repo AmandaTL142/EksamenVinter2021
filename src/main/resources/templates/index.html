@@ -34,9 +34,9 @@
 <body>
 <div class="background">
 <h1>Velkommen til projektstyring</h1>
-    <div>
+    <div id="loginContent">
         <p id="login">Login</p>
-        <form id="loginContent" method="POST" action="/login">
+        <form method="POST" action="/login">
             <input class="loginform" type="text" placeholder="ID" name="employee_id" required>
             <input class="loginform" type="password" placeholder="Password" name="password" id="password" required>
             <input id="showPassword" type="button" onclick="hidePassword(); change()" value="Show Password"> <br>

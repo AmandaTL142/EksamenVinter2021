@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>Customers</title>
     <link th:href="@{../../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{../../static/style/header.css}" type="text/css" rel="stylesheet">
     <link href="../../static/style/Style.css" type="text/css" rel="stylesheet">
+    <link href="../../static/style/header.css" type="text/css" rel="stylesheet">
     <link href="style/Style.css" type="text/css" rel="stylesheet">
     <link href="style/header.css" type="text/css" rel="stylesheet">
-    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
-    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
+
+
 
 
 </head>
 <body>
 <div class="background">
-    <div class="content">
+
 
 <div th:if = "${session.employee.role == 'MANAGER'}">
     <div th:replace="fragments/headers :: Manager-header"></div>
@@ -23,29 +25,26 @@
 <div th:if = "${session.employee.role == 'STAFF'}">
     <div th:replace="fragments/headers :: Employee-header"></div>
 </div>
-
+    <div class="contentTable">
     <h2>Our Customers</h2>
     <div class="link2">
-        <a class="link" href="/newCustomer"> Create new Customer </a>
+        <a class="link" href="/newCustomer"> <strong>Create new Customer </strong> </a>
     </div>
-    <table>
+    <table class="showData">
         <tr>
             <th id="ID">ID</th>
             <th id="CustomerName">Name</th>
         </tr>
-        <tr
-            th:each="customer : ${customerList}"} >
-        <td th:text="${customer.getCustomerId()}"></td>
-        <td th:text="${customer.getCustomerName()}"></td>
-
+        <tr class="newRowInTable"
+                th:each="customer : ${customerList}"} >
+            <td th:text="${customer.getCustomerId()}"></td>
+            <td th:text="${customer.getCustomerName()}"></td>
             <td>
-                <a class="link" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editCustomer/{id}(id=${customer.getCustomerId()})}"> Edit </a>
+                <a class="link editLink" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editCustomer/{id}(id=${customer.getCustomerId()})}">Edit </a>
             </td>
-
             <td>
-                <a class="link" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteCustomer/{id}(id=${customer.getCustomerId()})}"
+                <a class="link deleteLink" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteCustomer/{id}(id=${customer.getCustomerId()})}"
                 onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
-
             </td>
         </tr>
     </table>

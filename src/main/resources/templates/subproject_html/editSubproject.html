@@ -33,14 +33,14 @@
     <br>
     <select name="project-status-input" id="status" required>
       <div th:switch="${Project.getStatus()}">
-        <a th:case="'On hold'">
-          <option >On hold</option>
+        <a th:case="'Pending'">
+          <option >Pending</option>
           <option >Ongoing</option>
           <option >Complete</option>
         </a>
 
         <a th:case="'Ongoing'">
-          <option >Ongoing</option>
+          <option >Pending</option>
           <option >On hold</option>
           <option >Complete</option>
         </a>
@@ -48,12 +48,12 @@
         <a th:case="'Complete'">
           <option >Complete</option>
           <option >Ongoing</option>
-          <option >On hold</option>
+          <option >Pending</option>
         </a>
 
         <a th:case="*">
           <option selected disabled></option>
-          <option >On hold</option>
+          <option >Pending</option>
           <option >Ongoing</option>
           <option >Complete</option>
         </a>
@@ -61,24 +61,23 @@
 
     </select>
     </br>
+    </br>
+    <td>
+      <a class="link" th:href="@{/addEmployeeToSubproject/{id}(id=${Project.getProjectId()})}"> Add employee </a>
+    </td>
 
-    <br><input type="submit" value="Opdatér"></br>
+    <td>
+      <a class="link" th:href="@{/removeEmployeeFromSubproject/{id}(id=${Project.getProjectId()})}"> Remove employee </a>
+    </td>
+    <br><input type="submit" value="Update"></br>
 
   </form>
-
-  <td>
-    <a th:href="@{/addEmployeeToSubproject/{id}(id=${Project.getProjectId()})}"> Add employee </a>
-  </td>
-
-  <td>
-    <a th:href="@{/removeEmployeeFromSubproject/{id}(id=${Project.getProjectId()})}"> Remove employee </a>
-  </td>
 
 </div>
 
 <form>
   <input type="button" value="Back" onclick="history.go(-1)">
 </form>
-</div>
+  </div>
 </body>
 </html>

@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(WebRequest wr, HttpSession session) throws SQLException {
-        int employeeId = Integer.parseInt(wr.getParameter("employeeId"));
+        int employeeId = Integer.parseInt(wr.getParameter("employee_id"));
         String password = wr.getParameter("password");
 
         //Evaluer om login-oplysninger matcher database

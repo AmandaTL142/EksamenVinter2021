@@ -17,7 +17,6 @@ public class ProjectService {
     public Project createNewProjectObject(String title, String projectDeadline, String status, double basePrice,
                                  int customerId) {
         Project p = new Project(title, projectDeadline, status, basePrice, customerId);
-        //pr.insertProjectIntoDatabase(p);
 
         return p;
     }
@@ -79,32 +78,6 @@ public class ProjectService {
     public boolean doesProjectHaveSubprojects(int projectId) {
         return pr.doesProjectHaveSubprojects(projectId);
     }
-
-
-
-    /*
-
-    Might be need for GANTT
-
-    public List<Project> projectList;
-
-    public List<Project> getAllProjects()
-    {
-        projectList = pr.getProjectsInArrayForGantt();
-        return projectList;
-    }
-
-    public List<Project> getAllProjectsFromDataBase()
-    {
-        List<Project> allProjects = getAllProjects();
-
-        for (Project p : allProjects) {
-            p.setAssociatedSubprojects(subprojectService.getAllAssociatedSubprojectsAndAssociatedTasks(p.getProjectId()));
-        }
-
-        return allProjects;
-    }
-    */
 
 }
 

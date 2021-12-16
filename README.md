@@ -11,6 +11,10 @@ For at køre programmet skal en bruger have
 ## Kørselsvejledning
 1. Fork projektets repository fra GitHub
 2. Opret en database via de vedlagte MySQL scripts
+   1. Åben MySQL workbench
+   2. Opret nyt schema
+   3. Med det nye schema valgt åbnes .sql filen
+   4. Kopier nu SQL syntaksen over i en ny SQL tab og vælg 'run'
 3. Opret en applications.properties fil med brugernavn, password og url til databasen
 4. Deploy til Heroku via egen konto - se [Herokus guide til deployment af GitHub repository](https://devcenter.heroku.com/articles/github-integration "Guide til Heroku deployment")
 5. Det anbefales at benytte manual deployment så længe der arbejdes i kodebasen

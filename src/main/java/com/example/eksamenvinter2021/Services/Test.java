@@ -1,10 +1,8 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
-import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
-import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
-import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Models.Task;
+import com.example.eksamenvinter2021.Resporsitories.*;
 
 import java.text.ParseException;
 
@@ -19,14 +17,39 @@ public class Test {
     }
 
     public static void main(String[] args) throws ParseException {
+        SubprojectService sps = new SubprojectService();
         ProjectRepo pr = new ProjectRepo();
         CustomerRepo cr = new CustomerRepo();
+        TaskService ts = new TaskService();
+        TaskRepo tr = new TaskRepo();
+        ProjectService ps = new ProjectService();
         //System.out.println(getTaskFromDatabase(5));
         Project project = pr.getProjectFromDatabase(15);
         //Date date = project.getDateinDateFormat();
         //System.out.println(date);
         //System.out.println(cr.returnCustomerNameFromId(5));
-        System.out.println(pr.doesProjectHaveSubprojects(35));
+        //System.out.println(pr.doesProjectHaveSubprojects(35));
+        //sps.deleteSubprojectFromDatabase(155);
+        Task t = new Task();
+        t.setSubprojectId(15);
+        t.setStatus("1");
+        t.setEndDate("2021-12-23");
+        t.setTitle("13:00");
+        t.setProjectId(15);
+        t.setTimeUsed("1");
+        t.setEstimatedTime("1");
+        t.setStartDate("2021-12-23");
+        t.setDescription("Subproject-task");
+        //ts.insertNewTaskToDB(t);
+        //tr.insertTaskToLinktableWithSubproject(15, 475, 15, 15);
+        //System.out.println(tr.getTaskFromDB(345));
+        //Create project-object
+        Project currentProject = ps.createNewProjectObject("title", "2012.12.12", "status", 100, 25);
+
+        currentProject.setDescription("description");
+
+        //Add project to DB
+        ps.insertProjectIntoDatabase(currentProject);
 
     }
 

@@ -1,7 +1,7 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Employee;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class EmployeeRepo {
     public void insertEmployeeIntoDatabase(Employee employee) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO heroku_7aba49c42d6c0f0.employee (`name`,`competence`) VALUES (?,?);");
             stmt.setString(1, employee.getEmployeeName());
             stmt.setString(2, employee.getCompetence());
@@ -29,7 +29,7 @@ public class EmployeeRepo {
         String password = "";
         String role = "";
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT * FROM heroku_7aba49c42d6c0f0.employees WHERE employee_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -51,7 +51,7 @@ public class EmployeeRepo {
 
     public void deleteEmployeeFromDatabase(int id) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM `heroku_7aba49c42d6c0f0`.`employee` WHERE (`employee_id` = '" + id + "');");
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class EmployeeRepo {
 
     public void updateEmployeeInDatabase(Employee employee) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`employee` SET `name` = ?, `competence` = ? WHERE (`employee_id` = ?, `competence` = ? ;");
 
             stmt.setString(1, employee.getEmployeeName());
@@ -82,7 +82,7 @@ public class EmployeeRepo {
         Employee employee = new Employee();
         ArrayList<Employee> employeeList = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT * FROM heroku_7aba49c42d6c0f0.employees;");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -108,7 +108,7 @@ public class EmployeeRepo {
         int checkId = 0;
         String checkPassword = "";
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees WHERE employee_id= ? AND password= ?;");
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM employees WHERE employee_id= ? AND password= ?;");
             stmt.setInt(1, employee_id);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
@@ -130,7 +130,7 @@ public class EmployeeRepo {
 
     public static boolean isManager(int userId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM employees where employee_id=?;");
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM employees where employee_id=?;");
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

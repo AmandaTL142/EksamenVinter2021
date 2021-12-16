@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class JDBC {
+public class ConnectionManager {
     //Christian Hundahl
 
         //Creates db connection and returns as Singleton
@@ -17,7 +17,7 @@ public class JDBC {
         private static String password;
         private static Connection conn;
 
-        public JDBC() {
+        public ConnectionManager() {
         }
 
         public static Connection getConnection() {

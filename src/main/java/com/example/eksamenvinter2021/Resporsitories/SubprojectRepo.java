@@ -2,7 +2,7 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Models.Task;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ public class SubprojectRepo {
 
     public void insertSubprojectIntoDatabase(Subproject sp) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`subprojects` (`title`, `description`, " +
                             "`subproject_deadline`, `status`, `project_id`, `start_date`, `end_date`) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?);");
@@ -35,7 +35,7 @@ public class SubprojectRepo {
     public Subproject getSubprojectFromDatabase(int id) {
         Subproject sp = new Subproject();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.subprojects WHERE subproject_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -72,11 +72,11 @@ public class SubprojectRepo {
 
     public void deleteSubprojectFromDatabase(int id) {
         try {
-            PreparedStatement stmt1 = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt1 = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM `heroku_7aba49c42d6c0f0`.`link_table` WHERE (`subproject_id` = '" + id + "');");
             stmt1.executeUpdate();
 
-            PreparedStatement stmt2 = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt2 = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM `heroku_7aba49c42d6c0f0`.`subprojects` WHERE (`subproject_id` = '" + id + "');");
             stmt2.executeUpdate();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class SubprojectRepo {
     //Skal jeg evt. lave if-statements til de attributter, der ikke er NN?
     public void updateSubprojectInDatabase(Subproject sp) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`subprojects` SET `title` = ?, `description` = ?, " +
                             "`subproject_deadline` = ?, `status` = ?, `start_date` = ?, `end_date` = ? " +
                             "WHERE (`subproject_id` = ?);");
@@ -134,7 +134,7 @@ public class SubprojectRepo {
         ArrayList<Subproject> subprojects = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
             stmt.setInt(1, thisProjectId);
             ResultSet rs = stmt.executeQuery();
@@ -173,7 +173,7 @@ public class SubprojectRepo {
     public int getSubprojectIdByTitle(String title) {
         Subproject sp = new Subproject();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.subprojects WHERE title=?;");
             stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
@@ -195,7 +195,7 @@ public class SubprojectRepo {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE subproject_id=?;");
             stmt.setInt(1, thisSubprojectId);
             ResultSet rs = stmt.executeQuery();

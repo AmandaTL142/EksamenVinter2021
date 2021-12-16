@@ -5,7 +5,7 @@ import com.example.eksamenvinter2021.Services.EmployeeService;
 import com.example.eksamenvinter2021.Services.ProjectService;
 import com.example.eksamenvinter2021.Services.SubprojectService;
 import com.example.eksamenvinter2021.Services.TaskService;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +26,7 @@ public class LinkTableRepo {
         ArrayList<Project> projectObjects = new ArrayList<>();
         ArrayList<Project> activeProjectObjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
             stmt.setInt(1, employeeId);
             ResultSet rs = stmt.executeQuery();
@@ -75,7 +75,7 @@ public class LinkTableRepo {
         ArrayList<Project> projectObjects = new ArrayList<>();
         ArrayList<Project> completedProjectObjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
             stmt.setInt(1, employeeId);
             ResultSet rs = stmt.executeQuery();
@@ -114,7 +114,7 @@ public class LinkTableRepo {
     public ArrayList<Subproject> getSubprojectsConnectedToProjectsAndEmployee(int projectId, int employeeId) {
         ArrayList<Subproject> subProjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subproject_id FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT subproject_id FROM " +
                     "link_table WHERE project_id = ? AND employee_id = ?;");
             stmt.setInt(1, projectId);
             stmt.setInt(2, employeeId);
@@ -179,7 +179,7 @@ public class LinkTableRepo {
         ArrayList<Employee> employeeObjects = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE project_id=?;");
             stmt.setInt(1, projectId);
             ResultSet rs = stmt.executeQuery();
@@ -208,7 +208,7 @@ public class LinkTableRepo {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> managerObjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE project_id=?;");
             stmt.setInt(1, projectId);
             ResultSet rs = stmt.executeQuery();
@@ -240,7 +240,7 @@ public class LinkTableRepo {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE subproject_id=?;");
             stmt.setInt(1, subprojectId);
             ResultSet rs = stmt.executeQuery();
@@ -268,7 +268,7 @@ public class LinkTableRepo {
 
     public void insertLinkTableWithEmployeeAndProjectIntoDatabase(int employeeId, int projectId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `project_id`) " +
                             "VALUES (?, ?);");
             stmt.setInt(1, employeeId);
@@ -283,7 +283,7 @@ public class LinkTableRepo {
 
     public void insertLinkTableWithEmployeeAndSubprojectIntoDatabase(int employeeId, int subprojectId, int projectId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `subproject_id`, `project_Id`) " +
                             "VALUES (?, ?, ?);");
             stmt.setInt(1, employeeId);
@@ -300,7 +300,7 @@ public class LinkTableRepo {
 
     public void removeEmployeeFromProject(int employeeId, int projectId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM heroku_7aba49c42d6c0f0.link_table WHERE employee_id=? AND project_id=?;");
             stmt.setInt(1, employeeId);
             stmt.setInt(2, projectId);
@@ -314,7 +314,7 @@ public class LinkTableRepo {
 
     public void removeEmployeeFromSubproject(int employeeId, int subprojectId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM heroku_7aba49c42d6c0f0.link_table WHERE employee_id=? AND subproject_id=?;");
             stmt.setInt(1, employeeId);
             stmt.setInt(2, subprojectId);

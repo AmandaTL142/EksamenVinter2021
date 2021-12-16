@@ -1,9 +1,8 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Employee;
-import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.SubTask;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 public class SubTaskRepo {
 
-    Connection conn = JDBC.getConnection();
+    Connection conn = ConnectionManager.getConnection();
 
     public void insertNewSubtaskToDB(SubTask subTask) {
         String sql = "INSERT INTO `heroku_7aba49c42d6c0f0`.`subtasks` " +
@@ -303,7 +302,7 @@ public class SubTaskRepo {
     public ArrayList<SubTask> getSubtaskInArrayForGantt() {
         ArrayList<SubTask> subtaskArray = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.subtasks;");
             ResultSet rs = stmt.executeQuery();
 

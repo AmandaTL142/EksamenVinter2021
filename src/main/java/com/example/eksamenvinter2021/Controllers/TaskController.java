@@ -114,8 +114,8 @@ public class TaskController {
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
-        String startDate = wr.getParameter("new-subtask-startDate");
-        String endtDate = wr.getParameter("new-subtask-endDate");
+        String startDate = wr.getParameter("new-task-startDate");
+        String endtDate = wr.getParameter("new-task-endDate");
 
 
         //Create task-object
@@ -177,8 +177,8 @@ public class TaskController {
 
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
-        String startDate = wr.getParameter("new-subtask-startDate");
-        String endtDate = wr.getParameter("new-subtask-endDate");
+        String startDate = wr.getParameter("new-task-startDate");
+        String endtDate = wr.getParameter("new-task-endDate");
 
 
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);

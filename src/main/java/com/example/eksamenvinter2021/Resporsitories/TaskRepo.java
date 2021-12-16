@@ -163,8 +163,19 @@ public class TaskRepo {
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
-                Task t = new Task(title,description,estimated_time,timeUsed,status,projectID,subprojectID,startDate,endDate);
+                Task t = new Task();
+                t.setTitle(title);
+                t.setDescription(description);
+                t.setEstimatedTime(estimated_time);
+                t.setTimeUsed(timeUsed);
+                t.setStatus(status);
+                t.setProjectId(projectID);
+                t.setSubprojectId(subprojectID);
+                t.setStartDate(startDate);
+                t.setEndDate(endDate);
                 t.setId(taskID);
+
+                System.out.println(t);
 
                 allTasks.add(t);
             }

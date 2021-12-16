@@ -17,7 +17,14 @@ public class TaskService {
                               String status, String startDate, String endDate) {
 
 
-        Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);
+        Task task = new Task();
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setEstimatedTime(estimatedTime);
+        task.setTimeUsed(timeUsed);
+        task.setStatus(status);
+        task.setStartDate(startDate);
+        task.setEndDate(endDate);
 
         return task;
     }

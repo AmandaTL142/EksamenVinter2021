@@ -44,12 +44,14 @@ public class Test {
         //tr.insertTaskToLinktableWithSubproject(15, 475, 15, 15);
         //System.out.println(tr.getTaskFromDB(345));
         //Create project-object
-        Project currentProject = ps.createNewProjectObject("title", "2012.12.12", "status", 100, 25);
+        //Project currentProject = ps.createNewProjectObject("title", "2012.12.12", "status", 100, 25);
 
-        currentProject.setDescription("description");
+        //currentProject.setDescription("description");
+
+        tr.getAllTasksInProject(425);
 
         //Add project to DB
-        ps.insertProjectIntoDatabase(currentProject);
+        //ps.insertProjectIntoDatabase(currentProject);
 
     }
 

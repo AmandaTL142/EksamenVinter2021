@@ -13,7 +13,8 @@ public class TaskService {
     TaskRepo tr = new TaskRepo();
 
 
-    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+    public Task createNewTask(String title, String description, String estimatedTime, String timeUsed,
+                              String status, String startDate, String endDate) {
 
 
         Task task = new Task(title, description, estimatedTime, timeUsed, status, startDate, endDate);

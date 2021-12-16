@@ -23,7 +23,8 @@ public class TaskRepo {
 
         try{
 
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement("INSERT INTO " +
+                    "`heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
                     "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
                     "`subproject_id`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?);");
 

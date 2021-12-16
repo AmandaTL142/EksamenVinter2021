@@ -162,13 +162,12 @@ public class TaskController {
             Project p = pr.getProjectFromDatabase(projectId);
 
             m.addAttribute("project",p);
-            return"task_html/newTask";
+            return"task_html/newTask2";
         }
     }
 
     //Lavet af Amanda
     @PostMapping("/createNewTaskFromSubproject")
-    //For at få adgang til denne, skal man igennem showProject.Html
     public String createNewTaskFromSubproject(WebRequest wr, HttpSession session){
         //Først fortælles, at der ønskes input fra bruger via browser
         String title = wr.getParameter("new-task-title");
@@ -182,19 +181,13 @@ public class TaskController {
         String endtDate = wr.getParameter("new-subtask-endDate");
 
 
-        //Create task-object
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
-
-        /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
-        ProjectId sættes til i første omgang at være et tomt project, hvor det herefter er muligt at
-        kalde på metoden som henter projectId*/
 
         int projectID = sharedSubproject.getProjectId();
         tempTask.setProjectId(projectID);
 
         int subprojectId = sharedSubproject.getSubprojectId();
         tempTask.setSubprojectId(subprojectId);
-
 
         tr.insertNewTaskToDB(tempTask);
         int taskID = tr.getTaskID(tempTask.getTitle());

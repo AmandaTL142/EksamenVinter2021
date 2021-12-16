@@ -163,6 +163,7 @@ public class TaskRepo {
                 String endDate = rs.getString("end_date");
 
                 Task t = new Task(title,description,estimated_time,timeUsed,status,projectID,subprojectID,startDate,endDate);
+                t.setId(taskID);
 
                 allTasks.add(t);
             }
@@ -330,7 +331,7 @@ public class TaskRepo {
         try  {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
                     "(`employee_id`, `project_id`, `task_id`, `subproject_id`) " +
-                    "VALUES (?,?,?);");
+                    "VALUES (?,?,?,?);");
 
             stmt.setInt(1,employeeID);
             stmt.setInt(2,projectID);

@@ -26,16 +26,13 @@ public class ConnectionManager {
             }
 
             try  {
-                InputStream stream = new FileInputStream("src/main/resources/application.properties");
-                Properties properties = new Properties();
-                properties.load(stream);
-                url = properties.getProperty("db.url");
-                username = properties.getProperty("db.username");
-                password = properties.getProperty("db.password");
+                url = System.getenv("url");
+                username = System.getenv("username");
+                password = System.getenv("password");
                 conn = DriverManager.getConnection(url, username, password);
                 System.out.println("Connection established");
 
-            } catch (SQLException | IOException e) {
+            } catch (SQLException e) {
                 System.out.println("No connection");
                 System.out.println(e.getMessage());
                 e.printStackTrace();

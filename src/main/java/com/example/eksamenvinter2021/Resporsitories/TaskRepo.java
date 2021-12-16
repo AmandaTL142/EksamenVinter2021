@@ -175,8 +175,6 @@ public class TaskRepo {
                 t.setEndDate(endDate);
                 t.setId(taskID);
 
-                System.out.println(t);
-
                 allTasks.add(t);
             }
         } catch (SQLException e) {

@@ -261,7 +261,7 @@ public class TaskController {
 
         ts.updateTask(edithThisTask);
 
-        return "task_html/editTask";
+        return "frontPage";
     }
 
 
@@ -306,7 +306,7 @@ public class TaskController {
         edithThisTask = ts.getTaskObject(thisTask);
         m.addAttribute("task",edithThisTask);
 
-        return "task_html/addEmployeeToTask";
+        return "frontPage";
     }
 
 

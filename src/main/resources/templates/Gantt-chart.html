@@ -35,7 +35,7 @@
         data.addColumn('string', 'Dependencies');
 
         for (let project = 0; project < projects.length; project++) {
-
+            //Takes the project objects at asserts it's values into the data.addRows method.
             let currentProjectId = projects[project].projectId.toString();
             let currentProjectName = projects[project].projectTitle;
             let projectStatus = projects[project].status;
@@ -72,18 +72,10 @@
                 } else if (SubprojectStatus === "Ongoing") {
                     subprojectStatusAsInt = 50;
                 }
-
-                console.log("--NEW SUBPROJECT--");
-                console.log("currentSubprojectProjectId; " + currentSubprojectId);
-                console.log("currentSubprojectName; " + currentSubprojectName);
-                console.log("SubprojectStatus; " + SubprojectStatus);
-                console.log("SubprojectStartDate; " + SubprojectStartDate);
-                console.log("SubprojectEndDate; " + SubprojectEndDate);
-
-
                 data.addRows
                 ([
-                    ["Subproject-Id: " + currentSubprojectId, "Sub-Project - " + currentSubprojectName, null, SubprojectStartDate, SubprojectEndDate, null, 0, null]
+                    ["Subproject-Id: " + currentSubprojectId, "Sub-Project - " + currentSubprojectName,
+                        null, SubprojectStartDate, SubprojectEndDate, null, 0, null]
                 ]);
 
             }

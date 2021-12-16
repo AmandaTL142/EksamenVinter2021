@@ -90,8 +90,8 @@ public class ProjectController {
 
         //Connect project to manager via LinkTable
         Employee employee = (Employee) session.getAttribute("employee");
-        int employeeID = employee.getEmployeeId();
-        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
+        int employeeId = employee.getEmployeeId();
+        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
 
         return "frontPage";
     }

@@ -1,13 +1,10 @@
 package com.example.eksamenvinter2021.Services;
 
-import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
-import java.sql.Time;
 import java.util.ArrayList;
-
+//Hele klassen lavet af Andrea
 public class TaskService {
 
     TaskRepo tr = new TaskRepo();
@@ -18,13 +15,13 @@ public class TaskService {
 
 
         Task task = new Task();
-        task.setTitle(title);
-        task.setDescription(description);
-        task.setEstimatedTime(estimatedTime);
-        task.setTimeUsed(timeUsed);
-        task.setStatus(status);
-        task.setStartDate(startDate);
-        task.setEndDate(endDate);
+        task.setTaskTitle(title);
+        task.setTaskDescription(description);
+        task.setTaskEstimatedTime(estimatedTime);
+        task.setTaskTimeUsed(timeUsed);
+        task.setTaskStatus(status);
+        task.setTaskStartDate(startDate);
+        task.setTaskEndDate(endDate);
 
         return task;
     }
@@ -48,8 +45,8 @@ public class TaskService {
         return tr.getTasksInArray();
     }
 
-    public void deleteTask(int taskID){
-        tr.deleteTask(taskID);
+    public void deleteTask(int taskId){
+        tr.deleteTask(taskId);
     }
 
 }

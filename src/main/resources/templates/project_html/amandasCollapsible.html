@@ -179,11 +179,11 @@
                                         <td th:text="${subtask.getEndDate()}"></td>
 
                                             <td>
-                                                <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                                <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskId()})}"> Edit </a>
                                             </td>
 
                                             <td>
-                                                <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                                <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskId()})}"
                                                    onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
                                             </td>
 
@@ -269,11 +269,11 @@
                                     <td th:text="${subtask.getEndDate()}"></td>
 
                                         <td>
-                                            <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                            <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskId()})}"> Edit </a>
                                         </td>
 
                                         <td>
-                                            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskId()})}"
                                                onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
                                         </td>
 
@@ -351,11 +351,11 @@
                                     <td th:text="${subtask.getEndDate()}"></td>
 
                                     <td>
-                                        <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                        <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskId()})}"> Edit </a>
                                     </td>
 
                                     <td>
-                                        <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                        <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskId()})}"
                                            onclick="return confirm('Are you sure you want to delete this subtask?');">Delete</a>
                                     </td>
 

@@ -23,7 +23,7 @@
         <!---Table headings--->
         <tr>
             <th>Projektnavn</th>
-            <th>ID</th>
+            <th>Id</th>
             <th>Deadline</th>
         </tr>
     </thead>
@@ -39,7 +39,7 @@
         <tbody class="hide">
             <tr th:each= "project : ${Projects}">
                 <td class="collapsible" th:text="${project.getProjectTitle()}">Title</td>
-                <td class="collapsible" th:text="${project.getProjectId()}">ID</td>
+                <td class="collapsible" th:text="${project.getProjectId()}">Id</td>
                 <td class="collapsible" th:text="${project.getProjectDeadline()}">Deadline</td>
                     <tbody class="hide">
                         <tbody class="labels">

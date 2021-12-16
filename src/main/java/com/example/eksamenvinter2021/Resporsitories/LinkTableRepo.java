@@ -195,7 +195,6 @@ public class LinkTableRepo {
 
             employeeIds.forEach((employeeId) -> {
                 employeeObjects.add(es.showEmployee(employeeId));
-                System.out.println("Employees efter metoden i linkrepo: " + employeeObjects);
             });
 
         } catch(Exception e){

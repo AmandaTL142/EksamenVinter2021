@@ -187,7 +187,8 @@ public class ProjectRepo {
         return projectArray;
     }
 
-    //Casper har lavet denne
+    //Gets all projects in the database and excludes the once missing start- and end-Dates
+    //CAS
     public ArrayList<Project> getAllProjects() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {

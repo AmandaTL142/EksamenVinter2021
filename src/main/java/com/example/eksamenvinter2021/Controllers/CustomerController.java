@@ -23,7 +23,8 @@ public class CustomerController {
     LoginService ls = new LoginService();
     Customer editThisCustomer = new Customer();
 
-
+    //Checks if the user is a Manager and sends a view of all customers in the database
+    //CAS
     @GetMapping("/Customer")
     public String Customer(HttpSession session, Model model) {
         if (ls.notLoggedIn(session)) {
@@ -38,7 +39,9 @@ public class CustomerController {
             }
         }
     }
-
+    //Sends the user to the create new customer page and redirects to the POST controller
+    // when the user is finished
+    //CAS
     @GetMapping("/newCustomer")
     public String newProject(HttpSession session) {
         if (ls.notLoggedIn(session)) {
@@ -54,7 +57,8 @@ public class CustomerController {
         }
 
     }
-
+    //Sends the inserted data through to the createNewCustomer method
+    //CAS
     @PostMapping("/createNewCustomer")
     public String createNewCustomer(WebRequest webr) {
 
@@ -68,7 +72,8 @@ public class CustomerController {
 
         return "customer/Customer";
     }
-
+    //Gets a customer id and redirects when the new value(s) have been inserted
+    //CAS
     @GetMapping("/editCustomer/{thisCustomer}")
     public String editProjectGetProject(@PathVariable("thisCustomer") int thisCustomer, Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {
@@ -87,6 +92,8 @@ public class CustomerController {
             }
         }
     }
+    //Takes the new value and runs the updateCustomerInDataBase method.
+    //CAS
     @RequestMapping("/editCustomer")
     public String editCustomer(WebRequest webr) {
         String newName = webr.getParameter("customer-Name-input");
@@ -96,17 +103,17 @@ public class CustomerController {
         }
         //Update customer in DB
         cr.updateCustomerInDatabase(editThisCustomer);
-
         return "customer/Customer";
     }
-
+    //Deletes the chosen customer from the database
+    //CAS
     @GetMapping("/deleteCustomer/{customerId}")
     public String deleteCustomer(@PathVariable("customerId") String customerId, HttpSession session){
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
 
-            //Checks if the user is a manager and thus allowed to delete a Customer
+            //Checks if the user is a manager and thus  is allowed to delete a Customer
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")) {
                 int id = Integer.parseInt(customerId);

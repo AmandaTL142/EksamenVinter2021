@@ -52,19 +52,10 @@
                 projectStatusAsInt = 50;
             }
 
-            console.log("--NEW PROJECT--");
-            console.log("currentProjectId; " + currentProjectId);
-            console.log("currentProjectName; " + currentProjectName);
-            console.log("projectStatus; " + projectStatus);
-            console.log("currentCustomerId; " + currentCustomerId);
-            console.log("projectStartDate; " + projectStartDate);
-            console.log("projectEndDate; " + projectEndDate);
-            console.log("subProjects; " + subProjects.length);
-
-
             data.addRows
             ([
-                [currentProjectId, "Project: " + currentProjectName, currentCustomerId, projectStartDate, projectEndDate, null, projectStatusAsInt, null]
+                [currentProjectId, "Project: " + currentProjectName, currentCustomerId,
+                    projectStartDate, projectEndDate, null, projectStatusAsInt, null]
             ]);
 
             for (let subProject = 0; subProject < subProjects.length; subProject++) {

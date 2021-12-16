@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class CustomerRepo {
 
+    //Takes a customer object and inserts it into the database
+    //CAS
     public void insertCustomerIntoDatabase(Customer customer) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -24,7 +26,9 @@ public class CustomerRepo {
             System.out.println(e.getMessage());
         }
     }
-    
+
+    //Returns a customer based on their customer_Id
+    //Cas
     public Customer getCustomerFromDatabase(int id) {
         Customer cus = new Customer();
         try {
@@ -47,6 +51,8 @@ public class CustomerRepo {
         return cus;
     }
 
+    //Deletes a customer from the database based on the customer_Id
+    //CAS
     public void deleteCustomerFromDatabase(int id) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -59,6 +65,8 @@ public class CustomerRepo {
 
     }
 
+    //Updates the customer in the database based on the customer_Id
+    //CAS
     public void updateCustomerInDatabase(Customer customer) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement
@@ -66,7 +74,6 @@ public class CustomerRepo {
 
             stmt.setString(1, customer.getCustomerName());
             stmt.setInt(2, customer.getCustomerId());
-            System.out.println("update method CR: " +customer);
             stmt.executeUpdate();
 
         } catch (Exception e) {
@@ -76,6 +83,8 @@ public class CustomerRepo {
 
     }
 
+    //Returns a customer based on their customer_Name
+    //Cas
     public int getCustomerIdFromDatabase(String name) {
         int customer_id = 0;
         try {
@@ -97,6 +106,8 @@ public class CustomerRepo {
         return customer_id;
     }
 
+    //Returns a customer name from customer_Id
+    //CAS
     public String returnCustomerNameFromId(int customerId){
 
         String name = null;
@@ -116,6 +127,8 @@ public class CustomerRepo {
         return name;
     }
 
+    //Sets all customers in a ArrayList
+    //CAS
     public ArrayList <Customer> allCustomers(){
         ArrayList<Customer> customerList = new ArrayList<>();
         try {

@@ -7,22 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectServiceTest {
-
-    @Test
-    void createNewProjectObject() {
-        /*
-        //Arrange
-        ProjectService ps = new ProjectService();
-
-        //Act
-        Project projectTest1 = ps.createNewProjectObject("title", "projectDeadline", "status", 0, 1);
-
-        Project expected1 = new Project("title", "projectDeadline", "status", 0, 1);
-        //Assert
-        assertEquals(expected1, projectTest1);
-
-         */
-    }
+    //Amanda Tolstrup Laursen
 
     @Test
     //Denne test er bestået

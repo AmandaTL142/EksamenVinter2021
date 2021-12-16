@@ -38,7 +38,7 @@ public class LoginController {
             Employee employee = es.showEmployee(employee_id);
             //Sæt employee som attribut til sessionen
             session.setAttribute("employee", employee);
-            return "redirect:/frontpage";
+            return "/frontpage";
         }
         return "index";
     }

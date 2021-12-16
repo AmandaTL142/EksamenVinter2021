@@ -24,11 +24,11 @@ public class ConnectionManager {
             if (conn != null) {
                 return conn;
             }
+            url = System.getenv("url");
+            username = System.getenv("username");
+            password = System.getenv("password");
 
             try  {
-                url = System.getenv("url");
-                username = System.getenv("username");
-                password = System.getenv("password");
                 conn = DriverManager.getConnection(url, username, password);
                 System.out.println("Connection established");
 

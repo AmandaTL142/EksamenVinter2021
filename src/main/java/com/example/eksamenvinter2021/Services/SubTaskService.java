@@ -4,7 +4,9 @@ import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
 
 public class SubTaskService {
+    //Hele klassen lavet af Andrea
     SubTaskRepo sr = new SubTaskRepo();
+
 
     public SubTask createNewSubtask( String title, String description, String estimatedTime, String timeUsed, String status,String startDate, String endDate){
         SubTask sb = new SubTask(title,description,estimatedTime,timeUsed,status,startDate,endDate);

@@ -4,6 +4,7 @@ import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
 
 import java.util.ArrayList;
 
+//Hele klassen lavet af Andrea
 public class Task {
     private int taskId;
     private String taskTitle;

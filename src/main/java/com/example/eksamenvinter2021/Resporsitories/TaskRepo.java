@@ -11,10 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class TaskRepo {
 
     Connection conn = ConnectionManager.getConnection();
 
+    //Andrea
     public void insertNewTaskToDB(Task task){
 
         try{
@@ -51,6 +53,7 @@ public class TaskRepo {
         }
     }
 
+    //Andrea
     public Task getTaskFromDB(int id){
         Task t= new Task();
 
@@ -92,7 +95,7 @@ public class TaskRepo {
         }
         return t;
     }
-
+    //Andrea
     public void updateTask(Task task){
 
         String sql = "UPDATE `heroku_7aba49c42d6c0f0`.`tasks` SET `title` =?, `description` = ?, `estimated_time` = ?, `time_used` = ?, `status` =?, `start_date` = ?, `end_date` =? WHERE (`task_id` =?);";
@@ -120,6 +123,7 @@ public class TaskRepo {
 
     }
 
+    //Andrea
     public int getTaskId(String taskTitle){
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT task_id FROM " +
@@ -137,6 +141,7 @@ public class TaskRepo {
         return 0;
     }
 
+    //Andrea
     public ArrayList<Task> getAllTasksInProject(int pId){
         ArrayList<Task> allTasks = new ArrayList<>();
         try {
@@ -181,6 +186,7 @@ public class TaskRepo {
 
     }
 
+    //Andrea
     public void deleteTask(int taskId){
 
         try {
@@ -241,6 +247,7 @@ public class TaskRepo {
         return allTasks;
     }*/
 
+    //Andrea
     public ArrayList<Task> getTasksInArray() {
         ArrayList<Task> taskArray = new ArrayList<>();
         try {
@@ -312,7 +319,7 @@ public class TaskRepo {
         }
         return taskObjects;
     }
-
+    //Andrea
     public void insertTaskToLinktable(int employeeId, int taskId, int projectId){
         try  {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
@@ -353,6 +360,7 @@ public class TaskRepo {
 
     }
 
+    //Andrea
     public  ArrayList<Employee> getEmployeeFromTask(int taskId){
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
@@ -372,7 +380,7 @@ public class TaskRepo {
         }
         return employeeObjects;
     }
-
+//Andrea
     public void insertLinkTableWithEmployeeAndTaskInDB(int employeeId, int taskID){
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement

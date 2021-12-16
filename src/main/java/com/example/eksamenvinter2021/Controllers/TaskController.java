@@ -53,6 +53,7 @@ public class TaskController {
 
 
     /*thisProject, der står i curly brackets, indikere, at der skal opgives et projectID for at kunne benytte showTask*/
+    //lavet af Andrea
     @GetMapping("/showTask/{thisProject}")
     public String tasks(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
 
@@ -103,6 +104,7 @@ public class TaskController {
         }
     }
 
+    //lavet af Andrea
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
     public String createNewTask(WebRequest wr, HttpSession session){
@@ -146,6 +148,7 @@ public class TaskController {
     }
 
 
+   //Lavet af Andrea
     @GetMapping("/createTaskFromSubproject/{thisSubprojectId}")
     public String v(@PathVariable("thisSubprojectId") int thisSubprojectId, Model m, HttpSession session) {
         //Her gemmer vi projektID, som en int
@@ -216,6 +219,7 @@ public class TaskController {
 
     }
 
+    //lavet af Andrea
     @PostMapping("/editTaskChanges")
     public String editTask(WebRequest wr){
 
@@ -266,6 +270,7 @@ public class TaskController {
     }
 
 
+    //Lavet af Andrea
     @GetMapping("/deleteTask/{taskId}")
     public String deleteTask(@PathVariable("taskId") int taskId, HttpSession session) {
 
@@ -323,16 +328,5 @@ public class TaskController {
 
         return "frontPage";
     }
-
-
 }
 
-//transform string til datetime-java-format (loacltime) parToDateTime
-//localTime time = LocalTime.parse("den aflveret String fra browser")
-//evt. lav validation
-//System.out.println(LocalTime.parse(estimated_time));
-
-
-   /* TODO-liste:
-        derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
-        inde i et projekt og dermed automatisk er koblet til et project*/

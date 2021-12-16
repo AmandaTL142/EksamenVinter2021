@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Models;
 
 public class SubTask {
+    //Hele klasse lavet af Andrea
 
     private int subtaskId;
     private String subtaskTitle;

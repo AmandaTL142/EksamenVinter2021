@@ -1,8 +1,10 @@
 package com.example.eksamenvinter2021.Services;
 
 import com.example.eksamenvinter2021.Models.Project;
+import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class ProjectService {
     ProjectRepo pr = new ProjectRepo();
     SubprojectRepo spr = new SubprojectRepo();
     SubprojectService sps = new SubprojectService();
+    TaskRepo tr = new TaskRepo();
 
     public Project createNewProjectObject(String title, String projectDeadline, String status, double basePrice,
                                  int customerId) {
@@ -105,6 +108,27 @@ public class ProjectService {
         return allProjects;
     }
     */
+
+    //Udregner total tidsforbrug på projekt ved at addere alle færdiggjorte 'task' rapporteret af medarbejdere
+    public int totalTimeUsed (Project p) {
+        int totalHoursSpent = 0;
+        for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
+            if (t.getTaskStatus().equals("complete")) {
+                totalHoursSpent += Integer.parseInt(t.getTaskTimeUsed());
+            }
+        }
+        return totalHoursSpent;
+    }
+
+    //Udregner det tidsforbrug medarbejderne selv estimerer
+    public int totalEstimatedHours(Project p) {
+        int totalHoursEstimated = 0;
+
+        for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
+            totalHoursEstimated += Integer.parseInt(t.getTaskEstimatedTime());
+        }
+        return totalHoursEstimated;
+    }
 
 }
 

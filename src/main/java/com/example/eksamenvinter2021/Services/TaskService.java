@@ -4,7 +4,7 @@ import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.util.ArrayList;
-
+//Hele klassen lavet af Andrea
 public class TaskService {
 
     TaskRepo tr = new TaskRepo();

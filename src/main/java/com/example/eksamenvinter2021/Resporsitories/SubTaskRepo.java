@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Hele klassen lavet af Andrea
 public class SubTaskRepo {
 
     Connection conn = ConnectionManager.getConnection();

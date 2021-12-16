@@ -2,28 +2,24 @@ package com.example.eksamenvinter2021.Resporsitories;
 
 
 import com.example.eksamenvinter2021.Models.Employee;
-import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TaskRepo {
 
-    Connection conn = JDBC.getConnection();
+    Connection conn = ConnectionManager.getConnection();
 
     public void insertNewTaskToDB(Task task){
 
         try{
 
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("INSERT INTO " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("INSERT INTO " +
                     "`heroku_7aba49c42d6c0f0`.`tasks` (`title`, " +
                     "`description`, `estimated_time`, `time_used`, `status`, `project_id`, " +
                     "`subproject_id`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?);");
@@ -126,7 +122,7 @@ public class TaskRepo {
 
     public int getTaskID(String taskTitle){
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT task_id FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT task_id FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE title=?;");
             stmt.setString(1,taskTitle);
             ResultSet rs = stmt.executeQuery();
@@ -248,7 +244,7 @@ public class TaskRepo {
     public ArrayList<Task> getTasksInArray() {
         ArrayList<Task> taskArray = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.tasks;");
             ResultSet rs = stmt.executeQuery();
 
@@ -362,7 +358,7 @@ public class TaskRepo {
         ArrayList<Employee> employeeObjects = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE task_id=?;");
             stmt.setInt(1,taskID);
             ResultSet rs = stmt.executeQuery();
@@ -379,7 +375,7 @@ public class TaskRepo {
 
     public void insertLinkTableWithEmployeeAndTaskInDB(int employeeID, int taskID){
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `task_id`) " +
                             "VALUES (?, ?);");
 
@@ -488,7 +484,7 @@ public class TaskRepo {
     public Task getTaskFromDatabase(int taskId) {
         Task t = new Task();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE task_id=?;");
             stmt.setInt(1, taskId);
             ResultSet rs = stmt.executeQuery();

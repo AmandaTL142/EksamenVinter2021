@@ -1,9 +1,7 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Customer;
-import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Services.CustomerService;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +14,7 @@ public class CustomerRepo {
     //CAS
     public void insertCustomerIntoDatabase(Customer customer) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO heroku_7aba49c42d6c0f0.customers (`name`) " + "VALUES (?);");
             stmt.setString(1, customer.getCustomerName());
             stmt.executeUpdate();
@@ -32,7 +30,7 @@ public class CustomerRepo {
     public Customer getCustomerFromDatabase(int id) {
         Customer cus = new Customer();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT * FROM " + "heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -55,7 +53,7 @@ public class CustomerRepo {
     //CAS
     public void deleteCustomerFromDatabase(int id) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("DELETE FROM `heroku_7aba49c42d6c0f0`.`customers` WHERE (`customer_id` = '" + id + "');");
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -69,7 +67,7 @@ public class CustomerRepo {
     //CAS
     public void updateCustomerInDatabase(Customer customer) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`customers` SET `name` = ? WHERE (`customer_id` = ?);");
 
             stmt.setString(1, customer.getCustomerName());
@@ -88,7 +86,7 @@ public class CustomerRepo {
     public int getCustomerIdFromDatabase(String name) {
         int customer_id = 0;
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT customer_id FROM heroku_7aba49c42d6c0f0.customers WHERE name=?;");
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
@@ -113,7 +111,7 @@ public class CustomerRepo {
         String name = null;
 
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT * FROM heroku_7aba49c42d6c0f0.customers WHERE customer_id=?;");
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
@@ -132,7 +130,7 @@ public class CustomerRepo {
     public ArrayList <Customer> allCustomers(){
         ArrayList<Customer> customerList = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.customers;");
             ResultSet rs = stmt.executeQuery();
 

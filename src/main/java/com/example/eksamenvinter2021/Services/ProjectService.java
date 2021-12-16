@@ -3,11 +3,7 @@ package com.example.eksamenvinter2021.Services;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

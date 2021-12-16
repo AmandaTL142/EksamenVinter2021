@@ -1,16 +1,13 @@
 package com.example.eksamenvinter2021.Resporsitories;
 
 import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Services.CustomerService;
 import com.example.eksamenvinter2021.Services.SubprojectService;
-import com.example.eksamenvinter2021.Utility.JDBC;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProjectRepo {
     //Amanda Tolstrup Laursen
@@ -20,7 +17,7 @@ public class ProjectRepo {
     //Testet i "test"
     public void insertProjectIntoDatabase(Project p) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`projects` " +
                             "(`title`, `project_deadline`, `status`, `base_price`, `customer_id`, " +
                             "`description`, `start_date`, `end_date`) VALUES " +
@@ -44,7 +41,7 @@ public class ProjectRepo {
     public Project getProjectFromDatabase(int id) {
         Project p = new Project();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE project_id=?;");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -78,7 +75,7 @@ public class ProjectRepo {
     //Testet i "test"
     public void deleteProjectFromDatabase(int id) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
             stmt.setInt(1, id);
                     //("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE (`project_id` = " + id + ");");
             stmt.executeUpdate();
@@ -92,7 +89,7 @@ public class ProjectRepo {
 
     public void updateProjectInDatabase(Project p) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("UPDATE `heroku_7aba49c42d6c0f0`.`projects` SET `title` = ?, `project_deadline`= ?, " +
                             "`status` = ?, `base_price` = ?, `customer_id` = ?, `description` = ?, " +
                             "`start_date` = ?, `end_date` = ? WHERE (`project_id` = ?);");
@@ -117,7 +114,7 @@ public class ProjectRepo {
 
     public int getProjectIdFromTitle(String projectTitle) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT project_id FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
             stmt.setString(1, projectTitle);
             ResultSet rs = stmt.executeQuery();
@@ -137,7 +134,7 @@ public class ProjectRepo {
     public ArrayList<String> getProjectNamesInArray() {
         ArrayList<String> projectNames = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT title FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT title FROM " +
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
 
@@ -156,7 +153,7 @@ public class ProjectRepo {
     public ArrayList<Project> getProjectsInArray() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
 
@@ -192,7 +189,7 @@ public class ProjectRepo {
     public ArrayList<Project> getAllProjects() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT * FROM " +
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.projects;");
             ResultSet rs = stmt.executeQuery();
 
@@ -237,7 +234,7 @@ public class ProjectRepo {
 
     public boolean doesProjectHaveSubprojects(int projectId) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("SELECT project_id FROM heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
             stmt.setInt(1, projectId);
             ResultSet rs = stmt.executeQuery();

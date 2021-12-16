@@ -4,14 +4,12 @@ import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
-import com.example.eksamenvinter2021.Utility.JDBC;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry;
+import com.example.eksamenvinter2021.Utility.ConnectionManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 @SpringBootTest
@@ -34,7 +32,7 @@ public class TimeMethods {
         String finalEndDates = "";
         ArrayList<Date> dates = new ArrayList<>();
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement(
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "call find_deadline(?);");//Finder den seneste deadline i kategorierne project, subproject, task, subtask for project_id = p
             stmt.setInt(1, p.getProjectId());
             ResultSet rs = stmt.executeQuery();

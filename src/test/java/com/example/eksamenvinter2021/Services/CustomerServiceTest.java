@@ -15,18 +15,18 @@ class CustomerServiceTest {
 
 
         //Act
-        Customer customerTest1 = ps.getCustomerObject(5);
+        Customer customerTest1 = ps.getCustomerObject(215);
 
         Customer expected1 = new Customer();
-        expected1.setCustomerId(5);
-        expected1.setCustomerName("Amanda");
+        expected1.setCustomerId(215);
+        expected1.setCustomerName("Københavns Kommune");
 
         Customer notExpected1 = new Customer();
-        notExpected1.setCustomerId(15);
-        notExpected1.setCustomerName("Amanda");
+        notExpected1.setCustomerId(205);
+        notExpected1.setCustomerName("Københavns Kommune");
 
         Customer notExpected2 = new Customer();
-        notExpected2.setCustomerId(5);
+        notExpected2.setCustomerId(215);
         notExpected2.setCustomerName("");
 
 

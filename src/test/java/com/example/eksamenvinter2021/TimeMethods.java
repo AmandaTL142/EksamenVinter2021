@@ -66,8 +66,8 @@ public class TimeMethods {
     public int totalTimeUsed (Project p) {
         int totalHoursSpent = 0;
         for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
-            if (t.getStatus().equals("complete")) {
-                totalHoursSpent += Integer.parseInt(t.getTimeUsed());
+            if (t.getTaskStatus().equals("complete")) {
+                totalHoursSpent += Integer.parseInt(t.getTaskTimeUsed());
             }
         }
         return totalHoursSpent;
@@ -78,7 +78,7 @@ public class TimeMethods {
         int totalHoursEstimated = 0;
 
         for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
-            totalHoursEstimated += Integer.parseInt(t.getEstimatedTime());
+            totalHoursEstimated += Integer.parseInt(t.getTaskEstimatedTime());
         }
        return totalHoursEstimated;
     }

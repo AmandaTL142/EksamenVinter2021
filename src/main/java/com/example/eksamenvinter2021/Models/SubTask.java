@@ -2,129 +2,129 @@ package com.example.eksamenvinter2021.Models;
 
 public class SubTask {
 
-    private int subtaskID;
-    private String title;
-    private String description;
-    private String estimatedTime;
-    private String timeUsed;
-    private String status;
-    private int projectID;
-    private int taskID;
-    private String startDate;
-    private String endDate;
+    private int subtaskId;
+    private String subtaskTitle;
+    private String subtaskDescription;
+    private String subtaskEstimatedTime;
+    private String subtaskTimeUsed;
+    private String subtaskStatus;
+    private int subtaskProjectId;
+    private int subtaskTaskId;
+    private String subtaskStartDate;
+    private String subtaskEndDate;
 
 
     public SubTask() {
     }
 
-    public SubTask(int subtaskID, String title,
-                   String description, String estimatedTime,
-                   String timeUsed, String status, int projectID,
-                   int taskID, String startDate, String endDate) {
-        this.subtaskID = subtaskID;
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimatedTime;
-        this.timeUsed = timeUsed;
-        this.status = status;
-        this.projectID = projectID;
-        this.taskID = taskID;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public SubTask(int subtaskId, String subtaskTitle,
+                   String subtaskDescription, String subtaskEstimatedTime,
+                   String subtaskTimeUsed, String subtaskStatus, int subtaskProjectId,
+                   int taskID, String subtaskStartDate, String endDate) {
+        this.subtaskId = subtaskId;
+        this.subtaskTitle = subtaskTitle;
+        this.subtaskDescription = subtaskDescription;
+        this.subtaskEstimatedTime = subtaskEstimatedTime;
+        this.subtaskTimeUsed = subtaskTimeUsed;
+        this.subtaskStatus = subtaskStatus;
+        this.subtaskProjectId = subtaskProjectId;
+        this.subtaskTaskId = taskID;
+        this.subtaskStartDate = subtaskStartDate;
+        this.subtaskEndDate = endDate;
     }
 
-    public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, int projectID, int taskID, String startDate, String endDate) {
+    public SubTask(String subtaskTitle, String subtaskDescription, String subtaskEstimatedTime, String subtaskTimeUsed, String subtaskStatus, int subtaskProjectId, int taskID, String subtaskStartDate, String endDate) {
     }
 
-    public SubTask(String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+    public SubTask(String subtaskTitle, String subtaskDescription, String subtaskEstimatedTime, String subtaskTimeUsed, String subtaskStatus, String subtaskStartDate, String endDate) {
 
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimatedTime;
-        this.timeUsed = timeUsed;
-        this.status = status;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.subtaskTitle = subtaskTitle;
+        this.subtaskDescription = subtaskDescription;
+        this.subtaskEstimatedTime = subtaskEstimatedTime;
+        this.subtaskTimeUsed = subtaskTimeUsed;
+        this.subtaskStatus = subtaskStatus;
+        this.subtaskStartDate = subtaskStartDate;
+        this.subtaskEndDate = endDate;
 
     }
 
-    public int getSubtaskID() {
-        return subtaskID;
+    public int getSubtaskId() {
+        return subtaskId;
     }
 
-    public void setSubtaskID(int subtaskID) {
-        this.subtaskID = subtaskID;
+    public void setSubtaskId(int subtaskId) {
+        this.subtaskId = subtaskId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSubtaskTitle() {
+        return subtaskTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSubtaskTitle(String subtaskTitle) {
+        this.subtaskTitle = subtaskTitle;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSubtaskDescription() {
+        return subtaskDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubtaskDescription(String subtaskDescription) {
+        this.subtaskDescription = subtaskDescription;
     }
 
-    public String getEstimatedTime() {
-        return estimatedTime;
+    public String getSubtaskEstimatedTime() {
+        return subtaskEstimatedTime;
     }
 
-    public void setEstimatedTime(String estimatedTime) {
-        this.estimatedTime = estimatedTime;
+    public void setSubtaskEstimatedTime(String subtaskEstimatedTime) {
+        this.subtaskEstimatedTime = subtaskEstimatedTime;
     }
 
-    public String getTimeUsed() {
-        return timeUsed;
+    public String getSubtaskTimeUsed() {
+        return subtaskTimeUsed;
     }
 
-    public void setTimeUsed(String timeUsed) {
-        this.timeUsed = timeUsed;
+    public void setSubtaskTimeUsed(String subtaskTimeUsed) {
+        this.subtaskTimeUsed = subtaskTimeUsed;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSubtaskStatus() {
+        return subtaskStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSubtaskStatus(String subtaskStatus) {
+        this.subtaskStatus = subtaskStatus;
     }
 
-    public int getProjectID() {
-        return projectID;
+    public int getSubtaskProjectId() {
+        return subtaskProjectId;
     }
 
-    public void setProjectID(int projectID) {
-        this.projectID = projectID;
+    public void setSubtaskProjectId(int subtaskProjectId) {
+        this.subtaskProjectId = subtaskProjectId;
     }
 
-    public int getTaskID() {
-        return taskID;
+    public int getTaskId() {
+        return subtaskTaskId;
     }
 
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
+    public void setTaskId(int taskId) {
+        this.subtaskTaskId = taskId;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getSubtaskStartDate() {
+        return subtaskStartDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setSubtaskStartDate(String subtaskStartDate) {
+        this.subtaskStartDate = subtaskStartDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getSubtaskEndDate() {
+        return subtaskEndDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setSubtaskEndDate(String subtaskEndDate) {
+        this.subtaskEndDate = subtaskEndDate;
     }
 }

@@ -17,8 +17,8 @@ public class SubTaskService {
 
     }
 
-    public SubTask getSubtaskObject(int subtaskID){
-        return sr.getSubtaskFromDB(subtaskID);
+    public SubTask getSubtaskObject(int subtaskId){
+        return sr.getSubtaskFromDB(subtaskId);
     }
 
     public void deleteSubtaskFromDB(int id){

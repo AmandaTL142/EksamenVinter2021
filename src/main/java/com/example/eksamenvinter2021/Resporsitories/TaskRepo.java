@@ -25,18 +25,18 @@ public class TaskRepo {
                     "`subproject_id`, `start_date`, `end_date`) VALUES (?,?,?,?,?,?,?,?,?);");
 
 
-            stmt.setString(1,task.getTitle());
-            stmt.setString(2,task.getDescription());
-            stmt.setString(3,task.getEstimatedTime());
-            stmt.setString(4,task.getTimeUsed());
-            stmt.setString(5,task.getStatus());
-            stmt.setInt(6,task.getProjectId());
+            stmt.setString(1,task.getTaskTitle());
+            stmt.setString(2,task.getTaskDescription());
+            stmt.setString(3,task.getTaskEstimatedTime());
+            stmt.setString(4,task.getTaskTimeUsed());
+            stmt.setString(5,task.getTaskStatus());
+            stmt.setInt(6,task.getTaskProjectId());
 
-            stmt.setString(8, task.getStartDate());
-            stmt.setString(9,task.getEndDate());
+            stmt.setString(8, task.getTaskStartDate());
+            stmt.setString(9,task.getTaskEndDate());
 
-            if(task.getSubprojectId() != 0){
-                stmt.setInt(7,task.getSubprojectId());
+            if(task.getTaskSubprojectId() != 0){
+                stmt.setInt(7,task.getTaskSubprojectId());
             }
             else{
                 stmt.setString(7,null);
@@ -67,23 +67,23 @@ public class TaskRepo {
             String estimated_time = rs.getString("estimated_time");
             String timeUsed = rs.getString("time_used");
             String status = rs.getString("status");
-            int projectID = rs.getInt("project_id");
-            int subprojectID = rs.getInt("subproject_id");
+            int projectId = rs.getInt("project_id");
+            int subprojectId = rs.getInt("subproject_id");
             String startDate = rs.getString("start_date");
             String endDate = rs.getString("end_date");
 
 
             t = new Task(title, description,estimated_time,timeUsed,status);
-            t.setId(id);
-            t.setTitle(title);
-            t.setDescription(description);
-            t.setEstimatedTime(estimated_time);
-            t.setTimeUsed(timeUsed);
-            t.setStatus(status);
-            t.setProjectId(projectID);
-            t.setSubprojectId(subprojectID);
-            t.setStartDate(startDate);
-            t.setEndDate(endDate);
+            t.setTaskId(id);
+            t.setTaskTitle(title);
+            t.setTaskDescription(description);
+            t.setTaskEstimatedTime(estimated_time);
+            t.setTaskTimeUsed(timeUsed);
+            t.setTaskStatus(status);
+            t.setTaskProjectId(projectId);
+            t.setTaskSubprojectId(subprojectId);
+            t.setTaskStartDate(startDate);
+            t.setTaskEndDate(endDate);
 
 
         } catch (SQLException e) {
@@ -100,14 +100,14 @@ public class TaskRepo {
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setInt(8,task.getId());
-            stmt.setString(1,task.getTitle());
-            stmt.setString(2,task.getDescription());
-            stmt.setString(3,task.getEstimatedTime());
-            stmt.setString(4,task.getTimeUsed());
-            stmt.setString(5,task.getStatus());
-            stmt.setString(6,task.getStartDate());
-            stmt.setString(7,task.getEndDate());
+            stmt.setInt(8,task.getTaskId());
+            stmt.setString(1,task.getTaskTitle());
+            stmt.setString(2,task.getTaskDescription());
+            stmt.setString(3,task.getTaskEstimatedTime());
+            stmt.setString(4,task.getTaskTimeUsed());
+            stmt.setString(5,task.getTaskStatus());
+            stmt.setString(6,task.getTaskStartDate());
+            stmt.setString(7,task.getTaskEndDate());
 
 
             stmt.executeUpdate();
@@ -120,7 +120,7 @@ public class TaskRepo {
 
     }
 
-    public int getTaskID(String taskTitle){
+    public int getTaskId(String taskTitle){
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT task_id FROM " +
                     "heroku_7aba49c42d6c0f0.tasks WHERE title=?;");
@@ -137,39 +137,39 @@ public class TaskRepo {
         return 0;
     }
 
-    public ArrayList<Task> getAllTasksInProject(int pID){
+    public ArrayList<Task> getAllTasksInProject(int pId){
         ArrayList<Task> allTasks = new ArrayList<>();
         try {
 
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.tasks where project_id=?");
-            stmt.setInt(1, pID);
+            stmt.setInt(1, pId);
 
             ResultSet rs = stmt.executeQuery();
 
 
             while(rs.next()){
-                int taskID = rs.getInt("task_id");
+                int taskId = rs.getInt("task_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
                 String estimated_time = rs.getString("estimated_time");
                 String timeUsed = rs.getString("time_used");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
-                int subprojectID = rs.getInt("subproject_id");
+                int projectId = rs.getInt("project_id");
+                int subprojectId = rs.getInt("subproject_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
                 Task t = new Task();
-                t.setTitle(title);
-                t.setDescription(description);
-                t.setEstimatedTime(estimated_time);
-                t.setTimeUsed(timeUsed);
-                t.setStatus(status);
-                t.setProjectId(projectID);
-                t.setSubprojectId(subprojectID);
-                t.setStartDate(startDate);
-                t.setEndDate(endDate);
-                t.setId(taskID);
+                t.setTaskTitle(title);
+                t.setTaskDescription(description);
+                t.setTaskEstimatedTime(estimated_time);
+                t.setTaskTimeUsed(timeUsed);
+                t.setTaskStatus(status);
+                t.setTaskProjectId(projectId);
+                t.setTaskSubprojectId(subprojectId);
+                t.setTaskStartDate(startDate);
+                t.setTaskEndDate(endDate);
+                t.setTaskId(taskId);
 
                 allTasks.add(t);
             }
@@ -181,15 +181,15 @@ public class TaskRepo {
 
     }
 
-    public void deleteTask(int taskID){
+    public void deleteTask(int taskId){
 
         try {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`tasks` WHERE `task_id` = ?;");
-            stmt.setInt(1, taskID);
+            stmt.setInt(1, taskId);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Couldn't delete task with id " + taskID + " from database");
+            System.out.println("Couldn't delete task with id " + taskId + " from database");
             System.out.println(e.getMessage());
         }
 
@@ -256,22 +256,22 @@ public class TaskRepo {
                 String estimatedTime = rs.getString("estimated_time");
                 String timeUsed = rs.getString("time_used");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
-                int subprojectID = rs.getInt("subproject_id");
+                int projectId = rs.getInt("project_id");
+                int subprojectId = rs.getInt("subproject_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
                 Task task = new Task();
-                task.setId(taskId);
-                task.setTitle(title);
-                task.setDescription(description);
-                task.setEstimatedTime(estimatedTime);
-                task.setTimeUsed(timeUsed);
-                task.setStatus(status);
-                task.setProjectId(projectID);
-                task.setSubprojectId(subprojectID);
-                task.setStartDate(startDate);
-                task.setEndDate(endDate);
+                task.setTaskId(taskId);
+                task.setTaskTitle(title);
+                task.setTaskDescription(description);
+                task.setTaskEstimatedTime(estimatedTime);
+                task.setTaskTimeUsed(timeUsed);
+                task.setTaskStatus(status);
+                task.setTaskProjectId(projectId);
+                task.setTaskSubprojectId(subprojectId);
+                task.setTaskStartDate(startDate);
+                task.setTaskEndDate(endDate);
 
 
                 taskArray.add(task);
@@ -285,26 +285,26 @@ public class TaskRepo {
     }
 
     //Denne virker ikke
-    public ArrayList<Task> getTaskConnectedToEmployee(int employeeID){
-        ArrayList<Integer> taskIDs = new ArrayList<>();
+    public ArrayList<Task> getTaskConnectedToEmployee(int employeeId){
+        ArrayList<Integer> taskIds = new ArrayList<>();
         ArrayList<Task> taskObjects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
-            stmt.setInt(1,employeeID);
+            stmt.setInt(1,employeeId);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
-                int taskID = rs.getInt("task_id");
-                taskIDs.add(taskID);
+                int taskId = rs.getInt("task_id");
+                taskIds.add(taskId);
             }
 
             /*Set<Integer> taskIDHashSet = new HashSet<>();
-            taskIDs.clear();
-            taskIDs.addAll(taskIDHashSet);
+            taskIds.clear();
+            taskIds.addAll(taskIDHashSet);
 
-            taskIDs.forEach(taskId){
+            taskIds.forEach(taskId){
             taskObject.add(ts.getTaskOBject(taskId))}*/
 
         } catch (SQLException e) {
@@ -313,15 +313,15 @@ public class TaskRepo {
         return taskObjects;
     }
 
-    public void insertTaskToLinktable(int employeeID, int taskID, int projectID){
+    public void insertTaskToLinktable(int employeeId, int taskId, int projectId){
         try  {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
                     "(`employee_id`, `project_id`, `task_id`) " +
                     "VALUES (?,?,?);");
 
-            stmt.setInt(1,employeeID);
-            stmt.setInt(2,projectID);
-            stmt.setInt(3,taskID);
+            stmt.setInt(1,employeeId);
+            stmt.setInt(2,projectId);
+            stmt.setInt(3,taskId);
 
             stmt.executeUpdate();
 
@@ -333,15 +333,15 @@ public class TaskRepo {
     }
 
     //Lavet af Amanda på baggrund af insertTaskToLinktable()
-    public void insertTaskToLinktableWithSubproject(int employeeID, int taskID, int projectID, int subprojectId){
+    public void insertTaskToLinktableWithSubproject(int employeeId, int taskId, int projectId, int subprojectId){
         try  {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` " +
                     "(`employee_id`, `project_id`, `task_id`, `subproject_id`) " +
                     "VALUES (?,?,?,?);");
 
-            stmt.setInt(1,employeeID);
-            stmt.setInt(2,projectID);
-            stmt.setInt(3,taskID);
+            stmt.setInt(1,employeeId);
+            stmt.setInt(2,projectId);
+            stmt.setInt(3,taskId);
             stmt.setInt(4,subprojectId);
 
             stmt.executeUpdate();
@@ -353,19 +353,19 @@ public class TaskRepo {
 
     }
 
-    public  ArrayList<Employee> getEmployeeFromTask(int taskID){
-        ArrayList<Integer> employeeIDs = new ArrayList<>();
+    public  ArrayList<Employee> getEmployeeFromTask(int taskId){
+        ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE task_id=?;");
-            stmt.setInt(1,taskID);
+            stmt.setInt(1,taskId);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
-                int emmployeeID = rs.getInt("employee_id");
-                employeeIDs.add(emmployeeID);
+                int emmployeeId = rs.getInt("employee_id");
+                employeeIds.add(emmployeeId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -373,13 +373,13 @@ public class TaskRepo {
         return employeeObjects;
     }
 
-    public void insertLinkTableWithEmployeeAndTaskInDB(int employeeID, int taskID){
+    public void insertLinkTableWithEmployeeAndTaskInDB(int employeeId, int taskID){
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
                     ("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `task_id`) " +
                             "VALUES (?, ?);");
 
-            stmt.setInt(1,employeeID);
+            stmt.setInt(1,employeeId);
             stmt.setInt(2,taskID);
 
             stmt.executeUpdate();
@@ -403,20 +403,20 @@ public class TaskRepo {
             ResultSet rs= stmt.executeQuery();
 
             while(rs.next()){
-                int taskID = rs.getInt("task_id");
+                int taskId = rs.getInt("task_id");
                 String title = rs.getString("title");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
+                int projectId = rs.getInt("project_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
                 Task t = new Task();
-                t.setId(taskID);
-                t.setTitle(title);
-                t.setStatus(status);
-                t.setProjectId(projectID);
-                t.setStartDate(startDate);
-                t.setEndDate(endDate);
+                t.setTaskId(taskId);
+                t.setTaskTitle(title);
+                t.setTaskStatus(status);
+                t.setTaskProjectId(projectId);
+                t.setTaskStartDate(startDate);
+                t.setTaskEndDate(endDate);
 
                 if(startDate != null && !startDate.isEmpty() ) {
                     if (endDate != null && !endDate.isEmpty()) {
@@ -424,8 +424,8 @@ public class TaskRepo {
                         String newStartDate = startDate.replace("-",",").replace("'","");
                         String newEndDate = endDate.replace("-",",").replace("'","");
 
-                        t.setStartDate(newStartDate);
-                        t.setEndDate(newEndDate);
+                        t.setTaskStartDate(newStartDate);
+                        t.setTaskEndDate(newEndDate);
 
                         taskArray.add(t);
                     }
@@ -500,16 +500,16 @@ public class TaskRepo {
             String endDate = rs.getString("end_date");
 
 
-            t.setTitle(title);
-            t.setDescription(description);
-            t.setEstimatedTime(estimatedTime);
-            t.setTimeUsed(timeUsed);
-            t.setStatus(status);
-            t.setProjectId(projectId);
-            t.setSubprojectId(subprojectId);
-            t.setStartDate(startDate);
-            t.setEndDate(endDate);
-            t.setId(taskId);
+            t.setTaskTitle(title);
+            t.setTaskDescription(description);
+            t.setTaskEstimatedTime(estimatedTime);
+            t.setTaskTimeUsed(timeUsed);
+            t.setTaskStatus(status);
+            t.setTaskProjectId(projectId);
+            t.setTaskSubprojectId(subprojectId);
+            t.setTaskStartDate(startDate);
+            t.setTaskEndDate(endDate);
+            t.setTaskId(taskId);
 
         } catch(SQLException e){
             System.out.println("Couldn't get task with id " + taskId + " from database");
@@ -519,26 +519,26 @@ public class TaskRepo {
     }
 
     //Amanda
-    public ArrayList<Task> getTaskConnectedToEmployeeAndProject(int employeeID, int projectId){
-        ArrayList<Integer> tempTaskIDs = new ArrayList<>();
-        ArrayList<Integer> taskIDs = new ArrayList<>();
+    public ArrayList<Task> getTaskConnectedToEmployeeAndProject(int employeeId, int projectId){
+        ArrayList<Integer> tempTaskIds = new ArrayList<>();
+        ArrayList<Integer> taskIds = new ArrayList<>();
         ArrayList<Task> taskObjects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT task_id FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=? AND project_id=?;");
-            stmt.setInt(1,employeeID);
+            stmt.setInt(1,employeeId);
             stmt.setInt(2,projectId);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
                 int taskId = rs.getInt("task_id");
                 if(taskId != 0){
-                    tempTaskIDs.add(taskId);
+                    tempTaskIds.add(taskId);
 
                     //Forhindrer gentagelser
-                    if (!taskIDs.contains(taskId)) {
-                        taskIDs.add(taskId);
+                    if (!taskIds.contains(taskId)) {
+                        taskIds.add(taskId);
                         Task tempTask = getTaskFromDatabase(taskId);
                         taskObjects.add(tempTask);
                     }

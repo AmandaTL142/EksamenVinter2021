@@ -72,9 +72,13 @@ public class SubprojectRepo {
 
     public void deleteSubprojectFromDatabase(int id) {
         try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+            PreparedStatement stmt1 = JDBC.getConnection().prepareStatement
+                    ("DELETE FROM `heroku_7aba49c42d6c0f0`.`link_table` WHERE (`subproject_id` = '" + id + "');");
+            stmt1.executeUpdate();
+
+            PreparedStatement stmt2 = JDBC.getConnection().prepareStatement
                     ("DELETE FROM `heroku_7aba49c42d6c0f0`.`subprojects` WHERE (`subproject_id` = '" + id + "');");
-            stmt.executeUpdate();
+            stmt2.executeUpdate();
         } catch (Exception e) {
             System.out.println("Couldn't delete subproject with id " + id + " from database");
             System.out.println(e.getMessage());

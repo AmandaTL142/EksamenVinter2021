@@ -52,6 +52,7 @@ public class TaskController {
 
 
 
+    /*thisProject, der står i curly brackets, indikere, at der skal opgives et projectID for at kunne benytte showTask*/
     @GetMapping("/showTask/{thisProject}")
     public String tasks(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
 
@@ -66,6 +67,10 @@ public class TaskController {
                 m.addAttribute("tasks", ts.getAllTasksInArray());
                 m.addAttribute("project", ps.getProjectObject(pID));
 
+
+                /*Sharedproject er i første omgang et tomt projekt, men ved brug af getProjectObject, hentes
+                der et allerede eksisterende projekt fra Databasen. Hvilket projekt der hentes er baseret på
+                hvilket projectID der indtastes. Dette project tages med videre, til @Posttmapping "createNewTask*/
                 sharedProject = ps.getProjectObject(thisProject);
 
                 return "task_html/showTask";
@@ -82,17 +87,20 @@ public class TaskController {
     //man skal indtaste et projectId, for at komme på det rigtige projekt
     @GetMapping("/createTask/{thisProjectId}")
     public String project(@PathVariable("thisProjectId") int thisProjectId, Model m, HttpSession session) {
-        //Her gemmer vi projektID, som en int
 
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
 
-            //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
-            Project p = ps.getProjectObject(thisProjectId);
 
+            /*Her defineres et project ud fra hvilket ID, der indtastes i url*/
+            Project p = ps.getProjectObject(thisProjectId);
+            /*Her connnectes dette project til sharedProject, så projektet er det samme som det project der vises  */
             sharedProject = p;
+
+
+
             m.addAttribute("project",p);
             return"task_html/newTask";
         }
@@ -116,11 +124,13 @@ public class TaskController {
         //Create task-object
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-        /*I objektet ligger metoden setProjectId, som betyder at vi setter projectId
-        ProjectId sættes til i første omgang at være et tomt project, hvor det herefter er muligt at
-        kalde på metoden som henter projectId*/
-
+        /*Her sætter vi projectID, som skal være det ID, som kommer fra projektet der hedder sharedProject*/
         int projectID = sharedProject.getProjectId();
+        /*Ved at defineret projectID, som værende ID fra sharedProject, er det muligt at tage dette ID med videre,
+        når der oprettes en task.
+        På denne måde oprettes en task, som med det samme får et projectID tilknyttet. Dette gør, at så snart
+        task opretes tilhører den med det samme et project*/
+
         tempTask.setProjectId(projectID);
 
         /*her gøres der brug af metoden insertNewTaskToDB, som er en metode fra Task repo.
@@ -222,13 +232,10 @@ public class TaskController {
             }
         }
 
-
-
     }
 
     @PostMapping("/editTaskChanges")
     public String editTask(WebRequest wr){
-        //@PathVariable("thisTask")
 
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");

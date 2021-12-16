@@ -111,6 +111,10 @@
             </td>
 
             <td>
+                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/deleteSubproject/{id}(id=${subproject.getSubprojectId()})}" onclick="return confirm('Are you sure you want to delete this subproject?');"> Delete </a>
+            </td>
+
+            <td>
                 <a class="link" th:href="@{/createTaskFromSubproject/{id}(id=${subproject.getSubprojectId()})}"> New task </a>
             </td>
 
@@ -143,6 +147,11 @@
                             </td>
 
                             <td>
+                                <a th:href="@{/deleteTask/{id}(id=${task.getId()})}"
+                                   onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                            </td>
+
+                            <td>
                                 <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
                             </td>
 
@@ -170,7 +179,12 @@
                                         <td th:text="${subtask.getEndDate()}"></td>
 
                                             <td>
-                                                <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                                <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                            </td>
+
+                                            <td>
+                                                <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                                   onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
                                             </td>
 
                                         </table>
@@ -222,6 +236,11 @@
                         </td>
 
                         <td>
+                            <a th:href="@{/deleteTask/{id}(id=${task.getId()})}"
+                               onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                        </td>
+
+                        <td>
                             <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
                         </td>
 
@@ -250,7 +269,12 @@
                                     <td th:text="${subtask.getEndDate()}"></td>
 
                                         <td>
-                                            <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                            <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                        </td>
+
+                                        <td>
+                                            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                               onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
                                         </td>
 
                                     </table>
@@ -268,6 +292,89 @@
     </div>
 
 
+<div th:if = "${Project.getAllTasksInProject().size() > 0}">
+    <button type="button" class="collapsible">All tasks connected to project</button>
+    <div class="content">
+        <div th:each="task : ${Project.getAllTasksInProject()}">
+            <button type="button" class="collapsible2" th:text="${task.getTitle()}">
+            </button>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                    </tr>
+                    <td th:text="${task.getTitle()}"></td>
+                    <td th:text="${task.getDescription()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getEndDate()}"></td>
+
+                    <td>
+                        <a class="link" th:href="@{/editTask/{id}(id=${task.getId()})}"> Edit </a>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/deleteTask/{id}(id=${task.getId()})}"
+                           onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                    </td>
+
+                    <td>
+                        <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
+                    </td>
+
+
+                </table>
+
+                <div th:if = "${task.getAllSubtaskInTask().size() > 0}">
+                    <button type="button" class="collapsible3">Subtasks</button>
+                    <div class="content">
+                        <div th:each="subtask : ${task.getAllSubtaskInTask()}">
+                            <button type="button" class="collapsible2" th:text="${subtask.getTitle()}">
+                            </button>
+                            <div class="content">
+                                <table>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>End date</th>
+                                    </tr>
+                                    <td th:text="${subtask.getTitle()}"></td>
+                                    <td th:text="${subtask.getDescription()}"></td>
+                                    <td th:text="${subtask.getStatus()}"></td>
+                                    <td th:text="${subtask.getStartDate()}"></td>
+                                    <td th:text="${subtask.getEndDate()}"></td>
+
+                                    <td>
+                                        <a class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
+                                    </td>
+
+                                    <td>
+                                        <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                           onclick="return confirm('Are you sure you want to delete this subtask?');">Delete</a>
+                                    </td>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<!--
     <div th:if = "${Project.getAllTasksInProject().size() > 0}">
         <button type="button" class="collapsible">All tasks connected to project</button>
         <div class="content">
@@ -294,6 +401,11 @@
                         </td>
 
                         <td>
+                            <a th:href="@{/deleteTask/{id}(id=${task.getId()})}"
+                               onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                        </td>
+
+                        <td>
                             <a class="link" th:href="@{/createSubtask/{id}(id=${task.getId()})}"> New subtask </a>
                         </td>
 
@@ -324,6 +436,11 @@
                                             <a th:if = "${session.employee.role == 'MANAGER'}" class="link" th:href="@{/editSubtask/{id}(id=${subtask.getSubtaskID()})}"> Edit </a>
                                         </td>
 
+                                        <td>
+                                            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubtaskID()})}"
+                                               onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                                        </td>
+
                                     </table>
                                 </div>
                             </div>
@@ -337,6 +454,7 @@
             </div>
         </div>
     </div>
+    -->
 
 <div th:if = "${Project.getSubprojectsLinkedToProject().size() == 0 and
 session.employee.getTaskConnectedToEmployeeAndProject(Project.getProjectId()).size() == 0 and

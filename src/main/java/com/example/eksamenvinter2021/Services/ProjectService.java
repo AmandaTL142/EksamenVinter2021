@@ -15,8 +15,8 @@ public class ProjectService {
     SubprojectService sps = new SubprojectService();
 
     public Project createNewProjectObject(String title, String projectDeadline, String status, double basePrice,
-                                 int customerId) {
-        Project p = new Project(title, projectDeadline, status, basePrice, customerId);
+                                 int customerId, String description) {
+        Project p = new Project(title, projectDeadline, status, basePrice, customerId, description);
 
         return p;
     }

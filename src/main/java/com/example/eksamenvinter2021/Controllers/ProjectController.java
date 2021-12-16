@@ -53,7 +53,7 @@ public class ProjectController {
 
     }
 
-    //Denne virker
+
     @PostMapping("/createNewProject")
     public String createNewProject(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("project-title-input");
@@ -64,22 +64,23 @@ public class ProjectController {
         String status = webr.getParameter("project-status-input");
 
         double basePrice = 0;
-        try {
-            basePrice = Double.parseDouble(basePriceString);
-        } catch (Exception e) {
-            System.out.println("Baseprice could not be converted from string to double. " +
-                    "Check whether the input is a number.");
-            e.printStackTrace();
+        if (basePriceString != null){
+            try {
+                basePrice = Double.parseDouble(basePriceString);
+            } catch (Exception e) {
+                System.out.println("Baseprice could not be converted from string to double. " +
+                        "Check whether the input is a number.");
+                e.printStackTrace();
+            }
         }
 
-
-        int customerId = Integer.parseInt(customerIdString);
-
+        int customerId = 0;
+        if (customerIdString != null){
+            customerId = Integer.parseInt(customerIdString);
+        }
 
         //Create project-object
-        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
-
-        currentProject.setDescription(description);
+        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId, description);
 
         //Add project to DB
         ps.insertProjectIntoDatabase(currentProject);

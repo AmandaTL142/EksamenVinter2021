@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class JDBC {
+    //Christian Hundahl
 
         //Creates db connection and returns as Singleton
         private static String url;

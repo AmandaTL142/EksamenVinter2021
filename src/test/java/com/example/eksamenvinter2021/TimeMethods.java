@@ -28,12 +28,11 @@ public class TimeMethods {
     }
 
     public static Date findFinalEndTime(Project p) {
-
+        //Udregner faktisk dato projekt færdigt
+        //Find størst endDate ud af alle tabeller hvor project_id = ?
         Date maxDate = null;
         String finalEndDates = "";
         ArrayList<Date> dates = new ArrayList<>();
-        //Udregner faktisk dato projekt færdigt
-        //Find størst endDate ud af alle tabeller hvor project_id = ?
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement(
                     "call find_deadline(?);");//Finder den seneste deadline i kategorierne project, subproject, task, subtask for project_id = p
@@ -65,11 +64,9 @@ public class TimeMethods {
         return maxDate;
     }
 
-    //GetTotalHours
+    //Udregner total tidsforbrug på projekt ved at addere alle færdiggjorte 'task' rapporteret af medarbejdere
     public int totalTimeUsed (Project p) {
-        //calculates total hours spend by adding together all reported hours spent by employees
         int totalHoursSpent = 0;
-
         for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
             if (t.getStatus().equals("complete")) {
                 totalHoursSpent += Integer.parseInt(t.getTimeUsed());
@@ -78,9 +75,8 @@ public class TimeMethods {
         return totalHoursSpent;
     }
 
-    //GetEstimatedHours
+    //Udregner det tidsforbrug medarbejderne selv estimerer
     public int totalEstimatedHours(Project p) {
-        //calculates endTimes reported by employees
         int totalHoursEstimated = 0;
 
         for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
@@ -88,13 +84,4 @@ public class TimeMethods {
         }
        return totalHoursEstimated;
     }
-
-    /*Public int hours worked employee (employee e, project p) {
-        totals hours spend by one employee on one project
-    }*/
-
-    /*Public int hours spent on all projects (employee e) {
-        Shows total hours used on all projects by an employee
-    }*
-    */
 }

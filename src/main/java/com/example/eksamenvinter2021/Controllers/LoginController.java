@@ -15,8 +15,7 @@ import java.util.Objects;
 @Controller
 public class LoginController {
     //Christian Hundahl
-    //Her laver vi noget log-in logik
-    //Benyt sessions
+
     EmployeeService es = new EmployeeService();
 
     @GetMapping("/")
@@ -32,9 +31,12 @@ public class LoginController {
         int employee_id = Integer.parseInt(wr.getParameter("employee_id"));
         String password = wr.getParameter("password");
 
-        //Evaluer om login matcher database
+        //Evaluer om login-oplysninger matcher database
         if (LoginService.login(employee_id, password)) {
+            //Hvis if-statement == true
+            //Hent employee fra database
             Employee employee = es.showEmployee(employee_id);
+            //Sæt employee som attribut til sessionen
             session.setAttribute("employee", employee);
             return "redirect:/frontpage";
         }
@@ -52,6 +54,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
+        //Afslutter den nuværende session
         session.invalidate();
         return "redirect:/";
     }

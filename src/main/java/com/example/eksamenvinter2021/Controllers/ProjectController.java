@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Controllers;
 
+import com.example.eksamenvinter2021.Models.Customer;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Subproject;
@@ -36,12 +37,14 @@ public class ProjectController {
 
     //Denne virker
     @GetMapping("/newProject")
-    public String newProject(HttpSession session) {
+    public String newProject(HttpSession session, Model model) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
+                ArrayList<Customer> allCustomers = (ArrayList<Customer>) cs.getAllCustomers();
+                model.addAttribute("allCustomers", allCustomers);
                 return "project_html/newProject";
             }
             else{
@@ -58,9 +61,8 @@ public class ProjectController {
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
         String description = webr.getParameter("project-description-input");
-        String costumerName = webr.getParameter("project-costumer-input");
+        String customerIdString = webr.getParameter("project-customer-input");
         String status = webr.getParameter("project-status-input");
-
 
         double basePrice = 0;
         try {
@@ -71,7 +73,8 @@ public class ProjectController {
             e.printStackTrace();
         }
 
-        int customerId = cs.getCustomerIdFromDatabase(costumerName);
+
+        int customerId = Integer.parseInt(customerIdString);
 
 
         //Create project-object

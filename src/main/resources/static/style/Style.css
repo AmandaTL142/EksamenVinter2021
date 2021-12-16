@@ -139,10 +139,12 @@ h3{
 }
 
 .showData{
-    width: 60%;
+    width: 90%;
     position: relative;
     padding-top: 30px;
-    margin-left: 20%;
+    margin: auto;
+    text-align: left;
+
 }
 
 .content-form{
@@ -214,3 +216,36 @@ select{
 .newRowInTable{
     border-bottom: black solid 1px;
 }
+#chart_div{
+    width: 90%;
+    display: flex;
+    margin:auto;
+    background: inherit;
+}
+#note{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 15px;
+}
+
+.Title{
+    width: 15%;
+}
+.description {
+    width: 20%;
+}
+
+td.deadline{
+    width: 90px;
+    margin-left: 10px;
+}
+td.startdate{
+    width: 90px;
+    margin-left: 10px;
+}td.enddate{
+     width: 90px;
+     margin-left: 10px;
+ }
+
+

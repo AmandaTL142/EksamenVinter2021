@@ -30,19 +30,19 @@
 
 			<span>
 					<a href="/Customer" class="nav-bar">Customers</a>
-				</span>
+			</span>
 
 			<span>
 					<a href="/gantt" class="nav-bar">Gantt Chart</a>
-				</span>
+			</span>
 
 		</div>
 </header>
 
 <header th:fragment="Employee-header" class="header">
 	<div class="logo-header">
-		<img class="logo" th:src="@{../static/images/logo.png}" alt="logo" href="/frontpage">
-
+		<div class="logo" >
+		</div>
 		<a href="/frontPage" class="header-nav-bar"><h1>Tasks</h1></a> <br>
 		<form class="nav-bar-logout"  method="POST" action="/logout">
 			<input type="submit" value="log out">

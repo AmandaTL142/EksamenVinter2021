@@ -3,12 +3,12 @@
 <head>
     <title>Gantt Chart</title>
 
-    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{../../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{../../static/style/header.css}" type="text/css" rel="stylesheet">
+    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
     <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
     <link href="style/Style.css" type="text/css" rel="stylesheet">
     <link href="style/header.css" type="text/css" rel="stylesheet">
-    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
-    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
 
 
     <script type="text/javascript"
@@ -87,7 +87,7 @@
 
         const options = {
 
-            height: 500,
+            height: 400,
 
 
             gantt: {
@@ -124,9 +124,7 @@
     <div th:replace="fragments/headers :: Employee-header"></div>
 
 </div>
-    <div>
-        <p> All projects need to have a start date and end date to be shown in the view below.</p>
-    </div>
+        <p id="note" > All projects need to have a start date and end date to be shown in the view below.</p>
 
     <div id="chart_div"></div>
 </div>

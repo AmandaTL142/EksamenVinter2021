@@ -210,18 +210,20 @@ public class ProjectRepo {
                 p.setStatus(status);
                 p.setCustomerId(customerId);
 
-                if(startDate != null && !startDate.isEmpty() ) {
-                    if (endDate != null && !endDate.isEmpty()) {
+                if(!status.equals("Complete")){
+                    if(startDate != null && !startDate.isEmpty() ) {
+                        if (endDate != null && !endDate.isEmpty()) {
 
-                        String newStartDate = startDate.replace("-",",").replace("'","");
-                        String newEndDate = endDate.replace("-",",").replace("'","");
+                            String newStartDate = startDate.replace("-", ",").replace("'", "");
+                            String newEndDate = endDate.replace("-", ",").replace("'", "");
 
-                        p.setStartDate(newStartDate);
-                        p.setEndDate(newEndDate);
-                        p.setAssociatedSubprojects(sps.showSubprojectLinkedToProject(projectId));
+                            p.setStartDate(newStartDate);
+                            p.setEndDate(newEndDate);
+                            p.setAssociatedSubprojects(sps.showSubprojectLinkedToProject(projectId));
 
 
-                        projectArray.add(p);
+                            projectArray.add(p);
+                        }
                     }
                 }
             }

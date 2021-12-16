@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org">
+<!-- Amanda Tolstrup Laursen -->
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+
+    <link th:href="@{../../static/style/Style.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{../../static/style/header.css}" type="text/css" rel="stylesheet">
+    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
     <link href="../static/style/Style.css" type="text/css" rel="stylesheet">
     <link href="style/Style.css" type="text/css" rel="stylesheet">
     <link href="style/header.css" type="text/css" rel="stylesheet">
-    <link href="../static/style/header.css" type="text/css" rel="stylesheet">
-    <link th:href="@{../static/style/header.css}" type="text/css" rel="stylesheet">
-
-
-
     <title>Overview</title>
 </head>
 <body>
@@ -26,7 +25,8 @@
     <div th:replace="fragments/headers :: Employee-header"></div>
 </div>
 
-<table>
+
+<table class="showData">
     <tr>
         <th id="Titel">Title</th>
         <th id="description">Description</th>
@@ -55,13 +55,27 @@
                onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
         </td>
 
+
+        <td>
+            <a class="link" th:if = "${project.getSubprojectsLinkedToProject().size() > 0 and
+                session.employee.getTaskConnectedToEmployeeAndProject(project.getProjectId()).size() > 0 and
+                project.getAllTasksInProject().size() > 0}"
+               th:href="@{/collapsible/{id}(id=${project.getProjectId()})}">Show and/or create smaller parts</a>
+
+            <a class="link" th:unless = "${project.getSubprojectsLinkedToProject().size() > 0 and
+                session.employee.getTaskConnectedToEmployeeAndProject(project.getProjectId()).size() > 0 and
+                project.getAllTasksInProject().size() > 0}"
+               th:href="@{/collapsible/{id}(id=${project.getProjectId()})}">Create smaller parts</a>
+        </td>
+
     </tr>
 </table>
-<button th:if = "${session.employee.hasCompletedProjects() == false}" class="button" onclick="myFunction()" disabled>Show finished projects</button>
-<button th:unless = "${session.employee.hasCompletedProjects() == false}" class="button" onclick="myFunction()">Show finished projects</button>
 
-<div id="finishedProjects" hidden>
-    <table>
+<button class="hideStuff" th:if = "${session.employee.getCompletedProjectArray().size() == 0}" onclick="myFunction()" disabled>Show finished projects</button>
+<button class="hideStuff" th:unless = "${session.employee.getCompletedProjectArray().size() == 0}" onclick="myFunction()">Show finished projects</button>
+
+<div id="finishedProjects" style="display: none">
+    <table class="showData">
         <tr>
             <th>Title</th>
             <th>Description</th>
@@ -88,6 +102,13 @@
             <td>
                 <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}"
                    onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+            </td>
+
+            <td>
+                <a class="link" th:if = "${project.getSubprojectsLinkedToProject().size() > 0 and
+                session.employee.getTaskConnectedToEmployeeAndProject(project.getProjectId()).size() > 0 and
+                project.getAllTasksInProject().size() > 0}"
+                   th:href="@{/collapsible/{id}(id=${project.getProjectId()})}">See smaller parts</a>
             </td>
 
         </tr>

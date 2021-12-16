@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepo {
+    //Amanda Tolstrup Laursen
 
     SubprojectService sps = new SubprojectService();
 
@@ -114,7 +115,7 @@ public class ProjectRepo {
     }
 
 
-    public int getProjectId(String projectTitle) {
+    public int getProjectIdFromTitle(String projectTitle) {
         try {
             PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT project_id FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
@@ -229,5 +230,21 @@ public class ProjectRepo {
             System.out.println(e.getMessage());
         }
         return projectArray;
+    }
+
+    public boolean doesProjectHaveSubprojects(int projectId) {
+        try {
+            PreparedStatement stmt = JDBC.getConnection().prepareStatement
+                    ("SELECT project_id FROM heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
+            stmt.setInt(1, projectId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            System.out.println("Couldn't check subprojects connected to project with id " + projectId + " from database");
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 }

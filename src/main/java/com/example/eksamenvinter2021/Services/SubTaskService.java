@@ -12,7 +12,8 @@ public class SubTaskService {
         return sb;
     }
 
-    public void updateSubtask(){
+    public void updateSubtask(SubTask st){
+        sr.updateSubtask(st);
 
     }
 

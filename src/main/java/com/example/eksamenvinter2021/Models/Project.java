@@ -1,6 +1,9 @@
 package com.example.eksamenvinter2021.Models;
 
-import com.example.eksamenvinter2021.Resporsitories.LinkTabelRepo;
+import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
+import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
+import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Project {
+    //Amanda Tolstrup Laursen
     private String projectTitle;
     private String projectDeadline;
     private String status;
@@ -21,7 +25,10 @@ public class Project {
     private int projectId;
     private List<Subproject> associatedSubprojects;
 
-    LinkTabelRepo ltr = new LinkTabelRepo();
+    LinkTableRepo ltr = new LinkTableRepo();
+    SubprojectRepo spr = new SubprojectRepo();
+    ProjectRepo pr = new ProjectRepo();
+    TaskRepo tr = new TaskRepo();
 
     public String getDescription() {
         return description;
@@ -177,11 +184,6 @@ public class Project {
             employeeNameList.add(Employee.getEmployeeName());
         });
 
-        employeeList.forEach((Employee) -> {
-            employeeNameList.add(Employee.getEmployeeName());
-        });
-
-
         return employeeNameList;
     }
 
@@ -202,4 +204,19 @@ public class Project {
             }
         }
     }
+
+    public ArrayList<Subproject> getSubprojectsLinkedToProject() {
+        return spr.getSubprojectsLinkedToProject(projectId);
+    }
+
+    public boolean doesProjectHaveSubprojects() {
+        return pr.doesProjectHaveSubprojects(projectId);
+    }
+
+
+    public ArrayList<Task> getAllTasksInProject() {
+        return tr.getAllTasksInProject(projectId);
+    }
+
+
 }

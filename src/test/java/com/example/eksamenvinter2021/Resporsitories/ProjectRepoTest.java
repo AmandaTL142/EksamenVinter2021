@@ -13,7 +13,7 @@ class ProjectRepoTest {
 
 
         //Act
-        int projectIdTest1 = pr.getProjectId("Jul");
+        int projectIdTest1 = pr.getProjectIdFromTitle("Jul");
 
         int expected1 = 15;
         int notExpected1 = 5;

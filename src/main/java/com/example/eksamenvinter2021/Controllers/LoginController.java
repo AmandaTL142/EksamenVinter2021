@@ -40,7 +40,7 @@ public class LoginController {
             session.setAttribute("employee", employee);
             return "redirect:/frontPage";
         }
-        return "index";
+        return "/index";
     }
 
     @GetMapping("/frontpage")

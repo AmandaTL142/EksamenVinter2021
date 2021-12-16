@@ -3,15 +3,19 @@
 <head>
     <title>Fragment</title>
 	<link href="../../static/style/header.css" rel="stylesheet" type="text/css">
-	<link th:href="@{../static/style/Style.css}" type="text/css" rel="stylesheet">
+	<link href="../../static/style/Style.css" rel="stylesheet" type="text/css">
+	<link th:href="@{../../static/style/Style.css}" type="text/css" rel="stylesheet">
+	<link th:href="@{../../static/style/header.css}" type="text/css" rel="stylesheet">
 	<link href="style/Style.css" type="text/css" rel="stylesheet">
+	<link href="style/header.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
 
 <header th:fragment="Manager-header" class="header">
 	<div class="logo-header">
-		<img class="logo" src="../../static/images/logo.png" alt="logo" href="/frontpage">
+		<div class="logo" >
+		</div>
 
     <a href="/frontPage" class="header-nav-bar"><h1>Projects</h1></a> <br>
 		<form class="nav-bar-logout" method="POST" action="/logout">

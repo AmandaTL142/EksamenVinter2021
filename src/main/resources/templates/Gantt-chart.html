@@ -52,6 +52,8 @@
                 projectStatusAsInt = 50;
             }
 
+            console.log(currentProjectName);
+
             data.addRows
             ([
                 [currentProjectId, "Project: " + currentProjectName, currentCustomerId,
@@ -72,6 +74,8 @@
                 } else if (SubprojectStatus === "Ongoing") {
                     subprojectStatusAsInt = 50;
                 }
+                console.log(currentSubprojectName);
+
                 data.addRows
                 ([
                     ["Subproject-Id: " + currentSubprojectId, "Sub-Project - " + currentSubprojectName,

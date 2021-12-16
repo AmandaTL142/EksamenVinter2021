@@ -210,7 +210,7 @@ public class ProjectRepo {
                 p.setStatus(status);
                 p.setCustomerId(customerId);
 
-                if(!status.equals("Complete")){
+                //if(!status.equals("Complete")){
                     if(startDate != null && !startDate.isEmpty() ) {
                         if (endDate != null && !endDate.isEmpty()) {
 
@@ -225,7 +225,7 @@ public class ProjectRepo {
                             projectArray.add(p);
                         }
                     }
-                }
+                //}
             }
 
         } catch (SQLException e) {

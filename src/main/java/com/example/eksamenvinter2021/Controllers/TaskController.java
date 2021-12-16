@@ -91,14 +91,11 @@ public class TaskController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            Employee employee = (Employee) session.getAttribute("employee");
-
 
             /*Her defineres et project ud fra hvilket ID, der indtastes i url*/
             Project p = ps.getProjectObject(thisProjectId);
             /*Her connnectes dette project til sharedProject, så projektet er det samme som det project der vises  */
             sharedProject = p;
-
 
 
             m.addAttribute("project",p);
@@ -156,8 +153,6 @@ public class TaskController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            Employee employee = (Employee) session.getAttribute("employee");
-
             //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
             Subproject sp = sps.getSubprojectObject(thisSubprojectId);
 
@@ -216,20 +211,13 @@ public class TaskController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            Employee employee = (Employee) session.getAttribute("employee");
-            if (employee.getRole().equals("EMPLOYEE")){
-                int id = thisTask;
-                edithThisTask = ts.getTaskObject(id);
+            int id = thisTask;
+            edithThisTask = ts.getTaskObject(id);
 
-                m.addAttribute("tasks",edithThisTask);
-                m.addAttribute("project",sharedProject);
+            m.addAttribute("tasks",edithThisTask);
+            m.addAttribute("project",sharedProject);
 
-                return "task_html/editTask";
-
-            }
-            else{
-                return "error";
-            }
+            return "task_html/editTask";
         }
 
     }
@@ -290,16 +278,9 @@ public class TaskController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            Employee employee = (Employee) session.getAttribute("employee");
-            if (employee.getRole().equals("EMPLOYEE")){
-                int id = taskId;
-                ts.deleteTask(id);
+            ts.deleteTask(taskId);
 
-                return "frontPage";
-            }
-            else{
-                return "error";
-            }
+            return "frontPage";
         }
 
     }

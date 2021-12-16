@@ -1,6 +1,7 @@
 package com.example.eksamenvinter2021.Controllers;
 
 import com.example.eksamenvinter2021.Models.Employee;
+import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
@@ -57,17 +58,48 @@ public class SubTaskController {
         return "subtask_html/showSubtask";
     }
 
-    @GetMapping("/createSubtask/{thisTaskID}")
-    public String task(@PathVariable("thisTaskID") int thisTaskID, Model m){
-        int id = thisTaskID;
+    @GetMapping("/createSubtask/{thisTaskId}")
+    public String createSubtask(@PathVariable("thisTaskId") int thisTaskId, Model m){
 
-        Task t = tr.getTaskFromDB(thisTaskID);
+        Task t = tr.getTaskFromDB(thisTaskId);
 
         sharedTask = t;
         m.addAttribute("task",t);
 
         return "subtask_html/newSubtask";
     }
+
+    @GetMapping("/test2/{thisTaskId}")
+    public String project(@PathVariable("thisTaskId") int thisTaskId, Model m, HttpSession session) {
+
+        if (ls.notLoggedIn(session)) {
+            return  "redirect:/";
+        } else {
+
+
+            Task t = tr.getTaskFromDB(thisTaskId);
+
+            sharedTask = t;
+
+
+            m.addAttribute("task",t);
+            return"frontPage";
+        }
+    }
+
+
+    @GetMapping("/test}")
+    public String test(Model m){
+        //Task t = tr.getTaskFromDB(345);
+
+        //sharedTask = t;
+        //m.addAttribute("task",t);
+        return "frontPage";
+    }
+
+
+
+
     @PostMapping("/createNewSubtask")
     public String createNewSubtask(WebRequest wr, HttpSession session){
         String title=wr.getParameter("new-subtask-title");
@@ -96,7 +128,7 @@ public class SubTaskController {
         sr.insertLinkTTableWithEmployeeAndTaskInDB(employeeID, subtaskID, taskID);
 
 
-        return "subtask_html/showSubtask";
+        return "frontPage";
     }
 
     @GetMapping("/editSubtask/{thisSubtask}")

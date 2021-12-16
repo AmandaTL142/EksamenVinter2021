@@ -24,7 +24,7 @@ public class Test {
         TaskRepo tr = new TaskRepo();
         ProjectService ps = new ProjectService();
         //System.out.println(getTaskFromDatabase(5));
-        Project project = pr.getProjectFromDatabase(15);
+        //Project project = pr.getProjectFromDatabase(15);
         //Date date = project.getDateinDateFormat();
         //System.out.println(date);
         //System.out.println(cr.returnCustomerNameFromId(5));
@@ -48,10 +48,11 @@ public class Test {
 
         //currentProject.setDescription("description");
 
-        tr.getAllTasksInProject(425);
+        //tr.getAllTasksInProject(425);
 
         //Add project to DB
         //ps.insertProjectIntoDatabase(currentProject);
+        System.out.println(pr.getProjectIdFromTitle("Build the Metro City Ring"));
 
     }
 

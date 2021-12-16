@@ -70,7 +70,7 @@ public class TimeMethods {
         //calculates total hours spend by adding together all reported hours spent by employees
         int totalHoursSpent = 0;
 
-        for (Task t : tr.getAllTasksInnProject(p.getProjectId())) {
+        for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
             if (t.getStatus().equals("complete")) {
                 totalHoursSpent += Integer.parseInt(t.getTimeUsed());
             }
@@ -83,7 +83,7 @@ public class TimeMethods {
         //calculates endTimes reported by employees
         int totalHoursEstimated = 0;
 
-        for (Task t : tr.getAllTasksInnProject(p.getProjectId())) {
+        for (Task t : tr.getAllTasksInProject(p.getProjectId())) {
             totalHoursEstimated += Integer.parseInt(t.getEstimatedTime());
         }
        return totalHoursEstimated;

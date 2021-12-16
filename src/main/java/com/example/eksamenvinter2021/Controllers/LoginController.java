@@ -18,11 +18,10 @@ public class LoginController {
     //Her laver vi noget log-in logik
     //Benyt sessions
     EmployeeService es = new EmployeeService();
-    LoginService ls = new LoginService();
 
     @GetMapping("/")
     public String login( HttpSession session) {
-        if(ls.notLoggedIn(session)){
+        if(LoginService.notLoggedIn(session)){
             return "index";
         }
         return "frontPage";
@@ -34,25 +33,17 @@ public class LoginController {
         String password = wr.getParameter("password");
 
         //Evaluer om login matcher database
-        boolean validPass = LoginService.login(employee_id, password);
-
-        //Sæt en bruger som enten Manager eller Medarbejder allerede ved login
-        if (validPass) {
+        if (LoginService.login(employee_id, password)) {
             Employee employee = es.showEmployee(employee_id);
             session.setAttribute("employee", employee);
-            return "redirect:/frontpage"; //Mangler projekt-id for at vise korrekt projekt
-            //Vis forskellige sider til manager og medarbejder
-            //Hvis ingen aktiv session --> websiden vises ikke, henviser til login
-            //Alle sider implementerer metode der tjekker om logget ind
-            //Mulighed: Implementer en variation af HTTP-session interface via klasse?
-
+            return "redirect:/frontpage";
         }
         return "index";
     }
 
     @GetMapping("/frontpage")
     public String employee(HttpSession session) {
-        if (ls.notLoggedIn(session)) {
+        if (LoginService.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
             return "frontPage";

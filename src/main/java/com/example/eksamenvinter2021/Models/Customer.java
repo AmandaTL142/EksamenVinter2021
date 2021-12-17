@@ -48,6 +48,14 @@ public class Customer {
         } else {
             Customer otherCustomer = (Customer) other;
             boolean theSameId = otherCustomer.getCustomerId() == this.getCustomerId();
+            if (otherCustomer.getCustomerName() == null && this.getCustomerName() != null) {
+                return false;
+            }
+
+            if (this.getCustomerName() == null && otherCustomer.getCustomerName() != null) {
+                return false;
+            }
+
             boolean theSameName = otherCustomer.getCustomerName().equals(this.getCustomerName());
 
             if (theSameId == true && theSameName == true){
@@ -57,6 +65,5 @@ public class Customer {
             }
         }
     }
-
 }
 

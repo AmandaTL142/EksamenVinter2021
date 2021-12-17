@@ -1,5 +1,6 @@
 package com.example.eksamenvinter2021.Services;
 
+import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.*;
 
@@ -11,6 +12,7 @@ public class Test {
     SubprojectService sps = new SubprojectService();
     ProjectService ps = new ProjectService();
     LinkTableRepo ltr = new LinkTableRepo();
+    SubTaskRepo sr = new SubTaskRepo();
 
     public Test() throws ParseException {
     }
@@ -22,6 +24,7 @@ public class Test {
         TaskService ts = new TaskService();
         TaskRepo tr = new TaskRepo();
         ProjectService ps = new ProjectService();
+        SubTaskRepo sr = new SubTaskRepo();
         //System.out.println(getTaskFromDatabase(5));
         //Project project = pr.getProjectFromDatabase(15);
         //Date date = project.getDateinDateFormat();
@@ -39,6 +42,22 @@ public class Test {
         t.setTaskEstimatedTime("1");
         t.setTaskStartDate("2021-12-23");
         t.setTaskDescription("Subproject-task");
+
+
+        SubTask st = new SubTask();
+        st.setSubtaskTitle("nisse");
+        st.setSubtaskDescription("hej med dig");
+        st.setSubtaskStatus("pending");
+        st.setSubtaskEndDate("2021-12-23");
+        st.setSubtaskProjectId(15);
+        st.setSubtaskTimeUsed("1");
+       st.setSubtaskEstimatedTime("1");
+       st.setSubtaskStartDate("2021-12-23");
+        st.setSubtaskStartDate("2021-12-23");
+
+        sr.insertNewSubtaskToDB(st);
+
+
         //ts.insertNewTaskToDB(t);
         //tr.insertTaskToLinktableWithSubproject(15, 475, 15, 15);
         //System.out.println(tr.getTaskFromDB(345));
@@ -52,6 +71,7 @@ public class Test {
         //Add project to DB
         //ps.insertProjectIntoDatabase(currentProject);
         System.out.println(pr.getProjectIdFromTitle("Build the Metro City Ring"));
+
 
     }
 

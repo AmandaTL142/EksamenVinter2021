@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ErrorPageController{
     //Amanda Tolstrup Laursen
 
+    //Denne controller returnerer en error-page
     @GetMapping("/error")
     public String customError() {
         return "error";

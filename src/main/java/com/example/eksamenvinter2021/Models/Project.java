@@ -30,6 +30,7 @@ public class Project {
     ProjectRepo pr = new ProjectRepo();
     TaskRepo tr = new TaskRepo();
 
+    //Nedenfor er getters og setters for projects attributter
     public String getDescription() {
         return description;
     }
@@ -104,6 +105,27 @@ public class Project {
         return totalTime;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public Date getDateinDateFormat(String dateInput) throws ParseException {
+        Date returnDate=new SimpleDateFormat("yyyy-MM-dd").parse(dateInput);
+        return returnDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     public List<Subproject> getAssociatedSubprojects()
     {
         return associatedSubprojects;
@@ -115,6 +137,7 @@ public class Project {
     }
 
 
+    //Herunder er fire forskellige constructors. Således er constructoren overloadet.
     public Project(String title, String projectDeadline, String status, double basePrice, int customerId) {
         this.projectTitle = title;
         this.projectDeadline = projectDeadline;
@@ -146,6 +169,8 @@ public class Project {
     public Project() {
     }
 
+    //Herunder er toString-metoden overridet. Denne bruges ikke i programmet, men vi har brugt den i udviklingen
+    // til at printe projekter og tjekke, hvilke attributter, de har tilknyttet.
     @Override
     public String toString() {
         return "Project{" +
@@ -164,27 +189,6 @@ public class Project {
                 '}';
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public Date getDateinDateFormat(String dateInput) throws ParseException {
-        Date returnDate=new SimpleDateFormat("yyyy-MM-dd").parse(dateInput);
-        return returnDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
     public ArrayList<String> getEmployeesNamesFromProject(){
         ArrayList<Employee> employeeList = ltr.getEmployeesFromProject(projectId);
         ArrayList<String> employeeNameList = new ArrayList<>();
@@ -196,6 +200,7 @@ public class Project {
         return employeeNameList;
     }
 
+    //equals-metoden overrides, så vi kan teste getProjectObject i en unit-test
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Project)) {
@@ -214,6 +219,8 @@ public class Project {
         }
     }
 
+
+    //Nedenstående metoder er tilknyttet Project, så de kan kaldes i HTML
     public ArrayList<Subproject> getSubprojectsLinkedToProject() {
         return spr.getSubprojectsLinkedToProject(projectId);
     }

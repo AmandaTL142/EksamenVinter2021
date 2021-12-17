@@ -26,7 +26,7 @@ class CustomerServiceTest {
         notExpected1.setCustomerName("Københavns Kommune");
 
         Customer notExpected2 = new Customer();
-        notExpected2.setCustomerId(215);
+        notExpected2.setCustomerId(205);
         notExpected2.setCustomerName("");
 
         //Assert

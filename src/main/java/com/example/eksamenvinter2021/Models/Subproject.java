@@ -18,10 +18,7 @@ public class Subproject {
 
     SubprojectRepo spr = new SubprojectRepo();
 
-    public Subproject() {
-    }
-
-
+    //Herunder er getters og setters for subprojects attributter
     public int getSubprojectId() {
         return subprojectId;
     }
@@ -70,26 +67,6 @@ public class Subproject {
         this.projectId = projectId;
     }
 
-    public Subproject(String title, String deadline, String status, int projectId) {
-        this.subprojectTitle = title;
-        this.subprojectStatus = status;
-        this.subprojectDeadline = deadline;
-        this.projectId = projectId;
-    }
-
-    //Christian Hundahl
-    @Override
-    public String toString() {
-        return "Subproject{" +
-                "subprojectId=" + subprojectId +
-                ", subprojectTitle='" + subprojectTitle + '\'' +
-                ", subprojectDescription='" + subprojectDescription + '\'' +
-                ", subprojectDeadline='" + subprojectDeadline + '\'' +
-                ", subprojectStatus='" + subprojectStatus + '\'' +
-                ", projectId=" + projectId +
-                '}';
-    }
-
     public String getStartDate() {
         return startDate;
     }
@@ -106,6 +83,30 @@ public class Subproject {
         this.endDate = endDate;
     }
 
+    //Herunder er to controllers. Controlleren er således overloadet.
+    public Subproject() {
+    }
+
+    public Subproject(String title, String deadline, String status, int projectId) {
+        this.subprojectTitle = title;
+        this.subprojectStatus = status;
+        this.subprojectDeadline = deadline;
+        this.projectId = projectId;
+    }
+
+    @Override
+    public String toString() {
+        return "Subproject{" +
+                "subprojectId=" + subprojectId +
+                ", subprojectTitle='" + subprojectTitle + '\'' +
+                ", subprojectDescription='" + subprojectDescription + '\'' +
+                ", subprojectDeadline='" + subprojectDeadline + '\'' +
+                ", subprojectStatus='" + subprojectStatus + '\'' +
+                ", projectId=" + projectId +
+                '}';
+    }
+
+    //equals-metoden overrides, så vi kan teste getSubprojectObject i en unit-test
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Subproject)) {
@@ -125,6 +126,7 @@ public class Subproject {
         }
     }
 
+    //Nedenstående metoder er tilknyttet Subproject, så de kan kaldes i HTML
     public ArrayList<Task> getTasksLinkedToSubproject() {
         return spr.getTasksLinkedToSubproject(subprojectId);
     }

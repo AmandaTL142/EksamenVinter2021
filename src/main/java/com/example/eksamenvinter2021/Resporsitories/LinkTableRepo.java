@@ -48,16 +48,7 @@ public class LinkTableRepo {
             for (int i = 0; i < projectObjects.size(); i++) {
                 Project projectObject = projectObjects.get(i);
                 String status = projectObject.getStatus();
-                //FIXME: Couldn't get project with id 0 from database
-                //Illegal operation on empty result set.
-                //Couldn't get projects for employee with id 15 from database
-                //Cannot invoke "String.equalsIgnoreCase(String)" because "status" is null
-                //TODO: create method 'changeStatus' to set a project's status to ongoing
-                /*if (status == null) {
-                    System.out.println("Project status should not be null.");
-                    projectObject.changeStatus("ongoing");
-                    activeProjectObjects.add(projectObject);
-                }*/
+
                 if (!status.equalsIgnoreCase("complete")){
                     activeProjectObjects.add(projectObject);
                 }

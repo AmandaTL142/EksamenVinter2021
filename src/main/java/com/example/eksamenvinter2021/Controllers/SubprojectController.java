@@ -25,7 +25,9 @@ public class SubprojectController {
     LoginService ls = new LoginService();
 
 
-    //Skal denne bruges?
+    //Denne controller kan bruges til at vise et delprojekt, men den er ikke implementeret i programmets
+    // nuværende version.
+    /*
     @GetMapping("/subproject/{thisSubproject}")
     public String subproject(@PathVariable("thisSubproject") String thisSubproject, Model model) {
         int id = Integer.parseInt(thisSubproject);
@@ -33,8 +35,9 @@ public class SubprojectController {
         model.addAttribute("Project", ps.getProjectObject((sps.getSubprojectObject(id)).getProjectId()));
         return "subproject_html/showSubproject";
     }
+     */
 
-
+    //Denne controller bruges til at vise siden, hvor brugeren kan oprette et nyt projekt
     @GetMapping("/newSubproject/{thisProjectId}")
     public String newSubproject(@PathVariable("thisProjectId") int thisProjectId, HttpSession session) {
         if (ls.notLoggedIn(session)) {
@@ -51,7 +54,7 @@ public class SubprojectController {
         }
     }
 
-
+    //Denne controller bruges til at hente input fra brugeren og bruge det til at oprette et delprojekt
     @PostMapping("/createNewSubproject")
     public String createNewSubproject(HttpSession session, WebRequest webr) {
         //model.addAttribute("projects", projectArray);
@@ -84,7 +87,7 @@ public class SubprojectController {
         return "frontPage";
     }
 
-
+    //Denne controller bruges til at slette et delprojekt via dets id
     @GetMapping("/deleteSubproject/{subprojectId}")
     public String deleteSubproject(@PathVariable String subprojectId, HttpSession session) throws SQLException {
         if (ls.notLoggedIn(session)) {
@@ -102,7 +105,8 @@ public class SubprojectController {
         }
     }
 
-
+    //Denne controller bruges til at modtage et delprojekt-id fra programmet, oprette et tilhørende delprojekt
+    // og gemme dette til senere brug
     @GetMapping("/editSubproject/{thisSubproject}")
     public String editSubrojectGetSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {
@@ -125,7 +129,7 @@ public class SubprojectController {
         }
     }
 
-    //Denne virker
+    //Denne controller bruges til at hente input fra brugeren og bruge det til at opdatere et delprojekt
     @RequestMapping("/editSubprojectChanges")
     public String editSubprojectGetChanges(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("subproject-title-input");
@@ -155,7 +159,9 @@ public class SubprojectController {
         return "frontPage";
     }
 
-    //Skal denne bruges?
+    //Nedenstående kan bruges til at vise alle delprojekter forbundet til et projekt men den er ikke implementeret
+    // i programmets nuværende version.
+    /*
     @GetMapping("/showSubprojects/{thisProject}")
     public String subProjects(@PathVariable("thisProject") String thisProject, Model model) {
         int id = Integer.parseInt(thisProject);
@@ -164,9 +170,13 @@ public class SubprojectController {
         return "subproject_html/showSubprojects";
     }
 
+     */
 
+
+    //Denne controller bruges til at vise brugeren den side, hvor den kan tilføje en employee til et delprojekt
     @GetMapping("/addEmployeeToSubproject/{thisSubproject}")
-    public String addEmployeeToSubproject1(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
+    public String addEmployeeToSubproject1(@PathVariable("thisSubproject") int thisSubproject, Model model,
+                                           HttpSession session) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
@@ -192,7 +202,7 @@ public class SubprojectController {
         }
     }
 
-
+    //Denne controller bruges til at modtage brugerens valg af employee, der skal tilføjes
     @RequestMapping("/addEmployeeToSubprojectInput")
     public String addEmployeeToSubproject2(WebRequest webr, HttpSession session) {
         String employeeIdString = webr.getParameter("subproject-employeeId-input");
@@ -205,7 +215,8 @@ public class SubprojectController {
         return "frontPage";
     }
 
-
+    //Denne controller bruges til at tilgå en side, hvor man kan vælge, hvilken employee, der skal fjernes fra
+    // et delprojekt
     @GetMapping("/removeEmployeeFromSubproject/{thisSubproject}")
     public String removeEmployeeFromSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {
@@ -226,33 +237,9 @@ public class SubprojectController {
         }
     }
 
-/*
-    //Nedenstående virker ikke
-    @PostMapping("/removeEmployee/{employeeId}")
-    public String removeEmployee(@PathVariable("employeeId") int employeeId, HttpSession session){
 
-        if (ls.notLoggedIn(session)) {
-            return  "redirect:/";
-        } else {
-            //Checks if the user is a manager and thus allowed to access the site
-            Employee employee = (Employee) session.getAttribute("employee");
-            if (employee.getRole().equals("MANAGER")){
-                Subproject subproject = (Subproject) session.getAttribute("Subproject");
-                int subprojectId = subproject.getSubprojectId();
-                lts.removeEmployeeFromSubproject(employeeId, subprojectId);
-                return "frontPage";
-            }
-            else{
-                return "error";
-            }
-        }
-    }
-
-    */
-
-
-
-    //Nedenstående er ikke testet
+    //Denne controller bruges til at fjerne en valgt employee fra en liste ud fra dennes employeeId samt et delprojekt,
+    // der blev gemt i session i ovenstående controller
     @GetMapping("/removeEmployeeSubproject/{employeeId}")
     public String removeEmployeeSubproject(@PathVariable("employeeId") int employeeId, HttpSession session){
 

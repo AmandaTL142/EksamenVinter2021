@@ -19,8 +19,8 @@ public class LinkTableRepo {
     ProjectService ps = new ProjectService();
     EmployeeService es = new EmployeeService();
     SubprojectService sps = new SubprojectService();
-    TaskService ts = new TaskService();
 
+    //
     public ArrayList<Project> getActiveProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
         ArrayList<Project> projectObjects = new ArrayList<>();
@@ -131,48 +131,6 @@ public class LinkTableRepo {
         }
         return subProjects;
     }
-    /*
-    public ArrayList<Task> getTasksConnectedToSubProjectsAndEmployee(int subprojectId, int employeeId) {
-        ArrayList<Task> tasks = new ArrayList<>();
-        try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT task_id FROM " +
-                    "link_table WHERE subproject_id = ? AND employee_id = ?;");
-            stmt.setInt(1, subprojectId);
-            stmt.setInt(2, employeeId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int taskId = rs.getInt("task_id");
-                Task temp = ts.getTaskObject(taskId);
-                tasks.add(temp);
-            }
-        } catch (Exception e) {
-            System.out.println("Could not get tasks for employee ID" + employeeId +
-                    " and subproject ID " + subprojectId);
-            System.out.println(e.getMessage());
-        }
-        return tasks;
-    }
-
-    public ArrayList<SubTask> getSubtasksConnectedToTasksAndEmployee(int taskId, int employeeId) {
-        ArrayList<SubTask> subTasks = new ArrayList<>();
-        try {
-            PreparedStatement stmt = JDBC.getConnection().prepareStatement("SELECT subtask_id FROM " +
-                    "link_table WHERE task_id = ? AND employee_id = ?;");
-            stmt.setInt(1, taskId);
-            stmt.setInt(2, employeeId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int subTaskId = rs.getInt("subproject_id");
-                SubTask temp = sps.getSubTaskObject(subTaskId);
-                subTasks.add(temp);
-            }
-        } catch (Exception e) {
-            System.out.println("Could not get subprojects for employee ID" + employeeId +
-                    " and project ID " + taskId);
-            System.out.println(e.getMessage());
-        }
-        return subTasks;
-    }*/
 
     public ArrayList<Employee> getEmployeesFromProject(int projectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();

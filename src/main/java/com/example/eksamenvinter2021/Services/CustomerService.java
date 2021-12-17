@@ -6,6 +6,8 @@ import com.example.eksamenvinter2021.Resporsitories.CustomerRepo;
 
 import java.util.List;
 
+//CAS
+
 public class CustomerService {
 
     CustomerRepo customerRepo = new CustomerRepo();

@@ -1,5 +1,7 @@
 package com.example.eksamenvinter2021.Models;
 
+//CAS
+
 public class Customer {
     private String customerName;
     private int customerId;

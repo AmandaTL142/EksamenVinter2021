@@ -212,16 +212,16 @@ public class SubprojectRepo {
                 String endDate = rs.getString("end_date");
 
                 task = new Task();
-                task.setSubprojectId(thisSubprojectId);
-                task.setEndDate(endDate);
-                task.setProjectId(projectId);
-                task.setStartDate(startDate);
-                task.setStatus(status);
-                task.setEstimatedTime(estimatedTime);
-                task.setId(taskId);
-                task.setDescription(description);
-                task.setTimeUsed(timeUsed);
-                task.setTitle(title);
+                task.setTaskSubprojectId(thisSubprojectId);
+                task.setTaskEndDate(endDate);
+                task.setTaskProjectId(projectId);
+                task.setTaskStartDate(startDate);
+                task.setTaskStatus(status);
+                task.setTaskEstimatedTime(estimatedTime);
+                task.setTaskId(taskId);
+                task.setTaskDescription(description);
+                task.setTaskTimeUsed(timeUsed);
+                task.setTaskTitle(title);
 
                 tasks.add(task);
 

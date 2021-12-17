@@ -103,7 +103,7 @@ public class EmployeeRepo {
         return employeeList;
     }
 
-    //Login methods
+    //Christian Hundahl
     public static boolean login(int employee_id, String password) {
         int checkId = 0;
         String checkPassword = "";
@@ -128,6 +128,7 @@ public class EmployeeRepo {
         return false;
     }
 
+    //Christian Hundahl
     public static boolean isManager(int userId) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM employees where employee_id=?;");

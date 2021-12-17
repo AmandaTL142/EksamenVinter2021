@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectRepoTest {
+    //Amanda Tolstrup Laursen
 
     @Test
     void testGetProjectId() {
@@ -13,11 +14,11 @@ class ProjectRepoTest {
 
 
         //Act
-        int projectIdTest1 = pr.getProjectIdFromTitle("Jul");
+        int projectIdTest1 = pr.getProjectIdFromTitle("Build Papirøen");
 
-        int expected1 = 15;
-        int notExpected1 = 5;
-        int notExpected2 = 25;
+        int expected1 = 415;
+        int notExpected1 = 425;
+        int notExpected2 = 405;
 
 
         //Assert

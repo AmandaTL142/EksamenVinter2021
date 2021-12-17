@@ -75,7 +75,7 @@ public class CustomerRepo {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Couldn't update Customer: '" + customer.getCustomerName() + "' ID: " + customer.getCustomerId() +" in database");
+            System.out.println("Couldn't update Customer: '" + customer.getCustomerName() + "' Id: " + customer.getCustomerId() +" in database");
             System.out.println(e.getMessage());
         }
 
@@ -84,7 +84,7 @@ public class CustomerRepo {
     //Returns a customer based on their customer_Name
     //Cas
     public int getCustomerIdFromDatabase(String name) {
-        int customer_id = 0;
+        int customerId = 0;
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(
                     "SELECT customer_id FROM heroku_7aba49c42d6c0f0.customers WHERE name=?;");
@@ -94,14 +94,14 @@ public class CustomerRepo {
             int id = rs.getInt("customer_id");
 
             //Tilføjet af Amanda ifm. unit-test
-            customer_id = id;
+            customerId = id;
 
 
         } catch(SQLException e){
             System.out.println("Couldn't get the customer-id for customer with name " + name + " from the database");
             System.out.println(e.getMessage());
         }
-        return customer_id;
+        return customerId;
     }
 
     //Returns a customer name from customer_Id

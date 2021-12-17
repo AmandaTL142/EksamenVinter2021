@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerRepoTest {
+    //Amanda Tolstrup Laursen
 
     @Test
     void getCustomerIdFromDatabase() {
@@ -13,11 +14,11 @@ class CustomerRepoTest {
 
 
         //Act
-        int customerIdTest1 = pr.getCustomerIdFromDatabase("Amanda");
+        int customerIdTest1 = pr.getCustomerIdFromDatabase("Københavns Kommune");
 
-        int expected1 = 5;
-        int notExpected1 = 0;
-        int notExpected2 = 15;
+        int expected1 = 205;
+        int notExpected1 = 195;
+        int notExpected2 = 210;
 
 
         //Assert
@@ -31,13 +32,12 @@ class CustomerRepoTest {
         //Arrange
         CustomerRepo pr = new CustomerRepo();
 
-
         //Act
-        String customerNameTest1 = pr.returnCustomerNameFromId(5);
+        String customerNameTest1 = pr.returnCustomerNameFromId(205);
 
-        String expected1 = "Amanda";
+        String expected1 = "Københavns Kommune";
         String notExpected1 = "";
-        String notExpected2 = "Karl";
+        String notExpected2 = "KMD";
 
 
         //Assert

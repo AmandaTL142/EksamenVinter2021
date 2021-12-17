@@ -19,7 +19,6 @@ public class ProjectController {
     ProjectService ps = new ProjectService();
     CustomerService cs = new CustomerService();
     LinkTabelService lts = new LinkTabelService();
-    Project editThisProject = new Project();
     EmployeeService es = new EmployeeService();
     LoginService ls = new LoginService();
 
@@ -54,7 +53,7 @@ public class ProjectController {
 
     }
 
-    //Denne virker
+
     @PostMapping("/createNewProject")
     public String createNewProject(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("project-title-input");
@@ -65,22 +64,23 @@ public class ProjectController {
         String status = webr.getParameter("project-status-input");
 
         double basePrice = 0;
-        try {
-            basePrice = Double.parseDouble(basePriceString);
-        } catch (Exception e) {
-            System.out.println("Baseprice could not be converted from string to double. " +
-                    "Check whether the input is a number.");
-            e.printStackTrace();
+        if (basePriceString != null){
+            try {
+                basePrice = Double.parseDouble(basePriceString);
+            } catch (Exception e) {
+                System.out.println("Baseprice could not be converted from string to double. " +
+                        "Check whether the input is a number.");
+                e.printStackTrace();
+            }
         }
 
-
-        int customerId = Integer.parseInt(customerIdString);
-
+        int customerId = 0;
+        if (customerIdString != null){
+            customerId = Integer.parseInt(customerIdString);
+        }
 
         //Create project-object
-        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId);
-
-        currentProject.setDescription(description);
+        Project currentProject = ps.createNewProjectObject(title, deadline, status, basePrice, customerId, description);
 
         //Add project to DB
         ps.insertProjectIntoDatabase(currentProject);
@@ -91,8 +91,8 @@ public class ProjectController {
 
         //Connect project to manager via LinkTable
         Employee employee = (Employee) session.getAttribute("employee");
-        int employeeID = employee.getEmployeeId();
-        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeID, projectId);
+        int employeeId = employee.getEmployeeId();
+        lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
 
         return "frontPage";
     }
@@ -103,7 +103,7 @@ public class ProjectController {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            editThisProject = ps.getProjectObject(thisProject);
+            session.setAttribute("Project", ps.getProjectObject(thisProject));
             model.addAttribute("Project", ps.getProjectObject(thisProject));
 
             //Checks if the user is a manager and thus allowed to access the site
@@ -119,7 +119,7 @@ public class ProjectController {
 
     //Denne virker
     @RequestMapping("/editProjectChanges")
-    public String editProjectGetChanges(WebRequest webr) {
+    public String editProjectGetChanges(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("project-title-input");
         String deadline = webr.getParameter("project-deadline-input");
         String basePriceString = webr.getParameter("project-baseprice-input");
@@ -129,20 +129,21 @@ public class ProjectController {
         String startDate = webr.getParameter("project-startdate-input");
         String endDate = webr.getParameter("project-enddate-input");
 
+        Project Project = (Project) session.getAttribute("Project");
 
         if (title!="" && title!=null){
-            editThisProject.setProjectTitle(title);
+            Project.setProjectTitle(title);
         }
 
         if (deadline!="" && deadline!=null){
-            editThisProject.setProjectDeadline(deadline);
+            Project.setProjectDeadline(deadline);
         }
 
         if (basePriceString!="" && basePriceString!=null){
             double basePrice = 0;
             try {
                 basePrice = Double.parseDouble(basePriceString);
-                editThisProject.setBasePrice(basePrice);
+                Project.setBasePrice(basePrice);
             } catch (Exception e) {
                 System.out.println("Baseprice could not be converted from string to double. " +
                         "Check whether the input is a number.");
@@ -151,25 +152,25 @@ public class ProjectController {
         }
 
         if (description!="" && description!=null){
-            editThisProject.setDescription(description);
+            Project.setDescription(description);
         }
         if (costumerName!="" && costumerName!=null){
             int customerId = cs.getCustomerIdFromDatabase(costumerName);
-            editThisProject.setCustomerId(customerId);
+            Project.setCustomerId(customerId);
         }
 
-        editThisProject.setStatus(status);
+        Project.setStatus(status);
 
         if (startDate!="" && startDate!=null){
-            editThisProject.setStartDate(startDate);
+            Project.setStartDate(startDate);
         }
 
         if (endDate!="" && endDate!=null){
-            editThisProject.setEndDate(endDate);
+            Project.setEndDate(endDate);
         }
 
         //Update project in DB
-        ps.updateProjectInDatabase(editThisProject);
+        ps.updateProjectInDatabase(Project);
 
         return "frontPage";
     }
@@ -229,22 +230,24 @@ public class ProjectController {
             ArrayList<Employee> allEmployees = es.getAllEmployeesFromDatabase();
             ArrayList<Employee> projectEmployees = lts.getEmployeesFromProject(thisProject);
 
+            session.setAttribute("Project", ps.getProjectObject(thisProject));
+
             allEmployees.removeAll(projectEmployees);
 
             model.addAttribute("projectEmployees", projectEmployees);
             model.addAttribute("allEmployees", allEmployees);
-            editThisProject = ps.getProjectObject(thisProject);
-            model.addAttribute("project", editThisProject);
+            model.addAttribute("project", ps.getProjectObject(thisProject));
             return "project_html/addEmployeeToProject.html";
         }
     }
 
 
     @RequestMapping("/addEmployeeToProjectInput")
-    public String addEmployeeToProject(WebRequest webr) {
+    public String addEmployeeToProject(WebRequest webr, HttpSession session) {
         String employeeIdString = webr.getParameter("project-employeeId-input");
+        Project Project = (Project) session.getAttribute("Project");
         int employeeId = Integer.parseInt(employeeIdString);
-        int projectId = editThisProject.getProjectId();
+        int projectId = Project.getProjectId();
         lts.insertLinkTableWithEmployeeAndProjectIntoDatabase(employeeId, projectId);
         return "frontPage";
     }
@@ -272,8 +275,9 @@ public class ProjectController {
             ArrayList<Employee> projectManagers = lts.getManagersFromProject(thisProject);
             model.addAttribute("projectEmployees", projectEmployees);
             model.addAttribute("projectManagers", projectManagers);
-            editThisProject = ps.getProjectObject(thisProject);
-            model.addAttribute("project", editThisProject);
+            session.setAttribute("Project", ps.getProjectObject(thisProject));
+            model.addAttribute("project", ps.getProjectObject(thisProject));
+
             return "project_html/removeEmployeeFromProject.html";
         }
     }
@@ -287,7 +291,8 @@ public class ProjectController {
             //Checks if the user is a manager and thus allowed to access the site
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                int projectId = editThisProject.getProjectId();
+                Project Project = (Project) session.getAttribute("Project");
+                int projectId = Project.getProjectId();
                lts.removeEmployeeFromProject(employeeId, projectId);
                 return "frontPage";
             }

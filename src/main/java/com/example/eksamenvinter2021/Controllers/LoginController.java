@@ -28,14 +28,14 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(WebRequest wr, HttpSession session) throws SQLException {
-        int employee_id = Integer.parseInt(wr.getParameter("employee_id"));
+        int employeeId = Integer.parseInt(wr.getParameter("employee_id"));
         String password = wr.getParameter("password");
 
         //Evaluer om login-oplysninger matcher database
-        if (LoginService.login(employee_id, password)) {
+        if (LoginService.login(employeeId, password)) {
             //Hvis if-statement == true
             //Hent employee fra database
-            Employee employee = es.showEmployee(employee_id);
+            Employee employee = es.showEmployee(employeeId);
             //Sæt employee som attribut til sessionen
             session.setAttribute("employee", employee);
             return "redirect:/frontPage";

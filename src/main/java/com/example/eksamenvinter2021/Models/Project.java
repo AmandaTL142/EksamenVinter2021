@@ -123,6 +123,15 @@ public class Project {
         this.customerId = customerId;
     }
 
+    public Project(String title, String projectDeadline, String status, double basePrice, int customerId, String description) {
+        this.projectTitle = title;
+        this.projectDeadline = projectDeadline;
+        this.status = status;
+        this.basePrice = basePrice;
+        this.customerId = customerId;
+        this.description = description;
+    }
+
 
     public Project(int projectId, String title, String status, int customerId, String startDate, String endDate) {
         this.projectId = projectId;

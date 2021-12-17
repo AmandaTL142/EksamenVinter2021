@@ -125,8 +125,8 @@ public class LinkTableRepo {
                 subProjects.add(temp);
             }
         } catch (Exception e) {
-            System.out.println("Could not get subprojects for employee ID" + employeeId +
-                    " and project ID " + projectId);
+            System.out.println("Could not get subprojects for employee Id" + employeeId +
+                    " and project Id " + projectId);
             System.out.println(e.getMessage());
         }
         return subProjects;

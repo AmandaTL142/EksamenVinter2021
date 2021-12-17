@@ -1,22 +1,21 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.SubTaskRepo;
-import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
+//Hele klassen lavet af Andrea
 public class Task {
-    private int id;
-    private String title;
-    private String description;
-    private String estimatedTime;
-    private String timeUsed;
-    private String status;
-    private int projectId;
-    private int subprojectId;
-    private String startDate;
-    private String endDate;
+    private int taskId;
+    private String taskTitle;
+    private String taskDescription;
+    private String taskEstimatedTime;
+    private String taskTimeUsed;
+    private String taskStatus;
+    private int taskProjectId;
+    private int taskSubprojectId;
+    private String taskStartDate;
+    private String taskEndDate;
 
     SubTaskRepo str = new SubTaskRepo();
 
@@ -27,122 +26,122 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, String description, String estimatedTime, String timeUsed, String status) {
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimatedTime;
-        this.timeUsed = timeUsed;
-        this.status = status;
+    public Task(String taskTitle, String taskDescription, String TaskEstimatedTime, String timeUsed, String status) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskEstimatedTime = TaskEstimatedTime;
+        this.taskTimeUsed = timeUsed;
+        this.taskStatus = status;
     }
 
-    public Task(String title, String description, String estimated_time, String timeUsed, String status, int projectID, int subprojectID, String startDate, String endDate) {
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimated_time;
-        this.timeUsed = timeUsed;
-        this.status = status;
-        this.startDate=startDate;
-        this.endDate=endDate;
+    public Task(String taskTitle, String taskDescription, String estimated_time, String timeUsed, String status, int projectID, int subprojectID, String taskStartDate, String taskEndDate) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskEstimatedTime = estimated_time;
+        this.taskTimeUsed = timeUsed;
+        this.taskStatus = status;
+        this.taskStartDate = taskStartDate;
+        this.taskEndDate = taskEndDate;
     }
 
-    public Task(String title, String description, String estimated_time, String timeUsed, String status, String startDate, String endDate) {
-        this.title = title;
-        this.description = description;
-        this.estimatedTime = estimated_time;
-        this.timeUsed = timeUsed;
-        this.status = status;
-        this.startDate=startDate;
-        this.endDate=endDate;
+    public Task(String taskTitle, String taskDescription, String estimated_time, String timeUsed, String status, String taskStartDate, String taskEndDate) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskEstimatedTime = estimated_time;
+        this.taskTimeUsed = timeUsed;
+        this.taskStatus = status;
+        this.taskStartDate = taskStartDate;
+        this.taskEndDate = taskEndDate;
     }
 
-    public Task(int task_id, String title, String description, String estimated_time, String time_used, String status, int project_id, int subproject_id, String start_date, String end_date) {
+    public Task(int task_id, String taskTitle, String taskDescription, String estimated_time, String time_used, String status, int project_id, int subproject_id, String start_date, String end_date) {
     }
 
-    public Task(int taskId, String title, String description, String estimatedTime, String timeUsed, String status, String startDate, String endDate) {
+    public Task(int taskId, String taskTitle, String taskDescription, String TaskEstimatedTime, String timeUsed, String status, String taskStartDate, String taskEndDate) {
     }
 
-    public String getTitle() {
-        return title;
+    public String getTaskTitle() {
+        return taskTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
-    public String getEstimatedTime() {
-        return estimatedTime;
+    public String getTaskEstimatedTime() {
+        return taskEstimatedTime;
     }
 
-    public void setEstimatedTime(String estimatedTime) {
-        this.estimatedTime = estimatedTime;
+    public void setTaskEstimatedTime(String taskEstimatedTime) {
+        this.taskEstimatedTime = taskEstimatedTime;
     }
 
-    public String getTimeUsed() {
-        return timeUsed;
+    public String getTaskTimeUsed() {
+        return taskTimeUsed;
     }
 
-    public void setTimeUsed(String timeUsed) {
-        this.timeUsed = timeUsed;
+    public void setTaskTimeUsed(String taskTimeUsed) {
+        this.taskTimeUsed = taskTimeUsed;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
-    public int getId() {
-        return id;
+    public int getTaskId() {
+        return taskId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public int getTaskProjectId() {
+        return taskProjectId;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setTaskProjectId(int taskProjectId) {
+        this.taskProjectId = taskProjectId;
     }
 
-    public int getSubprojectId() {
-        return subprojectId;
+    public int getTaskSubprojectId() {
+        return taskSubprojectId;
     }
 
-    public void setSubprojectId(int subprojectId) {
-        this.subprojectId = subprojectId;
+    public void setTaskSubprojectId(int taskSubprojectId) {
+        this.taskSubprojectId = taskSubprojectId;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getTaskStartDate() {
+        return taskStartDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setTaskStartDate(String taskStartDate) {
+        this.taskStartDate = taskStartDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getTaskEndDate() {
+        return taskEndDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setTaskEndDate(String taskEndDate) {
+        this.taskEndDate = taskEndDate;
     }
 
     public void setTasks(ArrayList<Task> tasks) {
@@ -152,22 +151,22 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", estimatedTime='" + estimatedTime + '\'' +
-                ", timeUsed='" + timeUsed + '\'' +
-                ", status='" + status + '\'' +
-                ", projectId=" + projectId +
-                ", subprojectId=" + subprojectId +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                "id=" + taskId +
+                ", title='" + taskTitle + '\'' +
+                ", description='" + taskDescription + '\'' +
+                ", estimatedTime='" + taskEstimatedTime + '\'' +
+                ", timeUsed='" + taskTimeUsed + '\'' +
+                ", status='" + taskStatus + '\'' +
+                ", projectId=" + taskProjectId +
+                ", subprojectId=" + taskSubprojectId +
+                ", startDate='" + taskStartDate + '\'' +
+                ", endDate='" + taskEndDate + '\'' +
                 ", tasks=" + tasks +
                 '}';
     }
 
     public ArrayList<SubTask> getAllSubtaskInTask() {
-        return str.getAllSubtaskInTask(id);
+        return str.getAllSubtaskInTask(taskId);
     }
 
 }

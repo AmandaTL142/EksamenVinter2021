@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Hele klassen lavet af Andrea
 public class SubTaskRepo {
 
     Connection conn = ConnectionManager.getConnection();
@@ -22,15 +23,15 @@ public class SubTaskRepo {
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1,subTask.getTitle());
-            stmt.setString(2,subTask.getDescription());
-            stmt.setString(3,subTask.getEstimatedTime());
-            stmt.setString(4,subTask.getTimeUsed());
-            stmt.setString(5,subTask.getStatus());
-            stmt.setInt(6,subTask.getProjectID());
-            stmt.setInt(7,subTask.getTaskID());
-            stmt.setString(8,subTask.getStartDate());
-            stmt.setString(9,subTask.getEndDate());
+            stmt.setString(1,subTask.getSubtaskTitle());
+            stmt.setString(2,subTask.getSubtaskDescription());
+            stmt.setString(3,subTask.getSubtaskEstimatedTime());
+            stmt.setString(4,subTask.getSubtaskTimeUsed());
+            stmt.setString(5,subTask.getSubtaskStatus());
+            stmt.setInt(6,subTask.getSubtaskProjectId());
+            stmt.setInt(7,subTask.getTaskId());
+            stmt.setString(8,subTask.getSubtaskStartDate());
+            stmt.setString(9,subTask.getSubtaskEndDate());
 
             stmt.executeUpdate();
 
@@ -57,22 +58,22 @@ public class SubTaskRepo {
             String estimatedTime = rs.getString("estimated_time");
             String timeUsed = rs.getString("time_used");
             String status = rs.getString("status");
-            int projectID = rs.getInt("project_id");
-            int taskID = rs.getInt("task_id");
+            int projectId = rs.getInt("project_id");
+            int taskId = rs.getInt("task_id");
             String startDate = rs.getString("start_date");
             String endDate = rs.getString("end_date");
 
-            sb = new SubTask(title,description,estimatedTime,timeUsed,status,projectID,taskID,startDate,endDate);
-            sb.setSubtaskID(id);
-            sb.setTitle(title);
-            sb.setDescription(description);
-            sb.setEstimatedTime(estimatedTime);
-            sb.setTimeUsed(timeUsed);
-            sb.setStatus(status);
-            sb.setProjectID(projectID);
-            sb.setTaskID(taskID);
-            sb.setStartDate(startDate);
-            sb.setEndDate(endDate);
+            sb = new SubTask(title,description,estimatedTime,timeUsed,status,projectId,taskId,startDate,endDate);
+            sb.setSubtaskId(id);
+            sb.setSubtaskTitle(title);
+            sb.setSubtaskDescription(description);
+            sb.setSubtaskEstimatedTime(estimatedTime);
+            sb.setSubtaskTimeUsed(timeUsed);
+            sb.setSubtaskStatus(status);
+            sb.setSubtaskProjectId(projectId);
+            sb.setTaskId(taskId);
+            sb.setSubtaskStartDate(startDate);
+            sb.setSubtaskEndDate(endDate);
 
         } catch (SQLException e) {
             System.out.println("Couldn't get subtask with id " + id + " from database");
@@ -91,27 +92,27 @@ public class SubTaskRepo {
                     "`estimated_time` = ?, `time_used` = ?, `status` =?, `project_id` =?," +
                     " `task_id` =?, `start_date` =?, `end_date` =? WHERE (`subtask_id` =?);");
 
-            stmt.setString(1,sb.getTitle());
-            stmt.setString(2,sb.getDescription());
-            stmt.setString(3,sb.getEstimatedTime());
-            stmt.setString(4,sb.getTimeUsed());
-            stmt.setString(5,sb.getStatus());
-            stmt.setInt(6,sb.getProjectID());
-            stmt.setInt(7,sb.getTaskID());
-            stmt.setString(8,sb.getStartDate());
-            stmt.setString(8,sb.getEndDate());
-            stmt.setInt(9,sb.getSubtaskID());
+            stmt.setString(1,sb.getSubtaskTitle());
+            stmt.setString(2,sb.getSubtaskDescription());
+            stmt.setString(3,sb.getSubtaskEstimatedTime());
+            stmt.setString(4,sb.getSubtaskTimeUsed());
+            stmt.setString(5,sb.getSubtaskStatus());
+            stmt.setInt(6,sb.getSubtaskProjectId());
+            stmt.setInt(7,sb.getTaskId());
+            stmt.setString(8,sb.getSubtaskStartDate());
+            stmt.setString(8,sb.getSubtaskEndDate());
+            stmt.setInt(9,sb.getSubtaskId());
 
             stmt.executeUpdate();
 
 
         } catch (SQLException e) {
-            System.out.println("Couldn't update subtask with id " + sb.getSubtaskID() + " in database");
+            System.out.println("Couldn't update subtask with id " + sb.getSubtaskId() + " in database");
             System.out.println(e.getMessage());
         }
     }
 
-    public int getSubtaskID(String subtaskTitle){
+    public int getSubtaskId(String subtaskTitle){
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT subtask_id FROM " +
                     "heroku_7aba49c42d6c0f0.projects WHERE title=?;");
@@ -131,39 +132,39 @@ public class SubTaskRepo {
         }
     }
 
-    public ArrayList<SubTask> getAllSubtaskInTask(int tID){
+    public ArrayList<SubTask> getAllSubtaskInTask(int tId){
         ArrayList<SubTask> allSubtasks = new ArrayList<>();
 
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement("SELECT * FROM heroku_7aba49c42d6c0f0.subtasks where task_id=?");
-            stmt.setInt(1,tID);
+            stmt.setInt(1,tId);
 
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                int subtaskID = rs.getInt("subtask_id");
+                int subtaskId = rs.getInt("subtask_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
                 String estimated_time = rs.getString("estimated_time");
                 String timeUsed = rs.getString("time_used");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
-                int taskID = rs.getInt("task_id");
+                int projectId = rs.getInt("project_id");
+                int taskId = rs.getInt("task_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
                 SubTask sb = new SubTask();
-                sb.setSubtaskID(subtaskID);
-                sb.setTitle(title);
-                sb.setDescription(description);
-                sb.setEstimatedTime(estimated_time);
-                sb.setTimeUsed(timeUsed);
-                sb.setStatus(status);
-                sb.setProjectID(projectID);
-                sb.setTaskID(taskID);
-                sb.setStartDate(startDate);
-                sb.setEndDate(endDate);
+                sb.setSubtaskId(subtaskId);
+                sb.setSubtaskTitle(title);
+                sb.setSubtaskDescription(description);
+                sb.setSubtaskEstimatedTime(estimated_time);
+                sb.setSubtaskTimeUsed(timeUsed);
+                sb.setSubtaskStatus(status);
+                sb.setSubtaskProjectId(projectId);
+                sb.setTaskId(taskId);
+                sb.setSubtaskStartDate(startDate);
+                sb.setSubtaskEndDate(endDate);
 
                 allSubtasks.add(sb);
             }
@@ -199,14 +200,14 @@ public class SubTaskRepo {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                int subtaskID = rs.getInt("subtask_id");
+                int subtaskId = rs.getInt("subtask_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
                 String estimatedTime = rs.getString("estimated_time");
                 String timeUsed = rs.getString("time_used");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
-                int taskID = rs.getInt("task_id");
+                int projectId = rs.getInt("project_id");
+                int taskId = rs.getInt("task_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
@@ -214,16 +215,16 @@ public class SubTaskRepo {
                 så det ikke går i karambolage med model og man skal ende med at oprette en constructor,
                 som skal matche med den man laver her ift. rækkefølge datatyper*/
                 SubTask sb = new SubTask();
-                sb.setSubtaskID(subtaskID);
-                sb.setTitle(title);
-                sb.setDescription(description);
-                sb.setEstimatedTime(estimatedTime);
-                sb.setTimeUsed(timeUsed);
-                sb.setStatus(status);
-                sb.setProjectID(projectID);
-                sb.setTaskID(taskID);
-                sb.setStartDate(startDate);
-                sb.setEndDate(endDate);
+                sb.setSubtaskId(subtaskId);
+                sb.setSubtaskTitle(title);
+                sb.setSubtaskDescription(description);
+                sb.setSubtaskEstimatedTime(estimatedTime);
+                sb.setSubtaskTimeUsed(timeUsed);
+                sb.setSubtaskStatus(status);
+                sb.setSubtaskProjectId(projectId);
+                sb.setTaskId(taskId);
+                sb.setSubtaskStartDate(startDate);
+                sb.setSubtaskEndDate(endDate);
 
                 subtaskArray.add(sb);
             }
@@ -236,20 +237,20 @@ public class SubTaskRepo {
         return  subtaskArray;
     }
 
-    public ArrayList<SubTask> getSubtaskConnectedToEmployee(int employeeID){
-        ArrayList<Integer> subtaskIDs = new ArrayList<>();
+    public ArrayList<SubTask> getSubtaskConnectedToEmployee(int employeeId){
+        ArrayList<Integer> subtaskIds = new ArrayList<>();
         ArrayList<SubTask> subtaskObjects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE employee_id=?;");
-            stmt.setInt(1,employeeID);
+            stmt.setInt(1,employeeId);
 
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
-                int subtaskID = rs.getInt("subtask_id");
-                subtaskIDs.add(subtaskID);
+                int subtaskId = rs.getInt("subtask_id");
+                subtaskIds.add(subtaskId);
             }
 
         } catch (SQLException e) {
@@ -259,19 +260,19 @@ public class SubTaskRepo {
         return subtaskObjects;
     }
 
-    public ArrayList<Employee> getEmployeeFromSubtask(int subtaskID){
-        ArrayList<Integer> employeeIDs = new ArrayList<>();
+    public ArrayList<Employee> getEmployeeFromSubtask(int subtaskId){
+        ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.link_table WHERE task_id=?;");
-            stmt.setInt(1,subtaskID);
+            stmt.setInt(1,subtaskId);
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                int employeeID= rs.getInt("employee_id");
-                employeeIDs.add(employeeID);
+                int employeeId= rs.getInt("employee_id");
+                employeeIds.add(employeeId);
             }
 
         } catch (SQLException e) {
@@ -280,14 +281,14 @@ public class SubTaskRepo {
         return employeeObjects;
     }
 
-    public void insertLinkTTableWithEmployeeAndTaskInDB(int employeeID, int subtaskID, int taskID){
+    public void insertLinkTTableWithEmployeeAndTaskInDB(int employeeId, int subtaskId, int taskId){
         try {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO `heroku_7aba49c42d6c0f0`.`link_table` (`employee_id`, `subtask_id`, `task_id`) " +
                     "VALUES (?, ?,?);");
 
-            stmt.setInt(1,employeeID);
-            stmt.setInt(2,subtaskID);
-            stmt.setInt(3,taskID);
+            stmt.setInt(1,employeeId);
+            stmt.setInt(2,subtaskId);
+            stmt.setInt(3,taskId);
 
             stmt.executeUpdate();
 
@@ -310,18 +311,18 @@ public class SubTaskRepo {
                 int subtaskId = rs.getInt("subtask_id");
                 String title = rs.getString("title");
                 String status = rs.getString("status");
-                int taskID = rs.getInt("task_id");
+                int taskId = rs.getInt("task_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 
 
                 SubTask sb = new SubTask();
-                sb.setSubtaskID(subtaskId);
-                sb.setTitle(title);
-                sb.setStatus(status);
-                sb.setTaskID(taskID);
-                sb.setStartDate(startDate);
-                sb.setEndDate(endDate);
+                sb.setSubtaskId(subtaskId);
+                sb.setSubtaskTitle(title);
+                sb.setSubtaskStatus(status);
+                sb.setTaskId(taskId);
+                sb.setSubtaskStartDate(startDate);
+                sb.setSubtaskEndDate(endDate);
 
 
                 if(startDate != null && !startDate.isEmpty() ) {
@@ -330,8 +331,8 @@ public class SubTaskRepo {
                         String newStartDate = startDate.replace("-",",").replace("'","");
                         String newEndDate = endDate.replace("-",",").replace("'","");
 
-                        sb.setStartDate(newStartDate);
-                        sb.setEndDate(newEndDate);
+                        sb.setSubtaskStartDate(newStartDate);
+                        sb.setSubtaskEndDate(newEndDate);
 
                         subtaskArray.add(sb);
                     }

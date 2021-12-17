@@ -27,20 +27,12 @@ public class TaskController {
     TaskRepo tr = new TaskRepo();
 
     //Task objects
-    Task edithThisTask = new Task();
     Task t = new Task();
 
     //Project methods
     ProjectRepo pr = new ProjectRepo();
     ProjectService ps = new ProjectService();
     SubprojectService sps = new SubprojectService();
-
-    //Subproject objects
-    Subproject sharedSubproject = new Subproject();
-
-    //Project objects
-    Project sharedProject = new Project();
-    Project editThisProject = new Project();
 
     //Employee
     EmployeeRepo er = new EmployeeRepo();
@@ -53,6 +45,7 @@ public class TaskController {
 
 
     /*thisProject, der står i curly brackets, indikere, at der skal opgives et projectID for at kunne benytte showTask*/
+    //lavet af Andrea
     @GetMapping("/showTask/{thisProject}")
     public String tasks(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
 
@@ -62,16 +55,13 @@ public class TaskController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("EMPLOYEE")){
 
-                int pID = thisProject;
+                int pId = thisProject;
 
                 m.addAttribute("tasks", ts.getAllTasksInArray());
-                m.addAttribute("project", ps.getProjectObject(pID));
+                m.addAttribute("project", ps.getProjectObject(pId));
 
-
-                /*Sharedproject er i første omgang et tomt projekt, men ved brug af getProjectObject, hentes
-                der et allerede eksisterende projekt fra Databasen. Hvilket projekt der hentes er baseret på
-                hvilket projectID der indtastes. Dette project tages med videre, til @Posttmapping "createNewTask*/
-                sharedProject = ps.getProjectObject(thisProject);
+                Project project = ps.getProjectObject(thisProject);
+                session.setAttribute("Project", project);
 
                 return "task_html/showTask";
             }
@@ -94,15 +84,15 @@ public class TaskController {
 
             /*Her defineres et project ud fra hvilket ID, der indtastes i url*/
             Project p = ps.getProjectObject(thisProjectId);
-            /*Her connnectes dette project til sharedProject, så projektet er det samme som det project der vises  */
-            sharedProject = p;
 
+            session.setAttribute("Project", p);
 
             m.addAttribute("project",p);
             return"task_html/newTask";
         }
     }
 
+    //lavet af Andrea
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
     public String createNewTask(WebRequest wr, HttpSession session){
@@ -121,14 +111,16 @@ public class TaskController {
         //Create task-object
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-        /*Her sætter vi projectID, som skal være det ID, som kommer fra projektet der hedder sharedProject*/
-        int projectID = sharedProject.getProjectId();
-        /*Ved at defineret projectID, som værende ID fra sharedProject, er det muligt at tage dette ID med videre,
+
+        Project project = (Project) session.getAttribute("Project");
+
+        int projectId = project.getProjectId();
+        /*Ved at defineret projectId, som værende ID fra sharedProject, er det muligt at tage dette ID med videre,
         når der oprettes en task.
-        På denne måde oprettes en task, som med det samme får et projectID tilknyttet. Dette gør, at så snart
+        På denne måde oprettes en task, som med det samme får et projectId tilknyttet. Dette gør, at så snart
         task opretes tilhører den med det samme et project*/
 
-        tempTask.setProjectId(projectID);
+        tempTask.setTaskProjectId(projectId);
 
         /*her gøres der brug af metoden insertNewTaskToDB, som er en metode fra Task repo.
         Metoden indsætter de givende informationer ind til DB.
@@ -137,15 +129,16 @@ public class TaskController {
 
 
         tr.insertNewTaskToDB(tempTask);
-        int taskID = tr.getTaskID(tempTask.getTitle());
+        int taskId = tr.getTaskId(tempTask.getTaskTitle());
         Employee emp = (Employee) session.getAttribute("employee");
         int employeeID = emp.getEmployeeId();
-        tr.insertTaskToLinktable(employeeID, taskID, projectID);
+        tr.insertTaskToLinktable(employeeID, taskId, projectId);
 
         return "frontPage";
     }
 
 
+   //Lavet af Andrea
     @GetMapping("/createTaskFromSubproject/{thisSubprojectId}")
     public String v(@PathVariable("thisSubprojectId") int thisSubprojectId, Model m, HttpSession session) {
         //Her gemmer vi projektID, som en int
@@ -156,7 +149,7 @@ public class TaskController {
             //ønsker at hente projektet, specifik dets ID, så vi kan connecte task til dette Project
             Subproject sp = sps.getSubprojectObject(thisSubprojectId);
 
-            sharedSubproject = sp;
+            session.setAttribute("Subproject", sp);
 
             int projectId = sp.getProjectId();
             Project p = pr.getProjectFromDatabase(projectId);
@@ -183,40 +176,47 @@ public class TaskController {
 
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-        int projectID = sharedSubproject.getProjectId();
-        tempTask.setProjectId(projectID);
+        Subproject subproject = (Subproject) session.getAttribute("Subproject");
 
-        int subprojectId = sharedSubproject.getSubprojectId();
-        tempTask.setSubprojectId(subprojectId);
+        int projectId = subproject.getProjectId();
+        tempTask.setTaskProjectId(projectId);
+
+        int subprojectId = subproject.getSubprojectId();
+        tempTask.setTaskSubprojectId(subprojectId);
 
         tr.insertNewTaskToDB(tempTask);
-        int taskID = tr.getTaskID(tempTask.getTitle());
+        int taskId = tr.getTaskId(tempTask.getTaskTitle());
         Employee emp = (Employee) session.getAttribute("employee");
-        int employeeID = emp.getEmployeeId();
-        tr.insertTaskToLinktableWithSubproject(employeeID, taskID, projectID, subprojectId);
+        int employeeId = emp.getEmployeeId();
+        tr.insertTaskToLinktableWithSubproject(employeeId, taskId, projectId, subprojectId);
 
         return "frontPage";
     }
 
+    //TODO: kommener det her Andrea.....
     @GetMapping("/editTask/{thisTask}")
     public String editTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
 
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
-            int id = thisTask;
-            edithThisTask = ts.getTaskObject(id);
+            Project project = (Project) session.getAttribute("Project");
 
-            m.addAttribute("tasks",edithThisTask);
-            m.addAttribute("project",sharedProject);
+            int id = thisTask;
+            session.setAttribute("Task", ts.getTaskObject(thisTask));
+            Task task = ts.getTaskObject(id);
+
+            m.addAttribute("tasks",task);
+            m.addAttribute("project",project);
 
             return "task_html/editTask";
         }
 
     }
 
+    //lavet af Andrea
     @PostMapping("/editTaskChanges")
-    public String editTask(WebRequest wr){
+    public String editTask(WebRequest wr, HttpSession session){
 
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -226,45 +226,50 @@ public class TaskController {
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
 
-        String startDate = wr.getParameter("new-subtask-startDate");
-        String endtDate = wr.getParameter("new-subtask-endDate");
+        String startDate = wr.getParameter("new-task-startDate");
+        String endtDate = wr.getParameter("new-task-endDate");
+
+        Task task = (Task) session.getAttribute("Task");
 
 
         if (title != "" && title != null) {
-            edithThisTask.setTitle(title);
+            task.setTaskTitle(title);
         }
 
         if (description != "" && description != null) {
-            edithThisTask.setDescription(description);
+            task.setTaskDescription(description);
         }
 
         if (estimated_time != "" && estimated_time != null) {
-            edithThisTask.setEstimatedTime(estimated_time);
+            task.setTaskEstimatedTime(estimated_time);
         }
 
         if (timeUsed != "" && timeUsed != null) {
-            edithThisTask.setStatus(timeUsed);
+            task.setTaskStatus(timeUsed);
         }
 
         if (status != "" && status != null) {
-            edithThisTask.setStatus(status);
+            task.setTaskStatus(status);
         }
 
         if (startDate != "" && startDate != null) {
-            edithThisTask.setStartDate(startDate);
+            task.setTaskStartDate(startDate);
         }
         if (endtDate != "" && endtDate != null) {
-            edithThisTask.setEndDate(endtDate);
+            task.setTaskEndDate(endtDate);
         }
 
-        edithThisTask.setProjectId(sharedProject.getProjectId());
+        Project project = (Project) session.getAttribute("Project");
 
-        ts.updateTask(edithThisTask);
+        task.setTaskProjectId(project.getProjectId());
+
+        ts.updateTask(task);
 
         return "frontPage";
     }
 
 
+    //Lavet af Andrea
     @GetMapping("/deleteTask/{taskId}")
     public String deleteTask(@PathVariable("taskId") int taskId, HttpSession session) {
 
@@ -285,15 +290,15 @@ public class TaskController {
     public String getTaskForEmployee(HttpSession session, Model m){
         Employee emp;
         emp = (Employee) session.getAttribute("employee");
-        int employeeID = emp.getEmployeeId();
+        int employeeId = emp.getEmployeeId();
 
-        ArrayList<Task> tasks = tr.getTaskConnectedToEmployee(employeeID);
+        ArrayList<Task> tasks = tr.getTaskConnectedToEmployee(employeeId);
         m.addAttribute("tasks",tasks);
         return "fragments/taskConnectedToEmployee";
     }
 
     @GetMapping("/addEmployeeToTask/{thisTask}")
-    public String addEmployeeToTask(@PathVariable("thisTask") int thisTask, Model m){
+    public String addEmployeeToTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
         //manage employee
         ArrayList<Employee> allEmployees = er.getAllEmployeesFromDatabase();
         m.addAttribute("alllEmployees",allEmployees);
@@ -303,35 +308,27 @@ public class TaskController {
         m.addAttribute("taskEMployee",taskEmployee);
 
         //manage task
-        edithThisTask = ts.getTaskObject(thisTask);
-        m.addAttribute("task",edithThisTask);
+        session.setAttribute("Task", ts.getTaskObject(thisTask));
+        Task task = ts.getTaskObject(thisTask);
+
+        m.addAttribute("task",task);
 
         return "frontPage";
     }
 
 
     @PostMapping("/addEmployeeToTaskInput")
-    public String addEmployeeToTask(WebRequest wr){
-        String employeeIDString = wr.getParameter("task-employeeID-input");
+    public String addEmployeeToTask(WebRequest wr, HttpSession session){
+        String employeeIdString = wr.getParameter("task-employeeId-input");
+        Task task = (Task) session.getAttribute("Task");
 
-        int employeeID = Integer.parseInt(employeeIDString);
+        int employeeId = Integer.parseInt(employeeIdString);
 
-        int taskID = edithThisTask.getId();
+        int taskId = task.getTaskId();
 
-        tr.insertLinkTableWithEmployeeAndTaskInDB(employeeID,taskID);
+        tr.insertLinkTableWithEmployeeAndTaskInDB(employeeId,taskId);
 
         return "frontPage";
     }
-
-
 }
 
-//transform string til datetime-java-format (loacltime) parToDateTime
-//localTime time = LocalTime.parse("den aflveret String fra browser")
-//evt. lav validation
-//System.out.println(LocalTime.parse(estimated_time));
-
-
-   /* TODO-liste:
-        derefter skal tasken knyttes til project, sådan at man kun kan oprette en task
-        inde i et projekt og dermed automatisk er koblet til et project*/

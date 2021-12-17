@@ -1,6 +1,5 @@
 package com.example.eksamenvinter2021.Services;
 
-import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.*;
 
@@ -31,15 +30,15 @@ public class Test {
         //System.out.println(pr.doesProjectHaveSubprojects(35));
         //sps.deleteSubprojectFromDatabase(155);
         Task t = new Task();
-        t.setSubprojectId(15);
-        t.setStatus("1");
-        t.setEndDate("2021-12-23");
-        t.setTitle("13:00");
-        t.setProjectId(15);
-        t.setTimeUsed("1");
-        t.setEstimatedTime("1");
-        t.setStartDate("2021-12-23");
-        t.setDescription("Subproject-task");
+        t.setTaskSubprojectId(15);
+        t.setTaskStatus("1");
+        t.setTaskEndDate("2021-12-23");
+        t.setTaskTitle("13:00");
+        t.setTaskProjectId(15);
+        t.setTaskTimeUsed("1");
+        t.setTaskEstimatedTime("1");
+        t.setTaskStartDate("2021-12-23");
+        t.setTaskDescription("Subproject-task");
         //ts.insertNewTaskToDB(t);
         //tr.insertTaskToLinktableWithSubproject(15, 475, 15, 15);
         //System.out.println(tr.getTaskFromDB(345));

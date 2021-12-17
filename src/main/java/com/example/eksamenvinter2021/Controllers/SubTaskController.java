@@ -1,7 +1,6 @@
 package com.example.eksamenvinter2021.Controllers;
 
 import com.example.eksamenvinter2021.Models.Employee;
-import com.example.eksamenvinter2021.Models.Project;
 import com.example.eksamenvinter2021.Models.SubTask;
 import com.example.eksamenvinter2021.Models.Task;
 import com.example.eksamenvinter2021.Resporsitories.EmployeeRepo;
@@ -48,10 +47,10 @@ public class SubTaskController {
 
     @GetMapping("/showSubtask/{thisTask}")
     public  String subtasks(@PathVariable("thisTask") int thisTask, Model m){
-        int tID = thisTask;
+        int tId = thisTask;
 
         m.addAttribute("subtasks", sr.getSubtaskInArray());
-        m.addAttribute("task", tr.getTaskFromDB(tID));
+        m.addAttribute("task", tr.getTaskFromDB(tId));
 
         sharedTask = tr.getTaskFromDB(thisTask);
 
@@ -115,17 +114,17 @@ public class SubTaskController {
 
         SubTask tempSubtask = ss.createNewSubtask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-        int taskID = sharedTask.getId();
-        tempSubtask.setTaskID(taskID);
+        int taskId = sharedTask.getTaskId();
+        tempSubtask.setTaskId(taskId);
 
 
         sr.insertNewSubtaskToDB(tempSubtask);
 
-        int subtaskID = sr.getSubtaskID(tempSubtask.getTitle());
+        int subtaskId = sr.getSubtaskId(tempSubtask.getSubtaskTitle());
 
         Employee emp = (Employee) session.getAttribute("employee");
-        int employeeID = emp.getEmployeeId();
-        sr.insertLinkTTableWithEmployeeAndTaskInDB(employeeID, subtaskID, taskID);
+        int employeeId = emp.getEmployeeId();
+        sr.insertLinkTTableWithEmployeeAndTaskInDB(employeeId, subtaskId, taskId);
 
 
         return "frontPage";
@@ -159,42 +158,42 @@ public class SubTaskController {
         String endtDate = wr.getParameter("new-subtask-endDate");
 
         if (title != "" && title != null) {
-            editThisSubtask.setTitle(title);
+            editThisSubtask.setSubtaskTitle(title);
         }
 
         if (description != "" && description != null) {
-            editThisSubtask.setDescription(description);
+            editThisSubtask.setSubtaskDescription(description);
         }
 
         if (estimated_time != "" && estimated_time != null) {
-            editThisSubtask.setEstimatedTime(estimated_time);
+            editThisSubtask.setSubtaskEstimatedTime(estimated_time);
         }
 
         if (timeUsed != "" && timeUsed != null) {
-            editThisSubtask.setStatus(timeUsed);
+            editThisSubtask.setSubtaskStatus(timeUsed);
         }
 
         if (status != "" && status != null) {
-            editThisSubtask.setStatus(status);
+            editThisSubtask.setSubtaskStatus(status);
         }
 
         if (startDate != "" && startDate != null) {
-            editThisSubtask.setStartDate(startDate);
+            editThisSubtask.setSubtaskStartDate(startDate);
         }
         if (endtDate != "" && endtDate != null) {
-            editThisSubtask.setEndDate(endtDate);
+            editThisSubtask.setSubtaskEndDate(endtDate);
         }
 
-        editThisSubtask.setTaskID(sharedTask.getId());
+        editThisSubtask.setTaskId(sharedTask.getTaskId());
 
         sr.updateSubtask(editThisSubtask);
 
         return"subtask_html/updateSubtask";
     }
 
-    @GetMapping("/deleteSubtask/{subtaskID}")
-    public String deleteSubtask(@PathVariable("subtaskID") int subtaskID, Model m){
-        int id = subtaskID;
+    @GetMapping("/deleteSubtask/{subtaskId}")
+    public String deleteSubtask(@PathVariable("subtaskId") int subtaskId, Model m){
+        int id = subtaskId;
         sr.deleteSubtaskFromDB(id);
 
         return "frontPage";

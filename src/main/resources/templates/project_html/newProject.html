@@ -29,11 +29,6 @@
         <label>Description:</label><br>
         <input name="project-description-input" type="text" required><br>
 
-        <!--
-        <label>Name of Customer:</label><br>
-        <input name="project-customer-input" type="text"><br>
-        -->
-
         <h2>Choose Customer</h2>
         <td>
             <select th:name="project-customer-input">
@@ -49,7 +44,7 @@
         <!--https://www.w3schools.com/tags/att_select_form.asp-->
         <label for="status">Status:</label>
         <br>
-        <select name="project-status-input" id="status">
+        <select name="project-status-input" id="status" required>
             <option selected disabled></option>
             <option value="Pending">Pending</option>
             <option value="Ongoing">Ongoing</option>

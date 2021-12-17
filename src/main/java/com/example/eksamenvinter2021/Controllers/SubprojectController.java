@@ -22,8 +22,6 @@ public class SubprojectController {
     EmployeeService es = new EmployeeService();
     SubprojectService sps = new SubprojectService();
     LinkTabelService lts = new LinkTabelService();
-    Subproject editThisSubproject = new Subproject();
-    Project projectConnectedToSubproject = new Project();
     LoginService ls = new LoginService();
 
 
@@ -44,7 +42,7 @@ public class SubprojectController {
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                projectConnectedToSubproject = ps.getProjectObject(thisProjectId);
+                session.setAttribute("Project", ps.getProjectObject(thisProjectId));
                 return "subproject_html/newSubproject";
             }
             else{
@@ -64,7 +62,8 @@ public class SubprojectController {
         String status = webr.getParameter("subproject-status-input");
 
         //int projectId = pr.getProjectId(projectTitle);
-        int projectId = projectConnectedToSubproject.getProjectId();
+        Project project = (Project) session.getAttribute("Project");
+        int projectId = project.getProjectId();
 
         //Create subproject-object
         Subproject currentSubproject = sps.createNewSubproject(title, deadline, status, projectId);
@@ -105,17 +104,19 @@ public class SubprojectController {
 
 
     @GetMapping("/editSubproject/{thisSubproject}")
-    public String editSubrojectGetSubproject(@PathVariable("thisSubproject") String thisSubproject, Model model, HttpSession session) {
+    public String editSubrojectGetSubproject(@PathVariable("thisSubproject") int thisSubproject, Model model, HttpSession session) {
         if (ls.notLoggedIn(session)) {
             return  "redirect:/";
         } else {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                int id = Integer.parseInt(thisSubproject);
-                editThisSubproject = sps.getSubprojectObject(id);
+
+                Subproject subproject = (Subproject) session.getAttribute("Subproject");
+                session.setAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
+                subproject = sps.getSubprojectObject(thisSubproject);
                 //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
-                model.addAttribute("Subproject", sps.getSubprojectObject(id));
-                model.addAttribute("Project", ps.getProjectObject(editThisSubproject.getProjectId()));
+                model.addAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
+                model.addAttribute("Project", ps.getProjectObject(subproject.getProjectId()));
                 return "subproject_html/editSubproject";
             }
             else{
@@ -126,28 +127,30 @@ public class SubprojectController {
 
     //Denne virker
     @RequestMapping("/editSubprojectChanges")
-    public String editSubprojectGetChanges(WebRequest webr) {
+    public String editSubprojectGetChanges(WebRequest webr, HttpSession session) {
         String title = webr.getParameter("subproject-title-input");
         String deadline = webr.getParameter("subproject-deadline-input");
         String description = webr.getParameter("subproject-description-input");
         String status = webr.getParameter("subproject-status-input");
 
+        Subproject subproject = (Subproject) session.getAttribute("Subproject");
+
         if (title!="" && title!=null){
-            editThisSubproject.setSubprojectTitle(title);
+            subproject.setSubprojectTitle(title);
         }
 
         if (deadline!="" && deadline!=null){
-            editThisSubproject.setSubprojectDeadline(deadline);
+            subproject.setSubprojectDeadline(deadline);
         }
 
         if (description!="" && description!=null){
-            editThisSubproject.setSubprojectDescription(description);
+            subproject.setSubprojectDescription(description);
         }
 
-        editThisSubproject.setSubprojectStatus(status);
+        subproject.setSubprojectStatus(status);
 
         //Update project in DB
-        sps.updateSubprojectInDatabase(editThisSubproject);
+        sps.updateSubprojectInDatabase(subproject);
 
         return "frontPage";
     }
@@ -176,8 +179,11 @@ public class SubprojectController {
 
                 model.addAttribute("allEmployees", allEmployees);
                 model.addAttribute("subprojectEmployees", subprojectEmployees);
-                editThisSubproject = sps.getSubprojectObject(thisSubproject);
-                model.addAttribute("subproject", editThisSubproject);
+
+                session.setAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
+
+                Subproject subproject = sps.getSubprojectObject(thisSubproject);
+                model.addAttribute("subproject", subproject);
                 return "subproject_html/addEmployeeToSubproject.html";
             }
             else{
@@ -188,11 +194,12 @@ public class SubprojectController {
 
 
     @RequestMapping("/addEmployeeToSubprojectInput")
-    public String addEmployeeToSubproject2(WebRequest webr) {
+    public String addEmployeeToSubproject2(WebRequest webr, HttpSession session) {
         String employeeIdString = webr.getParameter("subproject-employeeId-input");
         int employeeId = Integer.parseInt(employeeIdString);
-        int subprojectId = editThisSubproject.getSubprojectId();
-        int projectId = editThisSubproject.getProjectId();
+        Subproject subproject = (Subproject) session.getAttribute("Subproject");
+        int subprojectId = subproject.getSubprojectId();
+        int projectId = subproject.getProjectId();
         //Nedenstående er ikke testet
         lts.insertLinkTableWithEmployeeAndSubprojectIntoDatabase(employeeId, subprojectId, projectId);
         return "frontPage";
@@ -208,8 +215,9 @@ public class SubprojectController {
             if (employee.getRole().equals("MANAGER")){
                 ArrayList<Employee> subprojectEmployees = lts.getEmployeesFromSubproject(thisSubproject);
                 model.addAttribute("subprojectEmployees", subprojectEmployees);
-                editThisSubproject = sps.getSubprojectObject(thisSubproject);
-                model.addAttribute("subproject", editThisSubproject);
+                session.setAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
+                Subproject subproject = sps.getSubprojectObject(thisSubproject);
+                model.addAttribute("subproject", subproject);
                 return "subproject_html/removeEmployeeFromSubproject.html";
             }
             else{
@@ -229,7 +237,8 @@ public class SubprojectController {
             //Checks if the user is a manager and thus allowed to access the site
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                int subprojectId = editThisSubproject.getSubprojectId();
+                Subproject subproject = (Subproject) session.getAttribute("Subproject");
+                int subprojectId = subproject.getSubprojectId();
                 lts.removeEmployeeFromSubproject(employeeId, subprojectId);
                 return "frontPage";
             }
@@ -239,7 +248,9 @@ public class SubprojectController {
         }
     }
 
- */
+    */
+
+
 
     //Nedenstående er ikke testet
     @GetMapping("/removeEmployeeSubproject/{employeeId}")
@@ -251,7 +262,8 @@ public class SubprojectController {
             //Checks if the user is a manager and thus allowed to access the site
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
-                int subprojectId = editThisSubproject.getSubprojectId();
+                Subproject subproject = (Subproject) session.getAttribute("Subproject");
+                int subprojectId = subproject.getSubprojectId();
                 lts.removeEmployeeFromSubproject(employeeId, subprojectId);
                 return "frontPage";
             }

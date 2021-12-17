@@ -460,10 +460,10 @@ public class TaskRepo {
             ResultSet rs= stmt.executeQuery();
 
             while(rs.next()){
-                int taskID = rs.getInt("task_id");
+                int taskId = rs.getInt("task_id");
                 String title = rs.getString("title");
                 String status = rs.getString("status");
-                int projectID = rs.getInt("project_id");
+                int projectId = rs.getInt("project_id");
                 String startDate = rs.getString("start_date");
                 String endDate = rs.getString("end_date");
 

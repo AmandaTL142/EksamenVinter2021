@@ -91,7 +91,7 @@ public class CustomerRepo {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            int id = rs.getInt("customerId");
+            int id = rs.getInt("customer_id");
 
             //Tilføjet af Amanda ifm. unit-test
             customerId = id;

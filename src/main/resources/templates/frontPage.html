@@ -28,23 +28,23 @@
 
 <table class="showData">
     <tr>
-        <th id="Titel">Title</th>
-        <th id="description">Description</th>
-        <th id="deadline">Deadline</th>
-        <th id="status">Status</th>
-        <th id="startdate">Start date</th>
-        <th id="enddate">End date</th>
-        <th id="employees">Employees</th>
+        <th class="Titel">Title</th>
+        <th class="description">Description</th>
+        <th class="deadline">Deadline</th>
+        <th class="status">Status</th>
+        <th class="startdate">Start date</th>
+        <th class="enddate">End date</th>
+        <th class="employees">Employees</th>
     </tr>
     <tr
             th:each="project : ${session.employee.getActiveProjectArray()}">
-        <td th:text="${project.getProjectTitle()}"></td>
-        <td th:text="${project.getDescription()}"></td>
-        <td th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
-        <td th:text="${project.getStatus()}"></td>
-        <td th:text="${project.getStartDate()}"></td>
-        <td th:text="${project.getEndDate()}"></td>
-        <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+        <td class="Titel" th:text="${project.getProjectTitle()}"></td>
+        <td class="description" th:text="${project.getDescription()}"></td>
+        <td class="deadline" th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
+        <td class="status" th:text="${project.getStatus()}"></td>
+        <td class="startdate" th:text="${project.getStartDate()}"></td>
+        <td class="enddate" th:text="${project.getEndDate()}"></td>
+        <td class="employees" th:text="${project.getEmployeesNamesFromProject()}"></td>
 
         <td>
             <a class="link" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
@@ -77,26 +77,26 @@
 <div id="finishedProjects" style="display: none">
     <table class="showData">
         <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Start date</th>
-            <th> End date</th>
-            <th>Employees</th>
+            <th class="Titel">Title</th>
+            <th class="description" >Description</th>
+            <th class="deadline">Deadline</th>
+            <th class="status">Status</th>
+            <th class="startdate">Start date</th>
+            <th class="enddate" > End date</th>
+            <th class="employees">Employees</th>
         </tr>
         <tr
                 th:each="project : ${session.employee.getCompletedProjectArray()}">
-            <td th:text="${project.getProjectTitle()}"></td>
-            <td th:text="${project.getDescription()}"></td>
-            <td th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
-            <td th:text="${project.getStatus()}"></td>
-            <td th:text="${project.getStartDate()}"></td>
-            <td th:text="${project.getEndDate()}"></td>
-            <td th:text="${project.getEmployeesNamesFromProject()}"></td>
+            <td class="Title" th:text="${project.getProjectTitle()}"></td>
+            <td class="description" th:text="${project.getDescription()}"></td>
+            <td class="deadline" th:text="${#dates.format(project.getDateinDateFormat(project.getProjectDeadline()), 'yyyy-MM-dd')}"></td>
+            <td class="status" th:text="${project.getStatus()}"></td>
+            <td class="startdate" th:text="${project.getStartDate()}"></td>
+            <td class="enddate" th:text="${project.getEndDate()}"></td>
+            <td class="emplyees" th:text="${project.getEmployeesNamesFromProject()}"></td>
 
             <td>
-                <a th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
+                <a class="link" th:if = "${session.employee.role == 'MANAGER'}" th:href="@{/editProject/{id}(id=${project.getProjectId()})}"> Edit </a>
             </td>
 
             <td>

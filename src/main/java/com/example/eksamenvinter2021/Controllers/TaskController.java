@@ -43,8 +43,6 @@ public class TaskController {
     LoginService ls = new LoginService();
 
 
-
-    /*thisProject, der står i curly brackets, indikere, at der skal opgives et projectID for at kunne benytte showTask*/
     //lavet af Andrea
     @GetMapping("/showTask/{thisProject}")
     public String tasks(@PathVariable("thisProject") int thisProject, Model m, HttpSession session){
@@ -58,9 +56,15 @@ public class TaskController {
                 int pId = thisProject;
 
                 m.addAttribute("tasks", ts.getAllTasksInArray());
+
                 m.addAttribute("project", ps.getProjectObject(pId));
 
+
+                //her hentes et project, som er baseret på hvilket id der er opgivet i url
                 Project project = ps.getProjectObject(thisProject);
+                /*Dette project gemmes i session og netop dette bestemte projekt tages med videre til bland andet
+                @GetMapping("/createTask/{thisProjectId}") og @PostMapping("/createNewTask") */
+
                 session.setAttribute("Project", project);
 
                 return "task_html/showTask";
@@ -74,7 +78,7 @@ public class TaskController {
 
 
     //Ændret af Amanda
-    //man skal indtaste et projectId, for at komme på det rigtige projekt
+    //projectId skal tages med videre i url, for at komme på det rigtige projekt
     @GetMapping("/createTask/{thisProjectId}")
     public String project(@PathVariable("thisProjectId") int thisProjectId, Model m, HttpSession session) {
 
@@ -96,37 +100,26 @@ public class TaskController {
     @PostMapping("/createNewTask")
     //For at få adgang til denne, skal man igennem showProject.Html
     public String createNewTask(WebRequest wr, HttpSession session){
-        //Først fortælles, at der ønskes input fra bruger via browser
+        //Input i browser
         String title = wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
-
         String estimated_time = wr.getParameter("new-task-estimatedTime");
-
         String timeUsed = wr.getParameter("new-task-timeUsed");
         String status = wr.getParameter("new-task-status");
         String startDate = wr.getParameter("new-task-startDate");
         String endtDate = wr.getParameter("new-task-endDate");
 
-
         //Create task-object
         Task tempTask = ts.createNewTask(title,description,estimated_time,timeUsed,status, startDate, endtDate);
 
-
+        //Henter projektet, som blev instanzieret i showTask
         Project project = (Project) session.getAttribute("Project");
 
+        //Gemmer projectet fra session i variablen projectId
         int projectId = project.getProjectId();
-        /*Ved at defineret projectId, som værende ID fra sharedProject, er det muligt at tage dette ID med videre,
-        når der oprettes en task.
-        På denne måde oprettes en task, som med det samme får et projectId tilknyttet. Dette gør, at så snart
-        task opretes tilhører den med det samme et project*/
 
+        //Connecter nyoprettet task til project fra session
         tempTask.setTaskProjectId(projectId);
-
-        /*her gøres der brug af metoden insertNewTaskToDB, som er en metode fra Task repo.
-        Metoden indsætter de givende informationer ind til DB.
-        I parantesen siges der, at disse værdier, som er indtastet af brugeren, i task-objektet
-        og på denne måde instanzieres objektet*/
-
 
         tr.insertNewTaskToDB(tempTask);
         int taskId = tr.getTaskId(tempTask.getTaskTitle());
@@ -193,7 +186,7 @@ public class TaskController {
         return "frontPage";
     }
 
-    //TODO: kommener det her Andrea.....
+    /**/
     @GetMapping("/editTask/{thisTask}")
     public String editTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
 
@@ -217,6 +210,8 @@ public class TaskController {
     //lavet af Andrea
     @PostMapping("/editTaskChanges")
     public String editTask(WebRequest wr, HttpSession session){
+        /*Her gøres der klar til input fra GUI via Webrequest, da det skal være muligt for
+        bruger at kunne indtaste det der skal ændres.*/
 
         String title=wr.getParameter("new-task-title");
         String description = wr.getParameter("new-task-description");
@@ -229,9 +224,11 @@ public class TaskController {
         String startDate = wr.getParameter("new-task-startDate");
         String endtDate = wr.getParameter("new-task-endDate");
 
+        //Henter tasken fra session, som blev instanzieret i @GetMapping("/editTask/{thisTask}")
         Task task = (Task) session.getAttribute("Task");
 
-
+        /*Disse if-statements sørger for, at hvis alle felter ikke udfyldes/skal ændres skal programmet ikke lave det om til et tomt felt,
+        men bare lade den allerede eksisterende data være*/
         if (title != "" && title != null) {
             task.setTaskTitle(title);
         }
@@ -259,10 +256,13 @@ public class TaskController {
             task.setTaskEndDate(endtDate);
         }
 
+        /*Her henter vi projektet som er blevet bestemt fra  @GetMapping("/showTask/{thisProject}"), */
         Project project = (Project) session.getAttribute("Project");
 
+        //tilknytter Tasken, der er gemt i session og projectet der er gemt i session
         task.setTaskProjectId(project.getProjectId());
 
+        //opdatere taske via denne metode, som indeholder et SET-statment, der går ind og ændre allerede eksiterende data i databasen
         ts.updateTask(task);
 
         return "frontPage";
@@ -285,8 +285,6 @@ public class TaskController {
 
 
     @GetMapping("/getTaskForEmployee")
-
-    //TODO skal den implementeres eller gør chrisitan det???
     public String getTaskForEmployee(HttpSession session, Model m){
         Employee emp;
         emp = (Employee) session.getAttribute("employee");

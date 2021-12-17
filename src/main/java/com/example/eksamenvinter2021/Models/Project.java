@@ -1,7 +1,6 @@
 package com.example.eksamenvinter2021.Models;
 
 import com.example.eksamenvinter2021.Resporsitories.LinkTableRepo;
-import com.example.eksamenvinter2021.Resporsitories.ProjectRepo;
 import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
 import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
@@ -27,7 +26,6 @@ public class Project {
 
     LinkTableRepo ltr = new LinkTableRepo();
     SubprojectRepo spr = new SubprojectRepo();
-    ProjectRepo pr = new ProjectRepo();
     TaskRepo tr = new TaskRepo();
 
     //Nedenfor er getters og setters for projects attributter
@@ -193,9 +191,7 @@ public class Project {
         ArrayList<Employee> employeeList = ltr.getEmployeesFromProject(projectId);
         ArrayList<String> employeeNameList = new ArrayList<>();
 
-        employeeList.forEach((Employee) -> {
-            employeeNameList.add(Employee.getEmployeeName());
-        });
+        employeeList.forEach((Employee) -> employeeNameList.add(Employee.getEmployeeName()));
 
         return employeeNameList;
     }
@@ -211,11 +207,7 @@ public class Project {
             boolean theSameTitle = otherProject.getProjectTitle().equals(this.getProjectTitle());
             boolean theSameDescription = otherProject.getDescription().equals(this.getDescription());
 
-            if (theSameId == true && theSameTitle == true && theSameDescription == true){
-                return true;
-            } else {
-                return false;
-            }
+            return theSameId && theSameTitle && theSameDescription;
         }
     }
 

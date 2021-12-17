@@ -117,11 +117,7 @@ public class Subproject {
             boolean theSameTitle = otherSubproject.getSubprojectTitle().equals(this.getSubprojectTitle());
             boolean theSameDescription = otherSubproject.getSubprojectDescription().equals(this.getSubprojectDescription());
 
-            if (theSameId == true && theSameTitle == true && theSameDescription == true && theSameProjectId == true){
-                return true;
-            } else {
-                return false;
-            }
+            return theSameId && theSameTitle && theSameDescription && theSameProjectId;
         }
     }
 

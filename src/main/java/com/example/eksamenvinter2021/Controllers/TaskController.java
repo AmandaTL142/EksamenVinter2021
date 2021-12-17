@@ -186,7 +186,7 @@ public class TaskController {
         return "frontPage";
     }
 
-    /**/
+    //Amanda
     @GetMapping("/editTask/{thisTask}")
     public String editTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
 
@@ -283,7 +283,7 @@ public class TaskController {
 
     }
 
-
+//Andrea inspireret af Amanda
     @GetMapping("/getTaskForEmployee")
     public String getTaskForEmployee(HttpSession session, Model m){
         Employee emp;
@@ -295,6 +295,7 @@ public class TaskController {
         return "fragments/taskConnectedToEmployee";
     }
 
+    //Andrea inspireret af Amanda
     @GetMapping("/addEmployeeToTask/{thisTask}")
     public String addEmployeeToTask(@PathVariable("thisTask") int thisTask, Model m, HttpSession session){
         //manage employee
@@ -314,7 +315,7 @@ public class TaskController {
         return "frontPage";
     }
 
-
+    //Andrea inspireret af Amanda
     @PostMapping("/addEmployeeToTaskInput")
     public String addEmployeeToTask(WebRequest wr, HttpSession session){
         String employeeIdString = wr.getParameter("task-employeeId-input");

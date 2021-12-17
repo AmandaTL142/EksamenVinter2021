@@ -1,9 +1,8 @@
 package com.example.eksamenvinter2021.Models;
 
-import com.example.eksamenvinter2021.Resporsitories.SubprojectRepo;
+import com.example.eksamenvinter2021.Resporsitories.TaskRepo;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Subproject {
     //Amanda Tolstrup Laursen
@@ -16,7 +15,7 @@ public class Subproject {
     private String startDate;
     private String endDate;
 
-    SubprojectRepo spr = new SubprojectRepo();
+    TaskRepo tr = new TaskRepo();
 
     //Herunder er getters og setters for subprojects attributter
     public int getSubprojectId() {
@@ -128,7 +127,7 @@ public class Subproject {
 
     //Nedenstående metoder er tilknyttet Subproject, så de kan kaldes i HTML
     public ArrayList<Task> getTasksLinkedToSubproject() {
-        return spr.getTasksLinkedToSubproject(subprojectId);
+        return tr.getTasksLinkedToSubproject(subprojectId);
     }
 
 }

@@ -15,7 +15,8 @@ public class ProjectRepo {
 
     SubprojectService sps = new SubprojectService();
 
-    //Testet i "test"
+    //Denne metode modtager et project-object og indsætter projektets attributter i databasen under projects-tabellen
+    // via et insert-statement.
     public void insertProjectIntoDatabase(Project p) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -38,7 +39,8 @@ public class ProjectRepo {
         }
     }
 
-    //Testet i "test", dele virker ikke
+    //Denne metode henter et datasæt fra projects-tabellen i DB, ekstraherer projekt-attributterne og opretter
+    // et projekt med disse.
     public Project getProjectFromDatabase(int id) {
         Project p = new Project();
         try {
@@ -73,10 +75,11 @@ public class ProjectRepo {
         return p;
     }
 
-    //Testet i "test"
+    //Denne metode sletter et projekt-datasæt fra projects-tabellen ud fra et bestemt project_id
     public void deleteProjectFromDatabase(int id) {
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
+                    ("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE `project_id` = ?;");
             stmt.setInt(1, id);
                     //("DELETE FROM `heroku_7aba49c42d6c0f0`.`projects` WHERE (`project_id` = " + id + ");");
             stmt.executeUpdate();
@@ -87,7 +90,8 @@ public class ProjectRepo {
 
     }
 
-
+    //Denne metode modtager et project-object og opdaterer et datasæt i projects-tabellen med dette objects attributter.
+    // Datasættet identificeres via project_id'et
     public void updateProjectInDatabase(Project p) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -112,7 +116,7 @@ public class ProjectRepo {
 
     }
 
-
+    //Denne metode søger efter en bestemt titel i projects-tabellen og returnerer det tilhørende project_id
     public int getProjectIdFromTitle(String projectTitle) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT project_id FROM " +
@@ -131,7 +135,7 @@ public class ProjectRepo {
         }
     }
 
-    //Test denne
+    //Denne metode henter alle titler fra projects-tabellen i DB og returnerer dem som en ArrayList
     public ArrayList<String> getProjectNamesInArray() {
         ArrayList<String> projectNames = new ArrayList<>();
         try {
@@ -150,7 +154,8 @@ public class ProjectRepo {
         return projectNames;
     }
 
-    //Den her metode virker!
+    //Denne metode henter alle datasæt fra projects-tabellen, ekstraherer dataen og opretter et proejekt med
+    // projekt-attributter baseret på denne data.
     public ArrayList<Project> getProjectsInArray() {
         ArrayList<Project> projectArray = new ArrayList<>();
         try {
@@ -233,23 +238,8 @@ public class ProjectRepo {
         return projectArray;
     }
 
-    public boolean doesProjectHaveSubprojects(int projectId) {
-        try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
-                    ("SELECT project_id FROM heroku_7aba49c42d6c0f0.subprojects WHERE project_id=?;");
-            stmt.setInt(1, projectId);
-            ResultSet rs = stmt.executeQuery();
-            return rs.next();
 
-        } catch (Exception e) {
-            System.out.println("Couldn't check subprojects connected to project with id " + projectId + " from database");
-            System.out.println(e.getMessage());
-        }
-
-        return false;
-    }
-
-    //lavet Christian
+    //lavet af Christian
     public static Date findFinalEndTime(Project p) {
         //Udregner faktisk dato projekt færdigt
         //Find størst endDate ud af alle tabeller hvor project_id = ?

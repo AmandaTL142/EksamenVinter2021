@@ -49,4 +49,9 @@ public class TaskService {
         tr.deleteTask(taskId);
     }
 
+    //Amanda Tolstrup Laursen
+    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
+        return tr.getTasksLinkedToSubproject(thisSubprojectId);
+    }
+
 }

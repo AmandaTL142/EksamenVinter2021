@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerRepoTest {
     //Amanda Tolstrup Laursen
 
+    //Her testes det, om det rette id returneres i databasen, når titlen "Københavns Kommune" gives som input i metoden.
     @Test
     void getCustomerIdFromDatabase() {
         //Arrange
@@ -27,6 +28,7 @@ class CustomerRepoTest {
         assertNotEquals(notExpected2, customerIdTest1);
     }
 
+    //Her testes det, om det rette navn returneres i databasen, når id=205 gives som input i metoden.
     @Test
     void returnCustomerNameFromId() {
         //Arrange
@@ -37,7 +39,7 @@ class CustomerRepoTest {
 
         String expected1 = "Københavns Kommune";
         String notExpected1 = "";
-        String notExpected2 = "KMD";
+        String notExpected2 = "KMD";    //Denne kunde findes også i databasen
 
 
         //Assert

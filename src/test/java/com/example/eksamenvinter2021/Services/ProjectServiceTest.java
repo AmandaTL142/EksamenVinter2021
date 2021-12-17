@@ -9,8 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectServiceTest {
     //Amanda Tolstrup Laursen
 
+    //Her testes det, om det rette Project-objekt returneres, når dets id gives som input i metoden.
+    // Vi har valgt, at to objekter er ens, hvis de tre attributter projectTitle, description og projectId er ens.
     @Test
-    //Denne test er bestået
     void getProjectObject() {
         //Arrange
         ProjectService ps = new ProjectService();

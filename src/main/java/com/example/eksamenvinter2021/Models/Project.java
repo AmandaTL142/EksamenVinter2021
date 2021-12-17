@@ -225,10 +225,6 @@ public class Project {
         return spr.getSubprojectsLinkedToProject(projectId);
     }
 
-    public boolean doesProjectHaveSubprojects() {
-        return pr.doesProjectHaveSubprojects(projectId);
-    }
-
 
     public ArrayList<Task> getAllTasksInProject() {
         return tr.getAllTasksInProject(projectId);

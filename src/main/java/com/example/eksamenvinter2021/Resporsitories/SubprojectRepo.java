@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class SubprojectRepo {
     //Amanda Tolstrup Laursen
 
+    //Denne metode modtager et subproject-object og indsætter projektets attributter i databasen i
+    // subprojects-tabellen via et insert-statement.
     public void insertSubprojectIntoDatabase(Subproject sp) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -31,7 +33,8 @@ public class SubprojectRepo {
         }
     }
 
-    //Denne virker 2/12
+    //Denne metode henter et datasæt fra subprojects-tabellen i DB, ekstraherer subprojekt-attributterne og opretter
+    // et subprojekt med disse.
     public Subproject getSubprojectFromDatabase(int id) {
         Subproject sp = new Subproject();
         try {
@@ -70,6 +73,7 @@ public class SubprojectRepo {
         return sp;
     }
 
+    //Denne metode sletter et subproject-datasæt fra subprojects-tabellen ud fra et bestemt subproject_id
     public void deleteSubprojectFromDatabase(int id) {
         try {
             PreparedStatement stmt1 = ConnectionManager.getConnection().prepareStatement
@@ -86,7 +90,8 @@ public class SubprojectRepo {
 
     }
 
-    //Skal jeg evt. lave if-statements til de attributter, der ikke er NN?
+    //Denne metode modtager et subproject-object og opdaterer et datasæt i subprojects-tabellen med dette
+    // objects attributter. Datasættet identificeres via subproject_id'et
     public void updateSubprojectInDatabase(Subproject sp) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -129,6 +134,9 @@ public class SubprojectRepo {
 
      */
 
+    //Denne modtage modtager et project-id og finder alle datasæt i subprojects-tabellen, der har dette project_id.
+    // Derefter ekstraheres attributterne fra datasættene, der oprettes subproject-objekter, og disse tilføjes til
+    // et array, der returneres.
     public ArrayList<Subproject> getSubprojectsLinkedToProject(int thisProjectId) {
         Subproject sp;
         ArrayList<Subproject> subprojects = new ArrayList<>();
@@ -170,8 +178,9 @@ public class SubprojectRepo {
         return subprojects;
     }
 
+    //Denne metode finder alle det i subprojects-tabellen, hvor titlen er lig inputtet. subproject_id ekstraheres
+    // fra datasættet, og dette returneres.
     public int getSubprojectIdByTitle(String title) {
-        Subproject sp = new Subproject();
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
                     "heroku_7aba49c42d6c0f0.subprojects WHERE title=?;");
@@ -189,51 +198,5 @@ public class SubprojectRepo {
             return 0;
         }
     }
-
-    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
-        Task task;
-        ArrayList<Task> tasks = new ArrayList<>();
-
-        try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
-                    "heroku_7aba49c42d6c0f0.tasks WHERE subproject_id=?;");
-            stmt.setInt(1, thisSubprojectId);
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next()){
-
-                int taskId = rs.getInt("task_id");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                String estimatedTime = rs.getString("estimated_time");
-                String timeUsed = rs.getString("time_used");
-                String status = rs.getString("status");
-                int projectId = rs.getInt("project_id");
-                String startDate = rs.getString("start_date");
-                String endDate = rs.getString("end_date");
-
-                task = new Task();
-                task.setTaskSubprojectId(thisSubprojectId);
-                task.setTaskEndDate(endDate);
-                task.setTaskProjectId(projectId);
-                task.setTaskStartDate(startDate);
-                task.setTaskStatus(status);
-                task.setTaskEstimatedTime(estimatedTime);
-                task.setTaskId(taskId);
-                task.setTaskDescription(description);
-                task.setTaskTimeUsed(timeUsed);
-                task.setTaskTitle(title);
-
-                tasks.add(task);
-
-            }
-
-
-        } catch(SQLException e){
-            System.out.println("Couldn't get task for subproject with id " + thisSubprojectId + " from database");
-            System.out.println(e.getMessage());
-        }
-        return tasks;
-    }
-
 
 }

@@ -54,8 +54,4 @@ public class SubprojectService {
         return spr.getSubprojectIdByTitle(title);
     }
 
-    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
-        return spr.getTasksLinkedToSubproject(thisSubprojectId);
-    }
-
 }

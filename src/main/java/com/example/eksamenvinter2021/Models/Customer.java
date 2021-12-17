@@ -43,6 +43,8 @@ public class Customer {
 
     }
 
+    //Amanda Tolstrup Laursen og CAS
+    //Denne metode er overridet, så vi kan sammenligne customers i unit-testen af getCustomerObject
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Customer)) {

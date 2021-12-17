@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerServiceTest {
     //Amanda Tolstrup Laursen
 
+    //Her testes det, om det rette Customer-objekt returneres, når dets id gives som input i metoden.
     @Test
     void getCustomerObject() {
         //Arrange

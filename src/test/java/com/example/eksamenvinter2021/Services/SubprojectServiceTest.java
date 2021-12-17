@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubprojectServiceTest {
     //Amanda Tolstrup Laursen
 
+    //Her testes det, om det rette Subproject-objekt returneres, når dets id gives som input i metoden.
+    // Vi har valgt, at to objekter er ens, hvis de fire attributter subprojectId, subprojectTitle,
+    // subprojectdescription og projectId er ens.
     @Test
     void getSubprojectObject() {
         //Arrange

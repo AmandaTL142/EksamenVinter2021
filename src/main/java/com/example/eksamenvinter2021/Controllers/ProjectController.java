@@ -3,7 +3,6 @@ package com.example.eksamenvinter2021.Controllers;
 import com.example.eksamenvinter2021.Models.Customer;
 import com.example.eksamenvinter2021.Models.Employee;
 import com.example.eksamenvinter2021.Models.Project;
-import com.example.eksamenvinter2021.Models.Subproject;
 import com.example.eksamenvinter2021.Services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -164,18 +163,18 @@ public class ProjectController {
 
         //Projekt-objektet opdateres med de nye oplsyninger. En attribut opdateres kun, hvis der er modtaget
         // input fra brugeren.
-        if (title!="" && title!=null){
+        if (title!=null && !title.equals("")){
             Project.setProjectTitle(title);
         }
 
-        if (deadline!="" && deadline!=null){
+        if (deadline!=null && !deadline.equals("")){
             Project.setProjectDeadline(deadline);
         }
 
         //basePriceString forsøges konverteret til en int. Har brugeren ikke indtastet et gyldigt tal, printes en
         // fejlmeddelselse. Ellers gemmes int'en som en ny variabel.
-        if (basePriceString!="" && basePriceString!=null){
-            double basePrice = 0;
+        if (basePriceString!=null && !basePriceString.equals("")){
+            double basePrice;
             try {
                 basePrice = Double.parseDouble(basePriceString);
                 Project.setBasePrice(basePrice);
@@ -186,10 +185,11 @@ public class ProjectController {
             }
         }
 
-        if (description!="" && description!=null){
+        if (description!=null && !description.equals("")){
             Project.setDescription(description);
         }
-        if (costumerName!="" && costumerName!=null){
+
+        if (costumerName!=null && !costumerName.equals("")){
             int customerId = cs.getCustomerIdFromDatabase(costumerName);
             Project.setCustomerId(customerId);
         }
@@ -197,11 +197,11 @@ public class ProjectController {
         //Status er i på siden autoudfyldt med information, så denne vil aldrig være tom
         Project.setStatus(status);
 
-        if (startDate!="" && startDate!=null){
+        if (startDate!=null && !startDate.equals("")){
             Project.setStartDate(startDate);
         }
 
-        if (endDate!="" && endDate!=null){
+        if (endDate!=null && !endDate.equals("")){
             Project.setEndDate(endDate);
         }
 

@@ -115,10 +115,9 @@ public class SubprojectController {
             Employee employee = (Employee) session.getAttribute("employee");
             if (employee.getRole().equals("MANAGER")){
 
-                Subproject subproject = (Subproject) session.getAttribute("Subproject");
+                Subproject subproject;
                 session.setAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
                 subproject = sps.getSubprojectObject(thisSubproject);
-                //projectConnectedToSubproject= pr.getProjectFromDatabase(editThisSubproject.getProjectId());
                 model.addAttribute("Subproject", sps.getSubprojectObject(thisSubproject));
                 model.addAttribute("Project", ps.getProjectObject(subproject.getProjectId()));
                 return "subproject_html/editSubproject";
@@ -139,15 +138,15 @@ public class SubprojectController {
 
         Subproject subproject = (Subproject) session.getAttribute("Subproject");
 
-        if (title!="" && title!=null){
+        if (title!=null && !title.equals("")){
             subproject.setSubprojectTitle(title);
         }
 
-        if (deadline!="" && deadline!=null){
+        if (deadline!=null && !deadline.equals("")){
             subproject.setSubprojectDeadline(deadline);
         }
 
-        if (description!="" && description!=null){
+        if (description!=null && !description.equals("")){
             subproject.setSubprojectDescription(description);
         }
 
@@ -206,7 +205,10 @@ public class SubprojectController {
     @RequestMapping("/addEmployeeToSubprojectInput")
     public String addEmployeeToSubproject2(WebRequest webr, HttpSession session) {
         String employeeIdString = webr.getParameter("subproject-employeeId-input");
-        int employeeId = Integer.parseInt(employeeIdString);
+        int employeeId=0;
+        if (employeeIdString!=null){
+            employeeId = Integer.parseInt(employeeIdString);
+        }
         Subproject subproject = (Subproject) session.getAttribute("Subproject");
         int subprojectId = subproject.getSubprojectId();
         int projectId = subproject.getProjectId();

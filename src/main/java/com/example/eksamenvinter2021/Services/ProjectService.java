@@ -75,10 +75,6 @@ public class ProjectService {
         return pr.getAllProjects();
     }
 
-    public boolean doesProjectHaveSubprojects(int projectId) {
-        return pr.doesProjectHaveSubprojects(projectId);
-    }
-
 }
 
 

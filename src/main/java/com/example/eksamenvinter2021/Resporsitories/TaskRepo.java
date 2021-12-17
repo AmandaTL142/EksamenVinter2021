@@ -560,4 +560,53 @@ public class TaskRepo {
         }
         return taskObjects;
     }
+
+    //Amanda Tolstrup Laursen
+    //Denne metode finder alle datasæt i tasks-tabellen, der har et bestemt subproject_id. For hvert datasæt
+    // ekstraheres attributterne, og et task-objekt oprettes. Hvert objekt tilføjes til et array, som returneres.
+    public ArrayList<Task> getTasksLinkedToSubproject(int thisSubprojectId) {
+        Task task;
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT * FROM " +
+                    "heroku_7aba49c42d6c0f0.tasks WHERE subproject_id=?;");
+            stmt.setInt(1, thisSubprojectId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+
+                int taskId = rs.getInt("task_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String estimatedTime = rs.getString("estimated_time");
+                String timeUsed = rs.getString("time_used");
+                String status = rs.getString("status");
+                int projectId = rs.getInt("project_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+
+                task = new Task();
+                task.setTaskSubprojectId(thisSubprojectId);
+                task.setTaskEndDate(endDate);
+                task.setTaskProjectId(projectId);
+                task.setTaskStartDate(startDate);
+                task.setTaskStatus(status);
+                task.setTaskEstimatedTime(estimatedTime);
+                task.setTaskId(taskId);
+                task.setTaskDescription(description);
+                task.setTaskTimeUsed(timeUsed);
+                task.setTaskTitle(title);
+
+                tasks.add(task);
+
+            }
+
+
+        } catch(SQLException e){
+            System.out.println("Couldn't get task for subproject with id " + thisSubprojectId + " from database");
+            System.out.println(e.getMessage());
+        }
+        return tasks;
+    }
+
 }

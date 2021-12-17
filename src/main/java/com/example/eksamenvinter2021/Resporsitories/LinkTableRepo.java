@@ -20,7 +20,8 @@ public class LinkTableRepo {
     EmployeeService es = new EmployeeService();
     SubprojectService sps = new SubprojectService();
 
-    //
+    //Denne metode henter alle datasæt fra DB, der har et bestemt employee_id. Herfra ekstraheres project_ids,
+    // de tilhørende project-objects oprettes, og de færdige frasorteres. Outputtet er et array af project-objects.
     public ArrayList<Project> getActiveProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
         ArrayList<Project> projectObjects = new ArrayList<>();
@@ -48,16 +49,7 @@ public class LinkTableRepo {
             for (int i = 0; i < projectObjects.size(); i++) {
                 Project projectObject = projectObjects.get(i);
                 String status = projectObject.getStatus();
-                //FIXME: Couldn't get project with id 0 from database
-                //Illegal operation on empty result set.
-                //Couldn't get projects for employee with id 15 from database
-                //Cannot invoke "String.equalsIgnoreCase(String)" because "status" is null
-                //TODO: create method 'changeStatus' to set a project's status to ongoing
-                /*if (status == null) {
-                    System.out.println("Project status should not be null.");
-                    projectObject.changeStatus("ongoing");
-                    activeProjectObjects.add(projectObject);
-                }*/
+
                 if (!status.equalsIgnoreCase("complete")){
                     activeProjectObjects.add(projectObject);
                 }
@@ -69,7 +61,8 @@ public class LinkTableRepo {
         return activeProjectObjects;
     }
 
-
+    //Denne metode henter alle datasæt fra DB, der har et bestemt employee_id. Herfra ekstraheres project_ids,
+    // de tilhørende project-objects oprettes, og de ikke-færdige frasorteres. Outputtet er et array af project-objects.
     public ArrayList<Project> getCompletedProjectsConnectedToEmployee(int employeeId) {
         ArrayList<Integer> projectIds = new ArrayList<>();
         ArrayList<Project> projectObjects = new ArrayList<>();
@@ -111,11 +104,14 @@ public class LinkTableRepo {
     }
 
 
+    //Denne metode henter alle datasæt fra DB, der både har et bestemt project_id og employee_id.
+    // Herfra ekstraheres subproject_ids, de tilhørende subproject-objects oprettes, og outputtet er
+    // et array af subproject-objects.
     public ArrayList<Subproject> getSubprojectsConnectedToProjectsAndEmployee(int projectId, int employeeId) {
         ArrayList<Subproject> subProjects = new ArrayList<>();
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT subproject_id FROM " +
-                    "link_table WHERE project_id = ? AND employee_id = ?;");
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement("SELECT subproject_id " +
+                    "FROM link_table WHERE project_id = ? AND employee_id = ?;");
             stmt.setInt(1, projectId);
             stmt.setInt(2, employeeId);
             ResultSet rs = stmt.executeQuery();
@@ -132,6 +128,9 @@ public class LinkTableRepo {
         return subProjects;
     }
 
+    //Denne metode henter alle datasæt fra DB, der har et bestemt project_id. Herfra ekstraheres employee_ids,
+    // eventuelle gentagelser fjernes (hvert subproject, task og subtask har tilknyttet et project_id), og
+    // employee-objekter oprettes. Outputtet er et array af employee-objects.
     public ArrayList<Employee> getEmployeesFromProject(int projectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
@@ -146,7 +145,7 @@ public class LinkTableRepo {
                 employeeIds.add(employeeId);
             }
 
-            //Prevents doubles
+            //Forhindrer gentagelser
             Set<Integer> projectIdsHashset = new HashSet<>(employeeIds);
             employeeIds.clear();
             employeeIds.addAll(projectIdsHashset);
@@ -162,6 +161,10 @@ public class LinkTableRepo {
         return employeeObjects;
     }
 
+    //Denne metode henter alle datasæt fra DB, der har et bestemt project_id. Herfra ekstraheres employee_ids,
+    // eventuelle gentagelser fjernes (hvert subproject, task og subtask har tilknyttet et project_id), og
+    // employee-objekter oprettes. Employees, der ikke er managers frasorteres. Outputtet er et array af
+    // employee-objects.
     public ArrayList<Employee> getManagersFromProject(int projectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> managerObjects = new ArrayList<>();
@@ -175,7 +178,7 @@ public class LinkTableRepo {
                 employeeIds.add(employeeId);
             }
 
-            //Prevents doubles
+            //Forhindrer gentagelser
             Set<Integer> projectIdsHashset = new HashSet<>(employeeIds);
             employeeIds.clear();
             employeeIds.addAll(projectIdsHashset);
@@ -194,6 +197,8 @@ public class LinkTableRepo {
     }
 
 
+    //Denne metode henter alle datasæt fra DB, der har et bestemt subproject_id. Herfra ekstraheres employee_ids,
+    // eventuelle gentagelser fjernes, og employee-objekter oprettes. Outputtet er et array af employee-objects.
     public ArrayList<Employee> getEmployeesFromSubproject(int subprojectId) {
         ArrayList<Integer> employeeIds = new ArrayList<>();
         ArrayList<Employee> employeeObjects = new ArrayList<>();
@@ -207,7 +212,7 @@ public class LinkTableRepo {
                 employeeIds.add(employeeId);
             }
 
-            //Prevents doubles
+            //Forhindrer gentagelser
             Set<Integer> subprojectIdsHashset = new HashSet<>(employeeIds);
             employeeIds.clear();
             employeeIds.addAll(subprojectIdsHashset);
@@ -224,6 +229,8 @@ public class LinkTableRepo {
     }
 
 
+    //Denne metode indsætter et datasæt i link_table, der har et employee_id og et project_id. Således forbindes
+    // de to.
     public void insertLinkTableWithEmployeeAndProjectIntoDatabase(int employeeId, int projectId) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -239,6 +246,9 @@ public class LinkTableRepo {
         }
     }
 
+
+    //Denne metode indsætter et datasæt i link_table, der har et employee_id og et subproject_id. Således forbindes
+    // de to.
     public void insertLinkTableWithEmployeeAndSubprojectIntoDatabase(int employeeId, int subprojectId, int projectId) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -256,6 +266,9 @@ public class LinkTableRepo {
         }
     }
 
+    //Denne metode sletter de datasæt fra link_table, hvor både employee_id og project_id har bestemte værdier.
+    // Således fjernes forbindelsen mellem de to, også for alle de subprojects, tasks og subtasks, der måtte
+    // være forbundet til projektet.
     public void removeEmployeeFromProject(int employeeId, int projectId) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
@@ -270,6 +283,8 @@ public class LinkTableRepo {
         }
     }
 
+    //Denne metode sletter de datasæt fra link_table, hvor både employee_id og subproject_id har bestemte værdier.
+    // Således fjernes forbindelsen mellem de to.
     public void removeEmployeeFromSubproject(int employeeId, int subprojectId) {
         try {
             PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement
